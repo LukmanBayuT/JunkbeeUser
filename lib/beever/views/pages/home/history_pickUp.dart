@@ -17,38 +17,34 @@ class _HistoryState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(480, 904),
-      builder: () => Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  Container(
-                    width: ScreenUtil().setWidth(480),
-                    height: ScreenUtil().setHeight(230),
-                    alignment: Alignment.topCenter,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(image: AssetImage('assets/heading.png'), fit: BoxFit.fill)
-                    ),
-                    child: HistoryWidget()
+        designSize: const Size(480, 904),
+        builder: () => Scaffold(
+                body: SafeArea(
+              child: SingleChildScrollView(
+                physics: const NeverScrollableScrollPhysics(),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: [
+                      Container(
+                          width: ScreenUtil().setWidth(480),
+                          height: ScreenUtil().setHeight(230),
+                          alignment: Alignment.topCenter,
+                          decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/heading.png'),
+                                  fit: BoxFit.fill)),
+                          child: const HistoryWidget()),
+                      Container(
+                          transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                          width: ScreenUtil().setWidth(480),
+                          height: ScreenUtil().setHeight(740),
+                          alignment: Alignment.topCenter,
+                          child: const HistoryList())
+                    ],
                   ),
-
-                  Container(
-                    transform: Matrix4.translationValues(0.0, -80.0, 0.0),
-                    width: ScreenUtil().setWidth(480),
-                    height: ScreenUtil().setHeight(740),
-                    alignment: Alignment.topCenter,
-                    child: HistoryList()
-                  )
-                ],
+                ),
               ),
-            ),
-          ),
-        )
-      )
-    );
+            )));
   }
 }

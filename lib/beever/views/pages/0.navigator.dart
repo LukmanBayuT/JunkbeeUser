@@ -50,8 +50,8 @@ class _NavigatorPagesState extends State<NavigatorPages> {
                           width: 26,
                           height: 26,
                           color: index == 0
-                              ? Color(0xFFF7D345)
-                              : Color(0xFF707070))),
+                              ? const Color(0xFFF7D345)
+                              : const Color(0xFF707070))),
                   TouchableOpacity(
                       onTap: () => setState(() => index = 1),
                       child: Image.asset(
@@ -64,16 +64,16 @@ class _NavigatorPagesState extends State<NavigatorPages> {
                           width: 26,
                           height: 26,
                           color: index == 2
-                              ? Color(0xFFF7D345)
-                              : Color(0xFF707070))),
+                              ? const Color(0xFFF7D345)
+                              : const Color(0xFF707070))),
                   TouchableOpacity(
                       onTap: () => setState(() => index = 3),
                       child: Image.asset('icons/p_0.png',
                           width: 26,
                           height: 26,
                           color: index == 3
-                              ? Color(0xFFF7D345)
-                              : Color(0xFF707070))),
+                              ? const Color(0xFFF7D345)
+                              : const Color(0xFF707070))),
                 ],
               ),
             ),

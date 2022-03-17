@@ -19,32 +19,29 @@ class _WithdrawState extends State<WithdrawScreen> {
   @override
   Widget build(BuildContext) {
     return ScreenUtilInit(
-      designSize: Size(480, 904),
-      builder: () => Scaffold(
-        appBar: AppBar(
-          title: Text('Withdraw', style: textBodyProfile),
-          centerTitle: true,
-          backgroundColor: Color(0xFFF8C503),
-          leading: TouchableOpacity(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios_new_rounded)
-          )
-        ),
-        body: SingleChildScrollView(
-          child: Container(
-            width: ScreenUtil().setWidth(480),
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                WithdrawWidget(),
-                ChooseBankAccount(context),
-                ChooseVirtualAccount(context),
-                ButtonContinue(context)
-              ],
-            ),
-          ),
-        ),
-      )
-    );
+        designSize: const Size(480, 904),
+        builder: () => Scaffold(
+              appBar: AppBar(
+                  title: const Text('Withdraw', style: textBodyProfile),
+                  centerTitle: true,
+                  backgroundColor: const Color(0xFFF8C503),
+                  leading: TouchableOpacity(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back_ios_new_rounded))),
+              body: SingleChildScrollView(
+                child: Container(
+                  width: ScreenUtil().setWidth(480),
+                  alignment: Alignment.topCenter,
+                  child: Column(
+                    children: [
+                      const WithdrawWidget(),
+                      ChooseBankAccount(context),
+                      ChooseVirtualAccount(context),
+                      ButtonContinue(context)
+                    ],
+                  ),
+                ),
+              ),
+            ));
   }
 }
