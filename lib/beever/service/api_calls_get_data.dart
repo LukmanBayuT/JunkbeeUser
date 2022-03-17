@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/model/news_model.dart';
 import 'package:junkbee_user/beever/model/user_profile.dart';

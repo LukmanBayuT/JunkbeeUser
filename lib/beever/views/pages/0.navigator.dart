@@ -13,7 +13,6 @@ class NavigatorPages extends StatefulWidget {
 }
 
 class _NavigatorPagesState extends State<NavigatorPages> {
-
   int index = 0;
   List<Widget> pagesBeever = [
     const HomePagesDriver(),
@@ -25,47 +24,60 @@ class _NavigatorPagesState extends State<NavigatorPages> {
   Widget build(BuildContext context) {
     return ClipRRect(
       child: Scaffold(
-        extendBody: true,
-        body: pagesBeever[index],
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.only(bottom: 30, left: 60, right: 60),
-          color: Colors.transparent,
-          child: Container(
-            height: 65,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(36),
-              boxShadow: [
-                BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))
-              ]
+          extendBody: true,
+          body: pagesBeever[index],
+          bottomNavigationBar: Container(
+            padding: const EdgeInsets.only(bottom: 30, left: 60, right: 60),
+            color: Colors.transparent,
+            child: Container(
+              height: 65,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(36),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 2,
+                        spreadRadius: 0,
+                        offset: Offset(0, 1))
+                  ]),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  TouchableOpacity(
+                      onTap: () => setState(() => index = 0),
+                      child: Image.asset('icons/h_0.png',
+                          width: 26,
+                          height: 26,
+                          color: index == 0
+                              ? Color(0xFFF7D345)
+                              : Color(0xFF707070))),
+                  TouchableOpacity(
+                      onTap: () => setState(() => index = 1),
+                      child: Image.asset(
+                          index == 1 ? 'icons/cb_1.png' : 'icons/cb_0.png',
+                          width: 26,
+                          height: 26)),
+                  TouchableOpacity(
+                      onTap: () => setState(() => index = 2),
+                      child: Image.asset('icons/i_0.png',
+                          width: 26,
+                          height: 26,
+                          color: index == 2
+                              ? Color(0xFFF7D345)
+                              : Color(0xFF707070))),
+                  TouchableOpacity(
+                      onTap: () => setState(() => index = 3),
+                      child: Image.asset('icons/p_0.png',
+                          width: 26,
+                          height: 26,
+                          color: index == 3
+                              ? Color(0xFFF7D345)
+                              : Color(0xFF707070))),
+                ],
+              ),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                TouchableOpacity(
-                  onTap: () => setState(() => index = 0 ),
-                  child: Image.asset('icons/h_0.png', width: 26, height: 26, color: index == 0 ? Color(0xFFF7D345) : Color(0xFF707070))
-                ),
-
-                TouchableOpacity(
-                  onTap: () => setState(() => index = 1 ),
-                  child: Image.asset(index == 1 ? 'icons/cb_1.png' : 'icons/cb_0.png', width: 26, height: 26)
-                ),
-
-                TouchableOpacity(
-                  onTap: () => setState(() => index = 2 ),
-                  child: Image.asset('icons/i_0.png', width: 26, height: 26, color: index == 2 ? Color(0xFFF7D345) : Color(0xFF707070))
-                ),
-
-                TouchableOpacity(
-                  onTap: () => setState(() => index = 3 ),
-                  child: Image.asset('icons/p_0.png', width: 26, height: 26, color: index == 3 ? Color(0xFFF7D345) : Color(0xFF707070))
-                ),
-              ],
-            ),
-          ),
-        )
-      ),
+          )),
     );
   }
 }
