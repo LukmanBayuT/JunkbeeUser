@@ -79,6 +79,8 @@ flutter:
     - assets/
     - assets_animations/
     - assets_onboarding/
+    - assets/animation/
+    - assets/onboarding/
     - assets_signscreen/
     - icons/icons_button/
     - icons/waste_icons/

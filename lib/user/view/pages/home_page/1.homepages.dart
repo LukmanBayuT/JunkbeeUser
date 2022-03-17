@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/widget/home_page/homepages_news_api.dart';
 import 'package:junkbee_user/user/widget/home_page/homepages_user_statistic.dart';
@@ -22,7 +23,7 @@ class HomepagesUser extends StatefulWidget {
 
 class _HomepagesUserState extends State<HomepagesUser> {
   final navKey = GlobalKey<CurvedNavigationBarState>();
-  String token = '';
+  dynamic token_local = null;
   String device_info = '';
 
   @override
@@ -37,8 +38,12 @@ class _HomepagesUserState extends State<HomepagesUser> {
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
     setState(() {
-      token = token;
+      token_local = token;
     });
+    if (token != null) {
+      await ApiCallsGetData().getUserData();
+      setState(() {});
+    }
   }
 
   getDeviceInfo() async {
@@ -56,7 +61,7 @@ class _HomepagesUserState extends State<HomepagesUser> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: token == '' ? UIHomePage(device_info: device_info,) : const UserDataHomepages(),
+              child: token_local == null ? UIHomePage(device_info: device_info,) : const UserDataHomepages(),
             ),
             UserDataGetStarted(navKey: navKey),
             const WasteCategories(),

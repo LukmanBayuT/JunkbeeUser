@@ -12,7 +12,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  final String token = '';
+  dynamic token_local = null;
 
   @override
   void initState() {
@@ -25,8 +25,12 @@ class _UserProfileState extends State<UserProfile> {
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
     setState(() {
-      token = token;
+      token_local = token;
     });
+    if (token != null) {
+      await ApiCallsGetData().getUserData();
+      setState(() {});
+    }
   }
 
   @override
@@ -63,11 +67,17 @@ class _UserProfileState extends State<UserProfile> {
                         margin: defaultPadding4,
                         child: Column(
                           children: [
-                            if (token == '') ...[
+                            if (token_local == null) ...[
                               Container(
                                 padding: const EdgeInsets.only(top: 20),
                                 child: GestureDetector(
-                                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SignInUser())),
+                                  onTap: () async {
+                                    var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInUser()));
+                                    if (result == 'back') {
+                                      await checkToken();
+                                      setState(() {});
+                                    }
+                                  },
                                   child: Container(
                                     width: MediaQuery.of(context).size.width / 2,
                                     height: MediaQuery.of(context).size.height / 15,
@@ -153,7 +163,7 @@ class _UserProfileState extends State<UserProfile> {
                                   title: Text('About App', style: bodySlimBody),
                                   trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
                                 ),
-                                if (token != '') ...[
+                                if (token_local != null) ...[
                                   const ListTile(
                                     title: Text('Log Out', style: bodySlimBody),
                                     trailing: Icon(Icons.logout_outlined, size: 20,),

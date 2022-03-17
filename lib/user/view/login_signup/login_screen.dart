@@ -51,7 +51,7 @@ class _SignInUserState extends State<SignInUser> {
         print(authToken);
         print(fcmToken);
 
-        Get.offAll(() => const NavigatorUser());
+        Navigator.pop(context, 'back');
       } else {
         Map<String, dynamic> output = jsonDecode(response.body);
         var errorMessage = output['message'];
