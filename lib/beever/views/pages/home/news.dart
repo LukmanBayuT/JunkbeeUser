@@ -11,19 +11,18 @@ class NewsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(480, 904),
-      builder: () => Scaffold(
-        appBar: AppBar(
-          title: Text('News', style: textBodyProfile),
-          centerTitle: true,
-          backgroundColor: Color(0xFFF8C503),
-          leading: TouchableOpacity(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios_new_rounded, size: 25)
-          ),
-        ),
-        body: WebView(initialUrl: url),
-      )
-    );
+        designSize: const Size(480, 904),
+        builder: () => Scaffold(
+              appBar: AppBar(
+                title: const Text('News', style: textBodyProfile),
+                centerTitle: true,
+                backgroundColor: const Color(0xFFF8C503),
+                leading: TouchableOpacity(
+                    onTap: () => Navigator.pop(context),
+                    child:
+                        const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
+              ),
+              body: WebView(initialUrl: url),
+            ));
   }
 }

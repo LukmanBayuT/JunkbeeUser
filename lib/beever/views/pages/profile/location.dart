@@ -15,13 +15,13 @@ class Location extends StatefulWidget {
 class LocationState extends State<Location> {
   Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(-6.9712568081305015, 110.42702698925254),
+  static final CameraPosition _kGooglePlex = const CameraPosition(
+    target: const LatLng(-6.9712568081305015, 110.42702698925254),
     zoom: 14.4746,
   );
 
-  static final CameraPosition _kLake = CameraPosition(
-      target: LatLng(-6.9712568081305015, 110.42702698925254),
+  static final CameraPosition _kLake = const CameraPosition(
+      target: const LatLng(-6.9712568081305015, 110.42702698925254),
       zoom: 19.151926040649414);
 
   @override
@@ -32,60 +32,59 @@ class LocationState extends State<Location> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(480, 853),
-      builder: () => Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFFF8C503),
-          title: Text('Add Location', style: textBodyProfile,),
-          centerTitle: true,
-          leading: TouchableOpacity(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back_ios_new_rounded, size: 25)
-          ),
-        ),
-        body: Stack(
-          children: [
-            GoogleMap(
-              mapType: MapType.normal,
-              myLocationEnabled: true,
-              initialCameraPosition: _kGooglePlex,
-              onMapCreated: (GoogleMapController controller) {
-                _controller.complete(controller);
-              },
+        designSize: const Size(480, 853),
+        builder: () => Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFFF8C503),
+              title: const Text(
+                'Add Location',
+                style: textBodyProfile,
+              ),
+              centerTitle: true,
+              leading: TouchableOpacity(
+                  onTap: () => Navigator.pop(context),
+                  child:
+                      const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
             ),
-            Container(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16.7)
+            body: Stack(
+              children: [
+                GoogleMap(
+                  mapType: MapType.normal,
+                  myLocationEnabled: true,
+                  initialCameraPosition: _kGooglePlex,
+                  onMapCreated: (GoogleMapController controller) {
+                    _controller.complete(controller);
+                  },
                 ),
-                child: TextFormField(
-                  keyboardType: TextInputType.streetAddress,
-                  textCapitalization: TextCapitalization.words,
-                  decoration: InputDecoration(
-                    hintText: 'Search by City',
-                    suffixIcon: const Icon(Icons.search),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.7),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFDEDEDE),
-                        width: 2.0,
+                Container(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 8),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.7)),
+                      child: TextFormField(
+                        keyboardType: TextInputType.streetAddress,
+                        textCapitalization: TextCapitalization.words,
+                        decoration: InputDecoration(
+                          hintText: 'Search by City',
+                          suffixIcon: const Icon(Icons.search),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.7),
+                            borderSide: const BorderSide(
+                              color: Color(0xFFDEDEDE),
+                              width: 2.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.7),
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(16.7),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            )
-          ],
-        )
-      )
-    );
+                    ))
+              ],
+            )));
   }
 }

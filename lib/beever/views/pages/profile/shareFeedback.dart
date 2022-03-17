@@ -19,43 +19,47 @@ class _ShareFeedbackState extends State<ShareFeedback> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(480, 904),
-      builder: () => Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            width: ScreenUtil().setWidth(480),
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                ShareFeedbackWidget(),
-                Container(
-                  transform: Matrix4.translationValues(0.0, -70.0, 0.0),
-                  child: Column(
-                    children: [
-                      Container(
-                        width: ScreenUtil().setWidth(220),
-                        height: ScreenUtil().setHeight(220),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(width: 2.0, color: Color(0xFF2AAE1B)),
-                          borderRadius: BorderRadius.circular(10)
+        designSize: const Size(480, 904),
+        builder: () => Scaffold(
+              body: SingleChildScrollView(
+                child: Container(
+                    width: ScreenUtil().setWidth(480),
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        const ShareFeedbackWidget(),
+                        Container(
+                          transform: Matrix4.translationValues(0.0, -70.0, 0.0),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: ScreenUtil().setWidth(220),
+                                height: ScreenUtil().setHeight(220),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 2.0,
+                                        color: const Color(0xFF2AAE1B)),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Image.asset(
+                                  'assets/group_241.png',
+                                  width: ScreenUtil().setWidth(170),
+                                ),
+                              ),
+                              const Padding(
+                                  padding: EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    'Beever',
+                                    style: textSemiBold,
+                                  ))
+                            ],
+                          ),
                         ),
-                        child: Image.asset('assets/group_241.png', width: ScreenUtil().setWidth(170),),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
-                        child: Text('Beever', style: textSemiBold,)
-                      )
-                    ],
-                  ),
-                ),
-                multipleTextInput()
-              ],
-            )
-          ),
-        ),
-      )
-    );
+                        const multipleTextInput()
+                      ],
+                    )),
+              ),
+            ));
   }
 }

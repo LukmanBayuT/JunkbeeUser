@@ -36,14 +36,14 @@ class _SignInDriverState extends State<SignInDriver> {
   getDeviceToken() async {
     WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM',
-        appId: '1:359679760003:android:2c6050331a3d3c6b2dadb6',
-        messagingSenderId: '359679760003',
-        projectId: 'junkbee-7f763'
-      )
-    );
-    FirebaseMessaging.instance.getToken().then((deviceToken) => print(deviceToken));
+        options: const FirebaseOptions(
+            apiKey: 'AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM',
+            appId: '1:359679760003:android:2c6050331a3d3c6b2dadb6',
+            messagingSenderId: '359679760003',
+            projectId: 'junkbee-7f763'));
+    FirebaseMessaging.instance
+        .getToken()
+        .then((deviceToken) => print(deviceToken));
   }
 
   void _toggle() {
@@ -57,32 +57,29 @@ class _SignInDriverState extends State<SignInDriver> {
     try {
       WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp(
-        options: const FirebaseOptions(
-          apiKey: 'AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM',
-          appId: '1:359679760003:android:2c6050331a3d3c6b2dadb6',
-          messagingSenderId: '359679760003',
-          projectId: 'junkbee-7f763'
-        )
-      );
-      FirebaseMessaging.instance.getToken()
-      .then((deviceToken) async {
-        final response = await http.post(
-          Uri.parse(EndPoint.baseApiURL + EndPoint.loginURL),
-          body: {
-            'email': _logincont.text.trim(),
-            'password': _passwordcont.text.trim(),
-          }
-        );
+          options: const FirebaseOptions(
+              apiKey: 'AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM',
+              appId: '1:359679760003:android:2c6050331a3d3c6b2dadb6',
+              messagingSenderId: '359679760003',
+              projectId: 'junkbee-7f763'));
+      FirebaseMessaging.instance.getToken().then((deviceToken) async {
+        final response = await http
+            .post(Uri.parse(EndPoint.baseApiURL + EndPoint.loginURL), body: {
+          'email': _logincont.text.trim(),
+          'password': _passwordcont.text.trim(),
+        });
         Map<String, dynamic> output = jsonDecode(response.body);
         if (output['message'] == 'login success') {
           var authToken = output['data']['token'];
           await secureStorage.writeSecureData('token', authToken);
 
           final resp = await http.put(
-            Uri.parse(EndPoint.baseApiURL+EndPoint.deviceToken),
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ${output['data']['token']}' },
-            body: json.encode({ 'device_token': deviceToken })
-          );
+              Uri.parse(EndPoint.baseApiURL + EndPoint.deviceToken),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ${output['data']['token']}'
+              },
+              body: json.encode({'device_token': deviceToken}));
           Map<String, dynamic> updateDeviceToken = jsonDecode(resp.body);
           if (updateDeviceToken['message'] == 'data has been updated') {
             setState(() => loading = false);
@@ -107,49 +104,55 @@ class _SignInDriverState extends State<SignInDriver> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
       child: Scaffold(
-        body: SafeArea(
+          body: SafeArea(
         child: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    LogoType(),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: defaultPadding9,
-                          child: TextFormField(
-                            controller: _logincont,
-                            keyboardType: TextInputType.emailAddress,
-                            style: signScreenTextStyle,
-                            decoration: InputDecoration(
+              child: Stack(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const LogoType(),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: defaultPadding9,
+                        child: TextFormField(
+                          controller: _logincont,
+                          keyboardType: TextInputType.emailAddress,
+                          style: signScreenTextStyle,
+                          decoration: InputDecoration(
                               labelStyle: signScreenTextStyle,
                               labelText: 'Phone Number or Email',
-                              errorText: (_validate) ? "Username cannot be empty" : null),
-                          ),
+                              errorText: (_validate)
+                                  ? "Username cannot be empty"
+                                  : null),
                         ),
-                        const SizedBox( height: 20 ),
-                        Padding(
-                          padding: defaultPadding9,
-                          child: TextFormField(
-                            controller: _passwordcont,
-                            style: signScreenTextStyle,
-                            obscureText: (_obsecureText) ? true : false,
-                            decoration: InputDecoration(
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: defaultPadding9,
+                        child: TextFormField(
+                          controller: _passwordcont,
+                          style: signScreenTextStyle,
+                          obscureText: (_obsecureText) ? true : false,
+                          decoration: InputDecoration(
                               labelStyle: signScreenTextStyle,
                               labelText: 'Password',
-                              errorText: (_validate) ? "Password Cannot be Empty" : null,
+                              errorText: (_validate)
+                                  ? "Password Cannot be Empty"
+                                  : null,
                               suffixIcon: IconButton(
-                                onPressed: () => _toggle(),
-                                icon: Icon((_obsecureText) ? Icons.visibility : Icons.visibility_off))),
-                          ),
+                                  onPressed: () => _toggle(),
+                                  icon: Icon((_obsecureText)
+                                      ? Icons.visibility
+                                      : Icons.visibility_off))),
                         ),
-                        ForgotPassword(),
-                        const SizedBox( height: 20 ),
-                        SizedBox(
+                      ),
+                      const ForgotPassword(),
+                      const SizedBox(height: 20),
+                      SizedBox(
                           width: MediaQuery.of(context).size.width / 1,
                           height: MediaQuery.of(context).size.height / 13,
                           child: Padding(
@@ -163,35 +166,33 @@ class _SignInDriverState extends State<SignInDriver> {
                                   _loginDriver();
                                 }
                               },
-                              child: const Text( 'Sign In', style: onboardingTextButton ),
+                              child: const Text('Sign In',
+                                  style: onboardingTextButton),
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.amber,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15))),
                             ),
-                          )
-                        ),
-                      ],
-                    ),
-                    BecomeABeever()
-                  ],
-                ),
-
-                Container(
-                  color: Colors.transparent,
-                  child: (loading) ? Container(
-                    color: Color.fromRGBO(0, 0, 0, 0.5),
-                    alignment: Alignment.center,
-                    child: Lottie.asset(
-                      "assets/animation/booble.json",
-                      width: 250,
-                      height: MediaQuery.of(context).size.height * 1,
-                      animate: true
-                    )
-                  ) : null,
-                )
-              ],
-            )
-          ),
+                          )),
+                    ],
+                  ),
+                  const BecomeABeever()
+                ],
+              ),
+              Container(
+                color: Colors.transparent,
+                child: (loading)
+                    ? Container(
+                        color: const Color.fromRGBO(0, 0, 0, 0.5),
+                        alignment: Alignment.center,
+                        child: Lottie.asset("assets/animation/booble.json",
+                            width: 250,
+                            height: MediaQuery.of(context).size.height * 1,
+                            animate: true))
+                    : null,
+              )
+            ],
+          )),
         ),
       )),
     );
