@@ -18,7 +18,7 @@ class HelpCentreState extends State<HelpCentre> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(480, 904),
+      designSize: const Size(480, 904),
       builder: () => Scaffold(
         appBar: const PreferredSize(
           preferredSize: Size.fromHeight(260),

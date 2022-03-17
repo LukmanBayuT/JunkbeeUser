@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/const/const.dart';
@@ -7,6 +9,7 @@ import 'package:junkbee_user/beever/widgets/home/withdraw_widget.dart';
 class WithdrawScreen extends StatefulWidget {
   const WithdrawScreen({Key? key}) : super(key: key);
 
+  @override
   _WithdrawState createState() => _WithdrawState();
 }
 

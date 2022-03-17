@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_string_interpolations
+
 import 'package:flutter/material.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:intl/intl.dart';
@@ -158,7 +160,7 @@ SizedBox pickUpHistory(BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 3.2,
     child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => HistoryScreen())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen())),
       child: Card(
         shape: roundedRectBor,
         child: Column(
@@ -197,7 +199,7 @@ SizedBox currentPickUp(BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 3.2,
     child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => CurrentScreen())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CurrentScreen())),
       child: Card(
         shape: roundedRectBor,
         child: Column(
@@ -236,7 +238,7 @@ SizedBox availablePickUp(BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 3.2,
     child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => AvailableScreen())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AvailableScreen())),
       child: Card(
         shape: roundedRectBor,
         child: Column(

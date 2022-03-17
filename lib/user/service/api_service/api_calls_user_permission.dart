@@ -15,9 +15,11 @@ class PermissionHandler {
       case PermissionStatus.limited:
         break;
       case PermissionStatus.restricted:
+        // ignore: todo
         // TODO: Handle this case.
         break;
       case PermissionStatus.permanentlyDenied:
+        // ignore: todo
         // TODO: Handle this case.
         break;
     }

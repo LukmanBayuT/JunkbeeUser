@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
@@ -121,7 +123,7 @@ class Onboarding_2 extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 13,
               child: ElevatedButton(
                 onPressed: () {
-                  Get.to(() => SignInDriver());
+                  Get.to(() => const SignInDriver());
                 },
                 child: const Text('Continue', style: onboardingTextButton),
                 style: ElevatedButton.styleFrom(

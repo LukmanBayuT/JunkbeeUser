@@ -1,7 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/beever/widgets/home/homepages_widget.dart';
@@ -20,6 +23,20 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
   void initState() {
     ApiCallsGetData().getData();
     super.initState();
+    getRole();
+  }
+
+  getRole() async {
+    var authToken = await secureStorage.readSecureData('token');
+    var token = authToken;
+
+    final userData = await http.get(
+      Uri.parse(EndPoint.baseApiURL + EndPoint.getUserData),
+      headers: {'Authorization': 'Bearer $token'}
+    );
+    Map<String, dynamic> bodyJSON = jsonDecode(userData.body);
+    var role = bodyJSON['data']['role'];
+    await secureStorage.writeSecureData('role', role);
   }
 
   @override

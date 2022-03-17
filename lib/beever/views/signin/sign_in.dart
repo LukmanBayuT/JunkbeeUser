@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,6 +30,7 @@ class _SignInDriverState extends State<SignInDriver> {
 
   final SecureStorage secureStorage = SecureStorage();
 
+  @override
   void initState() {
     super.initState();
     getDeviceToken();
@@ -54,6 +57,7 @@ class _SignInDriverState extends State<SignInDriver> {
 
   void _loginDriver() async {
     setState(() => loading = true);
+    await secureStorage.deleteAllSecureData();
     try {
       WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp(
@@ -70,8 +74,7 @@ class _SignInDriverState extends State<SignInDriver> {
         });
         Map<String, dynamic> output = jsonDecode(response.body);
         if (output['message'] == 'login success') {
-          var authToken = output['data']['token'];
-          await secureStorage.writeSecureData('token', authToken);
+          await secureStorage.writeSecureData('token', output['data']['token']);
 
           final resp = await http.put(
               Uri.parse(EndPoint.baseApiURL + EndPoint.deviceToken),

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_const
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -56,8 +58,8 @@ class _BeeverProfileState extends State<BeeverProfile> {
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(16),
-                                  boxShadow: [
-                                    const BoxShadow(
+                                  boxShadow: const [
+                                    BoxShadow(
                                         color: Colors.grey,
                                         blurRadius: 2,
                                         spreadRadius: 0.0,
@@ -65,7 +67,7 @@ class _BeeverProfileState extends State<BeeverProfile> {
                                   ]),
                               child: Column(
                                 children: [
-                                  Container(
+                                  SizedBox(
                                       width: ScreenUtil().setWidth(380),
                                       child: FutureBuilder(
                                           future: ApiCallsGetData().getData(),
@@ -108,7 +110,7 @@ class _BeeverProfileState extends State<BeeverProfile> {
                                                         .setWidth(270),
                                                     child: Column(
                                                       children: [
-                                                        Container(
+                                                        SizedBox(
                                                             width: ScreenUtil()
                                                                 .setWidth(270),
                                                             child: Text(

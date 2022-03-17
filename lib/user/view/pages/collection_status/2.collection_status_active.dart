@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 
@@ -28,7 +30,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 4.5,
               alignment: Alignment.topCenter,
-              decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/heading.png'), fit: BoxFit.cover)),
+              decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/heading.png'), fit: BoxFit.cover)),
               child: Container(
                 width: MediaQuery.of(context).size.width / 1.1,
                 child: Column(
@@ -37,7 +39,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                       padding: const EdgeInsets.only(top: 15, bottom: 22),
                       width: MediaQuery.of(context).size.width,
                       alignment: Alignment.topCenter,
-                      child: Text('Collection Status', style: bodyBodyUser,),
+                      child: const Text('Collection Status', style: bodyBodyUser,),
                     ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width / 1,
@@ -56,11 +58,12 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                               child: (_isChoiceSelected == true) ? Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  gradient: LinearGradient(colors: [Color(0xFFF8C503), Color(0xFFFFE067)]),
-                                  boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))]
+                                  // ignore: unnecessary_const
+                                  gradient: const LinearGradient(colors: [const Color(0xFFF8C503), const Color(0xFFFFE067)]),
+                                  boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))]
                                 ),
                                 alignment: Alignment.center,
-                                child: Text('Active', style: onboardingSkipWhite,),
+                                child: const Text('Active', style: onboardingSkipWhite,),
                               ) : Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(width: 1, color: Colors.white),
@@ -68,7 +71,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                   color: Colors.transparent
                                 ),
                                 alignment: Alignment.center,
-                                child: Text('Active', style: onboardingSkipWhite,),
+                                child: const Text('Active', style: onboardingSkipWhite,),
                               ),
                             )
                           ),
@@ -84,11 +87,12 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                               child: (_isChoiceSelected == false) ? Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
-                                  gradient: LinearGradient(colors: [Color(0xFFF8C503), Color(0xFFFFE067)]),
-                                  boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))]
+                                  // ignore: unnecessary_const
+                                  gradient: const LinearGradient(colors: [const Color(0xFFF8C503), const Color(0xFFFFE067)]),
+                                  boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))]
                                 ),
                                 alignment: Alignment.center,
-                                child: Text('History', style: onboardingSkipWhite,),
+                                child: const Text('History', style: onboardingSkipWhite,),
                               ) : Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(width: 1, color: Colors.white),
@@ -96,7 +100,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                   color: Colors.transparent
                                 ),
                                 alignment: Alignment.center,
-                                child: Text('History', style: onboardingSkipWhite,),
+                                child: const Text('History', style: onboardingSkipWhite,),
                               ),
                             )
                           ),
@@ -126,7 +130,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(16),
-                            boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))]
+                            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 2, spreadRadius: 0, offset: Offset(0, 1))]
                           ),
                           child: Column(
                             children: [
@@ -139,7 +143,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                     Container(
                                       padding: const EdgeInsets.only(left: 10),
                                       width: MediaQuery.of(context).size.width / 1.4,
-                                      child: Text('Great! we are looking for a Beever for you', style: TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF707070)),)
+                                      child: const Text('Great! we are looking for a Beever for you', style: TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF707070)),)
                                     )
                                   ],
                                 )
@@ -163,7 +167,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                               Container(
                                 padding: const EdgeInsets.only(top: 5),
                                 width: MediaQuery.of(context).size.width / 1.25,
-                                child: Text('Your collection request will be canclled automatically if the search timer runs out.', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xFF707070)),),
+                                child: const Text('Your collection request will be canclled automatically if the search timer runs out.', style: TextStyle(fontWeight: FontWeight.w500, color: Color(0xFF707070)),),
                               ),
 
                               Container(
@@ -171,7 +175,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                 child: Container(
                                   width: MediaQuery.of(context).size.width / 3,
                                   decoration: BoxDecoration(
-                                    border: Border.all(width: 1.5, color: Color(0xFFDEDEDE)),
+                                    border: Border.all(width: 1.5, color: const Color(0xFFDEDEDE)),
                                     borderRadius: BorderRadius.circular(10)
                                   ),
                                 ),
@@ -179,7 +183,7 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                             ],
                           ),
                         ),
-                        Padding(padding: const EdgeInsets.only(top: 20))
+                        const Padding(padding: EdgeInsets.only(top: 20))
                       ],
                     );
                   }

@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,15 +15,16 @@ class Location extends StatefulWidget {
 }
 
 class LocationState extends State<Location> {
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition _kGooglePlex = const CameraPosition(
-    target: const LatLng(-6.9712568081305015, 110.42702698925254),
+  // ignore: unnecessary_const
+  static const CameraPosition _kGooglePlex = const CameraPosition(
+    target: LatLng(-6.9712568081305015, 110.42702698925254),
     zoom: 14.4746,
   );
 
-  static final CameraPosition _kLake = const CameraPosition(
-      target: const LatLng(-6.9712568081305015, 110.42702698925254),
+  static const CameraPosition _kLake = CameraPosition(
+      target: LatLng(-6.9712568081305015, 110.42702698925254),
       zoom: 19.151926040649414);
 
   @override

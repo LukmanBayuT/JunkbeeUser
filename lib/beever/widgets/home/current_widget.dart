@@ -12,12 +12,12 @@ class CurrentWidget extends StatelessWidget {
       width: ScreenUtil().setWidth(480),
       height: ScreenUtil().setHeight(80),
       alignment: Alignment.topCenter,
-      child: Container(
+      child: SizedBox(
         width: ScreenUtil().setWidth(430),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               width: ScreenUtil().setWidth(40),
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -30,7 +30,7 @@ class CurrentWidget extends StatelessWidget {
             Container(
               width: ScreenUtil().setWidth(350),
               alignment: Alignment.center,
-              child: Text('Current Pick Up', style: textBodyProfile),
+              child: const Text('Current Pick Up', style: textBodyProfile),
             ),
             Container(
               width: ScreenUtil().setWidth(40),
@@ -58,7 +58,7 @@ class CurrentList extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
+                boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
               ),
               child: Column(
                 children: [
@@ -67,19 +67,19 @@ class CurrentList extends StatelessWidget {
                     width: ScreenUtil().setWidth(390),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: ScreenUtil().setWidth(40),
                           child: Image.asset('assets/group_2262.png'),
                         ),
                         Container(
                           padding: const EdgeInsets.only(left: 10),
                           width: ScreenUtil().setWidth(250),
-                          child: Text('Order From Cynthia', style: textProfileBoldMini,),
+                          child: const Text('Order From Cynthia', style: textProfileBoldMini,),
                         ),
                         Container(
                           width: ScreenUtil().setWidth(100),
                           alignment: Alignment.centerRight,
-                          child: Text('1 hour ago', style: textProfile,),
+                          child: const Text('1 hour ago', style: textProfile,),
                         )
                       ],
                     ),
@@ -87,7 +87,7 @@ class CurrentList extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: 10.5),
                     width: ScreenUtil().setWidth(390),
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+                    decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
                   ),
 
                   Container(
@@ -95,7 +95,7 @@ class CurrentList extends StatelessWidget {
                     width: ScreenUtil().setWidth(390),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: ScreenUtil().setWidth(40),
                           child: Image.asset('assets/group_971.png', width: ScreenUtil().setWidth(30), height: ScreenUtil().setHeight(30),),
                         ),
@@ -104,14 +104,14 @@ class CurrentList extends StatelessWidget {
                           width: ScreenUtil().setWidth(350),
                           child: Column(
                             children: [
-                              Container(
+                              SizedBox(
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Pick Up Location', style: textProfile,),
+                                child: const Text('Pick Up Location', style: textProfile,),
                               ),
                               Container(
                                 padding: const EdgeInsets.only(top: 1),
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Tugumuda, 50171 Semarang', style: textProfileBoldMini,),
+                                child: const Text('Tugumuda, 50171 Semarang', style: textProfileBoldMini,),
                               )
                             ],
                           )
@@ -124,7 +124,7 @@ class CurrentList extends StatelessWidget {
                     width: ScreenUtil().setWidth(390),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: ScreenUtil().setWidth(40),
                           child: Image.asset('assets/group_2267.png', width: ScreenUtil().setWidth(30), height: ScreenUtil().setHeight(30),),
                         ),
@@ -133,9 +133,9 @@ class CurrentList extends StatelessWidget {
                           width: ScreenUtil().setWidth(350),
                           child: Column(
                             children: [
-                              Container(
+                              SizedBox(
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Paper     0.5 kg', style: textProfile,),
+                                child: const Text('Paper     0.5 kg', style: textProfile,),
                               )
                             ],
                           )

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_init_to_null
 
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -31,7 +31,6 @@ class _HomepagesUserState extends State<HomepagesUser> {
     super.initState();
 
     checkToken();
-    getDeviceInfo();
   }
 
   checkToken() async {
@@ -43,6 +42,8 @@ class _HomepagesUserState extends State<HomepagesUser> {
     if (token != null) {
       await ApiCallsGetData().getUserData();
       setState(() {});
+    } else {
+      getDeviceInfo();
     }
   }
 

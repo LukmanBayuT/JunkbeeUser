@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -78,7 +80,7 @@ class _RecentActivityState extends State<RecentActivity> {
                                 border: Border.all(
                                     width: 1, color: const Color(0xFFDEDEDE)),
                                 borderRadius: BorderRadius.circular(16.7)),
-                            child: Container(
+                            child: SizedBox(
                               width: ScreenUtil().setWidth(380),
                               child: TextFormField(
                                 style: TextStyle(
@@ -105,12 +107,12 @@ class _RecentActivityState extends State<RecentActivity> {
                               decoration: BoxDecoration(
                                   color: const Color(0xFFF8C503),
                                   borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    const BoxShadow(
+                                  boxShadow: const [
+                                    BoxShadow(
                                         color: Colors.grey,
                                         blurRadius: 2,
                                         spreadRadius: 0.0,
-                                        offset: const Offset(0, 1))
+                                        offset: Offset(0, 1))
                                   ]),
                               alignment: Alignment.center,
                               child: const Text(

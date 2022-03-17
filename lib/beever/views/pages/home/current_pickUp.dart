@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/widgets/home/current_widget.dart';
@@ -5,6 +7,7 @@ import 'package:junkbee_user/beever/widgets/home/current_widget.dart';
 class CurrentScreen extends StatefulWidget {
   const CurrentScreen({Key? key}) : super(key: key);
 
+  @override
   _CurrentState createState() => _CurrentState();
 }
 

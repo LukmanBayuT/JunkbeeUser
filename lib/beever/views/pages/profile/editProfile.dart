@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, avoid_print, await_only_futures, unused_local_variable, non_constant_identifier_names, avoid_types_as_parameter_names
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -289,7 +291,7 @@ class _EditProfileState extends State<EditProfile> {
                         alignment: Alignment.topLeft,
                         child: Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: ScreenUtil().setWidth(342),
                               child: const Text(
                                 'Your Name',
@@ -334,7 +336,7 @@ class _EditProfileState extends State<EditProfile> {
                         alignment: Alignment.topLeft,
                         child: Column(
                           children: [
-                            Container(
+                            SizedBox(
                               width: ScreenUtil().setWidth(400),
                               child: const Text(
                                 'Linked Account',
@@ -349,7 +351,7 @@ class _EditProfileState extends State<EditProfile> {
                                 children: [
                                   Row(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                           width: ScreenUtil().setWidth(40),
                                           child: Image.asset(
                                               'assets/group_1669.png')),
@@ -412,7 +414,7 @@ class _EditProfileState extends State<EditProfile> {
                                                               _onFacebookSignOut()),
                                                     ));
                                         } else {
-                                          return Container(
+                                          return SizedBox(
                                               width: ScreenUtil().setWidth(40),
                                               height:
                                                   ScreenUtil().setHeight(40),
@@ -434,7 +436,7 @@ class _EditProfileState extends State<EditProfile> {
                                 children: [
                                   Row(
                                     children: [
-                                      Container(
+                                      SizedBox(
                                           width: ScreenUtil().setWidth(40),
                                           child: Image.asset(
                                               'assets/group_1670.png')),
@@ -498,7 +500,7 @@ class _EditProfileState extends State<EditProfile> {
                                                               _onGoogleSignOut()),
                                                     ));
                                         } else {
-                                          return Container(
+                                          return SizedBox(
                                               width: ScreenUtil().setWidth(40),
                                               height:
                                                   ScreenUtil().setHeight(40),

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -7,6 +9,7 @@ import 'package:junkbee_user/beever/widgets/profile/shareFeedback_widget.dart';
 class ShareFeedback extends StatefulWidget {
   const ShareFeedback({Key? key}) : super(key: key);
 
+  @override
   _ShareFeedbackState createState() => _ShareFeedbackState();
 }
 

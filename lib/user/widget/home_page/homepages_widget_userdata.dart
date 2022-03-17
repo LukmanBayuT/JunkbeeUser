@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace, unnecessary_string_interpolations, non_constant_identifier_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';

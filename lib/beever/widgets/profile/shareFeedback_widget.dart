@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, sized_box_for_whitespace, camel_case_types, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/const/const.dart';
@@ -13,9 +15,10 @@ class ShareFeedbackWidget extends StatelessWidget {
       width: ScreenUtil().setWidth(480),
       height: ScreenUtil().setHeight(280),
       alignment: Alignment.topCenter,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Color(0xFFF8C503),
-        image: DecorationImage(image: AssetImage('assets/mask_group_31.png'), fit: BoxFit.cover),
+        // ignore: unnecessary_const
+        image: const DecorationImage(image: const AssetImage('assets/mask_group_31.png'), fit: BoxFit.cover),
         boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
       ),
       child: Column(
@@ -34,7 +37,7 @@ class ShareFeedbackWidget extends StatelessWidget {
                 Container(
                   width: ScreenUtil().setWidth(350),
                   alignment: Alignment.center,
-                  child: Text('Share Feedback', style: textBodyProfile,),
+                  child: const Text('Share Feedback', style: textBodyProfile,),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(40),
@@ -46,7 +49,7 @@ class ShareFeedbackWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20),
             width: ScreenUtil().setWidth(220),
             alignment: Alignment.center,
-            child: Text('Every Feedback helps. What can we improve on?', style: textProfileMediumWhite, textAlign: TextAlign.center,),
+            child: const Text('Every Feedback helps. What can we improve on?', style: textProfileMediumWhite, textAlign: TextAlign.center,),
           )
         ],
       )
@@ -67,17 +70,17 @@ class multipleTextInput extends StatelessWidget {
             width: ScreenUtil().setWidth(400),
             alignment: Alignment.topCenter,
             decoration: BoxDecoration(
-              color: Color(0xFFDEDEDE),
+              color: const Color(0xFFDEDEDE),
               borderRadius: BorderRadius.circular(16.7)
             ),
             child: Container(
               width: ScreenUtil().setWidth(380),
               child: TextFormField(
-                style: TextStyle( color: Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp ),
+                style: TextStyle( color: const Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp ),
                 keyboardType: TextInputType.multiline,
                 maxLines: 6,
                 decoration: InputDecoration(
-                  hintStyle: TextStyle(color: Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp),
+                  hintStyle: TextStyle(color: const Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp),
                   hintText: 'Tell us your thought',
                   border: InputBorder.none
                 ),
@@ -94,11 +97,11 @@ class multipleTextInput extends StatelessWidget {
                 height: ScreenUtil().setHeight(75),
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Color(0xFFF8C503),
+                  color: const Color(0xFFF8C503),
                   borderRadius: BorderRadius.circular(16),
-                  boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
+                  boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
                 ),
-                child: Text('Send Feedback', style: textBodyProfile,),
+                child: const Text('Send Feedback', style: textBodyProfile,),
               )
             ),
           )

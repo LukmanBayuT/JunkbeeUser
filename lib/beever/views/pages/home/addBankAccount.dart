@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -6,6 +8,7 @@ import 'package:junkbee_user/beever/const/const.dart';
 class AddBankAccount extends StatefulWidget {
   const AddBankAccount({Key? key}) : super(key: key);
 
+  @override
   _AddBankAccountState createState() => _AddBankAccountState();
 }
 
@@ -82,6 +85,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
                           Container(
                             padding: const EdgeInsets.only(top: 200),
                             child: TouchableOpacity(
+                                // ignore: avoid_print
                                 onTap: () => print('add bank account'),
                                 child: Container(
                                   width: ScreenUtil().setWidth(400),

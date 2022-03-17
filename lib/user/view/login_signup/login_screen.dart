@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, avoid_print
+// ignore_for_file: prefer_const_constructors, avoid_print, unused_import
 
 import 'dart:convert';
 
@@ -45,13 +45,20 @@ class _SignInUserState extends State<SignInUser> {
 
       if (response.statusCode == 200) {
         Map<String, dynamic> output = jsonDecode(response.body);
-        var authToken = output['data']['token'];
-        await secureStorage.writeSecureData('token', authToken);
-        await secureStorage.writeSecureData('fcmToken', fcmToken!);
-        print(authToken);
-        print(fcmToken);
+        await secureStorage.writeSecureData('token', output['data']['token']);
 
-        Navigator.pop(context, 'back');
+        final resp = await http.put(
+          Uri.parse(EndPoint.baseApiURL+EndPoint.deviceToken),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${output['data']['token']}'
+          },
+          body: json.encode({'device_token': fcmToken})
+        );
+        Map<String, dynamic> updateToken = jsonDecode(resp.body);
+        if (updateToken['message'] == 'data has been updated') {
+          Navigator.pop(context, 'back');
+        }
       } else {
         Map<String, dynamic> output = jsonDecode(response.body);
         var errorMessage = output['message'];

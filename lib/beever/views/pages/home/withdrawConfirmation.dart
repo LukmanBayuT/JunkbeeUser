@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -7,6 +9,7 @@ import 'package:junkbee_user/beever/widgets/home/withdraw_confirmation_widget.da
 class WithdrawConfirmation extends StatefulWidget {
   const WithdrawConfirmation({Key? key}) : super(key: key);
 
+  @override
   _WithdrawConfirmationState createState() => _WithdrawConfirmationState();
 }
 

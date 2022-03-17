@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_import, unnecessary_const, sized_box_for_whitespace
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -8,9 +10,9 @@ class OngoingMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return const Padding(
       padding: defaultPadding11,
-      child: Text('Collection Status', style: textBodyProfile,),
+      child: const Text('Collection Status', style: textBodyProfile,),
     );
   }
 }
@@ -32,7 +34,7 @@ class ActiveList extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
+                boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
               ),
               child: Column(
                 children: [
@@ -48,12 +50,12 @@ class ActiveList extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.only(left: 10),
                           width: ScreenUtil().setWidth(250),
-                          child: Text('Order From Cynthia', style: textProfileBoldMini,),
+                          child: const Text('Order From Cynthia', style: textProfileBoldMini,),
                         ),
                         Container(
                           width: ScreenUtil().setWidth(100),
                           alignment: Alignment.centerRight,
-                          child: Text('1 hour ago', style: textProfile,),
+                          child: const Text('1 hour ago', style: textProfile,),
                         )
                       ],
                     ),
@@ -61,7 +63,7 @@ class ActiveList extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: 10.5),
                     width: ScreenUtil().setWidth(390),
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+                    decoration: const BoxDecoration(border: const Border(bottom: const BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
                   ),
 
                   Container(
@@ -80,12 +82,12 @@ class ActiveList extends StatelessWidget {
                             children: [
                               Container(
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Pick Up Location', style: textProfile,),
+                                child: const Text('Pick Up Location', style: textProfile,),
                               ),
                               Container(
                                 padding: const EdgeInsets.only(top: 1),
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Tugumuda, 50171 Semarang', style: textProfileBoldMini,),
+                                child: const Text('Tugumuda, 50171 Semarang', style: textProfileBoldMini,),
                               )
                             ],
                           )
@@ -109,7 +111,7 @@ class ActiveList extends StatelessWidget {
                             children: [
                               Container(
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Paper     0.5 kg', style: textProfile,),
+                                child: const Text('Paper     0.5 kg', style: textProfile,),
                               )
                             ],
                           )
@@ -147,7 +149,7 @@ class InboxList extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
+                boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
               ),
               child: Column(
                 children: [
@@ -163,12 +165,12 @@ class InboxList extends StatelessWidget {
                         Container(
                           padding: const EdgeInsets.only(left: 10),
                           width: ScreenUtil().setWidth(250),
-                          child: Text('Order From Cynthia', style: textProfileBoldMini,),
+                          child: const Text('Order From Cynthia', style: textProfileBoldMini,),
                         ),
                         Container(
                           width: ScreenUtil().setWidth(100),
                           alignment: Alignment.centerRight,
-                          child: Text('1 hour ago', style: textProfile,),
+                          child: const Text('1 hour ago', style: textProfile,),
                         )
                       ],
                     ),
@@ -176,7 +178,7 @@ class InboxList extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.only(top: 10.5),
                     width: ScreenUtil().setWidth(390),
-                    decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+                    decoration: const BoxDecoration(border: const Border(bottom: const BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
                   ),
 
                   Container(
@@ -195,12 +197,12 @@ class InboxList extends StatelessWidget {
                             children: [
                               Container(
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Pick Up Location', style: textProfile,),
+                                child: const Text('Pick Up Location', style: textProfile,),
                               ),
                               Container(
                                 padding: const EdgeInsets.only(top: 1),
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Tugumuda, 50171 Semarang', style: textProfileBoldMini,),
+                                child: const Text('Tugumuda, 50171 Semarang', style: textProfileBoldMini,),
                               )
                             ],
                           )
@@ -224,7 +226,7 @@ class InboxList extends StatelessWidget {
                             children: [
                               Container(
                                 width: ScreenUtil().setWidth(350),
-                                child: Text('Paper     0.5 kg', style: textProfile,),
+                                child: const Text('Paper     0.5 kg', style: textProfile,),
                               )
                             ],
                           )

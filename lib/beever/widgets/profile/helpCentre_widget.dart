@@ -1,9 +1,9 @@
+// ignore_for_file: file_names, sized_box_for_whitespace, non_constant_identifier_names, unnecessary_const, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:junkbee_user/beever/const/const.dart';
-import 'package:junkbee_user/beever/views/pages/profile/editProfile.dart';
-import 'package:junkbee_user/beever/views/pages/profile/recent_activity.dart';
 
 class HelpCentreWidget extends StatelessWidget {
   const HelpCentreWidget({Key? key}) : super(key: key);
@@ -35,7 +35,7 @@ class HelpCentreWidget extends StatelessWidget {
                 Container(
                   width: ScreenUtil().setWidth(350),
                   alignment: Alignment.center,
-                  child: Text('Help Centre', style: textBodyProfile),
+                  child: const Text('Help Centre', style: textBodyProfile),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(40),
@@ -56,17 +56,17 @@ class HelpCentreWidget extends StatelessWidget {
                     children: [
                       Container(
                         width: ScreenUtil().setWidth(215),
-                        child: Text('Hi Joko,', style: textProfileBoldWhiteMedium),
+                        child: const Text('Hi Joko,', style: textProfileBoldWhiteMedium),
                       ),
                       Container(
                         padding: const EdgeInsets.only(top: 5),
                         width: ScreenUtil().setWidth(215),
-                        child: Text('We Are Ready', style: textBodyProfile)
+                        child: const Text('We Are Ready', style: textBodyProfile)
                       ),
                       Container(
                         padding: const EdgeInsets.only(top: 2),
                         width: ScreenUtil().setWidth(215),
-                        child: Text('To Help You', style: textBodyProfile)
+                        child: const Text('To Help You', style: textBodyProfile)
                       )
                     ],
                   ),
@@ -90,7 +90,7 @@ Container searchBar(BuildContext context) {
     child: Container(
       width: ScreenUtil().setWidth(430),
       height: ScreenUtil().setHeight(60),
-      decoration: BoxDecoration(color: Color(0xFFDEDEDE), borderRadius: BorderRadius.circular(16.7)
+      decoration: BoxDecoration(color: const Color(0xFFDEDEDE), borderRadius: BorderRadius.circular(16.7)
       ),
       child: Row(
         children: [
@@ -124,7 +124,7 @@ Container Topics(BuildContext context) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('All Topics', style: textProfileBold),
+        const Text('All Topics', style: textProfileBold),
         Container(
           padding: const EdgeInsets.only(top: 24),
           width: ScreenUtil().setWidth(430),
@@ -133,7 +133,7 @@ Container Topics(BuildContext context) {
               children: [
                 Container(
                   width: ScreenUtil().setWidth(400),
-                  child: Text('Frequently Asked Questions', style: textProfile),
+                  child: const Text('Frequently Asked Questions', style: textProfile),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(30),
@@ -146,7 +146,7 @@ Container Topics(BuildContext context) {
         ),
         Container(
           padding: const EdgeInsets.only(bottom: 18),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+          decoration: const BoxDecoration(border: const Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
         ),
         Container(
           padding: const EdgeInsets.only(top: 18),
@@ -156,7 +156,7 @@ Container Topics(BuildContext context) {
               children: [
                 Container(
                   width: ScreenUtil().setWidth(400),
-                  child: Text('Payment Issue', style: textProfile),
+                  child: const Text('Payment Issue', style: textProfile),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(30),
@@ -169,7 +169,7 @@ Container Topics(BuildContext context) {
         ),
         Container(
           padding: const EdgeInsets.only(bottom: 18),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+          decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
         ),
         Container(
           padding: const EdgeInsets.only(top: 18),
@@ -179,7 +179,7 @@ Container Topics(BuildContext context) {
               children: [
                 Container(
                   width: ScreenUtil().setWidth(400),
-                  child: Text('About My Account', style: textProfile),
+                  child: const Text('About My Account', style: textProfile),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(30),
@@ -192,7 +192,7 @@ Container Topics(BuildContext context) {
         ),
         Container(
           padding: const EdgeInsets.only(bottom: 18),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+          decoration: const BoxDecoration(border: const Border(bottom: BorderSide(width: 1.0, color: const Color(0xFFDEDEDE)))),
         ),
         Container(
           padding: const EdgeInsets.only(top: 18),
@@ -202,7 +202,7 @@ Container Topics(BuildContext context) {
               children: [
                 Container(
                   width: ScreenUtil().setWidth(400),
-                  child: Text('App Issue', style: textProfile),
+                  child: const Text('App Issue', style: textProfile),
                 ),
                 Container(
                   width: ScreenUtil().setWidth(30),
@@ -215,7 +215,7 @@ Container Topics(BuildContext context) {
         ),
         Container(
           padding: const EdgeInsets.only(bottom: 18),
-          decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
+          decoration: const BoxDecoration(border: Border(bottom: const BorderSide(width: 1.0, color: const Color(0xFFDEDEDE)))),
         )
       ],
     )
@@ -231,7 +231,7 @@ Container RecentActivity(BuildContext context) {
       children: [
         Container(
           padding: const EdgeInsets.only(bottom: 23),
-          child: Text('Need Help With Your Recent Activity?', style: textProfileBold),
+          child: const Text('Need Help With Your Recent Activity?', style: textProfileBold),
         ),
         TouchableOpacity(
           onTap: () => print('Recent Activity'),
@@ -254,7 +254,7 @@ Container RecentActivity(BuildContext context) {
                       Image.asset('assets/recycle_icon.png', width: ScreenUtil().setWidth(34), height: ScreenUtil().setHeight(33),),
                       Container(
                         padding: const EdgeInsets.only(left: 13),
-                        child: Text('Collection Successfully', style: textProfileBoldMini),
+                        child: const Text('Collection Successfully', style: textProfileBoldMini),
                       )
                     ],
                   ),
@@ -266,12 +266,12 @@ Container RecentActivity(BuildContext context) {
                     children: [
                       Container(
                         width: ScreenUtil().setWidth(198),
-                        child: Text('09:30 | 11 Jul 2021', style: TextStyle(color: Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp),),
+                        child: Text('09:30 | 11 Jul 2021', style: TextStyle(color: const Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp),),
                       ),
                       Container(
                         width: ScreenUtil().setWidth(198),
                         alignment: Alignment.centerRight,
-                        child: Text('Collection Nr.: 37432', style: TextStyle(color: Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp),),
+                        child: Text('Collection Nr.: 37432', style: TextStyle(color: const Color(0xFF707070), fontFamily: 'DiodrumCyrillic', fontSize: 18.sp),),
                       )
                     ],
                   ),
@@ -294,7 +294,7 @@ Container MoreHelp(BuildContext context) {
       children: [
         Container(
           padding: const EdgeInsets.only(bottom: 23),
-          child: Text('Find More Help', style: textProfileBold),
+          child: const Text('Find More Help', style: textProfileBold),
         ),
         Container(
           width: ScreenUtil().setWidth(430),
@@ -313,12 +313,12 @@ Container MoreHelp(BuildContext context) {
                     Container(
                       padding: const EdgeInsets.only(left: 15, top: 12),
                       width: ScreenUtil().setWidth(280),
-                      child: Text('Still Need Help?', style: textProfileBoldWhite),
+                      child: const Text('Still Need Help?', style: textProfileBoldWhite),
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 15),
                       width: ScreenUtil().setWidth(280),
-                      child: Text('Fastest way to get help', style: textProfileWhite),
+                      child: const Text('Fastest way to get help', style: textProfileWhite),
                     ),
                     Container(
                       transform: Matrix4.translationValues(-35.0, 0.0, 0.0),
@@ -332,8 +332,8 @@ Container MoreHelp(BuildContext context) {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10)
                           ),
-                          child: Center(
-                            child: Text('Chat With Us', style: textProfileBoldColor),
+                          child: const Center(
+                            child: const Text('Chat With Us', style: textProfileBoldColor),
                           ),
                         )
                       ),
@@ -356,9 +356,9 @@ Container MailUS(BuildContext context) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text('Or you can', style: textProfile),
+        const Text('Or you can', style: textProfile),
         TouchableOpacity(
-          child: Text(' MAIL US', style: textProfileSemiBoldYellow)
+          child: const Text(' MAIL US', style: textProfileSemiBoldYellow)
         )
       ]
     ),

@@ -1,8 +1,17 @@
+// ignore_for_file: avoid_init_to_null, non_constant_identifier_names, unnecessary_const
+
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
 import 'package:junkbee_user/user/constant/constant.dart';
+import 'package:junkbee_user/user/constant/base_url.dart';
+import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
+
+final SecureStorage secureStorage = SecureStorage();
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -28,9 +37,26 @@ class _UserProfileState extends State<UserProfile> {
       token_local = token;
     });
     if (token != null) {
+      getRole(token);
       await ApiCallsGetData().getUserData();
       setState(() {});
     }
+  }
+
+  getRole(token) async {
+    final userData = await http.get(
+      Uri.parse(EndPoint.baseApiURL + EndPoint.getUserData),
+      headers: {'Authorization': 'Bearer $token'}
+    );
+    Map<String, dynamic> bodyJSON = jsonDecode(userData.body);
+    var role = bodyJSON['data']['role'];
+    await secureStorage.writeSecureData('role', role);
+  }
+
+  logOut() async {
+    await secureStorage.deleteAllSecureData();
+    await checkToken();
+    setState(() {});
   }
 
   @override
@@ -50,10 +76,10 @@ class _UserProfileState extends State<UserProfile> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height / 4.5,
                 alignment: Alignment.topCenter,
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/heading.png'), fit: BoxFit.cover)),
+                decoration: const BoxDecoration(image: DecorationImage(image: const AssetImage('assets/heading.png'), fit: BoxFit.cover)),
                 child: Container(
                   padding: const EdgeInsets.only(top: 25),
-                  child: Text('My Account', style: bodyBodyUser,)
+                  child: const Text('My Account', style: bodyBodyUser,)
                 ),
               ),
               Container(
@@ -83,10 +109,10 @@ class _UserProfileState extends State<UserProfile> {
                                     height: MediaQuery.of(context).size.height / 15,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
-                                      gradient: LinearGradient(colors: [Color(0xFFF8C503), Color(0xFFFFE067)])
+                                      gradient: const LinearGradient(colors: [const Color(0xFFF8C503), const Color(0xFFFFE067)])
                                     ),
                                     alignment: Alignment.center,
-                                    child: Text('Login / Register', style: bodyBodyUserMini,),
+                                    child: const Text('Login / Register', style: bodyBodyUserMini,),
                                   ),
                                 )
                               )
@@ -164,9 +190,12 @@ class _UserProfileState extends State<UserProfile> {
                                   trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
                                 ),
                                 if (token_local != null) ...[
-                                  const ListTile(
-                                    title: Text('Log Out', style: bodySlimBody),
-                                    trailing: Icon(Icons.logout_outlined, size: 20,),
+                                  GestureDetector(
+                                    onTap: () => logOut(),
+                                    child: const ListTile(
+                                      title: Text('Log Out', style: bodySlimBody),
+                                      trailing: Icon(Icons.logout_outlined, size: 20,),
+                                    )
                                   )
                                 ]
                               ],

@@ -18,7 +18,7 @@ class SecureStorage {
     return deleteSecureData;
   }
 
-  Future deleteAllSecureData(String key) async {
+  Future deleteAllSecureData() async {
     var deleteAllSecureData = await _storage.deleteAll();
     return deleteAllSecureData;
   }

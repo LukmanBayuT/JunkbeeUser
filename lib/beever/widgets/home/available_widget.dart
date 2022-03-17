@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace, unnecessary_const, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/const/const.dart';
@@ -60,12 +62,12 @@ class AvailableList extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      const BoxShadow(
+                    boxShadow: const [
+                      BoxShadow(
                           color: Colors.grey,
                           blurRadius: 2,
                           spreadRadius: 0.0,
-                          offset: const Offset(0, 1))
+                          offset: Offset(0, 1))
                     ]),
                 child: Column(
                   children: [
@@ -102,6 +104,7 @@ class AvailableList extends StatelessWidget {
                       width: ScreenUtil().setWidth(390),
                       decoration: const BoxDecoration(
                           border: Border(
+                              // ignore: unnecessary_const
                               bottom: const BorderSide(
                                   width: 1.0, color: const Color(0xFFDEDEDE)))),
                     ),

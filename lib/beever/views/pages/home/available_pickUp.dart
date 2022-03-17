@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_import
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/widgets/home/available_widget.dart';
@@ -7,6 +9,7 @@ import 'package:junkbee_user/beever/views/pages/home/available_pickUp.dart';
 class AvailableScreen extends StatefulWidget {
   const AvailableScreen({Key? key}) : super(key: key);
 
+  @override
   _AvailableState createState() => _AvailableState();
 }
 

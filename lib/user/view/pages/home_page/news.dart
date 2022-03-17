@@ -7,6 +7,7 @@ class News extends StatefulWidget {
   final String? url;
   const News({Key? key, @required this.url}) : super(key: key);
 
+  @override
   _NewsState createState() => _NewsState();
 }
 
@@ -17,12 +18,12 @@ class _NewsState extends State<News> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFF8C503),
-        title: Text('News', style: bodyBodyUser,),
+        backgroundColor: const Color(0xFFF8C503),
+        title: const Text('News', style: bodyBodyUser,),
         centerTitle: true,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
-          child: Icon(Icons.arrow_back_ios_new_rounded, size: 25,),
+          child: const Icon(Icons.arrow_back_ios_new_rounded, size: 25,),
         ),
       ),
       body: Stack(
@@ -40,7 +41,7 @@ class _NewsState extends State<News> {
           loading ? Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            color: Color.fromRGBO(0, 0, 0, 0.5),
+            color: const Color.fromRGBO(0, 0, 0, 0.5),
             alignment: Alignment.center,
             child: const SpinKitPouringHourGlass(color: Color(0xFFF8C503), size: 50,),
           ) : Stack()
