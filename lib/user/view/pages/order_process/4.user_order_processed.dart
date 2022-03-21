@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
-import 'package:junkbee_user/user/view/pages/4.1.user_order_maps.dart';
+import 'package:junkbee_user/user/view/pages/order_process/4.1.user_order_maps.dart';
 
 class UserOrder extends StatefulWidget {
   const UserOrder({Key? key}) : super(key: key);
@@ -113,8 +113,9 @@ class _UserOrderState extends State<UserOrder> {
                           child: SizedBox(
                             width: 100,
                             height: 80,
-                            child: Image.asset(
-                              (isPaperSelected == true) ? 'icons/waste_icons/paper_button.png' : 'icons/waste_icons/paper_off.png'),
+                            child: Image.asset((isPaperSelected == true)
+                                ? 'icons/waste_icons/paper_button.png'
+                                : 'icons/waste_icons/paper_off.png'),
                           ),
                         ),
                         GestureDetector(
@@ -127,8 +128,9 @@ class _UserOrderState extends State<UserOrder> {
                           child: SizedBox(
                             width: 100,
                             height: 80,
-                            child: Image.asset(
-                              (isPlasticSelected == true) ? 'icons/waste_icons/plastic_button.png' : 'icons/waste_icons/plastic_off.png'),
+                            child: Image.asset((isPlasticSelected == true)
+                                ? 'icons/waste_icons/plastic_button.png'
+                                : 'icons/waste_icons/plastic_off.png'),
                           ),
                         ),
                         GestureDetector(
@@ -141,8 +143,9 @@ class _UserOrderState extends State<UserOrder> {
                           child: SizedBox(
                             width: 100,
                             height: 80,
-                            child: Image.asset(
-                              (isGlassSelected == true) ? 'icons/waste_icons/glass_button.png' : 'icons/waste_icons/glass_off.png'),
+                            child: Image.asset((isGlassSelected == true)
+                                ? 'icons/waste_icons/glass_button.png'
+                                : 'icons/waste_icons/glass_off.png'),
                           ),
                         ),
                         GestureDetector(
@@ -155,8 +158,9 @@ class _UserOrderState extends State<UserOrder> {
                           child: SizedBox(
                             width: 100,
                             height: 80,
-                            child: Image.asset(
-                              (isSachetSelected == true) ? 'icons/waste_icons/sachet_button.png' : 'icons/waste_icons/sachet_off.png'),
+                            child: Image.asset((isSachetSelected == true)
+                                ? 'icons/waste_icons/sachet_button.png'
+                                : 'icons/waste_icons/sachet_off.png'),
                           ),
                         ),
                         GestureDetector(
@@ -169,8 +173,9 @@ class _UserOrderState extends State<UserOrder> {
                           child: SizedBox(
                             width: 100,
                             height: 80,
-                            child: Image.asset(
-                              (isMetalSelected == true) ? 'icons/waste_icons/metal_button.png' : 'icons/waste_icons/metal_off.png'),
+                            child: Image.asset((isMetalSelected == true)
+                                ? 'icons/waste_icons/metal_button.png'
+                                : 'icons/waste_icons/metal_off.png'),
                           ),
                         ),
                         GestureDetector(
@@ -183,8 +188,9 @@ class _UserOrderState extends State<UserOrder> {
                           child: SizedBox(
                             width: 100,
                             height: 80,
-                            child: Image.asset(
-                              (isOilSelected == true) ? 'icons/waste_icons/oil_button.png' : 'icons/waste_icons/oil_off.png'),
+                            child: Image.asset((isOilSelected == true)
+                                ? 'icons/waste_icons/oil_button.png'
+                                : 'icons/waste_icons/oil_off.png'),
                           ),
                         ),
                       ],
@@ -204,8 +210,9 @@ class _UserOrderState extends State<UserOrder> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Take a Photos (up to 3 photos)', style: titleBodyMini),
-                  const SizedBox( height: 10),
+                  const Text('Take a Photos (up to 3 photos)',
+                      style: titleBodyMini),
+                  const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -240,7 +247,8 @@ class _UserOrderState extends State<UserOrder> {
                                 height: MediaQuery.of(context).size.height / 7,
                                 child: ClipRRect(
                                     borderRadius: roundedRect,
-                                    child: Image.file(image2!, fit: BoxFit.cover)),
+                                    child:
+                                        Image.file(image2!, fit: BoxFit.cover)),
                               ),
                             )
                           : GestureDetector(
@@ -260,7 +268,8 @@ class _UserOrderState extends State<UserOrder> {
                                 height: MediaQuery.of(context).size.height / 7,
                                 child: ClipRRect(
                                     borderRadius: roundedRect,
-                                    child: Image.file(image3!, fit: BoxFit.cover)),
+                                    child:
+                                        Image.file(image3!, fit: BoxFit.cover)),
                               ),
                             )
                           : GestureDetector(
@@ -295,7 +304,8 @@ class _UserOrderState extends State<UserOrder> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
-                              Text('Estimated Weight (Kg)', style: onboardingNormalText),
+                              Text('Estimated Weight (Kg)',
+                                  style: onboardingNormalText),
                               Text('data')
                             ],
                           ),
@@ -305,7 +315,8 @@ class _UserOrderState extends State<UserOrder> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
-                              Text('Total Earnings', style: onboardingNormalText),
+                              Text('Total Earnings',
+                                  style: onboardingNormalText),
                               Text('data')
                             ],
                           ),
@@ -328,7 +339,8 @@ class _UserOrderState extends State<UserOrder> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
-                              Text('Estimated Earnings', style: onboardingNormalText),
+                              Text('Estimated Earnings',
+                                  style: onboardingNormalText),
                               Text('data')
                             ],
                           ),
@@ -356,9 +368,12 @@ class _UserOrderState extends State<UserOrder> {
                             children: [
                               Row(
                                 children: [
-                                  Image.asset('icons/icons_others/ico_location.png', width: 30),
+                                  Image.asset(
+                                      'icons/icons_others/ico_location.png',
+                                      width: 30),
                                   const SizedBox(width: 10),
-                                  const Text('Your Location', style: onboardingNormalText)
+                                  const Text('Your Location',
+                                      style: onboardingNormalText)
                                 ],
                               ),
                               GestureDetector(
@@ -366,7 +381,8 @@ class _UserOrderState extends State<UserOrder> {
                                   PermissionHandler().listenForPermission();
                                   Get.to(() => const UserOrderMaps());
                                 },
-                                child: const Text('Change', style: onboardingSkip),
+                                child:
+                                    const Text('Change', style: onboardingSkip),
                               )
                             ],
                           ),
@@ -407,8 +423,10 @@ class _UserOrderState extends State<UserOrder> {
                 width: MediaQuery.of(context).size.width / 1.1,
                 height: MediaQuery.of(context).size.height / 12,
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(primary: mainColor2, shape: roundedRectBor),
-                  child: const Text('Find a Beever', style: onboardingGetStarted),
+                  style: ElevatedButton.styleFrom(
+                      primary: mainColor2, shape: roundedRectBor),
+                  child:
+                      const Text('Find a Beever', style: onboardingGetStarted),
                   onPressed: () {},
                 )),
             SizedBox(

@@ -36,6 +36,7 @@ dependencies:
   firebase_storage: ^10.2.9
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
   flutter_local_notifications: ^9.4.0
   flutter_login_facebook: ^1.4.1
   flutter_screenutil: ^5.3.1
@@ -53,6 +54,7 @@ dependencies:
   intl: ^0.17.0
   location: ^4.3.0
   lottie: ^1.2.1
+  mapbox_gl: ^0.15.0
   permission_handler: ^9.2.0
   shared_preferences: ^2.0.12
   sliding_up_panel: ^2.0.0+1
@@ -77,6 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/config/
     - assets_animations/
     - assets_onboarding/
     - assets/animation/
