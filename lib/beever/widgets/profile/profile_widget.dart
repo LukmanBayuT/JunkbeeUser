@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, unnecessary_const, sized_box_for_whitespace
+// ignore_for_file: unused_import, unnecessary_const, sized_box_for_whitespace, unused_element
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,8 +36,8 @@ SizedBox text(BuildContext context) {
 SizedBox infoAccount(BuildContext context) {
   void logOut() async {
     final SecureStorage secureStorage = SecureStorage();
-    await secureStorage.deleteSecureData('token');
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInDriver(),));
+    await secureStorage.deleteAllSecureData();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SignInDriver()));
   }
 
   return SizedBox(
@@ -58,7 +58,7 @@ SizedBox infoAccount(BuildContext context) {
                     Container(
                       width: ScreenUtil().setWidth(80),
                       alignment: Alignment.centerRight,
-                      child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+                      child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
                     )
                   ],
                 ),
@@ -82,7 +82,7 @@ SizedBox infoAccount(BuildContext context) {
             //         Container(
             //           width: ScreenUtil().setWidth(80),
             //           alignment: Alignment.centerRight,
-            //           child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+            //           child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
             //         )
             //       ],
             //     ),
@@ -107,7 +107,7 @@ SizedBox infoAccount(BuildContext context) {
                     Container(
                       width: ScreenUtil().setWidth(80),
                       alignment: Alignment.centerRight,
-                      child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+                      child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
                     )
                   ],
                 ),
@@ -131,7 +131,7 @@ SizedBox infoAccount(BuildContext context) {
             //         Container(
             //           width: ScreenUtil().setWidth(80),
             //           alignment: Alignment.centerRight,
-            //           child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+            //           child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
             //         )
             //       ],
             //     ),
@@ -156,7 +156,7 @@ SizedBox infoAccount(BuildContext context) {
                     Container(
                       width: ScreenUtil().setWidth(80),
                       alignment: Alignment.centerRight,
-                      child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+                      child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
                     )
                   ],
                 ),
@@ -180,7 +180,7 @@ SizedBox infoAccount(BuildContext context) {
                     Container(
                       width: ScreenUtil().setWidth(80),
                       alignment: Alignment.centerRight,
-                      child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+                      child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
                     )
                   ],
                 ),
@@ -204,7 +204,7 @@ SizedBox infoAccount(BuildContext context) {
                     Container(
                       width: ScreenUtil().setWidth(80),
                       alignment: Alignment.centerRight,
-                      child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+                      child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
                     )
                   ],
                 ),
@@ -228,7 +228,7 @@ SizedBox infoAccount(BuildContext context) {
                     Container(
                       width: ScreenUtil().setWidth(80),
                       alignment: Alignment.centerRight,
-                      child: Image.asset('assets/arrow_forward.png', width: ScreenUtil().setWidth(15), height: ScreenUtil().setHeight(15),),
+                      child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
                     )
                   ],
                 ),
@@ -266,12 +266,21 @@ SizedBox infoAccount(BuildContext context) {
               padding: const EdgeInsets.only(top: 15, bottom: 25),
               child: TouchableOpacity(
                 onTap: () => logOut(),
-                child: Container(
-                  width: ScreenUtil().setWidth(380),
-                  child: const Text('Log Out', style: textProfile,),
+                child: Row(
+                  children: [
+                    Container(
+                      width: ScreenUtil().setWidth(300),
+                      child: const Text('Log Out', style: textProfile,),
+                    ),
+                    Container(
+                      width: ScreenUtil().setWidth(80),
+                      alignment: Alignment.centerRight,
+                      child: const Icon(Icons.logout_outlined, size: 20, color: Color(0xFF707070),)
+                    )
+                  ],
                 ),
               )
-            )
+            ),
           ],
         )
     ),

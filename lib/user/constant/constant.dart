@@ -7,6 +7,7 @@ const Color mainColor3 = Color(0xff1f1f1f);
 const Color mainColor0 = Color(0xffffffff);
 const Color mainColor4 = Color.fromARGB(255, 77, 151, 80);
 Color mainColor5 = Colors.grey.withOpacity(0.2);
+const Color mainColor6 = Color(0xFF263238);
 
 ////////////// PADDING ///////////////////////////////////
 const defaultPaddingHorizontal = EdgeInsets.symmetric(horizontal: 5);
@@ -32,6 +33,9 @@ const titleBodyUser =
 const bodyBodyUser =
     TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: mainColor0);
 
+const bodyBodyUserBold =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: mainColor0);
+
 const bodySlimBodyUser =
     TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: mainColor0);
 
@@ -40,6 +44,9 @@ const titleBody =
 
 const bodyBodyUserMini =
     TextStyle(fontSize: 20, fontWeight: FontWeight.w600, color: mainColor0);
+
+const bodyBodyUserMiniBold =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: mainColor0);
 
 const titleBodyStatistic =
     TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: mainColor3);
@@ -53,8 +60,26 @@ const titleBodyMiniGreen =
 const bodyBody =
     TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: mainColor1);
 
+const bodyBodyBold =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: mainColor1);
+
+const bodyBodySemi =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: mainColor1);
+
+const bodyBodyMini =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: mainColor0);
+
 const bodySlimBody =
     TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: mainColor1);
+
+const bodySlimBodyWhite =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: mainColor0);
+
+const bodySlimBodyColor =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w800, color: mainColor6);
+
+const bodySlimBodySemi =
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: mainColor2);
 
 const bodyBoldBody =
     TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: mainColor1);

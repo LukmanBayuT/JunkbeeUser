@@ -1,8 +1,9 @@
-// ignore_for_file: unnecessary_string_interpolations
+// ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
@@ -13,9 +14,7 @@ import 'package:junkbee_user/beever/views/pages/home/history_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/news.dart';
 
 class WhiteSpace extends StatelessWidget {
-  const WhiteSpace({
-    Key? key,
-  }) : super(key: key);
+  const WhiteSpace({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +24,11 @@ class WhiteSpace extends StatelessWidget {
   }
 }
 
-SizedBox profileAndBalance(BuildContext context) {
+Container profileAndBalance(BuildContext context) {
   final format = NumberFormat.simpleCurrency(locale: 'id_ID');
-  return SizedBox(
+  return Container(
+    transform: Matrix4.translationValues(0, -70, 0),
     width: MediaQuery.of(context).size.width / 1.1,
-    height: MediaQuery.of(context).size.height / 1.8,
     child: FutureBuilder(
       future: ApiCallsGetData().getData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -57,7 +56,7 @@ SizedBox profileAndBalance(BuildContext context) {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Image.asset('assets/star_icon.png', height: 30 ),
-                          const Text('4.5', style: signScreenTextStyle)
+                          const Text('(4.5)', style: signScreenTextStyle)
                         ],
                       ),
                     ),
@@ -120,12 +119,7 @@ SizedBox profileAndBalance(BuildContext context) {
             ),
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 4,
-              backgroundColor: Colors.amber,
-            )
-          );
+          return const Center(child: SpinKitWave(color: Colors.amberAccent, size: 50,));
         }
       },
     ),
@@ -344,12 +338,7 @@ class NewsAPI extends StatelessWidget {
                           );
                         });
                   } else {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 4,
-                        backgroundColor: Colors.amber,
-                      ),
-                    );
+                    return const Center(child: SpinKitWave(color: Colors.amberAccent, size: 50,));
                   }
                 },
               )),

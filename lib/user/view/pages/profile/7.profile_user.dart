@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_init_to_null, non_constant_identifier_names, unnecessary_const
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +9,9 @@ import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
+import 'package:junkbee_user/user/view/pages/profile/help_centre.dart';
+import 'package:junkbee_user/user/view/pages/profile/saved_location.dart';
+import 'package:junkbee_user/user/view/pages/profile/share_feedback.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
@@ -153,25 +155,34 @@ class _UserProfileState extends State<UserProfile> {
                             const SizedBox(height: 10),
                             Column(
                               children: [
-                                const ListTile(
-                                  title: Text('Saved Location', style: bodySlimBody),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                GestureDetector(
+                                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SavedLocation())),
+                                  child: const ListTile(
+                                    title: Text('Saved Location', style: bodySlimBody),
+                                    trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                  ),
                                 ),
-                                const ListTile(
-                                  title: Text('Invite Friends', style: bodySlimBody),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                // const ListTile(
+                                //   title: Text('Invite Friends', style: bodySlimBody),
+                                //   trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                // ),
+                                GestureDetector(
+                                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HelpCentre())),
+                                  child: const ListTile(
+                                    title: Text('Help Center', style: bodySlimBody),
+                                    trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                  )
                                 ),
-                                const ListTile(
-                                  title: Text('Help Center', style: bodySlimBody),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
-                                ),
-                                const ListTile(
-                                  title: Text('Setting', style: bodySlimBody),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
-                                ),
-                                const ListTile(
-                                  title: Text('Share Feedback', style: bodySlimBody),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                // const ListTile(
+                                //   title: Text('Setting', style: bodySlimBody),
+                                //   trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                // ),
+                                GestureDetector(
+                                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ShareFeedback())),
+                                  child: const ListTile(
+                                    title: Text('Share Feedback', style: bodySlimBody),
+                                    trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                  )
                                 ),
                                 const ListTile(
                                   title: Text('Privacy Policy', style: bodySlimBody),
@@ -187,7 +198,7 @@ class _UserProfileState extends State<UserProfile> {
                                 ),
                                 const ListTile(
                                   title: Text('About App', style: bodySlimBody),
-                                  trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
+                                  trailing: Text('v 1.0', style: bodySlimBody)
                                 ),
                                 if (token_local != null) ...[
                                   GestureDetector(

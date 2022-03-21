@@ -19,22 +19,14 @@ import 'package:junkbee_user/beever/widgets/profile/editProfile_widget.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
-GoogleSignIn _googleSignIn = GoogleSignIn(
-    clientId:
-        '359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com');
+GoogleSignIn _googleSignIn = GoogleSignIn(clientId: '359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com');
 
 class EditProfile extends StatefulWidget {
   final dynamic image;
   final String? name;
   final String? phone;
   final String? email;
-  const EditProfile(
-      {Key? key,
-      @required this.image,
-      @required this.name,
-      @required this.phone,
-      @required this.email})
-      : super(key: key);
+  const EditProfile({Key? key, @required this.image, @required this.name, @required this.phone, @required this.email}) : super(key: key);
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -76,7 +68,7 @@ class _EditProfileState extends State<EditProfile> {
         }));
     Map<String, dynamic> bodyJSON = jsonDecode(updateData.body);
     if (bodyJSON['message'] == 'data has been updated') {
-      Navigator.pop(context);
+      Navigator.pop(context, 'back');
     }
   }
 
@@ -92,10 +84,8 @@ class _EditProfileState extends State<EditProfile> {
           var token = authToken;
 
           String typeImage = photo.name.split('.').last;
-          final request = await http.MultipartRequest('POST',
-              Uri.parse(EndPoint.baseApiURL + EndPoint.updateProfileImage));
-          final file = await http.MultipartFile.fromPath('image', photo.path,
-              contentType: MediaType('image', typeImage));
+          final request = await http.MultipartRequest('POST', Uri.parse(EndPoint.baseApiURL+EndPoint.updateProfileImage));
+          final file = await http.MultipartFile.fromPath('image', photo.path, contentType: MediaType('image', typeImage));
           request.files.add(file);
           request.fields['oldImage'] = widget.image;
           request.headers['Authorization'] = 'Bearer $token';

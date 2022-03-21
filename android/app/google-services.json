@@ -66,6 +66,14 @@
           }
         },
         {
+          "client_id": "359679760003-bvq2o8mk1md7qboo2vho3m6l1cv7tiek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.junkbee_user",
+            "certificate_hash": "8a27bcfaf77161169f1995f0c7ff20d550097d52"
+          }
+        },
+        {
           "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
           "client_type": 3
         }
