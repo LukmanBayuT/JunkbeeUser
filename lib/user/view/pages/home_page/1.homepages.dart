@@ -30,18 +30,24 @@ class _HomepagesUserState extends State<HomepagesUser> {
   void initState() {
     super.initState();
 
-    checkToken();
+    if (mounted) {
+      checkToken();
+    }
   }
 
   checkToken() async {
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
-    setState(() {
-      token_local = token;
-    });
+    if (mounted) {
+      setState(() {
+        token_local = token;
+      });
+    }
     if (token != null) {
       await ApiCallsGetData().getUserData();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     } else {
       getDeviceInfo();
     }
@@ -49,9 +55,11 @@ class _HomepagesUserState extends State<HomepagesUser> {
 
   getDeviceInfo() async {
     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    setState(() {
-      device_info = '${androidInfo.model}';
-    });
+    if (mounted) {
+      setState(() {
+        device_info = '${androidInfo.model}';
+      });
+    }
   }
 
   @override
@@ -62,7 +70,11 @@ class _HomepagesUserState extends State<HomepagesUser> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              child: token_local == null ? UIHomePage(device_info: device_info,) : const UserDataHomepages(),
+              child: token_local == null
+                  ? UIHomePage(
+                      device_info: device_info,
+                    )
+                  : const UserDataHomepages(),
             ),
             UserDataGetStarted(navKey: navKey),
             const WasteCategories(),

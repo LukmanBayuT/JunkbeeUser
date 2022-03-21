@@ -51,7 +51,7 @@ class SavedLocationState extends State<SavedLocation> {
                     child: TouchableOpacity(
                         onTap: () =>
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const Location(),
+                              builder: (context) => Locations(),
                             )),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

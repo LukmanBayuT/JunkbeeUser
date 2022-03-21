@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/widget/user_order_maps_panel_widget.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class UserOrderMapbox extends StatefulWidget {
   const UserOrderMapbox({Key? key}) : super(key: key);
@@ -13,8 +14,6 @@ class UserOrderMapbox extends StatefulWidget {
 
 class _UserOrderMapboxState extends State<UserOrderMapbox> {
   final panelController = PanelController();
-  final CameraPosition _initialPosition =
-      const CameraPosition(target: LatLng(-6.9714841, 110.4266806), zoom: 19);
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +28,9 @@ class _UserOrderMapboxState extends State<UserOrderMapbox> {
         borderRadius: roundedRect,
         minHeight: panelHeightClosed,
         maxHeight: panelHeightOpen,
-        body: GoogleMap(
-          initialCameraPosition: _initialPosition,
-          mapType: MapType.normal,
+        body: FlutterMap(
+          options:
+              MapOptions(center: LatLng(6.9714229, 110.4265293), zoom: 13.0),
         ),
         panelBuilder: (controller) => PanelWidget(
           controller: controller,
