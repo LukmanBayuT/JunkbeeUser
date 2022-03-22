@@ -30,7 +30,7 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
         maxHeight: panelHeightOpen,
         body: FlutterMap(
           options:
-              MapOptions(center: LatLng(6.9714229, 110.4265293), zoom: 13.0),
+              MapOptions(center: LatLng(-6.9714229, 110.4265293), zoom: 18.0),
           layers: [
             TileLayerOptions(
               urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
