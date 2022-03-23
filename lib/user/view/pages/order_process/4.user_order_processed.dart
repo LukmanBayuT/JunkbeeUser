@@ -1,20 +1,29 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:junkbee_user/beever/service/secure_storage.dart';
+import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
 import 'package:junkbee_user/user/view/pages/order_process/4.1.user_order_maps.dart';
+import 'package:http/http.dart' as http;
 
 class UserOrder extends StatefulWidget {
-  const UserOrder({Key? key}) : super(key: key);
+  String? address;
+
+  UserOrder({Key? key, this.address}) : super(key: key);
 
   @override
   _UserOrderState createState() => _UserOrderState();
 }
 
 class _UserOrderState extends State<UserOrder> {
+  SecureStorage secureStorage = SecureStorage();
+
   bool isPaperSelected = false;
   bool isPlasticSelected = false;
   bool isGlassSelected = false;
@@ -78,8 +87,85 @@ class _UserOrderState extends State<UserOrder> {
     });
   }
 
+  String? totalWasteWeight;
+  String? totalPrice = 10.000.toString();
+  String? totalFeeBeever = 3000.toString();
+  String? userLocation;
+  String? wasteType = 'paper';
+  String? wasteWeight = 10.toString();
+  String? subtotal = 20.toString();
+
+  void _orderUserDio() async {
+    dio.Response response;
+    var dioh = dio.Dio();
+    response = await dioh.post(EndPoint.baseApiURL + EndPoint.userOrder, data: {
+      "total_weight": totalWasteWeight,
+      "total": totalPrice,
+      "fee_beever": totalFeeBeever,
+      "location1": userLocation,
+      "waste_type": wasteType,
+      "waste_weight": wasteWeight,
+      "subtotal": subtotal,
+    });
+    try {} catch (e) {}
+  }
+
+  void _orderUser() async {
+    try {
+      var authToken = await secureStorage.readSecureData('token');
+      var token = authToken;
+
+      final request = await http.MultipartRequest('POST', Uri.parse(EndPoint.baseApiURL+EndPoint.userOrder));
+      final file = await http.MultipartFile.fromPath('image', image1!.path, contentType: MediaType('image', 'jpg'));
+      request.files.add(file);
+      request.fields['total_weight'] = '$totalWasteWeight';
+      request.fields['total'] = '$totalPrice';
+      request.fields['fee_beever'] = '$totalFeeBeever';
+      request.fields['waste_type'] = '$wasteType';
+      request.fields['waste_weight'] = '$wasteWeight';
+      request.fields['subtotal'] = '$subtotal';
+      request.fields['location1'] = '$userLocation';
+      request.headers['Authorization'] = 'Bearer $token';
+
+      try {
+        final streamedResponse = await request.send();
+        final response = await http.Response.fromStream(streamedResponse);
+        Map<String, dynamic> responseJSON = jsonDecode(response.body);
+
+        if (response.statusCode == 200) {
+          print('success');
+          // Get.offAll(() => const SignInUser());
+        } else if (response.statusCode == 400) {
+          Get.snackbar('Bad Request', '${response.body}',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.amber,
+              colorText: Colors.white,
+              isDismissible: true,
+              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+              duration: const Duration(seconds: 1),
+              margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
+              icon: const Icon(
+                Icons.error_outlined,
+                color: Colors.red,
+              ));
+        }
+      } catch (e) {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    double totalWeight = initialPaper +
+        initialGlass +
+        initialMetal +
+        initialOil +
+        initialPlastic +
+        initialSachet;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -303,10 +389,10 @@ class _UserOrderState extends State<UserOrder> {
                           padding: defaultPadding3,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text('Estimated Weight (Kg)',
+                            children: [
+                              const Text('Estimated Weight (Kg)',
                                   style: onboardingNormalText),
-                              Text('data')
+                              Text(totalWeight.toString())
                             ],
                           ),
                         ),
@@ -372,8 +458,16 @@ class _UserOrderState extends State<UserOrder> {
                                       'icons/icons_others/ico_location.png',
                                       width: 30),
                                   const SizedBox(width: 10),
-                                  const Text('Your Location',
-                                      style: onboardingNormalText)
+                                  SizedBox(
+                                    width: 150,
+                                    child: Text(
+                                      (widget.address != null)
+                                          ? widget.address.toString()
+                                          : 'Lokasimu',
+                                      style: onboardingNormalText,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
                                 ],
                               ),
                               GestureDetector(
@@ -427,7 +521,13 @@ class _UserOrderState extends State<UserOrder> {
                       primary: mainColor2, shape: roundedRectBor),
                   child:
                       const Text('Find a Beever', style: onboardingGetStarted),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      totalWasteWeight = totalWeight.toString();
+                      userLocation = widget.address;
+                    });
+                    _orderUser();
+                  },
                 )),
             SizedBox(
               height: MediaQuery.of(context).size.height / 8,

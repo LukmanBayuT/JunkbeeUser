@@ -1,6 +1,8 @@
 // ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -18,8 +20,26 @@ class WhiteSpace extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       height: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(),
+          GestureDetector(
+            onTap: () {
+              Get.offAll(() => const NavigatorUser());
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Be a User',
+                style: titleBold.copyWith(color: Colors.white),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
@@ -39,17 +59,23 @@ Container profileAndBalance(BuildContext context) {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(90),
-                  child: beever?.data.image == null ? Image.asset('assets/beever_image.png', height: MediaQuery.of(context).size.height / 8) : Image.network(
-                    '${EndPoint.baseURL}storage/profile-images/${beever?.data.image}',
-                    width: 90, height: 90, fit: BoxFit.cover,
-                  ),
+                  child: beever?.data.image == null
+                      ? Image.asset('assets/beever_image.png',
+                          height: MediaQuery.of(context).size.height / 8)
+                      : Image.network(
+                          '${EndPoint.baseURL}storage/profile-images/${beever?.data.image}',
+                          width: 90,
+                          height: 90,
+                          fit: BoxFit.cover,
+                        ),
                 ),
                 Text('${beever?.data.fullName}', style: titleBodyMini),
                 SizedBox(
                   width: 100,
                   height: 50,
                   child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30) ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30)),
                     child: Padding(
                       padding: defaultPadding2,
                       child: Row(
@@ -62,7 +88,7 @@ Container profileAndBalance(BuildContext context) {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10 ),
+                const SizedBox(height: 10),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 1,
                   child: Card(
@@ -75,25 +101,34 @@ Container profileAndBalance(BuildContext context) {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const Text('Balance', style: textProfileBold),
-                              Text('${format.format(int.parse(beever?.data.balance))}', style: textProfileBold),
+                              Text(
+                                  '${format.format(int.parse(beever?.data.balance))}',
+                                  style: textProfileBold),
                             ],
                           ),
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width / 1.2,
-                          decoration: const  BoxDecoration(
-                            border: Border(bottom: BorderSide(width: 1, color: Color(0xFFDEDEDE)))
-                          ),
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: Color(0xFFDEDEDE)))),
                         ),
-                        const SizedBox(height: 25 ),
+                        const SizedBox(height: 25),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             TouchableOpacity(
-                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WithdrawScreen())),
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const WithdrawScreen())),
                               child: Column(
                                 children: [
-                                  Image.asset('assets/withdraw_icon.png', height: MediaQuery.of(context).size.height / 25),
+                                  Image.asset('assets/withdraw_icon.png',
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              25),
                                   const SizedBox(height: 5),
                                   const Text('Withdraw', style: bodySlimBody),
                                 ],
@@ -102,7 +137,10 @@ Container profileAndBalance(BuildContext context) {
                             TouchableOpacity(
                               child: Column(
                                 children: [
-                                  Image.asset('assets/topup_icon.png', height: MediaQuery.of(context).size.height / 25),
+                                  Image.asset('assets/topup_icon.png',
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              25),
                                   const SizedBox(height: 5),
                                   const Text('Topup', style: bodySlimBody),
                                 ],
@@ -152,119 +190,119 @@ Container orderPickup(BuildContext context) {
 
 SizedBox pickUpHistory(BuildContext context) {
   return SizedBox(
-    width: MediaQuery.of(context).size.width / 3.2,
-    child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HistoryScreen())),
-      child: Card(
-        shape: roundedRectBor,
-        child: Column(
-          children: [
-            Padding(
-              padding: defaultPadding0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('0', style: titleBodyMini),
-                  Image.asset('assets/arrow_forward.png', width: MediaQuery.of(context).size.width / 40)
-                ],
+      width: MediaQuery.of(context).size.width / 3.2,
+      child: TouchableOpacity(
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const HistoryScreen())),
+        child: Card(
+          shape: roundedRectBor,
+          child: Column(
+            children: [
+              Padding(
+                padding: defaultPadding0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('0', style: titleBodyMini),
+                    Image.asset('assets/arrow_forward.png',
+                        width: MediaQuery.of(context).size.width / 40)
+                  ],
+                ),
               ),
-            ),
-            const Padding(
-              padding: defaultPadding0,
-              child: Text('Picked Up History', style: bodySlimBody),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 5, bottom: 7.5),
-              child: Container(
-                width: MediaQuery.of(context).size.width / 5,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.greenAccent),
-                  borderRadius: BorderRadius.circular(20)),
-              )
-            )
-          ],
+              const Padding(
+                padding: defaultPadding0,
+                child: Text('Picked Up History', style: bodySlimBody),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(top: 5, bottom: 7.5),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 5,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Colors.greenAccent),
+                        borderRadius: BorderRadius.circular(20)),
+                  ))
+            ],
+          ),
         ),
-      ),
-    )
-  );
+      ));
 }
 
 SizedBox currentPickUp(BuildContext context) {
   return SizedBox(
-    width: MediaQuery.of(context).size.width / 3.2,
-    child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CurrentScreen())),
-      child: Card(
-        shape: roundedRectBor,
-        child: Column(
-          children: [
-            Padding(
-              padding: defaultPadding0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('0', style: titleBodyMini),
-                  Image.asset('assets/arrow_forward.png', width: MediaQuery.of(context).size.width / 40)
-                ],
+      width: MediaQuery.of(context).size.width / 3.2,
+      child: TouchableOpacity(
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CurrentScreen())),
+        child: Card(
+          shape: roundedRectBor,
+          child: Column(
+            children: [
+              Padding(
+                padding: defaultPadding0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('0', style: titleBodyMini),
+                    Image.asset('assets/arrow_forward.png',
+                        width: MediaQuery.of(context).size.width / 40)
+                  ],
+                ),
               ),
-            ),
-            const Padding(
-              padding: defaultPadding0,
-              child: Text('Current Pick Up', style: bodySlimBody),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 5, bottom: 7.5),
-              child: Container(
-                width: MediaQuery.of(context).size.width / 5,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.blueAccent),
-                  borderRadius: BorderRadius.circular(20)),
-              )
-            )
-          ],
+              const Padding(
+                padding: defaultPadding0,
+                child: Text('Current Pick Up', style: bodySlimBody),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(top: 5, bottom: 7.5),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 5,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Colors.blueAccent),
+                        borderRadius: BorderRadius.circular(20)),
+                  ))
+            ],
+          ),
         ),
-      ),
-    )
-  );
+      ));
 }
 
 SizedBox availablePickUp(BuildContext context) {
   return SizedBox(
-    width: MediaQuery.of(context).size.width / 3.2,
-    child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AvailableScreen())),
-      child: Card(
-        shape: roundedRectBor,
-        child: Column(
-          children: [
-            Padding(
-              padding: defaultPadding0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('0', style: titleBodyMini),
-                  Image.asset('assets/arrow_forward.png', width: MediaQuery.of(context).size.width / 40)
-                ],
+      width: MediaQuery.of(context).size.width / 3.2,
+      child: TouchableOpacity(
+        onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const AvailableScreen())),
+        child: Card(
+          shape: roundedRectBor,
+          child: Column(
+            children: [
+              Padding(
+                padding: defaultPadding0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text('0', style: titleBodyMini),
+                    Image.asset('assets/arrow_forward.png',
+                        width: MediaQuery.of(context).size.width / 40)
+                  ],
+                ),
               ),
-            ),
-            const Padding(
-              padding: defaultPadding0,
-              child: Text('Available Pick Up', style: bodySlimBody),
-            ),
-            Container(
-              padding: const EdgeInsets.only(top: 5, bottom: 7.5),
-              child: Container(
-                width: MediaQuery.of(context).size.width / 5,
-                decoration: BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.amber),
-                  borderRadius: BorderRadius.circular(20)),
-              )
-            )
-          ],
+              const Padding(
+                padding: defaultPadding0,
+                child: Text('Available Pick Up', style: bodySlimBody),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(top: 5, bottom: 7.5),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 5,
+                    decoration: BoxDecoration(
+                        border: Border.all(width: 2, color: Colors.amber),
+                        borderRadius: BorderRadius.circular(20)),
+                  ))
+            ],
+          ),
         ),
-      ),
-    )
-  );
+      ));
 }
 
 class NewsAPI extends StatelessWidget {
@@ -301,8 +339,12 @@ class NewsAPI extends StatelessWidget {
                             padding: defaultPaddingHorizontal,
                             child: GestureDetector(
                               onTap: () async {
-                                final launchNews = EndPoint.finalNewsData + news?.data[index].slug;
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewsScreen(url: launchNews),));
+                                final launchNews = EndPoint.finalNewsData +
+                                    news?.data[index].slug;
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      NewsScreen(url: launchNews),
+                                ));
                               },
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width / 2.3,
@@ -313,16 +355,18 @@ class NewsAPI extends StatelessWidget {
                                   children: [
                                     SizedBox(
                                       height:
-                                          MediaQuery.of(context).size.height / 6,
+                                          MediaQuery.of(context).size.height /
+                                              6,
                                       child: Column(
                                         children: [
                                           ClipRRect(
                                             borderRadius:
-                                              BorderRadius.circular(20),
+                                                BorderRadius.circular(20),
                                             child: AspectRatio(
                                               aspectRatio: 15 / 10,
                                               child: Image.network(
-                                                EndPoint.bannerForNews+'${news?.data[index].banner}',
+                                                EndPoint.bannerForNews +
+                                                    '${news?.data[index].banner}',
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -330,7 +374,10 @@ class NewsAPI extends StatelessWidget {
                                         ],
                                       ),
                                     ),
-                                    Text('${news?.data[index].judul}', style: bodySlimBody, maxLines: 2, overflow: TextOverflow.ellipsis),
+                                    Text('${news?.data[index].judul}',
+                                        style: bodySlimBody,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis),
                                   ],
                                 ),
                               ),

@@ -33,59 +33,6 @@ class _SignUpUserState extends State<SignUpUser> {
     });
   }
 
-  // void _registerUser() async {
-  //   try {
-  //     final response = await http
-  //         .post(Uri.parse(EndPoint.baseApiURL + EndPoint.registerURL), body: {
-  // 'full_name': _fullnamecont.text.trim(),
-  // 'email': _emailcont.text.trim(),
-  // 'phone': _phonenumcont.text.trim(),
-  // 'password': _passwordcont.text.trim(),
-  //     });
-
-  //     if (response.statusCode == 200) {
-  //       showDialog(
-  //           context: context,
-  //           builder: (BuildContext context) {
-  //             AlertDialog dialog = AlertDialog(
-  //               content:
-  //                   const Text('Berhasil membuat akun, silahkan login kembali'),
-  //               actions: [
-  //                 ElevatedButton(
-  //                   style: ElevatedButton.styleFrom(primary: Colors.amber),
-  //                   onPressed: () {
-  //                     Get.offAll(() => const SignInUser());
-  //                   },
-  //                   child: Text(
-  //                     'Login',
-  //                     style: bodySlimBody.copyWith(color: Colors.white),
-  //                   ),
-  //                 )
-  //               ],
-  //             );
-  //             return dialog;
-  //           });
-  //       print(response);
-
-  //       ///
-  //     } else if (response.statusCode == 400) {
-  //       Get.snackbar('Bad Request', 'Bad Request please try again',
-  //           snackPosition: SnackPosition.BOTTOM,
-  //           backgroundColor: Colors.amber,
-  //           colorText: Colors.white,
-  //           isDismissible: true,
-  //           forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-  //           duration: const Duration(seconds: 1),
-  //           margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
-  //           icon: const Icon(
-  //             Icons.error_outlined,
-  //             color: Colors.red,
-  //           ));
-  //     }
-  //   } catch (e) {
-  //     print('sumthingwong');
-  //   }
-  // }
   showDialogue() {
     showDialog(
         context: context,
