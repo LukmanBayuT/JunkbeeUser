@@ -28,13 +28,14 @@
     <data android:mimeType="*/*" />
   </intent>
 </queries>
+
    <application
         android:label="junkbee_user"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC8DFp6srzvTmC3KF0o_dAjkoP1iVWNbYs"/>
+            android:value="AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -62,4 +63,6 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
+
+    
 </manifest>

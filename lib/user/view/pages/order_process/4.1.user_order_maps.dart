@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
+
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/widget/user_order_maps_panel_widget.dart';
-import 'package:latlong2/latlong.dart';
+
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class UserOrderMaps extends StatefulWidget {
@@ -28,16 +28,7 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
         borderRadius: roundedRect,
         minHeight: panelHeightClosed,
         maxHeight: panelHeightOpen,
-        body: FlutterMap(
-          options:
-              MapOptions(center: LatLng(-6.9714229, 110.4265293), zoom: 18.0),
-          layers: [
-            TileLayerOptions(
-              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: ['a', 'b', 'c'],
-            )
-          ],
-        ),
+        body: Container(),
         panelBuilder: (controller) => PanelWidget(
           controller: controller,
           panelController: panelController,
