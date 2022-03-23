@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/go_to_waste_collection_points.dart';
@@ -22,7 +24,7 @@ class _OngoingOrderState extends State<OngoingOrder> {
       child: Center(
           child: GestureDetector(
         onTap: () {
-          Get.to(() => LocationTracking());
+          Get.to(() => const LocationTracking());
         },
         child: const Icon(
           Icons.maps_home_work_rounded,
