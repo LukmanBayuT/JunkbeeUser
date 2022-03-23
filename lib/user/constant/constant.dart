@@ -22,6 +22,7 @@ const defaultPadding6 = EdgeInsets.only(left: 20, right: 20);
 const defaultPadding7 = EdgeInsets.symmetric(horizontal: 20);
 const defaultPadding8 = EdgeInsets.only(left: 10);
 const defaultPadding9 = EdgeInsets.symmetric(horizontal: 10);
+const defaultPadding10 = EdgeInsets.only(left: 40, right: 40);
 
 const defaultPaddingOnly0 = EdgeInsets.only(left: 12, right: 12);
 
@@ -59,6 +60,9 @@ const titleBodyMiniGreen =
 
 const bodyBody =
     TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: mainColor1);
+
+const bodyBodyWhite =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: mainColor0);
 
 const bodyBodyBold =
     TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: mainColor1);

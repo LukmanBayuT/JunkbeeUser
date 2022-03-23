@@ -244,15 +244,16 @@ class _EditProfileState extends State<EditProfile> {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(110),
                               child: widget.image == null
-                                  ? Image.asset(
-                                      'assets/beever_image.png',
-                                      width: ScreenUtil().setWidth(110),
-                                      height: ScreenUtil().setHeight(110),
-                                    )
-                                  : Image.network('${widget.image}',
-                                      width: ScreenUtil().setWidth(110),
-                                      height: ScreenUtil().setHeight(110),
-                                      fit: BoxFit.cover),
+                                ? Image.asset(
+                                    'assets/beever_image.png',
+                                    width: ScreenUtil().setWidth(110),
+                                    height: ScreenUtil().setHeight(110),
+                                  )
+                                : Image.network('${widget.image}',
+                                    width: ScreenUtil().setWidth(110),
+                                    height: ScreenUtil().setHeight(110),
+                                    fit: BoxFit.cover
+                                ),
                             ),
                             Positioned(
                                 bottom: 0,

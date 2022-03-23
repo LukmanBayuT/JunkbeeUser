@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_init_to_null, non_constant_identifier_names, unnecessary_const
+// ignore_for_file: avoid_init_to_null, non_constant_identifier_names, unnecessary_const, prefer_const_declarations
 
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -9,9 +9,10 @@ import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
-import 'package:junkbee_user/user/view/pages/profile/help_centre.dart';
-import 'package:junkbee_user/user/view/pages/profile/saved_location.dart';
-import 'package:junkbee_user/user/view/pages/profile/share_feedback.dart';
+import 'edit_profile.dart';
+import 'help_centre.dart';
+import 'saved_location.dart';
+import 'share_feedback.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
@@ -135,14 +136,30 @@ class _UserProfileState extends State<UserProfile> {
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text('${userdata?.data.fullName}', style: bodyBoldBody),
-                                              Text('${userdata?.data.phone}', style: bodySlimBody),
-                                              Text('${userdata?.data.email}', style: bodySlimBody),
+                                              Text('${userdata.data.fullName}', style: bodyBoldBody),
+                                              Text('${userdata.data.phone}', style: bodySlimBody),
+                                              Text('${userdata.data.email}', style: bodySlimBody),
                                             ],
                                           ),
                                           IconButton(
-                                            onPressed: () {},
-                                            icon: const Icon(Icons.draw_rounded, color: Colors.amber))
+                                            onPressed: () async {
+                                              if (userdata.data.image == null) {
+                                                final image = null;
+                                                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile(image: image, name: userdata.data.fullName, phone: userdata.data.phone, email: userdata.data.email)));
+                                                if (result == 'back') {
+                                                  await ApiCallsGetData().getUserData();
+                                                  setState(() {});
+                                                }
+                                              } else {
+                                                final imageURL = EndPoint.baseApiURL+'storage/profile-images/'+userdata.data.image;
+                                                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfile(image: imageURL, name: userdata.data.fullName, phone: userdata.data.phone, email: userdata.data.email)));
+                                                if (result == 'back') {
+                                                  await ApiCallsGetData().getUserData();
+                                                  setState(() {});
+                                                }
+                                              }
+                                            },
+                                            icon: const Icon(Icons.edit_rounded, color: Colors.amber))
                                         ],
                                       );
                                     } else {

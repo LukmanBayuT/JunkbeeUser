@@ -178,9 +178,7 @@ class _SignUpUserState extends State<SignUpUser> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 15),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -188,77 +186,60 @@ class _SignUpUserState extends State<SignUpUser> {
                     'assets_signscreen/logo.png',
                     height: MediaQuery.of(context).size.height / 7,
                   ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height / 50,
-                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Already on Junkbee?',
-                        style: bodyBody,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
+                      const Text('Already on Junkbee?', style: bodyBody),
+                      const SizedBox(width: 10),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => const SignInUser());
+                          Get.back();
                         },
-                        child: Text(
-                          'Sign In',
-                          style: onboardingTextStyleSkipDone.copyWith(
-                              fontSize: 18),
-                        ),
+                        child: Text('Sign In', style: onboardingTextStyleSkipDone.copyWith(fontSize: 18)),
                       )
                     ],
                   ),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 20),
               Column(
                 children: [
                   Padding(
-                    padding: defaultPadding5,
+                    padding: defaultPadding10,
                     child: TextFormField(
                       controller: _fullnamecont,
                       style: const TextStyle(fontSize: 22),
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Full Name',
-                          errorText:
-                              (_validate) ? "Name cannot be empty" : null),
+                          errorText: (_validate) ? "Name cannot be empty" : null),
                     ),
                   ),
                   Padding(
-                    padding: defaultPadding5,
+                    padding: defaultPadding10,
                     child: TextFormField(
                       controller: _phonenumcont,
                       style: const TextStyle(fontSize: 22),
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Phone Number',
-                          errorText: (_validate)
-                              ? "Phone number cannot be empty"
-                              : null),
+                          errorText: (_validate) ? "Phone number cannot be empty" : null),
                     ),
                   ),
                   Padding(
-                    padding: defaultPadding5,
+                    padding: defaultPadding10,
                     child: TextFormField(
                       controller: _emailcont,
                       style: const TextStyle(fontSize: 22),
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Email',
-                          errorText:
-                              (_validate) ? "Username cannot be empty" : null),
+                          errorText: (_validate) ? "Username cannot be empty" : null),
                     ),
                   ),
                   Padding(
-                    padding: defaultPadding5,
+                    padding: defaultPadding10,
                     child: TextFormField(
                       controller: _passwordcont,
                       style: const TextStyle(fontSize: 22),
@@ -266,22 +247,17 @@ class _SignUpUserState extends State<SignUpUser> {
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Password',
-                          errorText:
-                              (_validate) ? "Password Cannot be Empty" : null,
+                          errorText: (_validate) ? "Password Cannot be Empty" : null,
                           suffixIcon: IconButton(
                               onPressed: () {
                                 _toggle();
                               },
-                              icon: Icon((_obsecureText)
-                                  ? Icons.visibility
-                                  : Icons.visibility_off))),
+                              icon: Icon((_obsecureText) ? Icons.visibility : Icons.visibility_off))),
                     ),
                   ),
                 ],
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 20),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.3,
                 child: Row(
@@ -296,33 +272,24 @@ class _SignUpUserState extends State<SignUpUser> {
                     Container(
                       width: MediaQuery.of(context).size.width / 1.7,
                       margin: const EdgeInsets.only(left: 10),
-                      child: const Text(
-                        'I agree with terms conditions and privacy policy',
-                        style: bodySlimBody,
-                      ),
+                      child: const Text('I agree with terms conditions and privacy policy', style: bodySlimBody),
                     )
                   ],
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
-              ),
+              SizedBox(height: MediaQuery.of(context).size.height / 20),
               SizedBox(
                   width: MediaQuery.of(context).size.width / 1.4,
-                  height: MediaQuery.of(context).size.height / 15,
+                  height: MediaQuery.of(context).size.height / 13,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary:
-                            (isChecked == true) ? Colors.amber : Colors.grey,
+                        primary: (isChecked == true) ? Colors.amber : Colors.grey,
                         shape: roundedRectBor),
                     child: const Text('Sign Up', style: onboardingGetStarted),
                     onPressed: () {
                       (isChecked == true) ? _registerUser() : null;
                     },
-                  )),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
-              ),
+                  ))
             ],
           ),
         ),
