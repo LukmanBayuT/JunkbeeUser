@@ -1,10 +1,15 @@
+import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:junkbee_user/beever/service/secure_storage.dart';
+import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
 import 'package:junkbee_user/user/view/pages/order_process/4.1.user_order_maps.dart';
+import 'package:http/http.dart' as http;
 
 class UserOrder extends StatefulWidget {
   String? address;
@@ -16,6 +21,8 @@ class UserOrder extends StatefulWidget {
 }
 
 class _UserOrderState extends State<UserOrder> {
+  SecureStorage secureStorage = SecureStorage();
+
   bool isPaperSelected = false;
   bool isPlasticSelected = false;
   bool isGlassSelected = false;
@@ -79,6 +86,73 @@ class _UserOrderState extends State<UserOrder> {
     });
   }
 
+  String? totalWasteWeight;
+  String? totalPrice = 10.000.toString();
+  String? totalFeeBeever = 3000.toString();
+  String? userLocation;
+  String? wasteType = 'paper';
+  String? wasteWeight = 10.toString();
+  String? subtotal = 20.toString();
+
+  void _orderUserDio() async {
+    dio.Response response;
+    var dioh = dio.Dio();
+    response = await dioh.post(EndPoint.baseApiURL + EndPoint.userOrder, data: {
+      "total_weight": totalWasteWeight,
+      "total": totalPrice,
+      "fee_beever": totalFeeBeever,
+      "location1": userLocation,
+      "waste_type": wasteType,
+      "waste_weight": wasteWeight,
+      "subtotal": subtotal,
+    });
+    try {} catch (e) {}
+  }
+
+  void _orderUser() async {
+    try {
+      var authToken = await secureStorage.readSecureData('token');
+      var token = authToken;
+      final body = {
+        "total_weight": totalWasteWeight,
+        "total": totalPrice,
+        "fee_beever": totalFeeBeever,
+        "location1": userLocation,
+        "waste_type": wasteType,
+        "waste_weight": wasteWeight,
+        "subtotal": subtotal,
+      };
+      final response = await http.post(
+        Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token}'
+        },
+        body: jsonEncode(body),
+      );
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        // Get.offAll(() => const SignInUser());
+      } else if (response.statusCode == 400) {
+        Get.snackbar('Bad Request', '${response.body}',
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.amber,
+            colorText: Colors.white,
+            isDismissible: true,
+            forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+            duration: const Duration(seconds: 1),
+            margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
+            icon: const Icon(
+              Icons.error_outlined,
+              color: Colors.red,
+            ));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double totalWeight = initialPaper +
@@ -87,8 +161,7 @@ class _UserOrderState extends State<UserOrder> {
         initialOil +
         initialPlastic +
         initialSachet;
-    double? total = 10.000;
-    double? feeBeever = 10.000;
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -444,7 +517,13 @@ class _UserOrderState extends State<UserOrder> {
                       primary: mainColor2, shape: roundedRectBor),
                   child:
                       const Text('Find a Beever', style: onboardingGetStarted),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      totalWasteWeight = totalWeight.toString();
+                      userLocation = widget.address;
+                    });
+                    _orderUserDio();
+                  },
                 )),
             SizedBox(
               height: MediaQuery.of(context).size.height / 8,

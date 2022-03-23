@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocode/geocode.dart';
-import 'package:geolocator/geolocator.dart' as geo;
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/user/view/pages/order_process/4.user_order_processed.dart';
-import 'package:junkbee_user/user/view/pages/order_process/assistant_methods.dart';
 import 'package:location/location.dart';
 
 class GetUserLocation extends StatefulWidget {
