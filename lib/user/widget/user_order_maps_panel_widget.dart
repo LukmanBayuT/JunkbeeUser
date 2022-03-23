@@ -1,12 +1,17 @@
 // ignore_for_file: unused_import, avoid_print
 
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
+import 'package:junkbee_user/user/view/pages/order_process/maps_flutter.dart';
+import 'package:search_map_location/utils/google_search/place.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_place/google_place.dart';
+import 'package:search_map_location/search_map_location.dart';
+import 'package:location/location.dart' as loc;
 
 class PanelWidget extends StatefulWidget {
   const PanelWidget({
@@ -25,9 +30,25 @@ class PanelWidget extends StatefulWidget {
 class _PanelWidgetState extends State<PanelWidget> {
   final _startSearchFieldController = TextEditingController();
   late GooglePlace googlePlace;
+  late String? currentPosition;
 
   late String latitude = '';
   late String longitude = '';
+
+  bool isChooseByLocation = true;
+  bool isSearchByMap = false;
+
+  List<AutocompletePrediction> predictions = [];
+
+  void autoCompleteSearch(String value) async {
+    var result = await googlePlace.autocomplete.get(value);
+    if (result != null && result.predictions != null && mounted) {
+      print(result.predictions?.first.description);
+      setState(() {
+        predictions = result.predictions!;
+      });
+    }
+  }
 
   void getCurrentLocation() async {
     var position = await Geolocator.getCurrentPosition(
@@ -42,7 +63,7 @@ class _PanelWidgetState extends State<PanelWidget> {
 
   @override
   void initState() {
-    String apiKey = 'AIzaSyC8DFp6srzvTmC3KF0o_dAjkoP1iVWNbYs';
+    String apiKey = 'AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k';
     googlePlace = GooglePlace(apiKey);
     getCurrentLocation();
     super.initState();
@@ -61,86 +82,66 @@ class _PanelWidgetState extends State<PanelWidget> {
             height: 35,
           ),
           buildMapsContent(),
-          Container(
-            margin: defaultPadding9,
-            width: MediaQuery.of(context).size.width / 1.5,
-            height: MediaQuery.of(context).size.height / 15,
-            decoration: BoxDecoration(
-              borderRadius: roundedRect,
-              color: Colors.grey[200],
-            ),
-            child: Row(
-              children: [
-                const SizedBox(
-                  width: 10,
+          (isChooseByLocation == true)
+              ? Container(
+                  margin: defaultPadding9,
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 15,
+                  decoration: BoxDecoration(
+                    borderRadius: roundedRect,
+                    color: Colors.grey[200],
+                  ),
+                  child: Row(
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Image.asset(
+                        'icons/icons_others/ico_location.png',
+                        width: 30,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.4,
+                          height: MediaQuery.of(context).size.height / 14,
+                          child: Center(
+                            child: TextField(
+                                // onChanged: (value) {
+                                //   if (value.isNotEmpty) {
+                                //     autoCompleteSearch(value);
+                                //   } else {
+                                //     print('empty');
+                                //   }
+                                // },
+                                autofocus: false,
+                                controller: _startSearchFieldController,
+                                decoration: const InputDecoration.collapsed(
+                                    hintText: 'Search Adrress',
+                                    hintStyle: onboardingNormalText)),
+                          )),
+                    ],
+                  ),
+                )
+              : Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 1,
+                        height: MediaQuery.of(context).size.height / 1.8,
+                        child: const GetUserLocation(),
+                      ),
+                    ],
+                  ),
                 ),
-                Image.asset(
-                  'icons/icons_others/ico_location.png',
-                  width: 30,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                    width: MediaQuery.of(context).size.width / 1.4,
-                    height: MediaQuery.of(context).size.height / 14,
-                    child: Center(
-                      child: TextField(
-                          autofocus: false,
-                          controller: _startSearchFieldController,
-                          decoration: const InputDecoration.collapsed(
-                              hintText: 'Search Adrress',
-                              hintStyle: onboardingNormalText)),
-                    )),
-              ],
-            ),
+          const SizedBox(
+            height: 10,
           ),
           const SizedBox(
             height: 10,
           ),
-          Center(
-            child: Column(
-              children: [
-                Text(latitude),
-                Text(longitude),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 15,
-            width: MediaQuery.of(context).size.width / 1.5,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: mainColor2, shape: roundedRectBor),
-              child: const Text(
-                'Minta Lokasi',
-                style: onboardingGetStarted,
-              ),
-              onPressed: () {},
-            ),
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 15,
-            width: MediaQuery.of(context).size.width / 1.5,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  primary: mainColor2, shape: roundedRectBor),
-              child: const Text(
-                'Print Lat Long',
-                style: onboardingGetStarted,
-              ),
-              onPressed: () {
-                print(latitude);
-                print(longitude);
-              },
-            ),
-          )
         ],
       );
 
@@ -166,14 +167,30 @@ class _PanelWidgetState extends State<PanelWidget> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'Choose Location',
-                  style: titleBodyMini,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isChooseByLocation = true;
+                      isSearchByMap = false;
+                    });
+                  },
+                  child: const Text(
+                    'Choose Location',
+                    style: titleBodyMini,
+                  ),
                 ),
-                Text(
-                  'Search by Map',
-                  style: titleBodyMiniGreen,
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isChooseByLocation = false;
+                      isSearchByMap = true;
+                    });
+                  },
+                  child: const Text(
+                    'Search by Map',
+                    style: titleBodyMiniGreen,
+                  ),
                 )
               ],
             ),

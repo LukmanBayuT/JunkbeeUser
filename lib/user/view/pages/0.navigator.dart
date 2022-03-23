@@ -26,7 +26,7 @@ class _NavigatorUserState extends State<NavigatorUser> {
   var pagesUser = [
     const HomepagesUser(),
     const CollectionStatusUser(),
-    const UserOrder(),
+    UserOrder(),
     const UserMessages(),
     const UserProfile(),
   ];

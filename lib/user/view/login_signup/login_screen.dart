@@ -48,17 +48,17 @@ class _SignInUserState extends State<SignInUser> {
         await secureStorage.writeSecureData('token', output['data']['token']);
 
         final resp = await http.put(
-          Uri.parse(EndPoint.baseApiURL+EndPoint.deviceToken),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${output['data']['token']}'
-          },
-          body: json.encode({'device_token': fcmToken})
-        );
+            Uri.parse(EndPoint.baseApiURL + EndPoint.deviceToken),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ${output['data']['token']}'
+            },
+            body: json.encode({'device_token': fcmToken}));
         Map<String, dynamic> updateToken = jsonDecode(resp.body);
         if (updateToken['message'] == 'data has been updated') {
           Navigator.pop(context, 'back');
         }
+        print(response.body);
       } else {
         Map<String, dynamic> output = jsonDecode(response.body);
         var errorMessage = output['message'];

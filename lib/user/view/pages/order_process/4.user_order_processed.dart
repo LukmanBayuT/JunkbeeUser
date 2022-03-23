@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -8,7 +7,9 @@ import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.
 import 'package:junkbee_user/user/view/pages/order_process/4.1.user_order_maps.dart';
 
 class UserOrder extends StatefulWidget {
-  const UserOrder({Key? key}) : super(key: key);
+  String? address;
+
+  UserOrder({Key? key, this.address}) : super(key: key);
 
   @override
   _UserOrderState createState() => _UserOrderState();
@@ -80,6 +81,14 @@ class _UserOrderState extends State<UserOrder> {
 
   @override
   Widget build(BuildContext context) {
+    double totalWeight = initialPaper +
+        initialGlass +
+        initialMetal +
+        initialOil +
+        initialPlastic +
+        initialSachet;
+    double? total = 10.000;
+    double? feeBeever = 10.000;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -303,10 +312,10 @@ class _UserOrderState extends State<UserOrder> {
                           padding: defaultPadding3,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text('Estimated Weight (Kg)',
+                            children: [
+                              const Text('Estimated Weight (Kg)',
                                   style: onboardingNormalText),
-                              Text('data')
+                              Text(totalWeight.toString())
                             ],
                           ),
                         ),
@@ -372,8 +381,16 @@ class _UserOrderState extends State<UserOrder> {
                                       'icons/icons_others/ico_location.png',
                                       width: 30),
                                   const SizedBox(width: 10),
-                                  const Text('Your Location',
-                                      style: onboardingNormalText)
+                                  SizedBox(
+                                    width: 150,
+                                    child: Text(
+                                      (widget.address != null)
+                                          ? widget.address.toString()
+                                          : 'Lokasimu',
+                                      style: onboardingNormalText,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
                                 ],
                               ),
                               GestureDetector(

@@ -16,8 +16,8 @@ class LocationTracking extends StatefulWidget {
 }
 
 class _LocationTrackingState extends State<LocationTracking> {
-  LatLng sourceLocation = const LatLng(28.432864, 77.002563);
-  LatLng destinationLatlng = const LatLng(-6.9714229, 110.4265293);
+  LatLng sourceLocation = LatLng(28.432864, 77.002563);
+  LatLng destinationLatlng = LatLng(-6.9714229, 110.4265293);
 
   final Completer<GoogleMapController> _controller = Completer();
 
@@ -110,9 +110,8 @@ class _LocationTrackingState extends State<LocationTracking> {
 
   void updatePinsOnMap() async {
     CameraPosition cameraPosition = CameraPosition(
-      zoom: 20,
-      tilt: 80,
-      bearing: 30,
+      zoom: 18,
+      tilt: 50,
       target: LatLng(
           currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0),
     );
@@ -137,9 +136,8 @@ class _LocationTrackingState extends State<LocationTracking> {
   @override
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = CameraPosition(
-      zoom: 20,
+      zoom: 16,
       tilt: 80,
-      bearing: 30,
       target: currentLocation != null
           ? LatLng(currentLocation!.latitude ?? 0.0,
               currentLocation!.longitude ?? 0.0)
