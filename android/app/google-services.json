@@ -1,181 +1,42 @@
 {
   "project_info": {
-    "project_number": "359679760003",
-    "project_id": "junkbee-7f763",
-    "storage_bucket": "junkbee-7f763.appspot.com"
+    "project_number": "1057154394115",
+    "project_id": "junkbee-340810",
+    "storage_bucket": "junkbee-340810.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:359679760003:android:2c6050331a3d3c6b2dadb6",
-        "android_client_info": {
-          "package_name": "com.example.junkbee_driver"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "359679760003-4aje6dudcltj2qlem9kbru3pml7655q4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.junkbee_driver",
-            "certificate_hash": "8a27bcfaf77161169f1995f0c7ff20d550097d52"
-          }
-        },
-        {
-          "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "359679760003-r93p6lb6f9l7tqpfrcn286qf5l9ljm0g.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.junkbee.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:359679760003:android:d3053038ed9595862dadb6",
+        "mobilesdk_app_id": "1:1057154394115:android:b9506b0624f49e657ec636",
         "android_client_info": {
           "package_name": "com.example.junkbee_user"
         }
       },
       "oauth_client": [
         {
-          "client_id": "359679760003-1a89stb26burmhvt68ou0n8d6uvse1tu.apps.googleusercontent.com",
+          "client_id": "1057154394115-kj90qnusl2p7n6sjfktl8m5r12vibqir.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.junkbee_user",
-            "certificate_hash": "aacee087ff1dc625225b314adc9e3f31c12d3929"
+            "certificate_hash": "8a27bcfaf77161169f1995f0c7ff20d550097d52"
           }
         },
         {
-          "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
+          "client_id": "1057154394115-lmbtvrv1k9kvs3o2fflgr992hfohmoab.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM"
+          "current_key": "AIzaSyA_w7kEkNowqdIRioKSocXrUPDLAhxP9Yw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
+              "client_id": "1057154394115-lmbtvrv1k9kvs3o2fflgr992hfohmoab.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "359679760003-r93p6lb6f9l7tqpfrcn286qf5l9ljm0g.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.junkbee.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:359679760003:android:674dd7b1ef37df282dadb6",
-        "android_client_info": {
-          "package_name": "com.junkbee.app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "359679760003-parc60elpd4q888vhlgq00kahdglshsi.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.junkbee.app",
-            "certificate_hash": "aacee087ff1dc625225b314adc9e3f31c12d3929"
-          }
-        },
-        {
-          "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "359679760003-r93p6lb6f9l7tqpfrcn286qf5l9ljm0g.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.junkbee.app"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:359679760003:android:7e84d7d86e650e1e2dadb6",
-        "android_client_info": {
-          "package_name": "com.wastecollection"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "359679760003-pvo738llplf0q568r1lcvqvm77h7oain.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.wastecollection",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "359679760003-ekq8juiku5p1k5f386i19v7a7udph28f.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "359679760003-r93p6lb6f9l7tqpfrcn286qf5l9ljm0g.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.junkbee.app"
-              }
             }
           ]
         }
