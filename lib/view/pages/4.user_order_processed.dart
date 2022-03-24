@@ -1,5 +1,12 @@
+<<<<<<< Updated upstream:lib/view/pages/4.user_order_processed.dart
 import 'dart:io';
 
+=======
+// ignore_for_file: must_be_immutable, await_only_futures, unused_local_variable, avoid_print, unnecessary_string_interpolations
+
+import 'dart:convert';
+import 'dart:io';
+>>>>>>> Stashed changes:lib/user/view/pages/order_process/4.user_order_processed.dart
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -78,6 +85,64 @@ class _UserOrderState extends State<UserOrder> {
     });
   }
 
+<<<<<<< Updated upstream:lib/view/pages/4.user_order_processed.dart
+=======
+  String? totalWasteWeight;
+  String? totalPrice = 10.000.toString();
+  String? totalFeeBeever = 3000.toString();
+  String? userLocation;
+  String? wasteType = 'paper';
+  String? wasteWeight = 10.toString();
+  String? subtotal = 20.toString();
+
+  void _orderUser() async {
+    try {
+      var authToken = await secureStorage.readSecureData('token');
+      var token = authToken;
+
+      final request = await http.MultipartRequest('POST', Uri.parse(EndPoint.baseApiURL+EndPoint.userOrder));
+      final file = await http.MultipartFile.fromPath('image', image1!.path, contentType: MediaType('image', 'jpg'));
+      request.files.add(file);
+      request.fields['total_weight'] = '$totalWasteWeight';
+      request.fields['total'] = '$totalPrice';
+      request.fields['fee_beever'] = '$totalFeeBeever';
+      request.fields['waste_type'] = '$wasteType';
+      request.fields['waste_weight'] = '$wasteWeight';
+      request.fields['subtotal'] = '$subtotal';
+      request.fields['location1'] = '$userLocation';
+      request.headers['Authorization'] = 'Bearer $token';
+
+      try {
+        final streamedResponse = await request.send();
+        final response = await http.Response.fromStream(streamedResponse);
+        Map<String, dynamic> responseJSON = jsonDecode(response.body);
+
+        if (response.statusCode == 200) {
+          print('success');
+          // Get.offAll(() => const SignInUser());
+        } else if (response.statusCode == 400) {
+          Get.snackbar('Bad Request', '${response.body}',
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.amber,
+              colorText: Colors.white,
+              isDismissible: true,
+              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+              duration: const Duration(seconds: 1),
+              margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
+              icon: const Icon(
+                Icons.error_outlined,
+                color: Colors.red,
+              ));
+        }
+      } catch (e) {
+        print(e);
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+>>>>>>> Stashed changes:lib/user/view/pages/order_process/4.user_order_processed.dart
   @override
   Widget build(BuildContext context) {
     return Scaffold(
