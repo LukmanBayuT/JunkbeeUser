@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_place/google_place.dart';
 
 class SearchScreen extends StatefulWidget {
+  const SearchScreen({Key? key}) : super(key: key);
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -18,7 +20,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     String apiKey = 'AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k';
     googlePlace = GooglePlace(apiKey);
@@ -49,7 +50,7 @@ class _SearchScreenState extends State<SearchScreen> {
             TextField(
               controller: _startSearchFieldController,
               autofocus: false,
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
               decoration: InputDecoration(
                   hintText: 'Starting Point',
                   hintStyle: const TextStyle(
@@ -69,11 +70,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 });
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             TextField(
               controller: _endSearchFieldController,
               autofocus: false,
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
               decoration: InputDecoration(
                   hintText: 'End Point',
                   hintStyle: const TextStyle(

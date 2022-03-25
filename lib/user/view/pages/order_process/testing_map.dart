@@ -4,6 +4,8 @@ import 'package:junkbee_user/user/view/pages/order_process/widget1.dart';
 import 'package:junkbee_user/user/view/pages/order_process/widget2.dart';
 
 class TestingMap extends StatefulWidget {
+  const TestingMap({Key? key}) : super(key: key);
+
   @override
   _TestingMapState createState() => _TestingMapState();
 }
@@ -52,7 +54,7 @@ class _TestingMapState extends State<TestingMap> {
                 )
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: const [
                 Expanded(

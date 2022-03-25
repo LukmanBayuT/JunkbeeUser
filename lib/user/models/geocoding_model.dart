@@ -2,6 +2,8 @@
 //
 //     final geocodingModel = geocodingModelFromJson(jsonString);
 
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 GeocodingModel geocodingModelFromJson(String str) =>
