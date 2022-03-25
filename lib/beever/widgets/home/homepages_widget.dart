@@ -31,7 +31,7 @@ class WhiteSpace extends StatelessWidget {
               Get.offAll(() => const NavigatorUser());
             },
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.only(right: 40),
               child: Text(
                 'Be a User',
                 style: titleBold.copyWith(color: Colors.white),
@@ -57,6 +57,8 @@ Container profileAndBalance(BuildContext context) {
           return Center(
             child: Column(
               children: [
+                // Image.asset('assets/beever_image.png',
+                //     width: MediaQuery.of(context).size.width / 5),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(90),
                   child: beever?.data.image == null
@@ -81,7 +83,7 @@ Container profileAndBalance(BuildContext context) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Image.asset('assets/star_icon.png', height: 30 ),
+                          Image.asset('assets/star_icon.png', height: 30),
                           const Text('(4.5)', style: signScreenTextStyle)
                         ],
                       ),
@@ -157,7 +159,11 @@ Container profileAndBalance(BuildContext context) {
             ),
           );
         } else {
-          return const Center(child: SpinKitWave(color: Colors.amberAccent, size: 50,));
+          return const Center(
+              child: SpinKitWave(
+            color: Colors.amberAccent,
+            size: 50,
+          ));
         }
       },
     ),
@@ -385,7 +391,11 @@ class NewsAPI extends StatelessWidget {
                           );
                         });
                   } else {
-                    return const Center(child: SpinKitWave(color: Colors.amberAccent, size: 50,));
+                    return const Center(
+                        child: SpinKitWave(
+                      color: Colors.amberAccent,
+                      size: 50,
+                    ));
                   }
                 },
               )),

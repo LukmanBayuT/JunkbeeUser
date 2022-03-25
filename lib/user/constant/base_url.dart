@@ -13,6 +13,13 @@ class EndPoint {
   static const String updateProfileImage = 'userdata/update/image';
   static const String updateSocialMedia = 'userdata/update/socialmedia';
   static const String getNewsData = "public/news";
-  static const String finalNewsData = "https://staging2.junkbee.id/api/public/news/";
-  static const String bannerForNews = "https://staging2.junkbee.id/storage/news-images/";
+  static const String finalNewsData =
+      "https://staging2.junkbee.id/api/public/news/";
+  static const String bannerForNews =
+      "https://staging2.junkbee.id/storage/news-images/";
+
+  static const String gMapsUrl =
+      'https://maps.googleapis.com/maps/api/geocode/json?latlng=';
+
+  static const String gMapsAPI = '&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k';
 }

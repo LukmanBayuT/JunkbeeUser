@@ -4,14 +4,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/const/const.dart';
+import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
+import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/beever/widgets/sign_in_widgets.dart';
 import 'package:lottie/lottie.dart';
-import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 
 class SignInDriver extends StatefulWidget {
   const SignInDriver({Key? key}) : super(key: key);
@@ -33,20 +33,6 @@ class _SignInDriverState extends State<SignInDriver> {
   @override
   void initState() {
     super.initState();
-    getDeviceToken();
-  }
-
-  getDeviceToken() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: 'AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM',
-            appId: '1:359679760003:android:2c6050331a3d3c6b2dadb6',
-            messagingSenderId: '359679760003',
-            projectId: 'junkbee-7f763'));
-    FirebaseMessaging.instance
-        .getToken()
-        .then((deviceToken) => print(deviceToken));
   }
 
   void _toggle() {
@@ -56,16 +42,9 @@ class _SignInDriverState extends State<SignInDriver> {
   }
 
   void _loginDriver() async {
-    setState(() => loading = true);
+    // setState(() => loading = true);
     await secureStorage.deleteAllSecureData();
     try {
-      WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp(
-          options: const FirebaseOptions(
-              apiKey: 'AIzaSyDUQzGA_M5A5icZARIG16wGh06Mpj54KkM',
-              appId: '1:359679760003:android:2c6050331a3d3c6b2dadb6',
-              messagingSenderId: '359679760003',
-              projectId: 'junkbee-7f763'));
       FirebaseMessaging.instance.getToken().then((deviceToken) async {
         final response = await http
             .post(Uri.parse(EndPoint.baseApiURL + EndPoint.loginURL), body: {
@@ -73,6 +52,7 @@ class _SignInDriverState extends State<SignInDriver> {
           'password': _passwordcont.text.trim(),
         });
         Map<String, dynamic> output = jsonDecode(response.body);
+
         if (output['message'] == 'login success') {
           await secureStorage.writeSecureData('token', output['data']['token']);
 
@@ -84,9 +64,11 @@ class _SignInDriverState extends State<SignInDriver> {
               },
               body: json.encode({'device_token': deviceToken}));
           Map<String, dynamic> updateDeviceToken = jsonDecode(resp.body);
+          print(updateDeviceToken);
           if (updateDeviceToken['message'] == 'data has been updated') {
             setState(() => loading = false);
             Get.offAll(() => const NavigatorPages());
+            ApiCallsGetData().getData();
           }
         } else {
           var errorMessage = output['message'];
@@ -97,6 +79,47 @@ class _SignInDriverState extends State<SignInDriver> {
               title: 'Please Try Again');
         }
       });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void _loginUser() async {
+    setState(() => loading = true);
+    try {
+      final response = await http
+          .post(Uri.parse(EndPoint.baseApiURL + EndPoint.loginURL), body: {
+        'email': _logincont.text.trim(),
+        'password': _passwordcont.text.trim(),
+      });
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> output = jsonDecode(response.body);
+        await secureStorage.writeSecureData('token', output['data']['token']);
+
+        final resp = await http.put(
+            Uri.parse(EndPoint.baseApiURL + EndPoint.deviceToken),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ${output['data']['token']}'
+            },
+            body: json.encode({'device_token': fcmToken}));
+        Map<String, dynamic> updateToken = jsonDecode(resp.body);
+        if (updateToken['message'] == 'data has been updated') {
+          setState(() => loading = false);
+          Get.offAll(() => const NavigatorPages());
+        }
+        print(response.body);
+      } else {
+        Map<String, dynamic> output = jsonDecode(response.body);
+        setState(() => loading = false);
+        var errorMessage = output['message'];
+        Get.defaultDialog(
+            textCancel: 'Ok',
+            middleText: errorMessage,
+            title: 'Please Try Again');
+      }
     } catch (e) {
       print(e);
     }
@@ -166,7 +189,7 @@ class _SignInDriverState extends State<SignInDriver> {
                                   setState(() => _validate = true);
                                 } else {
                                   setState(() => _validate = false);
-                                  _loginDriver();
+                                  _loginUser();
                                 }
                               },
                               child: const Text('Sign In',

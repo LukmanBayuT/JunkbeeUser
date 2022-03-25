@@ -13,12 +13,15 @@ class PermissionHandler {
         break;
 
       case PermissionStatus.limited:
+        requestForPermission();
         break;
       case PermissionStatus.restricted:
+        requestForPermission();
         // ignore: todo
         // TODO: Handle this case.
         break;
       case PermissionStatus.permanentlyDenied:
+        requestForPermission();
         // ignore: todo
         // TODO: Handle this case.
         break;

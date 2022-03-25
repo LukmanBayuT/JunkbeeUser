@@ -76,6 +76,8 @@ class _LocationTrackingState extends State<LocationTracking> {
     _marker.add(
       Marker(
         markerId: MarkerId('destinationPosition'),
+        infoWindow: const InfoWindow(title: 'Destination'),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
         position: destinationPosition,
       ),
     );

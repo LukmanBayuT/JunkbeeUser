@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'package:junkbee_user/user/constant/constant.dart';
-import 'package:junkbee_user/user/widget/user_order_maps_panel_widget.dart';
+import 'package:junkbee_user/user/view/pages/order_process/user_order_maps_panel_widget.dart';
 import 'package:location/location.dart';
-
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class UserOrderMaps extends StatefulWidget {

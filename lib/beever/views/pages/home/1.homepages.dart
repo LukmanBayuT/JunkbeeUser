@@ -33,9 +33,8 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var token = authToken;
 
     final userData = await http.get(
-      Uri.parse(EndPoint.baseApiURL + EndPoint.getUserData),
-      headers: {'Authorization': 'Bearer $token'}
-    );
+        Uri.parse(EndPoint.baseApiURL + EndPoint.getUserData),
+        headers: {'Authorization': 'Bearer $token'});
     Map<String, dynamic> bodyJSON = jsonDecode(userData.body);
     var role = bodyJSON['data']['role'];
     await secureStorage.writeSecureData('role', role);
@@ -49,29 +48,26 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          decoration: const BoxDecoration(image: DecorationImage(image: AssetImage('assets/heading_full.png'), fit: BoxFit.fill)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 35),
-                width: MediaQuery.of(context).size.width / 1.1,
-                alignment: Alignment.topRight,
-                child: GestureDetector(
-                  onTap: () => userPage(),
-                  child: Text('Go to a User Page', style: textProfileBoldWhiteMedium,),
-                ),
-              ),
-              WhiteSpace(),
-              profileAndBalance(context),
-              orderPickup(context),
-              NewsAPI()
-            ],
-          ),
+        body: SingleChildScrollView(
+      child: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/heading_full.png'),
+                fit: BoxFit.fill)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 60),
+              width: MediaQuery.of(context).size.width / 1.1,
+            ),
+            WhiteSpace(),
+            profileAndBalance(context),
+            orderPickup(context),
+            NewsAPI()
+          ],
         ),
-      )
-    );
+      ),
+    ));
   }
 }

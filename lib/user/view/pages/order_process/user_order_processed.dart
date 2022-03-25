@@ -8,9 +8,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
+import 'package:junkbee_user/user/service/api_service/api_calls_geocoding.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
-import 'package:junkbee_user/user/view/pages/order_process/4.1.user_order_maps.dart';
+import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/user/view/pages/order_process/testing_map.dart';
 
 class UserOrder extends StatefulWidget {
   String? address;
@@ -95,28 +97,15 @@ class _UserOrderState extends State<UserOrder> {
   String? wasteWeight = 10.toString();
   String? subtotal = 20.toString();
 
-  void _orderUserDio() async {
-    dio.Response response;
-    var dioh = dio.Dio();
-    response = await dioh.post(EndPoint.baseApiURL + EndPoint.userOrder, data: {
-      "total_weight": totalWasteWeight,
-      "total": totalPrice,
-      "fee_beever": totalFeeBeever,
-      "location1": userLocation,
-      "waste_type": wasteType,
-      "waste_weight": wasteWeight,
-      "subtotal": subtotal,
-    });
-    try {} catch (e) {}
-  }
-
   void _orderUser() async {
     try {
       var authToken = await secureStorage.readSecureData('token');
       var token = authToken;
 
-      final request = await http.MultipartRequest('POST', Uri.parse(EndPoint.baseApiURL+EndPoint.userOrder));
-      final file = await http.MultipartFile.fromPath('image', image1!.path, contentType: MediaType('image', 'jpg'));
+      final request = await http.MultipartRequest(
+          'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
+      final file = await http.MultipartFile.fromPath('image', image1!.path,
+          contentType: MediaType('image', 'jpg'));
       request.files.add(file);
       request.fields['total_weight'] = '$totalWasteWeight';
       request.fields['total'] = '$totalPrice';
@@ -134,7 +123,6 @@ class _UserOrderState extends State<UserOrder> {
 
         if (response.statusCode == 200) {
           print('success');
-          // Get.offAll(() => const SignInUser());
         } else if (response.statusCode == 400) {
           Get.snackbar('Bad Request', '${response.body}',
               snackPosition: SnackPosition.BOTTOM,
@@ -155,6 +143,12 @@ class _UserOrderState extends State<UserOrder> {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    PermissionHandler().listenForPermission();
   }
 
   @override
@@ -472,8 +466,7 @@ class _UserOrderState extends State<UserOrder> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  PermissionHandler().listenForPermission();
-                                  Get.to(() => const UserOrderMaps());
+                                  Get.to(() => UserOrderMaps());
                                 },
                                 child:
                                     const Text('Change', style: onboardingSkip),
