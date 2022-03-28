@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
 import 'package:http/http.dart' as http;
@@ -101,6 +100,10 @@ class _UserOrderState extends State<UserOrder> {
       latitude = "$lat";
       longitude = "$long";
     });
+
+    var response = await http.put(Uri.parse(
+      EndPoint.baseApiURL + EndPoint.updateUserLocation,
+    ));
   }
 
   String? totalWasteWeight;
