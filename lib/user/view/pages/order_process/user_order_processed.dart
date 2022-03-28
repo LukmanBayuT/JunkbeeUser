@@ -465,7 +465,7 @@ class _UserOrderState extends State<UserOrder> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  Get.to(() => UserOrderMaps());
+                                  Get.to(() => const UserOrderMaps());
                                 },
                                 child:
                                     const Text('Change', style: onboardingSkip),
