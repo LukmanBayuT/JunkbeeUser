@@ -2,9 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:junkbee_user/beever/widgets/profile/profile_widget.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-import 'package:junkbee_user/user/models/collection_data_models.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_collection.dart';
 
 class CollectionStatusUser extends StatefulWidget {
@@ -69,8 +67,8 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                         borderRadius: BorderRadius.circular(16),
                                         // ignore: unnecessary_const
                                         gradient: const LinearGradient(colors: [
-                                          const Color(0xFFF8C503),
-                                          const Color(0xFFFFE067)
+                                          Color(0xFFF8C503),
+                                          Color(0xFFFFE067)
                                         ]),
                                         boxShadow: const [
                                           BoxShadow(
@@ -113,8 +111,8 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                         borderRadius: BorderRadius.circular(16),
                                         // ignore: unnecessary_const
                                         gradient: const LinearGradient(colors: [
-                                          const Color(0xFFF8C503),
-                                          const Color(0xFFFFE067)
+                                          Color(0xFFF8C503),
+                                          Color(0xFFFFE067)
                                         ]),
                                         boxShadow: const [
                                           BoxShadow(

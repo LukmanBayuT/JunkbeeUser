@@ -110,29 +110,30 @@ class _PanelWidgetState extends State<PanelWidget> {
                         width: 10,
                       ),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          height: MediaQuery.of(context).size.height / 14,
-                          child: Center(
-                            child: TextField(
-                                onChanged: (value) {
-                                  if (_debounce?.isActive ?? false)
-                                    _debounce!.cancel();
-                                  _debounce = Timer(
-                                      const Duration(milliseconds: 1000), () {
-                                    if (value.isNotEmpty) {
-                                      //places api
-                                      autoCompleteSearch(value);
-                                    } else {
-                                      //clear out the results
-                                    }
-                                  });
-                                },
-                                autofocus: false,
-                                controller: _startSearchFieldController,
-                                decoration: const InputDecoration.collapsed(
-                                    hintText: 'Search Adrress',
-                                    hintStyle: onboardingNormalText)),
-                          )),
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        height: MediaQuery.of(context).size.height / 14,
+                        child: Center(
+                          child: TextField(
+                              onChanged: (value) {
+                                if (_debounce?.isActive ?? false)
+                                  _debounce!.cancel();
+                                _debounce = Timer(
+                                    const Duration(milliseconds: 1000), () {
+                                  if (value.isNotEmpty) {
+                                    //places api
+                                    autoCompleteSearch(value);
+                                  } else {
+                                    //clear out the results
+                                  }
+                                });
+                              },
+                              autofocus: false,
+                              controller: _startSearchFieldController,
+                              decoration: const InputDecoration.collapsed(
+                                  hintText: 'Search Adrress',
+                                  hintStyle: onboardingNormalText)),
+                        ),
+                      ),
                     ],
                   ),
                 )
@@ -143,9 +144,6 @@ class _PanelWidgetState extends State<PanelWidget> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 1,
                         height: MediaQuery.of(context).size.height / 1.8,
-                        // child: ElevatedButton(
-                        //     onPressed: getGeocodeLocation,
-                        //     child: const Text('print')),
                         child: FutureBuilder(
                           future: GetLocationGeocoding().getCurrentLocation(),
                           builder:
