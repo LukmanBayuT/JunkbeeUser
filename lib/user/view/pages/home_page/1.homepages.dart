@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/widget/home_page/homepages_news_api.dart';
@@ -22,7 +23,7 @@ class HomepagesUser extends StatefulWidget {
 }
 
 class _HomepagesUserState extends State<HomepagesUser> {
-  final navKey = GlobalKey<CurvedNavigationBarState>();
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   dynamic token_local = null;
   String device_info = '';
 
@@ -76,7 +77,7 @@ class _HomepagesUserState extends State<HomepagesUser> {
                     )
                   : const UserDataHomepages(),
             ),
-            UserDataGetStarted(navKey: navKey),
+            UserDataGetStarted(),
             const WasteCategories(),
             const StatisticUsers(),
             const NewsApiUsers()

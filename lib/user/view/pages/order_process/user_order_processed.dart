@@ -8,19 +8,23 @@ import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
+import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
 import 'package:http/http.dart' as http;
 
 class UserOrder extends StatefulWidget {
   String? address;
-
-  UserOrder({Key? key, this.address}) : super(key: key);
+  UserOrder({
+    Key? key,
+    required this.address,
+  }) : super(key: key);
 
   @override
   _UserOrderState createState() => _UserOrderState();
 }
 
 class _UserOrderState extends State<UserOrder> {
+  String? address;
   SecureStorage secureStorage = SecureStorage();
 
   bool isPaperSelected = false;
@@ -119,9 +123,9 @@ class _UserOrderState extends State<UserOrder> {
         Map<String, dynamic> responseJSON = jsonDecode(response.body);
 
         if (response.statusCode == 200) {
-          print('success');
+          Get.offAll(() => const NavigatorUser());
         } else if (response.statusCode == 400) {
-          Get.snackbar('Bad Request', '${response.body}',
+          Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.amber,
               colorText: Colors.white,
@@ -165,364 +169,374 @@ class _UserOrderState extends State<UserOrder> {
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: defaultPadding4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Waste Categories', style: titleBodyMini),
-                  const SizedBox(height: 10),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isPaperSelected = !isPaperSelected;
-                              initialPaper = 0;
-                            });
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 80,
-                            child: Image.asset((isPaperSelected == true)
-                                ? 'icons/waste_icons/paper_button.png'
-                                : 'icons/waste_icons/paper_off.png'),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: defaultPadding4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Waste Categories', style: titleBodyMini),
+                    const SizedBox(height: 10),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPaperSelected = !isPaperSelected;
+                                initialPaper = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Image.asset((isPaperSelected == true)
+                                  ? 'icons/waste_icons/paper_button.png'
+                                  : 'icons/waste_icons/paper_off.png'),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isPlasticSelected = !isPlasticSelected;
-                              initialPlastic = 0;
-                            });
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 80,
-                            child: Image.asset((isPlasticSelected == true)
-                                ? 'icons/waste_icons/plastic_button.png'
-                                : 'icons/waste_icons/plastic_off.png'),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isPlasticSelected = !isPlasticSelected;
+                                initialPlastic = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Image.asset((isPlasticSelected == true)
+                                  ? 'icons/waste_icons/plastic_button.png'
+                                  : 'icons/waste_icons/plastic_off.png'),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isGlassSelected = !isGlassSelected;
-                              initialGlass = 0;
-                            });
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 80,
-                            child: Image.asset((isGlassSelected == true)
-                                ? 'icons/waste_icons/glass_button.png'
-                                : 'icons/waste_icons/glass_off.png'),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isGlassSelected = !isGlassSelected;
+                                initialGlass = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Image.asset((isGlassSelected == true)
+                                  ? 'icons/waste_icons/glass_button.png'
+                                  : 'icons/waste_icons/glass_off.png'),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isSachetSelected = !isSachetSelected;
-                              initialSachet = 0;
-                            });
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 80,
-                            child: Image.asset((isSachetSelected == true)
-                                ? 'icons/waste_icons/sachet_button.png'
-                                : 'icons/waste_icons/sachet_off.png'),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isSachetSelected = !isSachetSelected;
+                                initialSachet = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Image.asset((isSachetSelected == true)
+                                  ? 'icons/waste_icons/sachet_button.png'
+                                  : 'icons/waste_icons/sachet_off.png'),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMetalSelected = !isMetalSelected;
-                              initialMetal = 0;
-                            });
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 80,
-                            child: Image.asset((isMetalSelected == true)
-                                ? 'icons/waste_icons/metal_button.png'
-                                : 'icons/waste_icons/metal_off.png'),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isMetalSelected = !isMetalSelected;
+                                initialMetal = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Image.asset((isMetalSelected == true)
+                                  ? 'icons/waste_icons/metal_button.png'
+                                  : 'icons/waste_icons/metal_off.png'),
+                            ),
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isOilSelected = !isOilSelected;
-                              initialOil = 0;
-                            });
-                          },
-                          child: SizedBox(
-                            width: 100,
-                            height: 80,
-                            child: Image.asset((isOilSelected == true)
-                                ? 'icons/waste_icons/oil_button.png'
-                                : 'icons/waste_icons/oil_off.png'),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isOilSelected = !isOilSelected;
+                                initialOil = 0;
+                              });
+                            },
+                            child: SizedBox(
+                              width: 100,
+                              height: 80,
+                              child: Image.asset((isOilSelected == true)
+                                  ? 'icons/waste_icons/oil_button.png'
+                                  : 'icons/waste_icons/oil_off.png'),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            (isPaperSelected == true) ? paperCard() : const SizedBox(),
-            (isPlasticSelected == true) ? plasticCard() : const SizedBox(),
-            (isGlassSelected == true) ? glassCard() : const SizedBox(),
-            (isSachetSelected == true) ? sachetCard() : const SizedBox(),
-            (isMetalSelected == true) ? metalCard() : const SizedBox(),
-            (isOilSelected == true) ? oilCard() : const SizedBox(),
-            Padding(
-              padding: defaultPadding4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Take a Photos (up to 3 photos)',
-                      style: titleBodyMini),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      image1 != null
-                          ? GestureDetector(
-                              onTap: () {
-                                _getFromCam1();
-                              },
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 4,
-                                height: MediaQuery.of(context).size.height / 7,
-                                child: ClipRRect(
-                                  borderRadius: roundedRect,
-                                  child: Image.file(image1!, fit: BoxFit.cover),
+              (isPaperSelected == true) ? paperCard() : const SizedBox(),
+              (isPlasticSelected == true) ? plasticCard() : const SizedBox(),
+              (isGlassSelected == true) ? glassCard() : const SizedBox(),
+              (isSachetSelected == true) ? sachetCard() : const SizedBox(),
+              (isMetalSelected == true) ? metalCard() : const SizedBox(),
+              (isOilSelected == true) ? oilCard() : const SizedBox(),
+              Padding(
+                padding: defaultPadding4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Take a Photos (up to 3 photos)',
+                        style: titleBodyMini),
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        image1 != null
+                            ? GestureDetector(
+                                onTap: () {
+                                  _getFromCam1();
+                                },
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  height:
+                                      MediaQuery.of(context).size.height / 7,
+                                  child: ClipRRect(
+                                    borderRadius: roundedRect,
+                                    child:
+                                        Image.file(image1!, fit: BoxFit.cover),
+                                  ),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  _getFromCam1();
+                                },
+                                child: Image.asset(
+                                  'icons/icons_others/add_pict.png',
+                                  width: MediaQuery.of(context).size.width / 5,
                                 ),
                               ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                _getFromCam1();
-                              },
-                              child: Image.asset(
-                                'icons/icons_others/add_pict.png',
-                                width: MediaQuery.of(context).size.width / 5,
-                              ),
-                            ),
-                      image2 != null
-                          ? GestureDetector(
-                              onTap: _getFromCam2,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 4,
-                                height: MediaQuery.of(context).size.height / 7,
-                                child: ClipRRect(
-                                    borderRadius: roundedRect,
-                                    child:
-                                        Image.file(image2!, fit: BoxFit.cover)),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                _getFromCam2();
-                              },
-                              child: Image.asset(
-                                'icons/icons_others/blank_image.png',
-                                width: MediaQuery.of(context).size.width / 5,
-                              ),
-                            ),
-                      image3 != null
-                          ? GestureDetector(
-                              onTap: _getFromCam3,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 4,
-                                height: MediaQuery.of(context).size.height / 7,
-                                child: ClipRRect(
-                                    borderRadius: roundedRect,
-                                    child:
-                                        Image.file(image3!, fit: BoxFit.cover)),
-                              ),
-                            )
-                          : GestureDetector(
-                              onTap: () {
-                                _getFromCam3();
-                              },
-                              child: Image.asset(
-                                'icons/icons_others/blank_image.png',
-                                width: MediaQuery.of(context).size.width / 5,
-                              ),
-                            ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: defaultPadding4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Estimated Earnings',
-                    style: titleBodyMini,
-                  ),
-                  Card(
-                    shape: roundedRectBor,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: defaultPadding3,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Estimated Weight (Kg)',
-                                  style: onboardingNormalText),
-                              Text(totalWeight.toString())
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: defaultPadding3,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text('Total Earnings',
-                                  style: onboardingNormalText),
-                              Text('data')
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: defaultPadding3,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text('Admin Fee', style: onboardingNormalText),
-                              Text('data')
-                            ],
-                          ),
-                        ),
-                        const Divider(
-                          height: 10,
-                        ),
-                        Padding(
-                          padding: defaultPadding3,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              Text('Estimated Earnings',
-                                  style: onboardingNormalText),
-                              Text('data')
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: defaultPadding4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Pick Up Location', style: titleBodyMini),
-                  Card(
-                    shape: roundedRectBor,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: defaultPadding2,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Image.asset(
-                                      'icons/icons_others/ico_location.png',
-                                      width: 30),
-                                  const SizedBox(width: 10),
-                                  SizedBox(
-                                    width: 150,
-                                    child: Text(
-                                      (widget.address != null)
-                                          ? widget.address.toString()
-                                          : 'Lokasimu',
-                                      style: onboardingNormalText,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => UserOrderMaps());
-                                },
-                                child:
-                                    const Text('Change', style: onboardingSkip),
+                        image2 != null
+                            ? GestureDetector(
+                                onTap: _getFromCam2,
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  height:
+                                      MediaQuery.of(context).size.height / 7,
+                                  child: ClipRRect(
+                                      borderRadius: roundedRect,
+                                      child: Image.file(image2!,
+                                          fit: BoxFit.cover)),
+                                ),
                               )
-                            ],
-                          ),
-                        ),
+                            : GestureDetector(
+                                onTap: () {
+                                  _getFromCam2();
+                                },
+                                child: Image.asset(
+                                  'icons/icons_others/blank_image.png',
+                                  width: MediaQuery.of(context).size.width / 5,
+                                ),
+                              ),
+                        image3 != null
+                            ? GestureDetector(
+                                onTap: _getFromCam3,
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  height:
+                                      MediaQuery.of(context).size.height / 7,
+                                  child: ClipRRect(
+                                      borderRadius: roundedRect,
+                                      child: Image.file(image3!,
+                                          fit: BoxFit.cover)),
+                                ),
+                              )
+                            : GestureDetector(
+                                onTap: () {
+                                  _getFromCam3();
+                                },
+                                child: Image.asset(
+                                  'icons/icons_others/blank_image.png',
+                                  width: MediaQuery.of(context).size.width / 5,
+                                ),
+                              ),
                       ],
-                    ),
-                  ),
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: defaultPadding4,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text('Notes', style: titleBodyMini),
-                  Card(
-                    shape: roundedRectBor,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 1,
-                      height: MediaQuery.of(context).size.height / 4,
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: TextField(
-                          maxLines: 10,
-                          keyboardType: TextInputType.multiline,
-                          decoration: InputDecoration.collapsed(
-                            hintText: 'Your Notes Here',
+              Padding(
+                padding: defaultPadding4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Estimated Earnings',
+                      style: titleBodyMini,
+                    ),
+                    Card(
+                      shape: roundedRectBor,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: defaultPadding3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Estimated Weight (Kg)',
+                                    style: onboardingNormalText),
+                                Text(totalWeight.toString())
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: defaultPadding3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Total Earnings',
+                                    style: onboardingNormalText),
+                                Text('data')
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: defaultPadding3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Admin Fee', style: onboardingNormalText),
+                                Text('data')
+                              ],
+                            ),
+                          ),
+                          const Divider(
+                            height: 10,
+                          ),
+                          Padding(
+                            padding: defaultPadding3,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: const [
+                                Text('Estimated Earnings',
+                                    style: onboardingNormalText),
+                                Text('data')
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: defaultPadding4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Pick Up Location', style: titleBodyMini),
+                    Card(
+                      shape: roundedRectBor,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: defaultPadding2,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Image.asset(
+                                        'icons/icons_others/ico_location.png',
+                                        width: 30),
+                                    const SizedBox(width: 10),
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text(
+                                        (widget.address != null)
+                                            ? widget.address.toString()
+                                            : 'Lokasimu',
+                                        style: onboardingNormalText,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const UserOrderMaps()));
+                                  },
+                                  child: const Text('Change',
+                                      style: onboardingSkip),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: defaultPadding4,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Notes', style: titleBodyMini),
+                    Card(
+                      shape: roundedRectBor,
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width / 1,
+                        height: MediaQuery.of(context).size.height / 4,
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: TextField(
+                            maxLines: 10,
+                            keyboardType: TextInputType.multiline,
+                            decoration: InputDecoration.collapsed(
+                              hintText: 'Your Notes Here',
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-                width: MediaQuery.of(context).size.width / 1.1,
-                height: MediaQuery.of(context).size.height / 12,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: mainColor2, shape: roundedRectBor),
-                  child:
-                      const Text('Find a Beever', style: onboardingGetStarted),
-                  onPressed: () {
-                    setState(() {
-                      totalWasteWeight = totalWeight.toString();
-                      userLocation = widget.address;
-                    });
-                    _orderUser();
-                  },
-                )),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 8,
-            ),
-          ],
+              SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.1,
+                  height: MediaQuery.of(context).size.height / 12,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: mainColor2, shape: roundedRectBor),
+                    child: const Text('Find a Beever',
+                        style: onboardingGetStarted),
+                    onPressed: () {
+                      setState(() {
+                        totalWasteWeight = totalWeight.toString();
+                      });
+                      _orderUser();
+                    },
+                  )),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 8,
+              ),
+            ],
+          ),
         ),
       ),
     );

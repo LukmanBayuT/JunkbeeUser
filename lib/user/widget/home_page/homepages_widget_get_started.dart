@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 
 class UserDataGetStarted extends StatelessWidget {
-  const UserDataGetStarted({Key? key, required this.navKey}) : super(key: key);
-
-  final GlobalKey<CurvedNavigationBarState> navKey;
+  UserDataGetStarted({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +21,13 @@ class UserDataGetStarted extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
-                onTap: () {
-                  navKey.currentState?.setPage(2);
-                },
+                onTap: () {},
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2.3,
                   height: MediaQuery.of(context).size.height / 12,
-                  decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(20)),
                   child: const Center(
                     child: Text('New Collection', style: bodyBodyUserMini),
                   ),
@@ -38,7 +38,9 @@ class UserDataGetStarted extends StatelessWidget {
                 child: Container(
                   width: MediaQuery.of(context).size.width / 2.3,
                   height: MediaQuery.of(context).size.height / 12,
-                  decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
+                  decoration: BoxDecoration(
+                      color: Colors.amber,
+                      borderRadius: BorderRadius.circular(20)),
                   child: const Center(
                     child: Text('History', style: bodyBodyUserMini),
                   ),

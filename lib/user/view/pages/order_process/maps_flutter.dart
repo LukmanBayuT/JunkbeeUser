@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocode/geocode.dart';
-import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
-import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
 import 'package:location/location.dart';
 
 class GetUserLocation extends StatefulWidget {
@@ -16,7 +14,7 @@ class GetUserLocation extends StatefulWidget {
 
 class _GetUserLocationState extends State<GetUserLocation> {
   LocationData? currentLocation;
-  String address = "";
+  String? alamat;
 
   @override
   void initState() {
@@ -26,7 +24,7 @@ class _GetUserLocationState extends State<GetUserLocation> {
       _getAddress(location?.latitude, location?.longitude).then((value) {
         setState(() {
           currentLocation = location;
-          address = value;
+          alamat = value;
         });
       });
     });
@@ -51,7 +49,7 @@ class _GetUserLocationState extends State<GetUserLocation> {
               ),
               if (currentLocation != null)
                 Text(
-                  address,
+                  alamat!,
                   style: bodyBoldBody,
                   textAlign: TextAlign.center,
                 ),
@@ -62,15 +60,11 @@ class _GetUserLocationState extends State<GetUserLocation> {
                     style: ElevatedButton.styleFrom(
                         primary: mainColor2, shape: roundedRectBor),
                     child: Text(
-                        (address == "")
+                        (alamat == "")
                             ? 'Mohon tunggu sebentar'
                             : 'Ya ini alamat saya!',
                         style: onboardingGetStarted),
-                    onPressed: () {
-                      (address == "")
-                          ? null
-                          : Get.offAll(() => UserOrder(address: address));
-                    },
+                    onPressed: () {},
                   )),
             ],
           ),
@@ -86,7 +80,7 @@ class _GetUserLocationState extends State<GetUserLocation> {
     return _locationData;
   }
 
-  Future<String> _getAddress(double? lat, double? lang) async {
+  Future<String?> _getAddress(double? lat, double? lang) async {
     try {
       if (lat == null || lang == null) return "";
       GeoCode geoCode = GeoCode();
@@ -97,6 +91,6 @@ class _GetUserLocationState extends State<GetUserLocation> {
       print(e);
     }
 
-    return address;
+    return alamat;
   }
 }

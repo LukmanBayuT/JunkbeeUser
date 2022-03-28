@@ -14,11 +14,6 @@ class NavigatorUser extends StatefulWidget {
 }
 
 class _NavigatorUserState extends State<NavigatorUser> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
   final navKey = GlobalKey<CurvedNavigationBarState>();
 
   int index = 0;
@@ -26,7 +21,9 @@ class _NavigatorUserState extends State<NavigatorUser> {
   var pagesUser = [
     const HomepagesUser(),
     const CollectionStatusUser(),
-    UserOrder(),
+    UserOrder(
+      address: '',
+    ),
     const UserMessages(),
     const UserProfile(),
   ];
