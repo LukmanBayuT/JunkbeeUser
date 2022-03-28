@@ -224,15 +224,16 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                       width: MediaQuery.of(context).size.width /
                                           1.25,
                                       child: Row(
-                                        children: const [
-                                          Text(
-                                            'Remaining search time: ',
+                                        children: [
+                                          const Text(
+                                            'Pesanan dibuat : ',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w500,
                                                 color: Color(0xFFF8C503)),
                                           ),
-                                          Text('5 minutes',
-                                              style: TextStyle(
+                                          Text(
+                                              '${collectiondata.data[index].createdAt}',
+                                              style: const TextStyle(
                                                   fontWeight: FontWeight.w800,
                                                   color: Color(0xFFF8C503)))
                                         ],
@@ -241,9 +242,9 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                     padding: const EdgeInsets.only(top: 5),
                                     width: MediaQuery.of(context).size.width /
                                         1.25,
-                                    child: const Text(
-                                      'Your collection request will be canclled automatically if the search timer runs out.',
-                                      style: TextStyle(
+                                    child: Text(
+                                      'Pesanan anda dengan order id : ${collectiondata.data[index].id} \nOrder kode : ${collectiondata.data[index].orderCode}',
+                                      style: const TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF707070)),
                                     ),
