@@ -13,6 +13,7 @@ class EndPoint {
   static const String updateProfileImage = 'userdata/update/image';
   static const String updateSocialMedia = 'userdata/update/socialmedia';
   static const String getCollectionData = 'userdata/collection/history';
+  static const String updateUserLocation = 'userdata/update/latlong';
   static const String getNewsData = "public/news";
   static const String finalNewsData =
       "https://staging2.junkbee.id/api/public/news/";

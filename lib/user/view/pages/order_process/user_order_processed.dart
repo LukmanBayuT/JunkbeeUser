@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
@@ -85,6 +86,20 @@ class _UserOrderState extends State<UserOrder> {
       } else {
         null;
       }
+    });
+  }
+
+  String? latitude;
+  String? longitude;
+
+  void getCurrentLocation() async {
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var lat = position.latitude;
+    var long = position.longitude;
+    setState(() {
+      latitude = "$lat";
+      longitude = "$long";
     });
   }
 

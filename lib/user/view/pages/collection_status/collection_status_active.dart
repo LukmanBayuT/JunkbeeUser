@@ -242,26 +242,67 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                                     padding: const EdgeInsets.only(top: 5),
                                     width: MediaQuery.of(context).size.width /
                                         1.25,
-                                    child: Text(
-                                      'Pesanan anda dengan order id : ${collectiondata.data[index].id} \nOrder kode : ${collectiondata.data[index].orderCode}',
-                                      style: const TextStyle(
+                                    child: const Text(
+                                      'Pesanan anda akan segera diambil oleh Beever kami, mohon ketersediaannya untuk menunggu',
+                                      style: TextStyle(
                                           fontWeight: FontWeight.w500,
                                           color: Color(0xFF707070)),
                                     ),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        top: 25, bottom: 15),
-                                    child: Container(
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                      decoration: BoxDecoration(
-                                          border: Border.all(
-                                              width: 1.5,
-                                              color: const Color(0xFFDEDEDE)),
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
+                                  ExpansionTile(
+                                    title: const Text(
+                                      'Muat Lebih Banyak',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w800,
+                                          color: Color(0xFF707070)),
                                     ),
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Text(
+                                              'ID pesanan : ${collectiondata.data[index].id}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xFF707070)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Text(
+                                              'Kode order pesanan : ${collectiondata.data[index].orderCode}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xFF707070)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10),
+                                            child: Text(
+                                              'Pesanan dibuat pada tanggal : ${collectiondata.data[index].createdAt}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Color(0xFF707070)),
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      )
+                                    ],
                                   )
                                 ],
                               ),
