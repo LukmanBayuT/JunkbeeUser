@@ -1,6 +1,7 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/widgets/profile/profile_widget.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/models/collection_data_models.dart';
@@ -269,18 +270,9 @@ class _CollectionStatusUserState extends State<CollectionStatusUser> {
                         );
                       }),
                 );
-                // return Container(
-                //   width: 100,
-                //   height: 100,
-                //   color: Colors.blue,
-                //   child: Text('${collectiondata.data[0].orderCode}'),
-                // );
               } else {
-                return Container(
-                  width: 100,
-                  height: 100,
-                  color: Colors.red,
-                );
+                return const Center(
+                    child: SpinKitWave(size: 50, color: Colors.amber));
               }
             },
           ),

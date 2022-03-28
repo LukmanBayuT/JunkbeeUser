@@ -14,7 +14,8 @@ class OnboardingSplashScreen extends StatefulWidget {
   _OnboardingSplashScreenState createState() => _OnboardingSplashScreenState();
 }
 
-class _OnboardingSplashScreenState extends State<OnboardingSplashScreen> with TickerProviderStateMixin {
+class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -46,8 +47,8 @@ class _OnboardingSplashScreenState extends State<OnboardingSplashScreen> with Ti
     return Scaffold(
       body: Center(
         child: Lottie.asset(
-          "assets_animations/booble.json",
-          width: 250,
+          "assets_animations/bee_loading.json",
+          width: MediaQuery.of(context).size.height * 1,
           controller: _controller,
           height: MediaQuery.of(context).size.height * 1,
           animate: true,
