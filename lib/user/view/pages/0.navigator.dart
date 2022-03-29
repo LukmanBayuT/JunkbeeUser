@@ -1,9 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:junkbee_user/user/view/pages/home_page/1.homepages.dart';
+import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
+import 'package:junkbee_user/user/view/pages/home_page/homepages.dart';
 import 'package:junkbee_user/user/view/pages/collection_status/collection_status_active.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
-import 'package:junkbee_user/user/view/pages/message/5.messages_chat.dart';
+import 'package:junkbee_user/user/view/pages/message/messages_chat.dart';
 import 'package:junkbee_user/user/view/pages/profile/7.profile_user.dart';
 
 class NavigatorUser extends StatefulWidget {
@@ -17,6 +18,7 @@ class _NavigatorUserState extends State<NavigatorUser> {
   @override
   void initState() {
     super.initState();
+    PermissionHandler().listenForPermission();
   }
 
   final navKey = GlobalKey<CurvedNavigationBarState>();

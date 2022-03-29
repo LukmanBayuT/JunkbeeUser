@@ -107,9 +107,10 @@ class _UserOrderState extends State<UserOrder> {
       longitude = "$long";
     });
 
-    var response = await http.put(Uri.parse(
-      EndPoint.baseApiURL + EndPoint.updateUserLocation,
-    ));
+    var queryParams = {
+      'lat': latitude,
+      'long': longitude,
+    };
   }
 
   String? totalWasteWeight;
@@ -136,6 +137,8 @@ class _UserOrderState extends State<UserOrder> {
       request.fields['waste_type'] = '$wasteType';
       request.fields['waste_weight'] = '$wasteWeight';
       request.fields['subtotal'] = '$subtotal';
+      request.fields['lat'] = '$latitude';
+      request.fields['lng'] = '$longitude';
       request.fields['location1'] = '$userLocation';
       request.headers['Authorization'] = 'Bearer $token';
 
@@ -147,7 +150,7 @@ class _UserOrderState extends State<UserOrder> {
         if (response.statusCode == 200) {
           print('success');
         } else if (response.statusCode == 400) {
-          Get.snackbar('Bad Request', '${response.body}',
+          Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.amber,
               colorText: Colors.white,
@@ -180,6 +183,7 @@ class _UserOrderState extends State<UserOrder> {
     setState(() {
       token_local = token;
     });
+    getCurrentLocation();
   }
 
   @override
@@ -621,6 +625,7 @@ class _UserOrderState extends State<UserOrder> {
                         duration: const Duration(seconds: 1)
                       );
                     } else {
+                      getCurrentLocation();
                       setState(() {
                         totalWasteWeight = totalWeight.toString();
                         userLocation = widget.address;

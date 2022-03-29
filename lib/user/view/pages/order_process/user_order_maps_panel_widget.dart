@@ -1,5 +1,4 @@
-// ignore_for_file: unused_import, avoid_print, curly_braces_in_flow_control_structures
-
+// ignore_for_file: unused_import, avoid_print, curly_braces_in_flow_control_structures, prefer_const_constructors_in_immutables
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,6 +12,7 @@ import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/models/geocoding_model.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_geocoding.dart';
 import 'package:junkbee_user/user/view/pages/order_process/maps_flutter.dart';
+import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
 import 'package:search_map_location/utils/google_search/place.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_place/google_place.dart';
@@ -21,7 +21,7 @@ import 'package:location/location.dart' as loc;
 import 'package:http/http.dart' as http;
 
 class PanelWidget extends StatefulWidget {
-  const PanelWidget({
+  PanelWidget({
     Key? key,
     required this.controller,
     required this.panelController,
@@ -36,6 +36,7 @@ class PanelWidget extends StatefulWidget {
 
 class _PanelWidgetState extends State<PanelWidget> {
   final _startSearchFieldController = TextEditingController();
+
   late GooglePlace googlePlace;
   List<AutocompletePrediction> predictions = [];
   Timer? _debounce;
@@ -46,11 +47,18 @@ class _PanelWidgetState extends State<PanelWidget> {
   bool isChooseByLocation = true;
   bool isSearchByMap = false;
 
+  DetailsResult? startPosition;
+
+  FocusNode? startFocusNode;
+
+  String? address;
+
   @override
   void initState() {
     super.initState();
     String apiKey = 'AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k';
     googlePlace = GooglePlace(apiKey);
+    startFocusNode = FocusNode();
     getCurrentLocation();
   }
 
@@ -76,6 +84,12 @@ class _PanelWidgetState extends State<PanelWidget> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    startFocusNode!.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => ListView(
         controller: widget.controller,
         padding: defaultPadding0,
@@ -88,97 +102,150 @@ class _PanelWidgetState extends State<PanelWidget> {
             height: 35,
           ),
           buildMapsContent(),
-          (isChooseByLocation == true)
-              ? Container(
-                  margin: defaultPadding9,
-                  width: MediaQuery.of(context).size.width / 1.5,
-                  height: MediaQuery.of(context).size.height / 15,
-                  decoration: BoxDecoration(
-                    borderRadius: roundedRect,
-                    color: Colors.grey[200],
-                  ),
-                  child: Row(
-                    children: [
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Image.asset(
-                        'icons/icons_others/ico_location.png',
-                        width: 30,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          height: MediaQuery.of(context).size.height / 14,
-                          child: Center(
-                            child: TextField(
-                                onChanged: (value) {
-                                  if (_debounce?.isActive ?? false)
-                                    _debounce!.cancel();
-                                  _debounce = Timer(
-                                      const Duration(milliseconds: 1000), () {
-                                    if (value.isNotEmpty) {
-                                      //places api
-                                      autoCompleteSearch(value);
-                                    } else {
-                                      //clear out the results
-                                    }
-                                  });
-                                },
-                                autofocus: false,
-                                controller: _startSearchFieldController,
-                                decoration: const InputDecoration.collapsed(
-                                    hintText: 'Search Adrress',
-                                    hintStyle: onboardingNormalText)),
-                          )),
-                    ],
-                  ),
-                )
-              : Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 1,
-                        height: MediaQuery.of(context).size.height / 1.8,
-                        // child: ElevatedButton(
-                        //     onPressed: getGeocodeLocation,
-                        //     child: const Text('print')),
-                        child: FutureBuilder(
-                          future: GetLocationGeocoding().getCurrentLocation(),
-                          builder:
-                              (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState ==
-                                ConnectionState.done) {
-                              var userloc = snapshot.data;
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${userloc?.results[0].formattedAddress}',
-                                  ),
-                                  const SizedBox(width: 30),
-                                ],
-                              );
+          Container(
+            margin: defaultPadding9,
+            width: MediaQuery.of(context).size.width / 1.5,
+            height: MediaQuery.of(context).size.height / 13,
+            decoration: BoxDecoration(
+              borderRadius: roundedRect,
+              color: Colors.grey[200],
+            ),
+            child: Row(
+              children: [
+                const SizedBox(
+                  width: 10,
+                ),
+                Image.asset(
+                  'icons/icons_others/ico_location.png',
+                  width: 30,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 1.4,
+                  height: MediaQuery.of(context).size.height / 14,
+                  child: Center(
+                    child: TextField(
+                        focusNode: startFocusNode,
+                        onChanged: (value) {
+                          if (_debounce?.isActive ?? false) _debounce!.cancel();
+                          _debounce =
+                              Timer(const Duration(milliseconds: 1000), () {
+                            if (value.isNotEmpty) {
+                              //places api
+                              autoCompleteSearch(value);
                             } else {
-                              return const Center(
-                                  child:
-                                      SpinKitWave(size: 50, color: mainColor0));
+                              //clear out the results
+                              setState(() {
+                                predictions = [];
+                                startPosition = null;
+                              });
                             }
-                          },
-                        ),
-                      ),
-                    ],
+                          });
+                        },
+                        autofocus: false,
+                        controller: _startSearchFieldController,
+                        decoration: InputDecoration(
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            suffixIcon:
+                                _startSearchFieldController.text.isNotEmpty
+                                    ? IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            predictions = [];
+                                            _startSearchFieldController.clear();
+                                          });
+                                        },
+                                        icon: const Icon(Icons.clear_outlined))
+                                    : null,
+                            hintText: 'Search Address',
+                            hintStyle: onboardingNormalText)),
                   ),
                 ),
-          const SizedBox(
-            height: 10,
+              ],
+            ),
           ),
-          const SizedBox(
-            height: 10,
+          ListView.builder(
+            shrinkWrap: true,
+            itemCount: predictions.length,
+            itemBuilder: (BuildContext context, int index) {
+              return ListTile(
+                leading: const CircleAvatar(
+                  child: Icon(Icons.pin_drop),
+                ),
+                title: Text(
+                  predictions[index].description.toString(),
+                  style: bodySlimBody,
+                ),
+                onTap: () async {
+                  final placeId = predictions[index].placeId!;
+                  final details = await googlePlace.details.get(placeId);
+
+                  if (details != null && details.result != null && mounted) {
+                    if (startFocusNode!.hasFocus) {
+                      setState(() {
+                        startPosition = details.result;
+                        _startSearchFieldController.text =
+                            details.result!.formattedAddress!;
+                        predictions = [];
+                        address = _startSearchFieldController.text;
+                      });
+                    }
+                  }
+                },
+              );
+            },
           ),
+          const SizedBox(height: 10),
+          (_startSearchFieldController.text.isNotEmpty)
+              ? SizedBox(
+                  width: 100,
+                  height: 300,
+                  child: Center(
+                    child: Column(
+                      children: [
+                        Text(
+                          'Lokasi Kamu : ',
+                          style:
+                              onboardingGetStarted.copyWith(color: mainColor1),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          _startSearchFieldController.text,
+                          style: onboardingNormalText,
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.4,
+                            height: MediaQuery.of(context).size.height / 13,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.amber, shape: roundedRectBor),
+                              child: const Text('Ya ini alamat saya',
+                                  style: onboardingGetStarted),
+                              onPressed: () {
+                                setState(() {
+                                  address = _startSearchFieldController.text;
+                                });
+                                Get.to(UserOrder(address: address));
+                              },
+                            )),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              : Container()
         ],
       );
 

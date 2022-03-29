@@ -100,11 +100,11 @@ class Datum {
       };
 }
 
-// ignore: constant_identifier_names
-enum Location1 { JL_JL, SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137 }
+enum Location1 { JL_JL, NULL, SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137 }
 
 final location1Values = EnumValues({
   "Jl.Jl": Location1.JL_JL,
+  "null": Location1.NULL,
   "Semarang Plaza, Kota Semarang, Indonesia, 50137":
       Location1.SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137
 });
@@ -129,7 +129,7 @@ class EnumValues<T> {
 
   Map<T, String> get reverse {
     if (reverseMap == null) {
-      reverseMap = map!.map((k, v) => new MapEntry(v, k));
+      reverseMap = map!.map((k, v) => MapEntry(v, k));
     }
     return reverseMap!;
   }

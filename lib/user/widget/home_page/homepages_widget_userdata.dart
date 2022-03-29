@@ -158,7 +158,7 @@ class UIHomePage extends StatelessWidget {
                       fit: BoxFit.cover)),
               child: Container(
                 padding: const EdgeInsets.only(top: 15),
-                width: MediaQuery.of(context).size.width / 1.1,
+                width: MediaQuery.of(context).size.width / 1.15,
                 child: Column(
                   children: [
                     Container(
