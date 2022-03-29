@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/go_to_waste_collection_points.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/location_tracking.dart';
+import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 
 class OngoingOrder extends StatefulWidget {
@@ -48,18 +49,33 @@ class _OngoingOrderState extends State<OngoingOrder> {
                     color: Colors.amber, // inner circle color
                   ),
                   child: const Center(
-                      child: Text(
-                    'Go to Waste Collector',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                  )), // inner content
+                    child: Text(
+                      'Go to Waste Collector',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ), // inner content
                 ),
               ),
             ),
           ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 10,
+          ),
+          GestureDetector(
+            onTap: () {
+              Get.to(() => OngoingOrderProceed());
+            },
+            child: Container(
+              height: 100,
+              width: 100,
+              color: Colors.amberAccent,
+              child: Text('Syalom'),
+            ),
+          )
         ],
       ),
     );

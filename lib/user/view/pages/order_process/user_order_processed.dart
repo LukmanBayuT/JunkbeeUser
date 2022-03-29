@@ -56,13 +56,15 @@ class _UserOrderState extends State<UserOrder> {
       maxHeight: 1080,
       maxWidth: 1080,
     );
-    setState(() {
-      if (pickedFile1 != null) {
-        image1 = File(pickedFile1.path);
-      } else {
-        null;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (pickedFile1 != null) {
+          image1 = File(pickedFile1.path);
+        } else {
+          null;
+        }
+      });
+    }
   }
 
   void _getFromCam2() async {
@@ -71,13 +73,15 @@ class _UserOrderState extends State<UserOrder> {
       maxHeight: 1080,
       maxWidth: 1080,
     );
-    setState(() {
-      if (pickedFile2 != null) {
-        image2 = File(pickedFile2.path);
-      } else {
-        null;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (pickedFile2 != null) {
+          image2 = File(pickedFile2.path);
+        } else {
+          null;
+        }
+      });
+    }
   }
 
   void _getFromCam3() async {
@@ -86,13 +90,15 @@ class _UserOrderState extends State<UserOrder> {
       maxHeight: 1080,
       maxWidth: 1080,
     );
-    setState(() {
-      if (pickedFile3 != null) {
-        image3 = File(pickedFile3.path);
-      } else {
-        null;
-      }
-    });
+    if (mounted) {
+      setState(() {
+        if (pickedFile3 != null) {
+          image3 = File(pickedFile3.path);
+        } else {
+          null;
+        }
+      });
+    }
   }
 
   String? latitude;
@@ -693,10 +699,12 @@ class _UserOrderState extends State<UserOrder> {
                             duration: const Duration(seconds: 1));
                       } else {
                         getCurrentLocation();
-                        setState(() {
-                          totalWasteWeight = totalWeight.toString();
-                          userLocation = widget.address;
-                        });
+                        if (mounted) {
+                          setState(() {
+                            totalWasteWeight = totalWeight.toString();
+                            userLocation = widget.address;
+                          });
+                        }
                         _orderUser();
                       }
                     },
