@@ -47,6 +47,7 @@ dependencies:
   flutter_secure_storage: ^5.0.2
   flutter_spinkit: ^5.1.0
   flutter_switch: ^0.3.2
+  fluttertoast: ^8.0.9
   geocode: ^1.0.1
   geolocator: ^8.2.0
   get: ^4.6.1
@@ -60,11 +61,12 @@ dependencies:
   location: ^4.3.0
   location_web: ^3.1.1
   lottie: ^1.2.1
+  page_transition: ^2.0.5
   permission_handler: ^9.2.0
   search_map_location: ^0.0.4
   shared_preferences: ^2.0.13
-  swipeable_button_view: ^0.0.2
   sliding_up_panel: ^2.0.0+1
+  swipeable_button_view: ^0.0.2
   touchable_opacity: ^1.2.0
   webview_flutter: ^3.0.1
 
