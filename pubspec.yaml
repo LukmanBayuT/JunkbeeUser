@@ -63,6 +63,7 @@ dependencies:
   permission_handler: ^9.2.0
   search_map_location: ^0.0.4
   shared_preferences: ^2.0.13
+  swipeable_button_view: ^0.0.2
   sliding_up_panel: ^2.0.0+1
   touchable_opacity: ^1.2.0
   webview_flutter: ^3.0.1

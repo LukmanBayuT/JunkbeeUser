@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:location/location.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 class OngoingOrderProceed extends StatefulWidget {
   var panelController = PanelController();
@@ -24,6 +25,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   bool isWeightConfirmation = false;
   bool isCollectionPoint = false;
   bool isCompleted = false;
+  bool isFinished = false;
 
   @override
   Widget build(BuildContext context) {
@@ -131,23 +133,6 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                               width: 10,
                             ),
                             Text(
-                              'Collection Point',
-                              style: onboardingGetStarted.copyWith(
-                                  color: const Color(0xFF707070), fontSize: 15),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: Row(
-                          children: [
-                            Image.asset('assets/bola_kuning.png'),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
                               'Completed',
                               style: onboardingGetStarted.copyWith(
                                   color: const Color(0xFF707070), fontSize: 15),
@@ -167,10 +152,14 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   child: Row(
                     children: [
-                      Image.asset('assets/recycle_bin.png'),
+                      Image.asset(
+                        'assets/recycle_bin.png',
+                        width: 15,
+                      ),
                       const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,16 +177,16 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                     ],
                   ),
                 ),
-                const Divider(
-                  height: 5,
-                  thickness: 2,
-                ),
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
                   child: Row(
                     children: [
-                      Image.asset('assets/point_map.png'),
+                      Image.asset(
+                        'assets/point_map.png',
+                        width: 15,
+                      ),
                       const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,37 +204,74 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width / 2.6,
-                          height: MediaQuery.of(context).size.height / 13,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.red, shape: roundedRectBor),
-                            child: const Text('Cancel',
-                                style: onboardingGetStarted),
-                            onPressed: () {},
-                          )),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width / 2.6,
-                          height: MediaQuery.of(context).size.height / 13,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.amber, shape: roundedRectBor),
-                            child: const Text('Confirm',
-                                style: onboardingGetStarted),
-                            onPressed: () {},
-                          )),
-                    ],
-                  ),
+                const Divider(
+                  height: 20,
+                  thickness: 2,
                 ),
+                (isOnTheWay == true)
+                    ? Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.6,
+                                height: MediaQuery.of(context).size.height / 13,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.red,
+                                      shape: roundedRectBor),
+                                  child: const Text('Cancel',
+                                      style: onboardingGetStarted),
+                                  onPressed: () {},
+                                )),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.6,
+                                height: MediaQuery.of(context).size.height / 13,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.amber,
+                                      shape: roundedRectBor),
+                                  child: const Text('Pick Up',
+                                      style: onboardingGetStarted),
+                                  onPressed: () {},
+                                )),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                (isOnPickUp == false)
+                    ? Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: SwipeableButtonView(
+                          buttonText: 'Arrived at The Pickup',
+                          buttonWidget: Container(
+                            child: const Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          activeColor: Color.fromARGB(255, 247, 172, 12),
+                          isFinished: isFinished,
+                          onWaitingProcess: () {
+                            Future.delayed(const Duration(seconds: 2), () {
+                              setState(() {
+                                isFinished = true;
+                              });
+                            });
+                          },
+                          onFinish: () {
+                            //TODO: For reverse ripple effect animation
+                            setState(() {
+                              isFinished = false;
+                            });
+                          },
+                        ),
+                      )
+                    : Container()
               ],
             ),
           );

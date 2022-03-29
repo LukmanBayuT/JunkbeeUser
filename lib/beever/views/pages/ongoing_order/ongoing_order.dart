@@ -70,12 +70,34 @@ class _OngoingOrderState extends State<OngoingOrder> {
               Get.to(() => OngoingOrderProceed());
             },
             child: Container(
-              height: 100,
               width: 100,
-              color: Colors.amberAccent,
-              child: Text('Syalom'),
+              height: 100,
+              decoration: const BoxDecoration(
+                color: Colors.white, // border color
+                shape: BoxShape.circle,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(5), // border width
+                child: Container(
+                  // or ClipRRect if you need to clip the content
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.amber, // inner circle color
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Simulasi Beever pickup',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ), // inner content
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
