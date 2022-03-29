@@ -11,14 +11,14 @@ String addCollectionToJson(AddCollection data) => json.encode(data.toJson());
 
 class AddCollection {
   AddCollection({
-    required this.success,
-    required this.message,
-    required this.data,
+    this.success,
+    this.message,
+    this.data,
   });
 
-  final int success;
-  final String message;
-  final List<Datum> data;
+  final int? success;
+  final String? message;
+  final List<Datum>? data;
 
   factory AddCollection.fromJson(Map<String, dynamic> json) => AddCollection(
         success: json["success"],
@@ -29,44 +29,44 @@ class AddCollection {
   Map<String, dynamic> toJson() => {
         "success": success,
         "message": message,
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
       };
 }
 
 class Datum {
   Datum({
-    required this.id,
-    required this.orderCode,
-    required this.userId,
+    this.id,
+    this.orderCode,
+    this.userId,
     this.driverId,
     this.wasteCollectorId,
-    required this.date,
-    required this.totalWeight,
-    required this.total,
-    required this.feeBeever,
-    required this.status,
-    required this.location1,
-    required this.location2,
+    this.date,
+    this.totalWeight,
+    this.total,
+    this.feeBeever,
+    this.status,
+    this.location1,
+    this.location2,
     this.reason,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  final int id;
-  final String orderCode;
-  final String userId;
+  final int? id;
+  final String? orderCode;
+  final String? userId;
   final dynamic driverId;
   final dynamic wasteCollectorId;
-  final DateTime date;
-  final String totalWeight;
-  final String total;
-  final String feeBeever;
-  final String status;
-  final String location1;
-  final String location2;
+  final DateTime? date;
+  final String? totalWeight;
+  final String? total;
+  final String? feeBeever;
+  final String? status;
+  final String? location1;
+  final String? location2;
   final dynamic reason;
-  final DateTime createdAt;
-  final DateTime updatedAt;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -93,7 +93,7 @@ class Datum {
         "driver_id": driverId,
         "waste_collector_id": wasteCollectorId,
         "date":
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
         "total_weight": totalWeight,
         "total": total,
         "fee_beever": feeBeever,
@@ -101,7 +101,7 @@ class Datum {
         "location1": location1,
         "location2": location2,
         "reason": reason,
-        "created_at": createdAt.toIso8601String(),
-        "updated_at": updatedAt.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }

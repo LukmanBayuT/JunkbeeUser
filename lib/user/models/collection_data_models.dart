@@ -2,8 +2,6 @@
 //
 //     final collectionData = collectionDataFromJson(jsonString);
 
-// ignore_for_file: constant_identifier_names
-
 import 'dart:convert';
 
 CollectionData collectionDataFromJson(String str) =>
@@ -100,10 +98,11 @@ class Datum {
       };
 }
 
-enum Location1 { JL_JL, SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137 }
+enum Location1 { JL_JL, NULL, SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137 }
 
 final location1Values = EnumValues({
   "Jl.Jl": Location1.JL_JL,
+  "null": Location1.NULL,
   "Semarang Plaza, Kota Semarang, Indonesia, 50137":
       Location1.SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137
 });
@@ -127,7 +126,9 @@ class EnumValues<T> {
   EnumValues(this.map);
 
   Map<T, String> get reverse {
-    reverseMap ??= map!.map((k, v) => MapEntry(v, k));
+    if (reverseMap == null) {
+      reverseMap = map!.map((k, v) => MapEntry(v, k));
+    }
     return reverseMap!;
   }
 }

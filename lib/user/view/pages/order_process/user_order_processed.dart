@@ -101,9 +101,20 @@ class _UserOrderState extends State<UserOrder> {
       longitude = "$long";
     });
 
-    var response = await http.put(Uri.parse(
-      EndPoint.baseApiURL + EndPoint.updateUserLocation,
-    ));
+    var queryParams = {
+      'lat': latitude,
+      'long': longitude,
+    };
+
+    var authToken = await secureStorage.readSecureData('token');
+    var token = authToken;
+
+    var url = Uri.https(EndPoint.baseApiURL + EndPoint.updateUserLocation,
+        queryParams.toString());
+
+    var response = http.put(url, headers: {'Authorization': 'Bearer $token'});
+
+    print(response);
   }
 
   String? totalWasteWeight;
@@ -160,12 +171,6 @@ class _UserOrderState extends State<UserOrder> {
     } catch (e) {
       print(e);
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    PermissionHandler().listenForPermission();
   }
 
   @override
@@ -536,7 +541,8 @@ class _UserOrderState extends State<UserOrder> {
                       totalWasteWeight = totalWeight.toString();
                       userLocation = widget.address;
                     });
-                    _orderUser();
+                    // _orderUser();
+                    getCurrentLocation();
                   },
                 )),
             SizedBox(
