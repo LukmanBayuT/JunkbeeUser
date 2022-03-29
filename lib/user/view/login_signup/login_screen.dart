@@ -271,7 +271,7 @@ class _SignInUserState extends State<SignInUser> {
                           alignment: Alignment.center,
                           child: Lottie.asset(
                               "assets/animation/bee_loading.json",
-                              width: 250,
+                              width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 1,
                               animate: true))
                       : Container()

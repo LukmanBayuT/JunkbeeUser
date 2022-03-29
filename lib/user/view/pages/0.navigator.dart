@@ -5,7 +5,7 @@ import 'package:junkbee_user/user/view/pages/home_page/homepages.dart';
 import 'package:junkbee_user/user/view/pages/collection_status/collection_status_active.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
 import 'package:junkbee_user/user/view/pages/message/messages_chat.dart';
-import 'package:junkbee_user/user/view/pages/profile/7.profile_user.dart';
+import 'package:junkbee_user/user/view/pages/profile/profile_user.dart';
 
 class NavigatorUser extends StatefulWidget {
   const NavigatorUser({Key? key}) : super(key: key);
