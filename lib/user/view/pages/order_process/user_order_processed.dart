@@ -495,13 +495,14 @@ class _UserOrderState extends State<UserOrder> {
                                         width: 30),
                                     const SizedBox(width: 10),
                                     SizedBox(
-                                      width: 150,
+                                      width:
+                                          MediaQuery.of(context).size.width / 2,
                                       child: Text(
                                         (widget.address != null)
                                             ? widget.address.toString()
                                             : 'Lokasimu',
                                         style: onboardingNormalText,
-                                        overflow: TextOverflow.ellipsis,
+                                        // overflow: TextOverflow.ellipsis,
                                       ),
                                     )
                                   ],
