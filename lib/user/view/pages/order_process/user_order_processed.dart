@@ -105,16 +105,6 @@ class _UserOrderState extends State<UserOrder> {
       'lat': latitude,
       'long': longitude,
     };
-
-    var authToken = await secureStorage.readSecureData('token');
-    var token = authToken;
-
-    var url = Uri.https(EndPoint.baseApiURL + EndPoint.updateUserLocation,
-        queryParams.toString());
-
-    var response = http.put(url, headers: {'Authorization': 'Bearer $token'});
-
-    print(response);
   }
 
   String? totalWasteWeight;
@@ -141,6 +131,8 @@ class _UserOrderState extends State<UserOrder> {
       request.fields['waste_type'] = '$wasteType';
       request.fields['waste_weight'] = '$wasteWeight';
       request.fields['subtotal'] = '$subtotal';
+      request.fields['lat'] = '$latitude';
+      request.fields['lng'] = '$longitude';
       request.fields['location1'] = '$userLocation';
       request.headers['Authorization'] = 'Bearer $token';
 
@@ -152,7 +144,7 @@ class _UserOrderState extends State<UserOrder> {
         if (response.statusCode == 200) {
           print('success');
         } else if (response.statusCode == 400) {
-          Get.snackbar('Bad Request', '${response.body}',
+          Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.amber,
               colorText: Colors.white,
@@ -171,6 +163,13 @@ class _UserOrderState extends State<UserOrder> {
     } catch (e) {
       print(e);
     }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentLocation();
   }
 
   @override
@@ -537,12 +536,12 @@ class _UserOrderState extends State<UserOrder> {
                   child:
                       const Text('Find a Beever', style: onboardingGetStarted),
                   onPressed: () {
+                    getCurrentLocation();
                     setState(() {
                       totalWasteWeight = totalWeight.toString();
                       userLocation = widget.address;
                     });
-                    // _orderUser();
-                    getCurrentLocation();
+                    _orderUser();
                   },
                 )),
             SizedBox(
