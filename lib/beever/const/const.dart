@@ -47,6 +47,9 @@ const bodyBoldBody =
 const textBodyProfile =
     TextStyle(fontSize: 22, fontWeight: FontWeight.w800, color: maincolor4);
 
+const textProfileBoldMed =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: mainColor1);
+
 const textProfileBold =
     TextStyle(fontSize: 18, fontWeight: FontWeight.w800, color: mainColor1);
 

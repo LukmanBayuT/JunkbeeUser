@@ -11,16 +11,14 @@ class NewsApiUsers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      transform: Matrix4.translationValues(0, -25, 0),
+      padding: const EdgeInsets.only(top: 20),
+      width: MediaQuery.of(context).size.width / 1.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: defaultPadding6,
-            child: Text('News', style: titleBodyMini),
-          ),
-          Padding(
-            padding: defaultPadding0,
+          const Text('News', style: titleBodyMini),
+          Container(
+            padding: const EdgeInsets.only(top: 15, bottom: 100),
             child: SizedBox(
                 width: MediaQuery.of(context).size.width / 1,
                 height: MediaQuery.of(context).size.height / 3.5,
@@ -55,7 +53,7 @@ class NewsApiUsers extends StatelessWidget {
                                             ClipRRect(
                                               borderRadius: BorderRadius.circular(20),
                                               child: AspectRatio(
-                                                aspectRatio: 16 / 9,
+                                                aspectRatio: 11 / 10,
                                                 child: Image.network(
                                                   EndPoint.bannerForNews + '${news?.data[index].banner}', fit: BoxFit.cover,
                                                 ),

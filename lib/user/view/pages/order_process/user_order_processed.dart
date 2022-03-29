@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, unused_local_variable, await_only_futures, avoid_print, unnecessary_string_interpolations, avoid_init_to_null, non_constant_identifier_names, sized_box_for_whitespace
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -6,10 +8,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
+import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,6 +28,8 @@ class UserOrder extends StatefulWidget {
 
 class _UserOrderState extends State<UserOrder> {
   SecureStorage secureStorage = SecureStorage();
+
+  dynamic token_local = null;
 
   bool isPaperSelected = false;
   bool isPlasticSelected = false;
@@ -166,6 +172,14 @@ class _UserOrderState extends State<UserOrder> {
   void initState() {
     super.initState();
     PermissionHandler().listenForPermission();
+    check_token();
+  }
+
+  check_token() async {
+    var token = await secureStorage.readSecureData('token');
+    setState(() {
+      token_local = token;
+    });
   }
 
   @override
@@ -532,11 +546,87 @@ class _UserOrderState extends State<UserOrder> {
                   child:
                       const Text('Find a Beever', style: onboardingGetStarted),
                   onPressed: () {
-                    setState(() {
-                      totalWasteWeight = totalWeight.toString();
-                      userLocation = widget.address;
-                    });
-                    _orderUser();
+                    if (token_local == null) {
+                      showAnimatedDialog(
+                        context: context,
+                        barrierDismissible: true,
+                        builder: (BuildContext context) {
+                          return Dialog(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                            elevation: 1,
+                            backgroundColor: Colors.white,
+                            insetPadding: const EdgeInsets.all(0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 1.5,
+                              height: MediaQuery.of(context).size.height / 3,
+                              alignment: Alignment.center,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width / 1.7,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(bottom: 15),
+                                      child: const Text('You must login first!', style: TextStyle(color: Color(0xFF707070), fontFamily: 'DiodrumCyrillicBold', fontSize: 18)),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInUser()));
+                                          if (result == 'back') {
+                                            await check_token();
+                                            if (mounted) {
+                                              setState(() {});
+                                            }
+                                          }
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width / 2,
+                                          height: MediaQuery.of(context).size.height / 15,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(16),
+                                            gradient: const LinearGradient(colors: [Color(0xFFF8C503), Color(0xFFFFE067)])),
+                                          alignment: Alignment.center,
+                                          child: const Text('Login / Register', style: bodyBodyUserMini),
+                                        ),
+                                      )
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.only(top: 20),
+                                      child: GestureDetector(
+                                        onTap: () => Navigator.of(context).pop(),
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width / 2,
+                                          height: MediaQuery.of(context).size.height / 15,
+                                          decoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            borderRadius: BorderRadius.circular(16),
+                                          ),
+                                          alignment: Alignment.center,
+                                          child: const Text('Cancel', style: bodyBodyUserMini),
+                                        ),
+                                      )
+                                    )
+                                  ],
+                                )
+                              )
+                            )
+                          );
+                        },
+                        animationType: DialogTransitionType.slideFromBottomFade,
+                        curve: Curves.fastOutSlowIn,
+                        duration: const Duration(seconds: 1)
+                      );
+                    } else {
+                      setState(() {
+                        totalWasteWeight = totalWeight.toString();
+                        userLocation = widget.address;
+                      });
+                      _orderUser();
+                    }
                   },
                 )),
             SizedBox(

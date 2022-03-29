@@ -15,8 +15,7 @@ class ArticleJunkbee extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           children: const [
             Article1(),
-            Article2(),
-            Article3(),
+            Article2()
           ],
         ),
       ),
@@ -25,14 +24,12 @@ class ArticleJunkbee extends StatelessWidget {
 }
 
 class Article1 extends StatelessWidget {
-  const Article1({
-    Key? key,
-  }) : super(key: key);
+  const Article1({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: defaultPadding0,
+      padding: const EdgeInsets.only(left: 20, right: 6, top: 6, bottom: 6),
       child: SizedBox(
         width: MediaQuery.of(context).size.width / 1.5,
         child: Card(
@@ -63,7 +60,7 @@ class Article2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: defaultPadding0,
+      padding: const EdgeInsets.only(left: 6, right: 20, top: 6, bottom: 6),
       child: SizedBox(
         width: MediaQuery.of(context).size.width / 1.5,
         child: Card(

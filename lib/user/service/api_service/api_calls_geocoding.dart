@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'package:junkbee_user/user/models/geocoding_model.dart';
@@ -10,6 +12,7 @@ class GetLocationGeocoding {
     var long = position.longitude.toString();
 
     String url =
+        // ignore: unnecessary_brace_in_string_interps
         'https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${long}&key=AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k';
 
     var response = await http.post(Uri.parse(url));

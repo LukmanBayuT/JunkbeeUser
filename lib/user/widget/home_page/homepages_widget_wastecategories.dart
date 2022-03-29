@@ -7,8 +7,8 @@ class WasteCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      transform: Matrix4.translationValues(0, -50, 0),
-      padding: defaultPadding4,
+      transform: Matrix4.translationValues(0, -20, 0),
+      width: MediaQuery.of(context).size.width / 1.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

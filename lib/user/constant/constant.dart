@@ -50,7 +50,13 @@ const bodyBodyUserMiniBold =
     TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: mainColor0);
 
 const titleBodyStatistic =
-    TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: mainColor3);
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w700, color: mainColor3);
+
+const titleBodyDialog =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: mainColor2);
+
+const titleBodyLogout =
+    TextStyle(fontSize: 20, fontWeight: FontWeight.w800, color: mainColor1);
 
 const titleBodyMini =
     TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: mainColor1);

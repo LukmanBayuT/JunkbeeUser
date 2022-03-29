@@ -7,8 +7,8 @@ class StatisticUsers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      transform: Matrix4.translationValues(0, -45, 0),
-      padding: defaultPadding4,
+      transform: Matrix4.translationValues(0, -5, 0),
+      width: MediaQuery.of(context).size.width / 1.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -18,10 +18,8 @@ class StatisticUsers extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                width: MediaQuery.of(context).size.width / 3.5,
-                decoration: BoxDecoration(
-                    borderRadius: roundedRect,
-                    border: Border.all(color: Colors.amber, width: 2)),
+                width: MediaQuery.of(context).size.width / 3.65,
+                decoration: BoxDecoration(borderRadius: roundedRect, border: Border.all(color: Colors.amber, width: 2)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,21 +33,19 @@ class StatisticUsers extends StatelessWidget {
                       child: Text('Material\nRecycled', style: bodyBody),
                     ),
                     Container(
-                        width: 130,
-                        height: 15,
-                        decoration: const BoxDecoration(
-                            color: Colors.blueAccent,
-                            borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(15),
-                                bottomRight: Radius.circular(15)))),
+                      width: 130,
+                      height: 15,
+                      decoration: const BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))
+                      )
+                    ),
                   ],
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width / 3.5,
-                decoration: BoxDecoration(
-                    borderRadius: roundedRect,
-                    border: Border.all(color: Colors.amber, width: 2)),
+                width: MediaQuery.of(context).size.width / 3.65,
+                decoration: BoxDecoration(borderRadius: roundedRect, border: Border.all(color: Colors.amber, width: 2)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +70,7 @@ class StatisticUsers extends StatelessWidget {
                 ),
               ),
               Container(
-                width: MediaQuery.of(context).size.width / 3.5,
+                width: MediaQuery.of(context).size.width / 3.65,
                 decoration: BoxDecoration(
                     borderRadius: roundedRect,
                     border: Border.all(color: Colors.amber, width: 2)),

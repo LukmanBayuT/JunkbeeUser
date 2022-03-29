@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, avoid_print
+// ignore_for_file: unused_import, avoid_print, curly_braces_in_flow_control_structures
 
 import 'dart:async';
 import 'package:flutter/material.dart';

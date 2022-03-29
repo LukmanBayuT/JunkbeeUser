@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, unnecessary_string_interpolations, non_constant_identifier_names
+// ignore_for_file: sized_box_for_whitespace, unnecessary_string_interpolations, non_constant_identifier_names, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -67,7 +67,7 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                       fit: BoxFit.cover)),
               child: Container(
                 padding: const EdgeInsets.only(top: 15),
-                width: MediaQuery.of(context).size.width / 1.1,
+                width: MediaQuery.of(context).size.width / 1.15,
                 child: Column(
                   children: [
                     Container(
@@ -81,9 +81,7 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                                 ? Get.offAll(() => const NavigatorPages())
                                 : showDialogue();
                           },
-                          child: Text('Be a Beever',
-                              style:
-                                  bodyBoldBody.copyWith(color: Colors.white))),
+                          child: Text('Be a Beever', style: bodyBoldBody.copyWith(color: Colors.white))),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,

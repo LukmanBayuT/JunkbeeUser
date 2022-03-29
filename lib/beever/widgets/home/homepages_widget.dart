@@ -21,7 +21,7 @@ class WhiteSpace extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      width: MediaQuery.of(context).size.width / 1.1,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -30,13 +30,7 @@ class WhiteSpace extends StatelessWidget {
             onTap: () {
               Get.offAll(() => const NavigatorUser());
             },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 40),
-              child: Text(
-                'Be a User',
-                style: titleBold.copyWith(color: Colors.white),
-              ),
-            ),
+            child: Text('Be a User', style: titleBodyMini.copyWith(color: Colors.white))
           )
         ],
       ),
@@ -76,8 +70,7 @@ Container profileAndBalance(BuildContext context) {
                   width: 100,
                   height: 50,
                   child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                     child: Padding(
                       padding: defaultPadding2,
                       child: Row(
@@ -111,26 +104,17 @@ Container profileAndBalance(BuildContext context) {
                         ),
                         Container(
                           width: MediaQuery.of(context).size.width / 1.2,
-                          decoration: const BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1, color: Color(0xFFDEDEDE)))),
+                          decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1, color: Color(0xFFDEDEDE)))),
                         ),
                         const SizedBox(height: 25),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             TouchableOpacity(
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WithdrawScreen())),
+                              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WithdrawScreen())),
                               child: Column(
                                 children: [
-                                  Image.asset('assets/withdraw_icon.png',
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              25),
+                                  Image.asset('assets/withdraw_icon.png', height: MediaQuery.of(context).size.height / 25),
                                   const SizedBox(height: 5),
                                   const Text('Withdraw', style: bodySlimBody),
                                 ],
@@ -139,10 +123,7 @@ Container profileAndBalance(BuildContext context) {
                             TouchableOpacity(
                               child: Column(
                                 children: [
-                                  Image.asset('assets/topup_icon.png',
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              25),
+                                  Image.asset('assets/topup_icon.png', height: MediaQuery.of(context).size.height / 25),
                                   const SizedBox(height: 5),
                                   const Text('Topup', style: bodySlimBody),
                                 ],
@@ -159,11 +140,7 @@ Container profileAndBalance(BuildContext context) {
             ),
           );
         } else {
-          return const Center(
-              child: SpinKitWave(
-            color: Colors.amberAccent,
-            size: 50,
-          ));
+          return const Center(child: SpinKitWave(color: Colors.amberAccent, size: 50));
         }
       },
     ),
@@ -173,13 +150,14 @@ Container profileAndBalance(BuildContext context) {
 Container orderPickup(BuildContext context) {
   return Container(
     transform: Matrix4.translationValues(0, -40, 0),
+    width: MediaQuery.of(context).size.width / 1.1,
     padding: defaultPadding0,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
           padding: defaultPadding8,
-          child: Text('Order', style: titleBodyMini),
+          child: Text('Order', style: textProfileBoldMed),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -196,7 +174,7 @@ Container orderPickup(BuildContext context) {
 
 SizedBox pickUpHistory(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 3.2,
+      width: MediaQuery.of(context).size.width / 3.45,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const HistoryScreen())),
@@ -216,7 +194,7 @@ SizedBox pickUpHistory(BuildContext context) {
                 ),
               ),
               const Padding(
-                padding: defaultPadding0,
+                padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                 child: Text('Picked Up History', style: bodySlimBody),
               ),
               Container(
@@ -235,7 +213,7 @@ SizedBox pickUpHistory(BuildContext context) {
 
 SizedBox currentPickUp(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 3.2,
+      width: MediaQuery.of(context).size.width / 3.45,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const CurrentScreen())),
@@ -255,7 +233,7 @@ SizedBox currentPickUp(BuildContext context) {
                 ),
               ),
               const Padding(
-                padding: defaultPadding0,
+                padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                 child: Text('Current Pick Up', style: bodySlimBody),
               ),
               Container(
@@ -274,7 +252,7 @@ SizedBox currentPickUp(BuildContext context) {
 
 SizedBox availablePickUp(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 3.2,
+      width: MediaQuery.of(context).size.width / 3.45,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const AvailableScreen())),
@@ -294,7 +272,7 @@ SizedBox availablePickUp(BuildContext context) {
                 ),
               ),
               const Padding(
-                padding: defaultPadding0,
+                padding: EdgeInsets.only(left: 8, right: 8, bottom: 8),
                 child: Text('Available Pick Up', style: bodySlimBody),
               ),
               Container(
@@ -312,98 +290,99 @@ SizedBox availablePickUp(BuildContext context) {
 }
 
 class NewsAPI extends StatelessWidget {
-  const NewsAPI({
-    Key? key,
-  }) : super(key: key);
+  const NewsAPI({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Padding(
-          padding: defaultPadding6,
-          child: Text('News for you', style: titleBodyMini),
-        ),
-        Padding(
-          padding: defaultPadding0,
-          child: SizedBox(
-              width: MediaQuery.of(context).size.width / 1,
-              height: MediaQuery.of(context).size.height / 3,
-              child: FutureBuilder(
-                future: ApiCallsGetNews().getNews(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  var news = snapshot.data;
+    return Container(
+      width: MediaQuery.of(context).size.width / 1.1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: defaultPadding6,
+            child: Text('News for you', style: textProfileBoldMed),
+          ),
+          Padding(
+            padding: defaultPadding0,
+            child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1,
+                height: MediaQuery.of(context).size.height / 3,
+                child: FutureBuilder(
+                  future: ApiCallsGetNews().getNews(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    var news = snapshot.data;
 
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return ListView.builder(
-                        reverse: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: news.data.length,
-                        itemBuilder: (_, index) {
-                          return Padding(
-                            padding: defaultPaddingHorizontal,
-                            child: GestureDetector(
-                              onTap: () async {
-                                final launchNews = EndPoint.finalNewsData +
-                                    news?.data[index].slug;
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) =>
-                                      NewsScreen(url: launchNews),
-                                ));
-                              },
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 2.3,
-                                height: MediaQuery.of(context).size.height / 20,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              6,
-                                      child: Column(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: AspectRatio(
-                                              aspectRatio: 15 / 10,
-                                              child: Image.network(
-                                                EndPoint.bannerForNews +
-                                                    '${news?.data[index].banner}',
-                                                fit: BoxFit.cover,
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return ListView.builder(
+                          reverse: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: news.data.length,
+                          itemBuilder: (_, index) {
+                            return Padding(
+                              padding: defaultPaddingHorizontal,
+                              child: GestureDetector(
+                                onTap: () async {
+                                  final launchNews = EndPoint.finalNewsData +
+                                      news?.data[index].slug;
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        NewsScreen(url: launchNews),
+                                  ));
+                                },
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2.3,
+                                  height: MediaQuery.of(context).size.height / 20,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                6,
+                                        child: Column(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: AspectRatio(
+                                                aspectRatio: 15 / 10,
+                                                child: Image.network(
+                                                  EndPoint.bannerForNews +
+                                                      '${news?.data[index].banner}',
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
-                                            ),
-                                          )
-                                        ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Text('${news?.data[index].judul}',
-                                        style: bodySlimBody,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis),
-                                  ],
+                                      Text('${news?.data[index].judul}',
+                                          style: bodySlimBody,
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        });
-                  } else {
-                    return const Center(
-                        child: SpinKitWave(
-                      color: Colors.amberAccent,
-                      size: 50,
-                    ));
-                  }
-                },
-              )),
-        ),
-        const SizedBox(
-          height: 30,
-        )
-      ],
+                            );
+                          });
+                    } else {
+                      return const Center(
+                          child: SpinKitWave(
+                        color: Colors.amberAccent,
+                        size: 50,
+                      ));
+                    }
+                  },
+                )),
+          ),
+          const SizedBox(
+            height: 30,
+          )
+        ],
+      )
     );
   }
 }

@@ -38,6 +38,7 @@ dependencies:
   firebase_storage: ^10.2.9
   flutter:
     sdk: flutter
+  flutter_animated_dialog: ^2.0.1
   flutter_dotenv: ^5.0.2
   flutter_local_notifications: ^9.4.0
   flutter_login_facebook: ^1.4.1

@@ -2,6 +2,8 @@
 //
 //     final collectionData = collectionDataFromJson(jsonString);
 
+// ignore_for_file: constant_identifier_names, duplicate_ignore, unnecessary_new, prefer_conditional_assignment
+
 import 'dart:convert';
 
 CollectionData collectionDataFromJson(String str) =>
@@ -98,6 +100,7 @@ class Datum {
       };
 }
 
+// ignore: constant_identifier_names
 enum Location1 { JL_JL, SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137 }
 
 final location1Values = EnumValues({

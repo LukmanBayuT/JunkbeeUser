@@ -47,26 +47,25 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/heading_full.png'),
-                fit: BoxFit.fill)),
+      body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 60),
-              width: MediaQuery.of(context).size.width / 1.1,
+              padding: const EdgeInsets.only(top: 40),
+              height: MediaQuery.of(context).size.height / 4,
+              alignment: Alignment.topCenter,
+              decoration: const BoxDecoration(
+                image: DecorationImage(image: AssetImage('assets/heading.png'), fit: BoxFit.fill)
+              ),
+              child: WhiteSpace()
             ),
-            WhiteSpace(),
             profileAndBalance(context),
             orderPickup(context),
             NewsAPI()
           ],
         ),
       ),
-    ));
+    );
   }
 }

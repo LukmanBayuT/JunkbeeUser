@@ -10,8 +10,8 @@ class UserDataGetStarted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      transform: Matrix4.translationValues(0, -60, 0),
-      padding: defaultPadding4,
+      transform: Matrix4.translationValues(0, -50, 0),
+      width: MediaQuery.of(context).size.width / 1.15,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -25,7 +25,7 @@ class UserDataGetStarted extends StatelessWidget {
                   navKey.currentState?.setPage(2);
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 2.3,
+                  width: MediaQuery.of(context).size.width / 2.5,
                   height: MediaQuery.of(context).size.height / 12,
                   decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
                   child: const Center(
@@ -36,7 +36,7 @@ class UserDataGetStarted extends StatelessWidget {
               GestureDetector(
                 onTap: () {},
                 child: Container(
-                  width: MediaQuery.of(context).size.width / 2.3,
+                  width: MediaQuery.of(context).size.width / 2.5,
                   height: MediaQuery.of(context).size.height / 12,
                   decoration: BoxDecoration(color: Colors.amber, borderRadius: BorderRadius.circular(20)),
                   child: const Center(
