@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed_final.dart';
+import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:location/location.dart';
 import 'package:page_transition/page_transition.dart';
@@ -18,6 +18,8 @@ class OngoingOrderProceed extends StatefulWidget {
 }
 
 class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
+  final TextEditingController _jenisSampah = TextEditingController();
+  final TextEditingController _BeratSampah = TextEditingController();
   final panelController = PanelController();
   LocationData? currentLocation;
   late LocationData destinationLocation;
@@ -29,6 +31,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   bool isCollectionPoint = false;
   bool isCompleted = false;
   bool isFinished = false;
+  bool isLastScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +46,19 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
     final panelHeightOpen = MediaQuery.of(context).size.height * 0.35;
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
 
+    final panelHeightOpenFinal = MediaQuery.of(context).size.height * 0.8;
+    final panelHeightClosedFinal = MediaQuery.of(context).size.height * 0.1;
+
     return Scaffold(
       body: SlidingUpPanel(
         controller: panelController,
         parallaxEnabled: true,
         parallaxOffset: .5,
         borderRadius: roundedRect,
-        minHeight: panelHeightClosed,
-        maxHeight: panelHeightOpen,
+        minHeight:
+            (isLastScreen == true) ? panelHeightClosedFinal : panelHeightClosed,
+        maxHeight:
+            (isLastScreen == true) ? panelHeightOpenFinal : panelHeightOpen,
         body: Stack(
           children: [
             GoogleMap(initialCameraPosition: initialCameraPosition),
@@ -269,26 +277,159 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                           activeColor: const Color.fromARGB(255, 247, 172, 12),
                           isFinished: isFinished,
                           onWaitingProcess: () {
-                            Future.delayed(const Duration(seconds: 2), () {
+                            Future.delayed(const Duration(seconds: 3), () {
                               setState(() {
                                 isFinished = true;
                               });
                             });
                           },
                           onFinish: () async {
-                            await Navigator.push(
-                                context,
-                                PageTransition(
-                                    type: PageTransitionType.fade,
-                                    child: OngoingOrderProceedFinal()));
                             setState(() {
-                              isFinished = false;
+                              isOnTheWay = false;
                               isOnPickUp = false;
-                              isOnTheWay = true;
+                              isLastScreen = true;
+                              isFinished = false;
                             });
                           },
                         ),
                       )
+                    : Container(),
+                (isLastScreen == true)
+                    ? Column(children: [
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
+                          height: MediaQuery.of(context).size.height * 0.45,
+                          width: MediaQuery.of(context).size.width / 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Category',
+                                style: bodyBodyBold,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Jenis Sampah',
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.7),
+                                    borderSide: const BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.7),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFDEDEDE),
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.7),
+                                    borderSide: const BorderSide(
+                                      color: Colors.red,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.7),
+                                    borderSide: const BorderSide(
+                                      color: Colors.red,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  counterText: '',
+                                ),
+                                controller: _jenisSampah,
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              const Text(
+                                'Total Weight',
+                                style: bodyBodyBold,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                  hintText: 'Total Kilo',
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.7),
+                                    borderSide: const BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.7),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xFFDEDEDE),
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  counterText: '',
+                                ),
+                                controller: _BeratSampah,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  height:
+                                      MediaQuery.of(context).size.height / 13,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.amber,
+                                        shape: roundedRectBor),
+                                    child: Text('Confirm',
+                                        style: onboardingGetStarted.copyWith(
+                                            fontSize: 18)),
+                                    onPressed: () {},
+                                  )),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: SwipeableButtonView(
+                            buttonText: 'Weight Confirmation',
+                            buttonWidget: Container(
+                              child: const Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            activeColor:
+                                const Color.fromARGB(255, 247, 172, 12),
+                            isFinished: isFinished,
+                            onWaitingProcess: () {
+                              Future.delayed(const Duration(seconds: 2), () {
+                                setState(() {
+                                  isFinished = true;
+                                });
+                              });
+                            },
+                            onFinish: () async {
+                              await Navigator.pushReplacement(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.fade,
+                                      child: const NavigatorPages()));
+                              setState(() {
+                                isOnTheWay = true;
+                                isOnPickUp = false;
+                                isLastScreen = false;
+                                isFinished = false;
+                                isFinished = false;
+                              });
+                            },
+                          ),
+                        )
+                      ])
                     : Container()
               ],
             ),
