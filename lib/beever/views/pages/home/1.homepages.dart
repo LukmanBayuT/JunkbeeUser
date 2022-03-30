@@ -52,14 +52,10 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
     var id = await secureStorage.readSecureData('id');
-
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     var lat = position.latitude;
     var long = position.longitude;
-
-    print(lat);
-    print(long);
 
     var uri = Uri.https(
         'www.staging2.junkbee.id',
@@ -68,9 +64,6 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var response =
         await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
-      print(id);
-      print(response.body);
-
       return Future.delayed(Duration(seconds: 5))
           .then((value) => patchBeeverLocation());
     } else {

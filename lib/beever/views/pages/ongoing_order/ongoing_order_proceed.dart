@@ -26,12 +26,15 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   late Location location;
 
   bool isOnTheWay = true;
+  bool isOnTheWayText = false;
   bool isOnPickUp = false;
+  bool isOnPickUpText = false;
   bool isWeightConfirmation = false;
-  bool isCollectionPoint = false;
+  bool isWeightConfirmationText = false;
+  bool isLastScreen = false;
+  bool isLastScreenText = false;
   bool isCompleted = false;
   bool isFinished = false;
-  bool isLastScreen = false;
 
   @override
   Widget build(BuildContext context) {
@@ -92,11 +95,10 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text(
-                              'On The Way',
-                              style: onboardingGetStarted.copyWith(
-                                  color: const Color(0xFF707070), fontSize: 15),
-                            )
+                            Text('On The Way',
+                                style: (isOnTheWayText == false)
+                                    ? onboardingGetStartedGrey
+                                    : onboardingGetStartedYellow)
                           ],
                         ),
                       ),
@@ -111,8 +113,9 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             ),
                             Text(
                               'Pick Up Point',
-                              style: onboardingGetStarted.copyWith(
-                                  color: const Color(0xFF707070), fontSize: 15),
+                              style: (isOnPickUpText == false)
+                                  ? onboardingGetStartedGrey
+                                  : onboardingGetStartedYellow,
                             )
                           ],
                         ),
@@ -128,8 +131,9 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             ),
                             Text(
                               'Weight Confirmation',
-                              style: onboardingGetStarted.copyWith(
-                                  color: const Color(0xFF707070), fontSize: 15),
+                              style: (isWeightConfirmationText == false)
+                                  ? onboardingGetStartedGrey
+                                  : onboardingGetStartedYellow,
                             )
                           ],
                         ),
@@ -145,8 +149,9 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             ),
                             Text(
                               'Completed',
-                              style: onboardingGetStarted.copyWith(
-                                  color: const Color(0xFF707070), fontSize: 15),
+                              style: (isLastScreenText == false)
+                                  ? onboardingGetStartedGrey
+                                  : onboardingGetStartedYellow,
                             )
                           ],
                         ),
@@ -254,6 +259,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                     if (mounted) {
                                       setState(() {
                                         isOnTheWay = false;
+                                        isOnTheWayText = true;
                                         isOnPickUp = true;
                                       });
                                     }
@@ -287,6 +293,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             setState(() {
                               isOnTheWay = false;
                               isOnPickUp = false;
+                              isOnPickUpText = true;
                               isLastScreen = true;
                               isFinished = false;
                             });
@@ -421,8 +428,11 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                       child: const NavigatorPages()));
                               setState(() {
                                 isOnTheWay = true;
+                                isOnTheWayText = false;
                                 isOnPickUp = false;
+                                isOnPickUpText = false;
                                 isLastScreen = false;
+                                isLastScreenText = false;
                                 isFinished = false;
                                 isFinished = false;
                               });

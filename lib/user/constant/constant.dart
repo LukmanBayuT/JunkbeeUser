@@ -100,6 +100,18 @@ const onboardingGetStarted = TextStyle(
   color: Color(0xffffffff),
 );
 
+const onboardingGetStartedGrey = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  color: Color(0xFF707070),
+);
+
+const onboardingGetStartedYellow = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  color: Colors.amber,
+);
+
 const signScreenTextStyle = TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.w500,
