@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
@@ -27,6 +30,27 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     super.initState();
     getRole();
     patchBeeverLocation();
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text("Notification"),
+              content: Text(event.notification!.body!),
+              actions: [
+                TextButton(
+                  child: Text("Ok"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            );
+          });
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      Get.to(() => OngoingOrderProceed());
+    });
   }
 
   getRole() async {
@@ -58,12 +82,16 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var long = position.longitude;
 
     var uri = Uri.https(
-        'www.staging2.junkbee.id',
-        '/api/beever/update/location',
-        {'id': id, 'lat': lat.toString(), 'lng': long.toString()});
+        'www.staging2.junkbee.id', '/api/beever/update/location', {
+      'id': id,
+      'lat': lat.toString(),
+      'lng': long.toString(),
+      'status': 'ready'
+    });
     var response =
         await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
+      print(response.body);
       return Future.delayed(Duration(seconds: 5))
           .then((value) => patchBeeverLocation());
     } else {

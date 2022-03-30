@@ -61,6 +61,7 @@ dependencies:
   location: ^4.3.0
   location_web: ^3.1.1
   lottie: ^1.2.1
+  overlay_support: ^1.2.1
   page_transition: ^2.0.5
   permission_handler: ^9.2.0
   search_map_location: ^0.0.4
