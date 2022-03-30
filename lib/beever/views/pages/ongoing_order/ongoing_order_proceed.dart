@@ -19,7 +19,7 @@ class OngoingOrderProceed extends StatefulWidget {
 
 class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   final TextEditingController _jenisSampah = TextEditingController();
-  final TextEditingController _BeratSampah = TextEditingController();
+  final TextEditingController _beratSampah = TextEditingController();
   final panelController = PanelController();
   LocationData? currentLocation;
   late LocationData destinationLocation;
@@ -379,7 +379,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                   ),
                                   counterText: '',
                                 ),
-                                controller: _BeratSampah,
+                                controller: _beratSampah,
                               ),
                               const SizedBox(
                                 height: 10,
