@@ -271,7 +271,7 @@ class _OngoingOrderProceedFinalState extends State<OngoingOrderProceedFinal> {
                       ),
                       TextFormField(
                         decoration: InputDecoration(
-                          hintText: 'Jenis Sampah',
+                          hintText: 'Total Kilo',
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(16.7),
                             borderSide: const BorderSide(

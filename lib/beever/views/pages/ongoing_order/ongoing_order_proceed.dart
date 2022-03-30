@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed_final.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -22,7 +23,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   late LocationData destinationLocation;
   late Location location;
 
-  bool isOnTheWay = false;
+  bool isOnTheWay = true;
   bool isOnPickUp = false;
   bool isWeightConfirmation = false;
   bool isCollectionPoint = false;
@@ -225,7 +226,9 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                       shape: roundedRectBor),
                                   child: const Text('Cancel',
                                       style: onboardingGetStarted),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.back();
+                                  },
                                 )),
                             const SizedBox(
                               width: 20,
@@ -239,13 +242,20 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                       shape: roundedRectBor),
                                   child: const Text('Pick Up',
                                       style: onboardingGetStarted),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    if (mounted) {
+                                      setState(() {
+                                        isOnTheWay = false;
+                                        isOnPickUp = true;
+                                      });
+                                    }
+                                  },
                                 )),
                           ],
                         ),
                       )
                     : Container(),
-                (isOnPickUp == false)
+                (isOnPickUp == true)
                     ? Padding(
                         padding: const EdgeInsets.all(20),
                         child: SwipeableButtonView(
@@ -271,9 +281,10 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                 PageTransition(
                                     type: PageTransitionType.fade,
                                     child: OngoingOrderProceedFinal()));
-                            //TODO: For reverse ripple effect animation
                             setState(() {
                               isFinished = false;
+                              isOnPickUp = false;
+                              isOnTheWay = true;
                             });
                           },
                         ),

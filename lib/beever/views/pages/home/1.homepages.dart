@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     ApiCallsGetData().getData();
     super.initState();
     getRole();
+    patchBeeverLocation();
   }
 
   getRole() async {
@@ -36,12 +38,44 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
         headers: {'Authorization': 'Bearer $token'});
     Map<String, dynamic> bodyJSON = jsonDecode(userData.body);
     var role = bodyJSON['data']['role'];
+    var id = bodyJSON['data']['id'];
     await secureStorage.writeSecureData('role', role);
+    await secureStorage.writeSecureData('id', id.toString());
   }
 
   userPage() async {
     await secureStorage.deleteAllSecureData();
     Get.offAll(() => const NavigatorUser());
+  }
+
+  Future<void> patchBeeverLocation() async {
+    var authToken = await secureStorage.readSecureData('token');
+    var token = authToken;
+    var id = await secureStorage.readSecureData('id');
+
+    var position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    var lat = position.latitude;
+    var long = position.longitude;
+
+    print(lat);
+    print(long);
+
+    var uri = Uri.https(
+        'www.staging2.junkbee.id',
+        '/api/beever/update/location',
+        {'id': id, 'lat': lat.toString(), 'lng': long.toString()});
+    var response =
+        await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
+    if (response.statusCode == 200) {
+      print(id);
+      print(response.body);
+
+      return Future.delayed(Duration(seconds: 5))
+          .then((value) => patchBeeverLocation());
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -52,14 +86,14 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: const EdgeInsets.only(top: 40),
-              height: MediaQuery.of(context).size.height / 4,
-              alignment: Alignment.topCenter,
-              decoration: const BoxDecoration(
-                image: DecorationImage(image: AssetImage('assets/heading.png'), fit: BoxFit.fill)
-              ),
-              child: WhiteSpace()
-            ),
+                padding: const EdgeInsets.only(top: 40),
+                height: MediaQuery.of(context).size.height / 4,
+                alignment: Alignment.topCenter,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/heading.png'),
+                        fit: BoxFit.fill)),
+                child: WhiteSpace()),
             profileAndBalance(context),
             orderPickup(context),
             NewsAPI()
