@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -10,6 +11,7 @@ import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
+import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'edit_profile.dart';
 import 'help_centre.dart';
 import 'saved_location.dart';
@@ -214,10 +216,6 @@ class _UserProfileState extends State<UserProfile> {
                                       ),
                                     ),
                                   ),
-                                  // const ListTile(
-                                  //   title: Text('Invite Friends', style: bodySlimBody),
-                                  //   trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
-                                  // ),
                                   GestureDetector(
                                       onTap: () => Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -231,10 +229,6 @@ class _UserProfileState extends State<UserProfile> {
                                           size: 20,
                                         ),
                                       )),
-                                  // const ListTile(
-                                  //   title: Text('Setting', style: bodySlimBody),
-                                  //   trailing: Icon(Icons.arrow_forward_ios_rounded, size: 20,),
-                                  // ),
                                   GestureDetector(
                                       onTap: () => Navigator.of(context).push(
                                           MaterialPageRoute(
@@ -558,10 +552,11 @@ class _UserProfileState extends State<UserProfile> {
                                                                               .height /
                                                                           13,
                                                                       child: ElevatedButton(
-                                                                          style: ElevatedButton.styleFrom(
-                                                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                                                                              primary: const Color(0xFFF8C503)),
-                                                                          onPressed: () => logOut(),
+                                                                          style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), primary: const Color(0xFFF8C503)),
+                                                                          onPressed: () {
+                                                                            logOut();
+                                                                            Get.offAll(()=>NavigatorUser());
+                                                                          },
                                                                           child: Text('Confirm', style: bodyBodyMini)),
                                                                     )
                                                                   ],

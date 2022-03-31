@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
-import 'package:junkbee_user/beever/views/pages/home/1.homepages.dart';
+import 'package:junkbee_user/beever/views/pages/home/homepages.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_message/3.ongoing_message.dart';
 import 'package:junkbee_user/beever/views/pages/profile/4.beever_profile.dart';

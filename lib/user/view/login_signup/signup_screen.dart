@@ -44,7 +44,7 @@ class _SignUpUserState extends State<SignUpUser> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(primary: Colors.amber),
                 onPressed: () {
-                  Get.offAll(() => const SignInUser());
+                  Get.back();
                 },
                 child: Text(
                   'Login',
@@ -143,7 +143,9 @@ class _SignUpUserState extends State<SignUpUser> {
                         onTap: () {
                           Get.back();
                         },
-                        child: Text('Sign In', style: onboardingTextStyleSkipDone.copyWith(fontSize: 18)),
+                        child: Text('Sign In',
+                            style: onboardingTextStyleSkipDone.copyWith(
+                                fontSize: 18)),
                       )
                     ],
                   ),
@@ -160,7 +162,8 @@ class _SignUpUserState extends State<SignUpUser> {
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Full Name',
-                          errorText: (_validate) ? "Name cannot be empty" : null),
+                          errorText:
+                              (_validate) ? "Name cannot be empty" : null),
                     ),
                   ),
                   Padding(
@@ -171,7 +174,9 @@ class _SignUpUserState extends State<SignUpUser> {
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Phone Number',
-                          errorText: (_validate) ? "Phone number cannot be empty" : null),
+                          errorText: (_validate)
+                              ? "Phone number cannot be empty"
+                              : null),
                     ),
                   ),
                   Padding(
@@ -182,7 +187,8 @@ class _SignUpUserState extends State<SignUpUser> {
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Email',
-                          errorText: (_validate) ? "Username cannot be empty" : null),
+                          errorText:
+                              (_validate) ? "Username cannot be empty" : null),
                     ),
                   ),
                   Padding(
@@ -194,12 +200,15 @@ class _SignUpUserState extends State<SignUpUser> {
                       decoration: InputDecoration(
                           labelStyle: signScreenTextStyle,
                           labelText: 'Password',
-                          errorText: (_validate) ? "Password Cannot be Empty" : null,
+                          errorText:
+                              (_validate) ? "Password Cannot be Empty" : null,
                           suffixIcon: IconButton(
                               onPressed: () {
                                 _toggle();
                               },
-                              icon: Icon((_obsecureText) ? Icons.visibility : Icons.visibility_off))),
+                              icon: Icon((_obsecureText)
+                                  ? Icons.visibility
+                                  : Icons.visibility_off))),
                     ),
                   ),
                 ],
@@ -219,7 +228,9 @@ class _SignUpUserState extends State<SignUpUser> {
                     Container(
                       width: MediaQuery.of(context).size.width / 1.7,
                       margin: const EdgeInsets.only(left: 10),
-                      child: const Text('I agree with terms conditions and privacy policy', style: bodySlimBody),
+                      child: const Text(
+                          'I agree with terms conditions and privacy policy',
+                          style: bodySlimBody),
                     )
                   ],
                 ),
@@ -230,7 +241,8 @@ class _SignUpUserState extends State<SignUpUser> {
                   height: MediaQuery.of(context).size.height / 13,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: (isChecked == true) ? Colors.amber : Colors.grey,
+                        primary:
+                            (isChecked == true) ? Colors.amber : Colors.grey,
                         shape: roundedRectBor),
                     child: const Text('Sign Up', style: onboardingGetStarted),
                     onPressed: () {
