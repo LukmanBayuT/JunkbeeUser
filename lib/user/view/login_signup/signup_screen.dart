@@ -1,5 +1,8 @@
 // ignore_for_file: avoid_print, unnecessary_string_interpolations
 
+import 'dart:convert';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
@@ -7,6 +10,7 @@ import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 
 class SignUpUser extends StatefulWidget {
   const SignUpUser({Key? key}) : super(key: key);
@@ -69,8 +73,35 @@ class _SignUpUserState extends State<SignUpUser> {
       print(response.body);
 
       if (response.statusCode == 200) {
-        showDialogue();
-        // Get.offAll(() => const SignInUser());
+        try {
+          String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+          if (response.statusCode == 200) {
+            Map<String, dynamic> output = jsonDecode(response.body);
+            await secureStorage.writeSecureData(
+                'token', output['data']['token']);
+
+            final resp = await http.put(
+                Uri.parse(EndPoint.baseApiURL + EndPoint.deviceToken),
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ${output['data']['token']}'
+                },
+                body: json.encode({'device_token': fcmToken}));
+            Map<String, dynamic> updateToken = jsonDecode(resp.body);
+            if (updateToken['message'] == 'data has been updated') {
+              Navigator.pop(context, 'back');
+            }
+            print(response.body);
+          } else {
+            Map<String, dynamic> output = jsonDecode(response.body);
+            var errorMessage = output['message'];
+            Get.defaultDialog(
+                textCancel: 'Ok',
+                middleText: errorMessage,
+                title: 'Please Try Again');
+          }
+        } catch (e) {}
       } else if (response.statusCode == 400) {
         Get.snackbar('Bad Request', '${response.body}',
             snackPosition: SnackPosition.BOTTOM,
