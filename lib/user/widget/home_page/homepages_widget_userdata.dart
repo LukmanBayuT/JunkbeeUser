@@ -20,6 +20,11 @@ class UserDataHomepages extends StatefulWidget {
 }
 
 class _UserDataHomepagesState extends State<UserDataHomepages> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   showDialogue() {
     showDialog(
         context: context,
@@ -81,7 +86,9 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                                 ? Get.offAll(() => const NavigatorPages())
                                 : showDialogue();
                           },
-                          child: Text('Be a Beever', style: bodyBoldBody.copyWith(color: Colors.white))),
+                          child: Text('Be a Beever',
+                              style:
+                                  bodyBoldBody.copyWith(color: Colors.white))),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
