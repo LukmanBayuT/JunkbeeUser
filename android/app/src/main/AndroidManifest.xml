@@ -31,7 +31,7 @@
 </queries>
 
    <application
-    
+        
         android:label="junkbee_user"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
@@ -60,6 +60,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+            <intent-filter>
                 <action android:name="FLUTTER_NOTIFICATION_CLICK" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

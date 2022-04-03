@@ -21,6 +21,11 @@ class UserDataHomepages extends StatefulWidget {
 }
 
 class _UserDataHomepagesState extends State<UserDataHomepages> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   showDialogue() {
     showDialog(
         context: context,

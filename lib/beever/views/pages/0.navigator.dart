@@ -8,7 +8,6 @@ import 'package:junkbee_user/beever/views/pages/profile/4.beever_profile.dart';
 
 class NavigatorPages extends StatefulWidget {
   const NavigatorPages({Key? key}) : super(key: key);
-
   @override
   _NavigatorPagesState createState() => _NavigatorPagesState();
 }
