@@ -180,7 +180,7 @@ class AvailableList extends StatelessWidget {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(30),
+                height: ScreenUtil().setHeight(15),
               )
             ],
           );

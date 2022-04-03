@@ -85,18 +85,21 @@ class _SignInUserState extends State<SignInUser> {
   _onFacebookSignIn() async {
     final fb = FacebookLogin();
 
-    final res = await fb.logIn(permissions: [FacebookPermission.publicProfile]);
+    final res = await fb.logIn(permissions: [
+      FacebookPermission.publicProfile,
+      FacebookPermission.email
+    ]);
     switch (res.status) {
       case FacebookLoginStatus.success:
         final profile = await fb.getUserProfile();
         final email = await fb.getUserEmail();
         if (profile != null) {
-          final response = await http.put(
+          final response = await http.post(
               Uri.parse(EndPoint.baseApiURL + EndPoint.loginFacebook),
               body: {
                 'facebook_id': '${profile.userId}',
-                'email': '${profile.name}',
-                'full_name': '${email}'
+                'email': '${email}',
+                'full_name': '${profile.name}'
               });
           Map<String, dynamic> bodyJSON = jsonDecode(response.body);
           if (response.statusCode == 200) {

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_import, avoid_print, avoid_returning_null_for_void
 
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';

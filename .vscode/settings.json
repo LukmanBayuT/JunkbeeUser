@@ -107,5 +107,6 @@
         "Widodo",
         "ZARIG",
         "Zuyq"
-    ]
+    ],
+    "editor.formatOnSave": true
 }

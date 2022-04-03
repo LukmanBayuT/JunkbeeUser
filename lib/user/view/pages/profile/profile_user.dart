@@ -64,6 +64,7 @@ class _UserProfileState extends State<UserProfile> {
 
   logOut() async {
     await secureStorage.deleteAllSecureData();
+    Navigator.pop(context);
     await checkToken();
     if (mounted) {
       setState(() {});
@@ -160,33 +161,136 @@ class _UserProfileState extends State<UserProfile> {
                                         var userdata = snapshot.data;
                                         return Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Image.asset(
-                                                'assets/beever_image.png',
-                                                width: MediaQuery.of(context)
-                                                        .size
-                                                        .width /
-                                                    5),
-                                            Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                            Row(
                                               children: [
-                                                Text(
-                                                    '${userdata?.data.fullName}',
-                                                    style: bodyBoldBody),
-                                                Text('${userdata?.data.phone}',
-                                                    style: bodySlimBody),
-                                                Text('${userdata?.data.email}',
-                                                    style: bodySlimBody),
+                                                Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                      child: userdata
+                                                                  .data.image ==
+                                                              null
+                                                          ? Image.asset(
+                                                              'assets/beever_image.png',
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width /
+                                                                  5,
+                                                            )
+                                                          : Image.network(
+                                                              '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}',
+                                                              width: MediaQuery
+                                                                          .of(
+                                                                              context)
+                                                                      .size
+                                                                      .width /
+                                                                  5,
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .height /
+                                                                  8.8,
+                                                              fit:
+                                                                  BoxFit.cover),
+                                                    )),
+                                                Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            1.9,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                            '${userdata?.data.fullName}',
+                                                            style:
+                                                                bodyBoldBody),
+                                                        if (userdata
+                                                                ?.data.phone ==
+                                                            '') ...[
+                                                          Text('-',
+                                                              style:
+                                                                  bodySlimBody)
+                                                        ] else ...[
+                                                          Text(
+                                                              '${userdata?.data.phone}',
+                                                              style:
+                                                                  bodySlimBody)
+                                                        ],
+                                                        Text(
+                                                            '${userdata?.data.email}',
+                                                            style:
+                                                                bodySlimBody),
+                                                      ],
+                                                    ))
                                               ],
                                             ),
                                             IconButton(
-                                                onPressed: () {},
+                                                onPressed: () async {
+                                                  if (userdata.data.image ==
+                                                      null) {
+                                                    final imageURL = null;
+                                                    final result = await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => EditProfile(
+                                                                image: imageURL,
+                                                                name: userdata
+                                                                    ?.data
+                                                                    .fullName,
+                                                                phone: userdata
+                                                                    ?.data
+                                                                    .phone,
+                                                                email: userdata
+                                                                    ?.data
+                                                                    .email)));
+                                                    if (result == 'back') {
+                                                      await ApiCallsGetData()
+                                                          .getUserData();
+                                                      setState(() {});
+                                                    }
+                                                  } else {
+                                                    final imageURL = EndPoint
+                                                            .baseURL +
+                                                        'storage/profile-images/' +
+                                                        userdata.data.image;
+                                                    final result = await Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) => EditProfile(
+                                                                image: imageURL,
+                                                                name: userdata
+                                                                    ?.data
+                                                                    .fullName,
+                                                                phone: userdata
+                                                                    ?.data
+                                                                    .phone,
+                                                                email: userdata
+                                                                    ?.data
+                                                                    .email)));
+                                                    if (result == 'back') {
+                                                      await ApiCallsGetData()
+                                                          .getUserData();
+                                                      setState(() {});
+                                                    }
+                                                  }
+                                                },
                                                 icon: const Icon(
-                                                    Icons.draw_rounded,
+                                                    Icons.edit_rounded,
                                                     color: Colors.amber))
                                           ],
                                         );
@@ -555,7 +659,6 @@ class _UserProfileState extends State<UserProfile> {
                                                                           style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), primary: const Color(0xFFF8C503)),
                                                                           onPressed: () {
                                                                             logOut();
-                                                                            Get.offAll(()=>NavigatorUser());
                                                                           },
                                                                           child: Text('Confirm', style: bodyBodyMini)),
                                                                     )

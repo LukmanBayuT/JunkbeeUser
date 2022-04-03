@@ -2,17 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/widget/home_page/homepages_widget_article.dart';
-import 'package:junkbee_user/beever/views/signin/sign_in.dart';
 
 final format = NumberFormat.simpleCurrency(locale: 'id_ID');
 
 class UserDataHomepages extends StatefulWidget {
+  final dynamic token_local = null;
   const UserDataHomepages({Key? key}) : super(key: key);
 
   @override
@@ -35,7 +36,7 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                   Get.back();
                 },
                 child: Text(
-                  'Tutup',
+                  'OK',
                   style: bodySlimBody.copyWith(color: Colors.white),
                 ),
               )
@@ -81,7 +82,9 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                                 ? Get.offAll(() => const NavigatorPages())
                                 : showDialogue();
                           },
-                          child: Text('Be a Beever', style: bodyBoldBody.copyWith(color: Colors.white))),
+                          child: Text('Be a Beever',
+                              style:
+                                  bodyBoldBody.copyWith(color: Colors.white))),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,
@@ -165,9 +168,10 @@ class UIHomePage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width,
                       alignment: Alignment.topRight,
                       child: GestureDetector(
-                          onTap: () => Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => const SignInDriver())),
+                          onTap: () => Fluttertoast.showToast(
+                              backgroundColor: const Color(0xFFF8C503),
+                              msg: 'Anda harus login terlebih dahulu',
+                              toastLength: Toast.LENGTH_LONG),
                           child: Text('Be a Beever',
                               style:
                                   bodyBoldBody.copyWith(color: Colors.white))),
