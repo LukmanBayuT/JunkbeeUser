@@ -232,10 +232,8 @@ class _PanelWidgetState extends State<PanelWidget> {
                               child: const Text('Ya ini alamat saya',
                                   style: onboardingGetStarted),
                               onPressed: () {
-                                setState(() {
-                                  address = _startSearchFieldController.text;
-                                });
-                                Get.to(UserOrder(address: address));
+                                Get.back(
+                                    result: _startSearchFieldController.text);
                               },
                             )),
                         const SizedBox(

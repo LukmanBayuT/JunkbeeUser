@@ -68,11 +68,7 @@ class _GetUserLocationState extends State<GetUserLocation> {
                             ? 'Mohon tunggu sebentar'
                             : 'Ya ini alamat saya!',
                         style: onboardingGetStarted),
-                    onPressed: () {
-                      (address == "")
-                          ? null
-                          : Get.offAll(() => UserOrder(address: address));
-                    },
+                    onPressed: () {},
                   )),
             ],
           ),

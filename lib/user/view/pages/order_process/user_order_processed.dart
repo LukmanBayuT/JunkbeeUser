@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable, unused_local_variable, await_only_futures, avoid_print, unnecessary_string_interpolations, avoid_init_to_null, non_constant_identifier_names, sized_box_for_whitespace, avoid_unnecessary_containers
-
 import 'dart:convert';
 import 'dart:io';
 
@@ -19,15 +17,14 @@ import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart'
 import 'package:http/http.dart' as http;
 
 class UserOrder extends StatefulWidget {
-  String? address;
-
-  UserOrder({Key? key, this.address}) : super(key: key);
+  UserOrder({Key? key}) : super(key: key);
 
   @override
   _UserOrderState createState() => _UserOrderState();
 }
 
 class _UserOrderState extends State<UserOrder> {
+  String? alamat = '';
   SecureStorage secureStorage = SecureStorage();
 
   dynamic token_local = null;
@@ -195,6 +192,15 @@ class _UserOrderState extends State<UserOrder> {
       });
     }
     getCurrentLocation();
+  }
+
+  showMapsScreen() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          var screen = UserOrder();
+          return screen;
+        });
   }
 
   showDialogue() {
@@ -553,19 +559,17 @@ class _UserOrderState extends State<UserOrder> {
                                                   .size
                                                   .width /
                                               2,
-                                          child: Text(
-                                            (widget.address != null)
-                                                ? widget.address.toString()
-                                                : 'Lokasimu',
-                                            style: onboardingNormalText,
-                                            // overflow: TextOverflow.ellipsis,
-                                          ),
+                                          child: Text((alamat != null)
+                                              ? alamat.toString()
+                                              : 'Lokasimu'),
                                         )
                                       ],
                                     ),
                                     GestureDetector(
-                                      onTap: () {
-                                        Get.to(() => const UserOrderMaps());
+                                      onTap: () async {
+                                        alamat = await Get.to(
+                                            () => const UserOrderMaps());
+                                        setState(() {});
                                       },
                                       child: const Text('Change',
                                           style: onboardingSkip),
@@ -760,7 +764,6 @@ class _UserOrderState extends State<UserOrder> {
                             if (mounted) {
                               setState(() {
                                 totalWasteWeight = totalWeight.toString();
-                                userLocation = widget.address;
                               });
                             }
                             getCurrentLocation();
