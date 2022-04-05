@@ -152,9 +152,11 @@ class _UserOrderState extends State<UserOrder> {
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
         Map<String, dynamic> responseJSON = jsonDecode(response.body);
+        print(responseJSON);
+        var order_code = responseJSON['data'][0]['order_code'];
+        print(order_code);
 
         if (response.statusCode == 200) {
-          Get.offAll(() => const NavigatorUser());
         } else if (response.statusCode == 400) {
           Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
@@ -786,7 +788,7 @@ class _UserOrderState extends State<UserOrder> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height /
-                                              2.3,
+                                              3.1,
                                           alignment: Alignment.center,
                                           child: Container(
                                               width: MediaQuery.of(context)
@@ -794,8 +796,6 @@ class _UserOrderState extends State<UserOrder> {
                                                       .width /
                                                   1.3,
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
@@ -827,7 +827,7 @@ class _UserOrderState extends State<UserOrder> {
                                                             top: 18,
                                                             bottom: 15),
                                                     child: const Text(
-                                                        'Pesanan anda telah dibuat',
+                                                        'Pesanan Sudah Siap!',
                                                         style: titleBodyLogout),
                                                   ),
                                                   Container(
@@ -835,7 +835,7 @@ class _UserOrderState extends State<UserOrder> {
                                                         const EdgeInsets.only(
                                                             bottom: 45),
                                                     child: const Text(
-                                                        'Pastikan semua data sudah benar, pesanan ada terdapat pada tab collection status',
+                                                        'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
                                                         style: bodyBody),
                                                   ),
                                                   Row(
@@ -862,10 +862,10 @@ class _UserOrderState extends State<UserOrder> {
                                                                   Alignment
                                                                       .center,
                                                               child: const Text(
-                                                                  'Back',
+                                                                  'Kembali',
                                                                   style:
                                                                       bodyBodySemi))),
-                                                      Container(
+                                                      SizedBox(
                                                         width: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -885,10 +885,11 @@ class _UserOrderState extends State<UserOrder> {
                                                                 primary:
                                                                     const Color(
                                                                         0xFFF8C503)),
-                                                            onPressed: () =>
-                                                                _orderUser(),
+                                                            onPressed: () {
+                                                              _orderUser();
+                                                            },
                                                             child: const Text(
-                                                                'Confirm',
+                                                                'Sudah Tepat',
                                                                 style:
                                                                     bodyBodyMini)),
                                                       )

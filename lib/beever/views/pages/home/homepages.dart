@@ -29,6 +29,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     super.initState();
     getRole();
     patchBeeverLocation();
+
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       showDialog(
           context: context,
@@ -64,6 +65,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var id = bodyJSON['data']['id'];
     await secureStorage.writeSecureData('role', role);
     await secureStorage.writeSecureData('id', id.toString());
+    print(role);
   }
 
   userPage() async {

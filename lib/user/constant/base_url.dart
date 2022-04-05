@@ -9,6 +9,7 @@ class EndPoint {
   static const String deviceToken = "userdata/update/device-token";
   static const String getUserData = "userdata/get";
   static const String userOrder = 'userdata/collection';
+  static const String userFindBeever = 'userdata/find/beever';
   static const String updateUserData = 'userdata/update';
   static const String updateProfileImage = 'userdata/update/image';
   static const String updateSocialMedia = 'userdata/update/socialmedia';
