@@ -30,7 +30,12 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: ThemeData(fontFamily: 'DiodrumCyrillic'),
+          theme: ThemeData(
+            primarySwatch: Colors.amber,
+            fontFamily: 'DiodrumCyrillic',
+            textSelectionTheme:
+                const TextSelectionThemeData(cursorColor: Color(0xff707070)),
+          ),
           home: const OnboardingSplashScreen(),
         ),
         providers: [
