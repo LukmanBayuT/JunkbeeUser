@@ -16,16 +16,82 @@ class WasteCategories extends StatelessWidget {
           SizedBox(height: MediaQuery.of(context).size.height / 50),
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 10,
+            height: MediaQuery.of(context).size.height / 7,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                Image.asset('icons/waste_icons/plastic_button.png'),
-                Image.asset('icons/waste_icons/paper_button.png'),
-                Image.asset('icons/waste_icons/glass_button.png'),
-                Image.asset('icons/waste_icons/sachet_button.png'),
-                Image.asset('icons/waste_icons/metal_button.png'),
-                Image.asset('icons/waste_icons/oil_button.png'),
+                Column(
+                  children: [
+                    Image.asset(
+                      'icons/waste_icons/plastic_button.png',
+                      width: 70,
+                    ),
+                    const Text(
+                      'Plastic',
+                      style: bodySlimBody,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      'icons/waste_icons/paper_button.png',
+                      width: 70,
+                    ),
+                    const Text(
+                      'Paper',
+                      style: bodySlimBody,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      'icons/waste_icons/glass_button.png',
+                      width: 70,
+                    ),
+                    const Text(
+                      'Glass',
+                      style: bodySlimBody,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      'icons/waste_icons/sachet_button.png',
+                      width: 70,
+                    ),
+                    const Text(
+                      'Sachet',
+                      style: bodySlimBody,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      'icons/waste_icons/metal_button.png',
+                      width: 70,
+                    ),
+                    const Text(
+                      'Metal',
+                      style: bodySlimBody,
+                    )
+                  ],
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      'icons/waste_icons/oil_button.png',
+                      width: 70,
+                    ),
+                    const Text(
+                      'Oil',
+                      style: bodySlimBody,
+                    )
+                  ],
+                ),
               ],
             ),
           ),
