@@ -151,12 +151,31 @@ class _UserOrderState extends State<UserOrder> {
       try {
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
+        print(token);
         Map<String, dynamic> responseJSON = jsonDecode(response.body);
-        print(responseJSON);
-        var order_code = responseJSON['data'][0]['order_code'];
-        print(order_code);
-
         if (response.statusCode == 200) {
+          print(responseJSON);
+          var orderCode = responseJSON['data'][0]['order_code'];
+          print(orderCode);
+          try {
+            final responsePost = await http.post(
+                Uri.parse(EndPoint.baseApiURL + EndPoint.userFindBeever),
+                headers: {
+                  'Authorization': 'Bearer $token'
+                },
+                body: {
+                  'order_code': orderCode,
+                  'lat': latitude,
+                  'lng': longitude
+                });
+            print(responsePost.body);
+            if (responsePost.statusCode == 200 &&
+                responseJSON['success'] == 1) {
+              Get.offAll(() => const NavigatorUser());
+            } else {
+              print('ada error');
+            }
+          } catch (e) {}
         } else if (response.statusCode == 400) {
           Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
@@ -194,40 +213,6 @@ class _UserOrderState extends State<UserOrder> {
       });
     }
     getCurrentLocation();
-  }
-
-  showMapsScreen() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          var screen = UserOrder();
-          return screen;
-        });
-  }
-
-  showDialogue() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          AlertDialog dialog = AlertDialog(
-            title: const Text('Pesanan Anda Sedang di Buat'),
-            content: const Text(
-                'Pesanan anda telah dibuat dan beever akan segera menuju tempat anda'),
-            actions: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.amber),
-                onPressed: () {
-                  _orderUser();
-                },
-                child: Text(
-                  'Baik',
-                  style: bodySlimBody.copyWith(color: Colors.white),
-                ),
-              )
-            ],
-          );
-          return dialog;
-        });
   }
 
   @override

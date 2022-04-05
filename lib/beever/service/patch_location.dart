@@ -23,11 +23,8 @@ class PatchLocation {
     var response =
         await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
-      print(response.body);
       return Future.delayed(Duration(seconds: 5))
           .then((value) => patchBeeverLocation());
-    } else {
-      return null;
-    }
+    } else {}
   }
 }
