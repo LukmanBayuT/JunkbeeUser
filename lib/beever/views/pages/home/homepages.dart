@@ -34,8 +34,13 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Notification"),
-              content: Text(event.notification!.body!),
+              title: Text("Sampah Baru!"),
+              content: Column(
+                children: [
+                  Text(event.notification!.title!),
+                  Text(event.notification!.body!),
+                ],
+              ),
               actions: [
                 TextButton(
                   child: Text("Ok"),
@@ -64,6 +69,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var id = bodyJSON['data']['id'];
     await secureStorage.writeSecureData('role', role);
     await secureStorage.writeSecureData('id', id.toString());
+    print(role);
   }
 
   userPage() async {

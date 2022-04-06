@@ -154,7 +154,7 @@ Container profileAndBalance(BuildContext context) {
           );
         } else {
           return const Center(
-              child: SpinKitWave(color: Colors.amberAccent, size: 50));
+              child: SpinKitWave(color: Colors.white, size: 50));
         }
       },
     ),

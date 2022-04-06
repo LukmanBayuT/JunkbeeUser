@@ -19,7 +19,7 @@ import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart'
 import 'package:http/http.dart' as http;
 
 class UserOrder extends StatefulWidget {
-  UserOrder({Key? key}) : super(key: key);
+  const UserOrder({Key? key}) : super(key: key);
 
   @override
   _UserOrderState createState() => _UserOrderState();
@@ -114,11 +114,8 @@ class _UserOrderState extends State<UserOrder> {
         longitude = "$long";
       });
     }
-
-    var queryParams = {
-      'lat': latitude,
-      'long': longitude,
-    };
+    print(latitude);
+    print(longitude);
   }
 
   String? totalWasteWeight;
@@ -147,16 +144,38 @@ class _UserOrderState extends State<UserOrder> {
       request.fields['subtotal'] = '$subtotal';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
-      request.fields['location1'] = '$userLocation';
+      request.fields['location1'] = '$alamat';
       request.headers['Authorization'] = 'Bearer $token';
 
       try {
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
+        print(token);
         Map<String, dynamic> responseJSON = jsonDecode(response.body);
-
         if (response.statusCode == 200) {
-          Get.offAll(() => const NavigatorUser());
+          print(responseJSON);
+          var orderCode = responseJSON['data'][0]['order_code'];
+          var alamatNih = responseJSON['data'][0]['location1'];
+          print(orderCode);
+          try {
+            final responsePost = await http.post(
+                Uri.parse(EndPoint.baseApiURL + EndPoint.userFindBeever),
+                headers: {
+                  'Authorization': 'Bearer $token'
+                },
+                body: {
+                  'order_code': orderCode,
+                  'lat': latitude,
+                  'lng': longitude
+                });
+            print(responsePost.body);
+            if (responsePost.statusCode == 200 &&
+                responseJSON['success'] == 1) {
+              Get.offAll(() => const NavigatorUser());
+            } else {
+              print('ada error');
+            }
+          } catch (e) {}
         } else if (response.statusCode == 400) {
           Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
@@ -194,40 +213,6 @@ class _UserOrderState extends State<UserOrder> {
       });
     }
     getCurrentLocation();
-  }
-
-  showMapsScreen() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          var screen = UserOrder();
-          return screen;
-        });
-  }
-
-  showDialogue() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          AlertDialog dialog = AlertDialog(
-            title: const Text('Pesanan Anda Sedang di Buat'),
-            content: const Text(
-                'Pesanan anda telah dibuat dan beever akan segera menuju tempat anda'),
-            actions: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.amber),
-                onPressed: () {
-                  _orderUser();
-                },
-                child: Text(
-                  'Baik',
-                  style: bodySlimBody.copyWith(color: Colors.white),
-                ),
-              )
-            ],
-          );
-          return dialog;
-        });
   }
 
   @override
@@ -642,7 +627,7 @@ class _UserOrderState extends State<UserOrder> {
                                                   .height /
                                               3,
                                           alignment: Alignment.center,
-                                          child: Container(
+                                          child: SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
@@ -788,16 +773,14 @@ class _UserOrderState extends State<UserOrder> {
                                           height: MediaQuery.of(context)
                                                   .size
                                                   .height /
-                                              2.3,
+                                              3.1,
                                           alignment: Alignment.center,
-                                          child: Container(
+                                          child: SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
                                                   1.3,
                                               child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 mainAxisSize: MainAxisSize.min,
@@ -829,7 +812,7 @@ class _UserOrderState extends State<UserOrder> {
                                                             top: 18,
                                                             bottom: 15),
                                                     child: const Text(
-                                                        'Pesanan anda telah dibuat',
+                                                        'Pesanan Sudah Siap!',
                                                         style: titleBodyLogout),
                                                   ),
                                                   Container(
@@ -837,7 +820,7 @@ class _UserOrderState extends State<UserOrder> {
                                                         const EdgeInsets.only(
                                                             bottom: 45),
                                                     child: const Text(
-                                                        'Pastikan semua data sudah benar, pesanan ada terdapat pada tab collection status',
+                                                        'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
                                                         style: bodyBody),
                                                   ),
                                                   Row(
@@ -864,10 +847,10 @@ class _UserOrderState extends State<UserOrder> {
                                                                   Alignment
                                                                       .center,
                                                               child: const Text(
-                                                                  'Back',
+                                                                  'Kembali',
                                                                   style:
                                                                       bodyBodySemi))),
-                                                      Container(
+                                                      SizedBox(
                                                         width: MediaQuery.of(
                                                                     context)
                                                                 .size
@@ -887,10 +870,11 @@ class _UserOrderState extends State<UserOrder> {
                                                                 primary:
                                                                     const Color(
                                                                         0xFFF8C503)),
-                                                            onPressed: () =>
-                                                                _orderUser(),
+                                                            onPressed: () {
+                                                              _orderUser();
+                                                            },
                                                             child: const Text(
-                                                                'Confirm',
+                                                                'Sudah Tepat',
                                                                 style:
                                                                     bodyBodyMini)),
                                                       )
