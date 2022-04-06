@@ -175,7 +175,9 @@ class _UserOrderState extends State<UserOrder> {
             } else {
               print('ada error');
             }
-          } catch (e) {}
+          } catch (e) {
+            print('error => $e');
+          }
         } else if (response.statusCode == 400) {
           Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
