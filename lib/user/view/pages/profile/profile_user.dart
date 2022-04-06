@@ -197,7 +197,7 @@ class _UserProfileState extends State<UserProfile> {
                                                                           context)
                                                                       .size
                                                                       .height /
-                                                                  8.8,
+                                                                  10,
                                                               fit:
                                                                   BoxFit.cover),
                                                     )),
@@ -206,7 +206,7 @@ class _UserProfileState extends State<UserProfile> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .width /
-                                                            1.9,
+                                                            3,
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
