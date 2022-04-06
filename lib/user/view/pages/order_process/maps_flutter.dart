@@ -2,9 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:geocode/geocode.dart';
-import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
-import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
 import 'package:location/location.dart';
 
 class GetUserLocation extends StatefulWidget {

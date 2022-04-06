@@ -17,7 +17,7 @@ import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart'
 import 'package:http/http.dart' as http;
 
 class UserOrder extends StatefulWidget {
-  UserOrder({Key? key}) : super(key: key);
+  const UserOrder({Key? key}) : super(key: key);
 
   @override
   _UserOrderState createState() => _UserOrderState();
@@ -112,11 +112,8 @@ class _UserOrderState extends State<UserOrder> {
         longitude = "$long";
       });
     }
-
-    var queryParams = {
-      'lat': latitude,
-      'long': longitude,
-    };
+    print(latitude);
+    print(longitude);
   }
 
   String? totalWasteWeight;
@@ -145,7 +142,7 @@ class _UserOrderState extends State<UserOrder> {
       request.fields['subtotal'] = '$subtotal';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
-      request.fields['location1'] = '$userLocation';
+      request.fields['location1'] = '$alamat';
       request.headers['Authorization'] = 'Bearer $token';
 
       try {
@@ -156,6 +153,7 @@ class _UserOrderState extends State<UserOrder> {
         if (response.statusCode == 200) {
           print(responseJSON);
           var orderCode = responseJSON['data'][0]['order_code'];
+          var alamatNih = responseJSON['data'][0]['location1'];
           print(orderCode);
           try {
             final responsePost = await http.post(
@@ -627,7 +625,7 @@ class _UserOrderState extends State<UserOrder> {
                                                   .height /
                                               3,
                                           alignment: Alignment.center,
-                                          child: Container(
+                                          child: SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
@@ -775,7 +773,7 @@ class _UserOrderState extends State<UserOrder> {
                                                   .height /
                                               3.1,
                                           alignment: Alignment.center,
-                                          child: Container(
+                                          child: SizedBox(
                                               width: MediaQuery.of(context)
                                                       .size
                                                       .width /
