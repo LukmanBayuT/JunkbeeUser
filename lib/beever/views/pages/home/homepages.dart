@@ -42,11 +42,17 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
               ),
               actions: [
                 TextButton(
-                  child: Text("Ok"),
+                  child: Text("Tolak"),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Get.back();
                   },
-                )
+                ),
+                TextButton(
+                  child: Text("Ambil"),
+                  onPressed: () {
+                    Get.to(() => OngoingOrderProceed());
+                  },
+                ),
               ],
             );
           });
