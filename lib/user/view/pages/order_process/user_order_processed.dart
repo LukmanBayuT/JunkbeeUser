@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors_in_immutables, non_constant_identifier_names, avoid_init_to_null, unused_local_variable, await_only_futures, avoid_print, sized_box_for_whitespace, avoid_unnecessary_containers
+
 import 'dart:convert';
 import 'dart:io';
 
