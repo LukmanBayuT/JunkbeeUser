@@ -188,7 +188,7 @@ Container orderPickup(BuildContext context) {
 
 SizedBox pickUpHistory(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 4,
+      width: MediaQuery.of(context).size.width / 3.5,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const HistoryScreen())),
@@ -227,7 +227,7 @@ SizedBox pickUpHistory(BuildContext context) {
 
 SizedBox currentPickUp(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 3.45,
+      width: MediaQuery.of(context).size.width / 3.5,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const CurrentScreen())),
@@ -266,7 +266,7 @@ SizedBox currentPickUp(BuildContext context) {
 
 SizedBox availablePickUp(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 3.45,
+      width: MediaQuery.of(context).size.width / 3.5,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const AvailableScreen())),
@@ -375,7 +375,7 @@ class NewsAPI extends StatelessWidget {
                                         ),
                                         Padding(
                                             padding:
-                                                const EdgeInsets.only(top: 10),
+                                                const EdgeInsets.only(top: 5),
                                             child: Text(
                                                 '${news?.data[index].judul}',
                                                 style: bodySlimBody,

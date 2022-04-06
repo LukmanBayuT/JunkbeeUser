@@ -73,6 +73,8 @@ class NewsApiUsers extends StatelessWidget {
                                             ],
                                           ),
                                         ),
+                                        const Padding(
+                                            padding: EdgeInsets.only(top: 5)),
                                         Text(
                                           '${news?.data[index].judul}',
                                           style: bodySlimBody,

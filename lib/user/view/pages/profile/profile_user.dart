@@ -243,7 +243,8 @@ class _UserProfileState extends State<UserProfile> {
                                                 onPressed: () async {
                                                   if (userdata.data.image ==
                                                       null) {
-                                                    final imageURL = null;
+                                                    final imageURL =
+                                                        userdata.data.image;
                                                     final result = await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(

@@ -45,7 +45,7 @@ class Data {
   final dynamic googleId;
   final dynamic facebookId;
   final dynamic selfie;
-  final dynamic image;
+  final String? image;
   final dynamic ktp;
   final dynamic emailVerifiedAt;
 
