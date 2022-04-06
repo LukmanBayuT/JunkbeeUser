@@ -30,26 +30,33 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     getRole();
     patchBeeverLocation();
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: Text(event.notification!.title!),
-              content: Column(
-                children: [
-                  Text(event.notification!.body!),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  child: Text("Ok"),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
+      Get.to(() => OngoingOrderProceed());
+      // showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return AlertDialog(
+      //         title: Text(event.notification!.title!),
+      //         content: Column(
+      //           children: [
+      //             Text(event.notification!.body!),
+      //           ],
+      //         ),
+      //         actions: [
+      //           TextButton(
+      //             child: Text("Tolak"),
+      //             onPressed: () {
+      //               Get.back();
+      //             },
+      //           ),
+      //           TextButton(
+      //             child: Text("Ambil"),
+      //             onPressed: () {
+      //               Get.to(() => OngoingOrderProceed());
+      //             },
+      //           ),
+      //         ],
+      //       );
+      //     });
     });
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       Get.to(() => OngoingOrderProceed());

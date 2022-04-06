@@ -17,12 +17,7 @@ class EditProfile extends StatefulWidget {
   final String? name;
   final String? phone;
   final String? email;
-  EditProfile(
-      {Key? key,
-      @required this.image,
-      @required this.name,
-      @required this.phone,
-      @required this.email})
+  EditProfile({Key? key, this.image, this.name, this.phone, this.email})
       : super(key: key);
 
   @override
@@ -82,7 +77,11 @@ class EditProfileState extends State<EditProfile> {
           final file = await http.MultipartFile.fromPath('image', photo.path,
               contentType: MediaType('image', typeImage));
           request.files.add(file);
-          request.fields['oldImage'] = widget.image;
+          if (widget.image == null) {
+            request.fields['oldImage'] = '';
+          } else {
+            request.fields['oldImage'] = widget.image;
+          }
           request.headers['Authorization'] = 'Bearer $token';
 
           try {

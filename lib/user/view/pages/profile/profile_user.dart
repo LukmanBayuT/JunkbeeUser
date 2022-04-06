@@ -197,41 +197,54 @@ class _UserProfileState extends State<UserProfile> {
                                                                           context)
                                                                       .size
                                                                       .height /
-                                                                  8.8,
+                                                                  10,
                                                               fit:
                                                                   BoxFit.cover),
                                                     )),
                                                 Container(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width /
+                                                            3,
                                                     child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                        '${userdata?.data.fullName}',
-                                                        style: bodyBoldBody),
-                                                    if (userdata?.data.phone ==
-                                                        '') ...[
-                                                      Text('-',
-                                                          style: bodySlimBody)
-                                                    ] else ...[
-                                                      Text(
-                                                          '${userdata?.data.phone}',
-                                                          style: bodySlimBody)
-                                                    ],
-                                                    Text(
-                                                        '${userdata?.data.email}',
-                                                        style: bodySlimBody),
-                                                  ],
-                                                ))
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                            '${userdata?.data.fullName}',
+                                                            style:
+                                                                bodyBoldBody),
+                                                        if (userdata
+                                                                ?.data.phone ==
+                                                            '') ...[
+                                                          Text('-',
+                                                              style:
+                                                                  bodySlimBody)
+                                                        ] else ...[
+                                                          Text(
+                                                              '${userdata?.data.phone}',
+                                                              style:
+                                                                  bodySlimBody)
+                                                        ],
+                                                        Text(
+                                                            '${userdata?.data.email}',
+                                                            style:
+                                                                bodySlimBody),
+                                                      ],
+                                                    ))
                                               ],
                                             ),
                                             IconButton(
                                                 onPressed: () async {
                                                   if (userdata.data.image ==
                                                       null) {
-                                                    final imageURL = null;
+                                                    final imageURL =
+                                                        userdata.data.image;
                                                     final result = await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(
