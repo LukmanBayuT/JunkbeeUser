@@ -4,7 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:junkbee_user/beever/views/pages/home/homepages.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_message/3.ongoing_message.dart';
-import 'package:junkbee_user/beever/views/pages/profile/4.beever_profile.dart';
+import 'package:junkbee_user/beever/views/pages/profile/beever_profile.dart';
 
 class NavigatorPages extends StatefulWidget {
   const NavigatorPages({Key? key}) : super(key: key);

@@ -58,7 +58,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
       //       );
       //     });
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       Get.to(() => OngoingOrderProceed());
     });
   }
