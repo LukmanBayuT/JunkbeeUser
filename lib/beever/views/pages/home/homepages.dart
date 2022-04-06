@@ -34,10 +34,9 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Sampah Baru!"),
+              title: Text(event.notification!.title!),
               content: Column(
                 children: [
-                  Text(event.notification!.title!),
                   Text(event.notification!.body!),
                 ],
               ),
@@ -93,6 +92,8 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
       'lng': long.toString(),
       'status': 'ready'
     });
+    print(lat);
+    print(long);
     var response =
         await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {

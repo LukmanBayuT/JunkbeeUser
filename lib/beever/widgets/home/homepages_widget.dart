@@ -188,7 +188,7 @@ Container orderPickup(BuildContext context) {
 
 SizedBox pickUpHistory(BuildContext context) {
   return SizedBox(
-      width: MediaQuery.of(context).size.width / 3.45,
+      width: MediaQuery.of(context).size.width / 4,
       child: TouchableOpacity(
         onTap: () => Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const HistoryScreen())),
