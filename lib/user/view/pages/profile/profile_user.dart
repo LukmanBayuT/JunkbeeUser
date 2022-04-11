@@ -63,11 +63,22 @@ class _UserProfileState extends State<UserProfile> {
   }
 
   logOut() async {
-    await secureStorage.deleteAllSecureData();
-    Navigator.pop(context);
-    await checkToken();
-    if (mounted) {
-      setState(() {});
+    var authToken = await secureStorage.readSecureData('token');
+    var token = authToken;
+
+    final logOut = await http.post(
+        Uri.parse(EndPoint.baseApiURL + EndPoint.logoutURL),
+        headers: {'Authorization': 'Bearer $token'});
+    Map<String, dynamic> bodyJson = jsonDecode(logOut.body);
+    if (bodyJson['message'] == 'success') {
+      await secureStorage.deleteAllSecureData();
+      Navigator.pop(context);
+      await checkToken();
+      if (mounted) {
+        setState(() {});
+      }
+    } else {
+      print(bodyJson);
     }
   }
 

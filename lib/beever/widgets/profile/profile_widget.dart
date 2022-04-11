@@ -1,6 +1,9 @@
 // ignore_for_file: unused_import, unnecessary_const, sized_box_for_whitespace, unused_element
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
@@ -36,11 +39,23 @@ SizedBox text(BuildContext context) {
 }
 
 SizedBox infoAccount(BuildContext context) {
+  final SecureStorage secureStorage = SecureStorage();
+
   void logOut() async {
-    final SecureStorage secureStorage = SecureStorage();
-    await secureStorage.deleteAllSecureData();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const NavigatorUser()));
+    var authToken = await secureStorage.readSecureData('token');
+    var token = authToken;
+
+    final logOut = await http.post(
+        Uri.parse(EndPoint.baseApiURL + EndPoint.logoutURL),
+        headers: {'Authorization': 'Bearer $token'});
+    Map<String, dynamic> bodyJson = jsonDecode(logOut.body);
+    if (bodyJson['message'] == 'success') {
+      await secureStorage.deleteAllSecureData();
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const NavigatorUser()));
+    } else {
+      print(bodyJson);
+    }
   }
 
   return SizedBox(

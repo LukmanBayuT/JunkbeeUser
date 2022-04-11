@@ -3,6 +3,7 @@ class EndPoint {
   static const String baseURL = "https://staging2.junkbee.id/";
   static const String registerURL = "register";
   static const String loginURL = "login";
+  static const String logoutURL = "logout";
   static const String loginGoogleURL = "login/google";
   static const String deviceToken = "userdata/update/device-token";
   static const String getUserData = "userdata/get";

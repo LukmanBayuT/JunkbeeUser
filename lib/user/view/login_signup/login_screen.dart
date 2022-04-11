@@ -35,6 +35,23 @@ class _SignInUserState extends State<SignInUser> {
 
   final SecureStorage secureStorage = SecureStorage();
 
+  @override
+  void initState() {
+    super.initState();
+    checkToken();
+  }
+
+  checkToken() async {
+    final authToken = await secureStorage.readSecureData('token');
+    final token = authToken;
+
+    if (token == null) {
+      print('token is null');
+    } else {
+      print('token is not null');
+    }
+  }
+
   void _toggle() {
     setState(() {
       _obsecureText = !_obsecureText;
