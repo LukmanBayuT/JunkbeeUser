@@ -181,37 +181,34 @@ class _UserProfileState extends State<UserProfile> {
                                                         const EdgeInsets.only(
                                                             left: 10,
                                                             right: 10),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50),
-                                                      child: userdata
-                                                                  .data.image ==
-                                                              null
-                                                          ? Image.asset(
-                                                              'assets/beever_image.png',
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  5,
-                                                            )
-                                                          : Image.network(
-                                                              '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}',
-                                                              width: MediaQuery
-                                                                          .of(
-                                                                              context)
-                                                                      .size
-                                                                      .width /
-                                                                  5,
-                                                              height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height /
-                                                                  10,
-                                                              fit:
-                                                                  BoxFit.cover),
-                                                    )),
+                                                    child: Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .width /
+                                                            5.5,
+                                                        height: MediaQuery.of(
+                                                                    context)
+                                                                .size
+                                                                .height /
+                                                            10,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(50),
+                                                          child: userdata.data
+                                                                      .image ==
+                                                                  null
+                                                              ? Image.asset(
+                                                                  'assets/beever_image.png',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                )
+                                                              : Image.network(
+                                                                  '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}',
+                                                                  fit: BoxFit
+                                                                      .cover),
+                                                        ))),
                                                 Container(
                                                     width:
                                                         MediaQuery.of(context)

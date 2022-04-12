@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
@@ -21,10 +23,7 @@ class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: (1)),
-      vsync: this,
-    );
+    startLaunching();
   }
 
   void startLaunching() async {
@@ -34,11 +33,20 @@ class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
     var role = authRole;
 
     if (token == null) {
-      Get.offAll(() => const NavigatorUser());
+      var duration = const Duration(seconds: 2);
+      Timer(duration, () {
+        Get.offAll(() => const NavigatorUser());
+      });
     } else if (token != null && role == 'user') {
-      Get.offAll(() => const NavigatorUser());
+      var duration = const Duration(seconds: 2);
+      Timer(duration, () {
+        Get.offAll(() => const NavigatorUser());
+      });
     } else if (token != null && role == 'beever') {
-      Get.offAll(() => const NavigatorPages());
+      var duration = const Duration(seconds: 2);
+      Timer(duration, () {
+        Get.offAll(() => const NavigatorPages());
+      });
     }
   }
 
@@ -46,18 +54,10 @@ class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Lottie.asset(
-          "assets_animations/bee_loading.json",
-          width: MediaQuery.of(context).size.height * 1,
-          controller: _controller,
-          height: MediaQuery.of(context).size.height * 1,
-          animate: true,
-          onLoaded: (composition) {
-            _controller
-              ..duration = composition.duration
-              ..forward().whenComplete(() => startLaunching());
-          },
-        ),
+        child: Lottie.asset("assets_animations/bee_loading.json",
+            width: MediaQuery.of(context).size.height * 1,
+            height: MediaQuery.of(context).size.height * 1,
+            animate: true),
       ),
     );
   }

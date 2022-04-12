@@ -15,7 +15,7 @@ import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/beever/views/pages/profile/saved_location.dart';
 import 'package:junkbee_user/beever/views/pages/profile/help_centre.dart';
 import 'package:junkbee_user/beever/views/pages/profile/shareFeedback.dart';
-import 'package:junkbee_user/user/view/pages/0.navigator.dart';
+import 'package:junkbee_user/user/view/splashscreen/1. onboarding_splash_screen.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({Key? key}) : super(key: key);
@@ -51,8 +51,8 @@ SizedBox infoAccount(BuildContext context) {
     Map<String, dynamic> bodyJson = jsonDecode(logOut.body);
     if (bodyJson['message'] == 'success') {
       await secureStorage.deleteAllSecureData();
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const NavigatorUser()));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const OnboardingSplashScreen()));
     } else {
       print(bodyJson);
     }

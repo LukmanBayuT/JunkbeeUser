@@ -29,7 +29,7 @@ class NewsApiUsers extends StatelessWidget {
 
                       if (snapshot.connectionState == ConnectionState.done) {
                         return ListView.builder(
-                            reverse: true,
+                            shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
                             itemCount: news.data.length,
                             itemBuilder: (_, index) {
