@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -43,9 +44,13 @@ class _SignInUserState extends State<SignInUser> {
     final token = authToken;
 
     if (token == null) {
-      print('token is null');
+      if (kDebugMode) {
+        print('token is null');
+      }
     } else {
-      print('token is not null');
+      if (kDebugMode) {
+        print('token is not null');
+      }
     }
   }
 
@@ -81,7 +86,9 @@ class _SignInUserState extends State<SignInUser> {
           setState(() => loading = false);
           Navigator.pop(context, 'back');
         }
-        print(response.body);
+        if (kDebugMode) {
+          print(response.body);
+        }
       } else {
         Map<String, dynamic> output = jsonDecode(response.body);
         setState(() => loading = false);
@@ -92,7 +99,9 @@ class _SignInUserState extends State<SignInUser> {
             title: 'Please Try Again');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -125,10 +134,14 @@ class _SignInUserState extends State<SignInUser> {
         }
         break;
       case FacebookLoginStatus.cancel:
-        print('You cancel Facebook login');
+        if (kDebugMode) {
+          print('You cancel Facebook login');
+        }
         break;
       case FacebookLoginStatus.error:
-        print('Facebook login error');
+        if (kDebugMode) {
+          print('Facebook login error');
+        }
         break;
     }
   }
@@ -154,7 +167,9 @@ class _SignInUserState extends State<SignInUser> {
       final account = await _googleSignIn.signIn();
       _onGoogleSigninSuccess(account!);
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
   }
 

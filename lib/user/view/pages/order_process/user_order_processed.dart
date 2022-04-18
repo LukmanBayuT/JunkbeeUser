@@ -538,18 +538,6 @@ class _UserOrderState extends State<UserOrder> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: defaultPadding3,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text('Admin Fee',
-                                            style: onboardingNormalText),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
                                   const Divider(
                                     height: 10,
                                   ),
