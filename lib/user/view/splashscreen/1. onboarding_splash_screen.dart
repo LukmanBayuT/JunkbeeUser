@@ -18,8 +18,6 @@ class OnboardingSplashScreen extends StatefulWidget {
 
 class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
     with TickerProviderStateMixin {
-  late AnimationController _controller;
-
   @override
   void initState() {
     super.initState();

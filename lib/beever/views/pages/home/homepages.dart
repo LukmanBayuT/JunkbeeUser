@@ -78,11 +78,6 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     print(role);
   }
 
-  userPage() async {
-    await secureStorage.deleteAllSecureData();
-    Get.offAll(() => const NavigatorUser());
-  }
-
   Future<void> patchBeeverLocation() async {
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
