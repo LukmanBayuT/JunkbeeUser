@@ -22,7 +22,7 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = CameraPosition(
       zoom: 16,
-      tilt: 30,
+      tilt: 45,
       target: currentLocation != null
           ? LatLng(currentLocation!.latitude ?? 0.0,
               currentLocation!.longitude ?? 0.0)
@@ -39,7 +39,9 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
         borderRadius: roundedRect,
         minHeight: panelHeightClosed,
         maxHeight: panelHeightOpen,
-        body: GoogleMap(initialCameraPosition: initialCameraPosition),
+        body: GoogleMap(
+          initialCameraPosition: initialCameraPosition,
+        ),
         panelBuilder: (controller) => PanelWidget(
           controller: controller,
           panelController: panelController,

@@ -65,7 +65,6 @@ class _PanelWidgetState extends State<PanelWidget> {
   void autoCompleteSearch(String value) async {
     var result = await googlePlace.autocomplete.get(value);
     if (result != null && result.predictions != null && mounted) {
-      // print(result.predictions!.first.description);
       setState(() {
         predictions = result.predictions!;
       });
@@ -198,7 +197,7 @@ class _PanelWidgetState extends State<PanelWidget> {
               );
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 50),
           (_startSearchFieldController.text.isNotEmpty)
               ? SizedBox(
                   width: 100,
