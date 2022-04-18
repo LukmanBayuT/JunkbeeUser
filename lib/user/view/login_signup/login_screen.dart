@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, unused_import, unnecessary_string_interpolations, unnecessary_brace_in_string_interps
-
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,6 @@ import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/view/login_signup/signup_screen.dart';
-import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
@@ -114,8 +111,8 @@ class _SignInUserState extends State<SignInUser> {
           final response = await http.post(
               Uri.parse(EndPoint.baseApiURL + EndPoint.loginFacebook),
               body: {
-                'facebook_id': '${profile.userId}',
-                'email': '${email}',
+                'facebook_id': profile.userId,
+                'email': '$email',
                 'full_name': '${profile.name}'
               });
           Map<String, dynamic> bodyJSON = jsonDecode(response.body);
@@ -140,8 +137,8 @@ class _SignInUserState extends State<SignInUser> {
     setState(() => loading = true);
     final response = await http
         .post(Uri.parse(EndPoint.baseApiURL + EndPoint.loginGoogle), body: {
-      'google_id': '${account.id}',
-      'email': '${account.email}',
+      'google_id': account.id,
+      'email': account.email,
       'full_name': '${account.displayName}'
     });
     Map<String, dynamic> bodyJSON = jsonDecode(response.body);
@@ -278,7 +275,7 @@ class _SignInUserState extends State<SignInUser> {
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 50),
                           GestureDetector(
-                            onTap: () => Get.to(() => SignUpUser()),
+                            onTap: () => Get.to(() => const SignUpUser()),
                             child: const Text('Sign Up', style: onboardingSkip),
                           ),
                         ],

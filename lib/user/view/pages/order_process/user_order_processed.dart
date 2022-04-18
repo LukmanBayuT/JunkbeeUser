@@ -179,18 +179,7 @@ class _UserOrderState extends State<UserOrder> {
             print('error => $e');
           }
         } else if (response.statusCode == 400) {
-          Get.snackbar('Bad Request', response.body,
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.amber,
-              colorText: Colors.white,
-              isDismissible: true,
-              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-              duration: const Duration(seconds: 1),
-              margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
-              icon: const Icon(
-                Icons.error_outlined,
-                color: Colors.red,
-              ));
+          errorResponse();
         }
       } catch (e) {
         print(e);
@@ -198,6 +187,21 @@ class _UserOrderState extends State<UserOrder> {
     } catch (e) {
       print(e);
     }
+  }
+
+  void errorResponse() {
+    Get.snackbar('Bad Request', 'Failed',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.amber,
+        colorText: Colors.white,
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+        duration: const Duration(seconds: 1),
+        margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
+        icon: const Icon(
+          Icons.error_outlined,
+          color: Colors.red,
+        ));
   }
 
   @override
