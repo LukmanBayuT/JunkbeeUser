@@ -65,10 +65,12 @@ class _PanelWidgetState extends State<PanelWidget> {
   void autoCompleteSearch(String value) async {
     var result = await googlePlace.autocomplete.get(value);
     if (result != null && result.predictions != null && mounted) {
-      print(result.predictions!.first.description);
+      // print(result.predictions!.first.description);
       setState(() {
         predictions = result.predictions!;
       });
+    } else {
+      print('no data found');
     }
   }
 
@@ -133,10 +135,8 @@ class _PanelWidgetState extends State<PanelWidget> {
                           _debounce =
                               Timer(const Duration(milliseconds: 1000), () {
                             if (value.isNotEmpty) {
-                              //places api
                               autoCompleteSearch(value);
                             } else {
-                              //clear out the results
                               setState(() {
                                 predictions = [];
                                 startPosition = null;
