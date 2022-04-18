@@ -659,159 +659,7 @@ class _UserOrderState extends State<UserOrder> {
                                 style: onboardingGetStarted),
                             onPressed: () {
                               if (token_local == null) {
-                                showAnimatedDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                          elevation: 1,
-                                          backgroundColor: Colors.white,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.5,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  3,
-                                              alignment: Alignment.center,
-                                              child: SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      1.7,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 15),
-                                                        child: const Text(
-                                                            'You must login first!',
-                                                            style: TextStyle(
-                                                                color: Color(
-                                                                    0xFF707070),
-                                                                fontFamily:
-                                                                    'DiodrumCyrillicBold',
-                                                                fontSize: 18)),
-                                                      ),
-                                                      Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 20),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () async {
-                                                              var result = await Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              const SignInUser()));
-                                                              if (result ==
-                                                                  'back') {
-                                                                await check_token();
-                                                                if (mounted) {
-                                                                  setState(
-                                                                      () {});
-                                                                }
-                                                              }
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height /
-                                                                  15,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              16),
-                                                                  gradient:
-                                                                      const LinearGradient(
-                                                                          colors: [
-                                                                        Color(
-                                                                            0xFFF8C503),
-                                                                        Color(
-                                                                            0xFFFFE067)
-                                                                      ])),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: const Text(
-                                                                  'Login / Register',
-                                                                  style:
-                                                                      bodyBodyUserMini),
-                                                            ),
-                                                          )),
-                                                      Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 20),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () =>
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop(),
-                                                            child: Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height /
-                                                                  15,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color:
-                                                                    Colors.grey,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16),
-                                                              ),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: const Text(
-                                                                  'Cancel',
-                                                                  style:
-                                                                      bodyBodyUserMini),
-                                                            ),
-                                                          ))
-                                                    ],
-                                                  ))));
-                                    },
-                                    animationType: DialogTransitionType
-                                        .slideFromBottomFade,
-                                    curve: Curves.fastOutSlowIn,
-                                    duration: const Duration(seconds: 1));
+                                showAnimatedDialogue();
                               } else {
                                 if (mounted) {
                                   setState(() {
@@ -819,149 +667,7 @@ class _UserOrderState extends State<UserOrder> {
                                   });
                                 }
                                 getCurrentLocation();
-                                showAnimatedDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                          elevation: 1,
-                                          backgroundColor: Colors.white,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.2,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  3.1,
-                                              alignment: Alignment.center,
-                                              child: SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      1.3,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                          child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(),
-                                                          GestureDetector(
-                                                              onTap: () =>
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(),
-                                                              child: Image.asset(
-                                                                  'assets/group_2210.png',
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      25))
-                                                        ],
-                                                      )),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 18,
-                                                                bottom: 15),
-                                                        child: const Text(
-                                                            'Pesanan Sudah Siap!',
-                                                            style:
-                                                                titleBodyLogout),
-                                                      ),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 45),
-                                                        child: const Text(
-                                                            'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
-                                                            style: bodyBody),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          GestureDetector(
-                                                              onTap: () =>
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(),
-                                                              child: Container(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      2.8,
-                                                                  height: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height /
-                                                                      13,
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  child: const Text(
-                                                                      'Kembali',
-                                                                      style:
-                                                                          bodyBodySemi))),
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width /
-                                                                2.8,
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height /
-                                                                13,
-                                                            child:
-                                                                ElevatedButton(
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius: BorderRadius.circular(
-                                                                                10)),
-                                                                        primary:
-                                                                            const Color(
-                                                                                0xFFF8C503)),
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .pop();
-                                                                      _orderUser();
-                                                                    },
-                                                                    child: const Text(
-                                                                        'Sudah Tepat',
-                                                                        style:
-                                                                            bodyBodyMini)),
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ))));
-                                    },
-                                    animationType: DialogTransitionType
-                                        .slideFromBottomFade,
-                                    curve: Curves.fastOutSlowIn,
-                                    duration: const Duration(seconds: 1));
+                                showAnimatedDialogueFinish();
                               }
                             },
                           )),
@@ -985,6 +691,176 @@ class _UserOrderState extends State<UserOrder> {
         ),
       ),
     );
+  }
+
+  void showAnimatedDialogueFinish() {
+    showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              elevation: 1,
+              backgroundColor: Colors.white,
+              insetPadding: const EdgeInsets.all(0),
+              child: Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: MediaQuery.of(context).size.height / 3.1,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(),
+                              GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Image.asset('assets/group_2210.png',
+                                      width: MediaQuery.of(context).size.width /
+                                          25))
+                            ],
+                          )),
+                          Container(
+                            padding: const EdgeInsets.only(top: 18, bottom: 15),
+                            child: const Text('Pesanan Sudah Siap!',
+                                style: titleBodyLogout),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 45),
+                            child: const Text(
+                                'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
+                                style: bodyBody),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          2.8,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              13,
+                                      alignment: Alignment.center,
+                                      child: const Text('Kembali',
+                                          style: bodyBodySemi))),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.8,
+                                height: MediaQuery.of(context).size.height / 13,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        primary: const Color(0xFFF8C503)),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      _orderUser();
+                                    },
+                                    child: const Text('Sudah Tepat',
+                                        style: bodyBodyMini)),
+                              )
+                            ],
+                          )
+                        ],
+                      ))));
+        },
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(seconds: 1));
+  }
+
+  void showAnimatedDialogue() {
+    showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              elevation: 1,
+              backgroundColor: Colors.white,
+              insetPadding: const EdgeInsets.all(0),
+              child: Container(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 3,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.7,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: const Text('You must login first!',
+                                style: TextStyle(
+                                    color: Color(0xFF707070),
+                                    fontFamily: 'DiodrumCyrillicBold',
+                                    fontSize: 18)),
+                          ),
+                          Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  var result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignInUser()));
+                                  if (result == 'back') {
+                                    await check_token();
+                                    if (mounted) {
+                                      setState(() {});
+                                    }
+                                  }
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 15,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      gradient: const LinearGradient(colors: [
+                                        Color(0xFFF8C503),
+                                        Color(0xFFFFE067)
+                                      ])),
+                                  alignment: Alignment.center,
+                                  child: const Text('Login / Register',
+                                      style: bodyBodyUserMini),
+                                ),
+                              )),
+                          Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 15,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: const Text('Cancel',
+                                      style: bodyBodyUserMini),
+                                ),
+                              ))
+                        ],
+                      ))));
+        },
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(seconds: 1));
   }
 
   Padding paperCard() {
