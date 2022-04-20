@@ -12,7 +12,6 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
-import 'package:junkbee_user/beever/widgets/profile/profile_widget.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
@@ -42,7 +41,8 @@ class _UserOrderState extends State<UserOrder> {
   bool isMetalSelected = false;
   bool isOilSelected = false;
 
-  double initialPaper = 0.0;
+  double initialPaper = 5.0;
+  double initialMixPaper = 5.0;
   double initialPlastic = 0.0;
   double initialGlass = 0.0;
   double initialSachet = 0.0;
@@ -246,6 +246,7 @@ class _UserOrderState extends State<UserOrder> {
   @override
   Widget build(BuildContext context) {
     double totalWeight = initialPaper +
+        initialMixPaper +
         initialGlass +
         initialMetal +
         initialOil +
@@ -328,7 +329,8 @@ class _UserOrderState extends State<UserOrder> {
                                     onTap: () {
                                       setState(() {
                                         isPaperSelected = !isPaperSelected;
-                                        initialPaper = 0;
+                                        initialPaper = 5.0;
+                                        initialMixPaper = 5.0;
                                       });
                                     },
                                     child: SizedBox(
@@ -681,30 +683,42 @@ class _UserOrderState extends State<UserOrder> {
                           ],
                         ),
                       ),
+                      (totalWeight >= 5)
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              height: MediaQuery.of(context).size.height / 12,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: mainColor2, shape: roundedRectBor),
+                                child: const Text('Find a Beever',
+                                    style: onboardingGetStarted),
+                                onPressed: () {
+                                  if (token_local == null) {
+                                    showAnimatedDialogue();
+                                  } else {
+                                    if (mounted) {
+                                      setState(() {
+                                        totalWasteWeight =
+                                            totalWeight.toString();
+                                      });
+                                    }
+                                    getCurrentLocation();
+                                    showAnimatedDialogueFinish();
+                                  }
+                                },
+                              ))
+                          : SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              height: MediaQuery.of(context).size.height / 12,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: mainColor1, shape: roundedRectBor),
+                                child: const Text('Minimal berat 5 Kg',
+                                    style: onboardingGetStarted),
+                                onPressed: () {},
+                              )),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.1,
-                          height: MediaQuery.of(context).size.height / 12,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: mainColor2, shape: roundedRectBor),
-                            child: const Text('Find a Beever',
-                                style: onboardingGetStarted),
-                            onPressed: () {
-                              if (token_local == null) {
-                                showAnimatedDialogue();
-                              } else {
-                                if (mounted) {
-                                  setState(() {
-                                    totalWasteWeight = totalWeight.toString();
-                                  });
-                                }
-                                getCurrentLocation();
-                                showAnimatedDialogueFinish();
-                              }
-                            },
-                          )),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 8,
+                        height: MediaQuery.of(context).size.height / 10,
                       ),
                     ],
                   ),
@@ -901,52 +915,108 @@ class _UserOrderState extends State<UserOrder> {
       child: Card(
         child: Padding(
           padding: defaultPaddingS,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'icons/waste_icons/paper_button.png',
-                    width: 60,
+                  Row(
+                    children: [
+                      Image.asset(
+                        'icons/waste_icons/paper_button.png',
+                        width: 60,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Text(
+                        'Paper',
+                        style: bodySlimBody,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Text(
-                    'Paper',
-                    style: bodySlimBody,
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (mounted) {
+                              setState(() {
+                                (initialPaper > 0) ? initialPaper-- : null;
+                              });
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.remove_circle_outline,
+                            color: Colors.amber,
+                          )),
+                      Text(
+                        '$initialPaper Kg',
+                        style: bodySlimBody,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              initialPaper++;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.add_circle_outline_outlined,
+                            color: Colors.amber,
+                          )),
+                    ],
                   ),
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        if (mounted) {
-                          setState(() {
-                            (initialPaper > 0) ? initialPaper-- : null;
-                          });
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.remove_circle_outline,
-                        color: Colors.amber,
-                      )),
-                  Text(
-                    '$initialPaper Kg',
-                    style: bodySlimBody,
+                  Row(
+                    children: [
+                      Image.asset(
+                        'icons/waste_icons/mix_paper.png',
+                        width: 60,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Text(
+                        'Mix Paper',
+                        style: bodySlimBody,
+                      ),
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          initialPaper++;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.add_circle_outline_outlined,
-                        color: Colors.amber,
-                      )),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (mounted) {
+                              setState(() {
+                                (initialMixPaper > 0)
+                                    ? initialMixPaper--
+                                    : null;
+                              });
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.remove_circle_outline,
+                            color: Colors.amber,
+                          )),
+                      Text(
+                        '$initialMixPaper Kg',
+                        style: bodySlimBody,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              initialMixPaper++;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.add_circle_outline_outlined,
+                            color: Colors.amber,
+                          )),
+                    ],
+                  ),
                 ],
               ),
             ],
