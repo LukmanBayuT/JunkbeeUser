@@ -8,9 +8,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -19,6 +21,7 @@ import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
 
 class UserOrder extends StatefulWidget {
   const UserOrder({Key? key}) : super(key: key);
@@ -48,54 +51,64 @@ class _UserOrderState extends State<UserOrder> {
   double initialMetal = 0.0;
   double initialOil = 0.0;
 
-  File? image1;
+  List<Asset> images = <Asset>[];
+  List<XFile>? image1;
   File? image2;
   File? image3;
 
+  Future<void> takePhoto() async {
+    List<Asset> resultList = <Asset>[];
+    if (await Permission.camera.request().isGranted &&
+        await Permission.storage.request().isGranted) {
+      var status = await Permission.camera.status;
+      var state = await Permission.storage.status;
+      if (status.isGranted && state.isGranted) {
+        print('access granted');
+        try {
+          resultList = await MultiImagePicker.pickImages(
+            maxImages: 300,
+            enableCamera: true,
+            selectedAssets: images,
+            cupertinoOptions: const CupertinoOptions(
+              takePhotoIcon: "chat",
+              doneButtonTitle: "Fatto",
+            ),
+            materialOptions: const MaterialOptions(
+              actionBarColor: "#abcdef",
+              actionBarTitle: "Example App",
+              allViewTitle: "All Photos",
+              useDetailsView: false,
+              selectCircleStrokeColor: "#000000",
+            ),
+          );
+        } catch (e) {
+          print(e.toString());
+        }
+
+        if (!mounted) return;
+        setState(() {
+          images = resultList.toList();
+        });
+      } else {
+        print('access denied');
+      }
+    }
+  }
+
+  getImageFileFromAsset(String path) async {
+    final file = File(path);
+    return file;
+  }
+
   void _getFromCam1() async {
-    XFile? pickedFile1 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
+    List<XFile>? pickedFile1 = await ImagePicker().pickMultiImage(
       maxHeight: 1080,
       maxWidth: 1080,
     );
     if (mounted) {
       setState(() {
         if (pickedFile1 != null) {
-          image1 = File(pickedFile1.path);
-        } else {
-          null;
-        }
-      });
-    }
-  }
-
-  void _getFromCam2() async {
-    XFile? pickedFile2 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxHeight: 1080,
-      maxWidth: 1080,
-    );
-    if (mounted) {
-      setState(() {
-        if (pickedFile2 != null) {
-          image2 = File(pickedFile2.path);
-        } else {
-          null;
-        }
-      });
-    }
-  }
-
-  void _getFromCam3() async {
-    XFile? pickedFile3 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxHeight: 1080,
-      maxWidth: 1080,
-    );
-    if (mounted) {
-      setState(() {
-        if (pickedFile3 != null) {
-          image3 = File(pickedFile3.path);
+          image1 = pickedFile1;
         } else {
           null;
         }
@@ -136,9 +149,18 @@ class _UserOrderState extends State<UserOrder> {
 
       final request = await http.MultipartRequest(
           'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
-      final file = await http.MultipartFile.fromPath('image', image1!.path,
-          contentType: MediaType('image', 'jpg'));
-      request.files.add(file);
+      for (int i = 0; i < images.length; i++) {
+        Directory tempDir = await getTemporaryDirectory();
+        String tempPath = tempDir.path;
+        final file = await http.MultipartFile.fromPath(
+            'image', '$tempPath/${images[i].name}',
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file);
+      }
+      // print('image 1 => ${image1!.path}');
+      // final file = await http.MultipartFile.fromPath('image', image1!.path,
+      //     contentType: MediaType('image', 'jpg'));
+      // request.files.add(file);
       request.fields['total_weight'] = '$totalWasteWeight';
       request.fields['total'] = '$totalPrice';
       request.fields['fee_beever'] = '$totalFeeBeever';
@@ -381,106 +403,29 @@ class _UserOrderState extends State<UserOrder> {
                         padding: defaultPadding4,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Text('Take a Photos (up to 3 photos)',
-                                style: titleBodyMini),
+                            Container(
+                              width: MediaQuery.of(context).size.width,
+                              child: const Text(
+                                  'Take a Photos (up to 3 photos)',
+                                  style: titleBodyMini),
+                            ),
                             const SizedBox(height: 10),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                image1 != null
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          _getFromCam1();
-                                        },
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              4,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              7,
-                                          child: ClipRRect(
-                                            borderRadius: roundedRect,
-                                            child: Image.file(image1!,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _getFromCam1();
-                                        },
-                                        child: Image.asset(
-                                          'icons/icons_others/add_pict.png',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                        ),
-                                      ),
-                                image2 != null
-                                    ? GestureDetector(
-                                        onTap: _getFromCam2,
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              4,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              7,
-                                          child: ClipRRect(
-                                              borderRadius: roundedRect,
-                                              child: Image.file(image2!,
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _getFromCam2();
-                                        },
-                                        child: Image.asset(
-                                          'icons/icons_others/blank_image.png',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                        ),
-                                      ),
-                                image3 != null
-                                    ? GestureDetector(
-                                        onTap: _getFromCam3,
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              4,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              7,
-                                          child: ClipRRect(
-                                              borderRadius: roundedRect,
-                                              child: Image.file(image3!,
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _getFromCam3();
-                                        },
-                                        child: Image.asset(
-                                          'icons/icons_others/blank_image.png',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                        ),
-                                      ),
+                                GestureDetector(
+                                  onTap: () {
+                                    takePhoto();
+                                  },
+                                  child: Image.asset(
+                                    'icons/icons_others/add_pict.png',
+                                    width:
+                                        MediaQuery.of(context).size.width / 5,
+                                  ),
+                                ),
+                                Expanded(child: buildGridView())
                               ],
                             )
                           ],
@@ -970,6 +915,25 @@ class _UserOrderState extends State<UserOrder> {
         ),
       ),
     );
+  }
+
+  Widget buildGridView() {
+    return GridView.count(
+        crossAxisCount: 3,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: List.generate(images.length, (index) {
+          Asset asset = images[index];
+          return Container(
+              padding: const EdgeInsets.only(bottom: 10, left: 10),
+              child: Container(
+                  width: MediaQuery.of(context).size.width / 5,
+                  height: MediaQuery.of(context).size.height / 10,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child:
+                          AssetThumb(asset: asset, width: 300, height: 300))));
+        }));
   }
 
   Padding paperCard() {
