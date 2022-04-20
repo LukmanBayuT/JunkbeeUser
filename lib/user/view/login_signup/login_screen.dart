@@ -1,7 +1,6 @@
-// ignore_for_file: prefer_const_constructors, avoid_print, unused_import, unnecessary_string_interpolations, unnecessary_brace_in_string_interps
-
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -12,7 +11,6 @@ import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/view/login_signup/signup_screen.dart';
-import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 
 GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
@@ -46,9 +44,13 @@ class _SignInUserState extends State<SignInUser> {
     final token = authToken;
 
     if (token == null) {
-      print('token is null');
+      if (kDebugMode) {
+        print('token is null');
+      }
     } else {
-      print('token is not null');
+      if (kDebugMode) {
+        print('token is not null');
+      }
     }
   }
 
@@ -84,7 +86,9 @@ class _SignInUserState extends State<SignInUser> {
           setState(() => loading = false);
           Navigator.pop(context, 'back');
         }
-        print(response.body);
+        if (kDebugMode) {
+          print(response.body);
+        }
       } else {
         Map<String, dynamic> output = jsonDecode(response.body);
         setState(() => loading = false);
@@ -95,7 +99,9 @@ class _SignInUserState extends State<SignInUser> {
             title: 'Please Try Again');
       }
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 
@@ -114,8 +120,8 @@ class _SignInUserState extends State<SignInUser> {
           final response = await http.post(
               Uri.parse(EndPoint.baseApiURL + EndPoint.loginFacebook),
               body: {
-                'facebook_id': '${profile.userId}',
-                'email': '${email}',
+                'facebook_id': profile.userId,
+                'email': '$email',
                 'full_name': '${profile.name}'
               });
           Map<String, dynamic> bodyJSON = jsonDecode(response.body);
@@ -128,10 +134,14 @@ class _SignInUserState extends State<SignInUser> {
         }
         break;
       case FacebookLoginStatus.cancel:
-        print('You cancel Facebook login');
+        if (kDebugMode) {
+          print('You cancel Facebook login');
+        }
         break;
       case FacebookLoginStatus.error:
-        print('Facebook login error');
+        if (kDebugMode) {
+          print('Facebook login error');
+        }
         break;
     }
   }
@@ -140,8 +150,8 @@ class _SignInUserState extends State<SignInUser> {
     setState(() => loading = true);
     final response = await http
         .post(Uri.parse(EndPoint.baseApiURL + EndPoint.loginGoogle), body: {
-      'google_id': '${account.id}',
-      'email': '${account.email}',
+      'google_id': account.id,
+      'email': account.email,
       'full_name': '${account.displayName}'
     });
     Map<String, dynamic> bodyJSON = jsonDecode(response.body);
@@ -157,7 +167,9 @@ class _SignInUserState extends State<SignInUser> {
       final account = await _googleSignIn.signIn();
       _onGoogleSigninSuccess(account!);
     } catch (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
   }
 
@@ -278,7 +290,7 @@ class _SignInUserState extends State<SignInUser> {
                           SizedBox(
                               height: MediaQuery.of(context).size.height / 50),
                           GestureDetector(
-                            onTap: () => Get.to(() => SignUpUser()),
+                            onTap: () => Get.to(() => const SignUpUser()),
                             child: const Text('Sign Up', style: onboardingSkip),
                           ),
                         ],

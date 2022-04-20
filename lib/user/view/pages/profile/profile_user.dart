@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_init_to_null, non_constant_identifier_names, unnecessary_const, prefer_const_declarations, unused_import, sized_box_for_whitespace, prefer_const_constructors, avoid_unnecessary_containers
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,9 @@ class _UserProfileState extends State<UserProfile> {
         setState(() {});
       }
     } else {
-      print(bodyJson);
+      if (kDebugMode) {
+        print(bodyJson);
+      }
     }
   }
 

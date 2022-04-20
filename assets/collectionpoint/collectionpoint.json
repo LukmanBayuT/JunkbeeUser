@@ -1,0 +1,49 @@
+{
+    "collectionpoint": [
+        {
+            "id": "1",
+            "name": "CP Mr. Donny",
+            "description": "Mitra 383",
+            "city": "Semarang",
+            "alamat": "Jl. Kanjengan Pungkuran No.383, Kauman, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50139",
+            "latitude": -6.9749235,
+            "longitude": 110.4218642,
+            "pictureId": "https://lh5.googleusercontent.com/p/AF1QipMhGfZwdmlTij-ytOraUc0e2PE8dl6jE7W9YAM=w408-h306-k-no",
+            "keramaian": 6.8,
+            "jenisSampah": {
+                "kardus": "aktif",
+                "nonKardus": "aktif"
+            }
+        },
+        {
+            "id": "2",
+            "name": "CP Mr. Marcell",
+            "description": "Super Warehouse",
+            "city": "Semarang",
+            "alamat": "Jl. Puspowarno Sel. V No.26 Salamanmloyo, Kec. Semarang Barat Kota Semarang, Jawa Tengah 50149",
+            "latitude": -6.9870617,
+            "longitude": 110.3908796,
+            "pictureId": "https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=hK4efEILLUekEgqMJMt0_Q&cb_client=search.gws-prod.gps&w=408&h=240&yaw=121.27202&pitch=0&thumbfov=100",
+            "keramaian": 8.9,
+            "jenisSampah": {
+                "kardus": "aktif",
+                "nonKardus": "aktif"
+            }
+        },
+        {
+            "id": "3",
+            "name": "CP Mr. Welly",
+            "description": "Super Warehouse",
+            "city": "Semarang",
+            "alamat": "Jl. Kendalisodo No.2a, Wonotingal, Kec. Candisari, Kota Semarang, Jawa Tengah 50252",
+            "latitude": -7.014945,
+            "longitude": 110.4162697,
+            "pictureId": "Jl. Kendalisodo No.2a, Wonotingal, Kec. Candisari, Kota Semarang, Jawa Tengah 50252",
+            "keramaian": 6.8,
+            "jenisSampah": {
+                "kardus": "aktif",
+                "nonKardus": "aktif"
+            }
+        }
+    ]
+}

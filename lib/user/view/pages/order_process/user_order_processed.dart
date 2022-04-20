@@ -31,7 +31,7 @@ class UserOrder extends StatefulWidget {
 }
 
 class _UserOrderState extends State<UserOrder> {
-  String? alamat = '';
+  String? alamat = 'Lokasimu';
   SecureStorage secureStorage = SecureStorage();
 
   dynamic token_local = null;
@@ -44,7 +44,8 @@ class _UserOrderState extends State<UserOrder> {
   bool isMetalSelected = false;
   bool isOilSelected = false;
 
-  double initialPaper = 0.0;
+  double initialPaper = 5.0;
+  double initialMixPaper = 5.0;
   double initialPlastic = 0.0;
   double initialGlass = 0.0;
   double initialSachet = 0.0;
@@ -232,6 +233,21 @@ class _UserOrderState extends State<UserOrder> {
     }
   }
 
+  void errorResponse() {
+    Get.snackbar('Bad Request', 'Failed',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.amber,
+        colorText: Colors.white,
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+        duration: const Duration(seconds: 1),
+        margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
+        icon: const Icon(
+          Icons.error_outlined,
+          color: Colors.red,
+        ));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -252,6 +268,7 @@ class _UserOrderState extends State<UserOrder> {
   @override
   Widget build(BuildContext context) {
     double totalWeight = initialPaper +
+        initialMixPaper +
         initialGlass +
         initialMetal +
         initialOil +
@@ -260,7 +277,6 @@ class _UserOrderState extends State<UserOrder> {
 
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
         title: const Text('New Collection', style: onboardingGetStarted),
         centerTitle: true,
         backgroundColor: Colors.amber,
@@ -275,6 +291,44 @@ class _UserOrderState extends State<UserOrder> {
                 children: [
                   Column(
                     children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('assets/bg_warning.png'),
+                              fit: BoxFit.fitWidth),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Image.asset(
+                                'assets/bg_warning_person.png',
+                                width: MediaQuery.of(context).size.width / 4,
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text(
+                                      'Minimum Request 5 Kg',
+                                      style: onboardingGetStarted,
+                                    ),
+                                    Text(
+                                      'untuk saat ini berat minimal sampah yang bisa kami jemput adalah 5 Kg',
+                                      style: onboardingGetStartedSmallWhite,
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: defaultPadding4,
                         child: Column(
@@ -291,7 +345,8 @@ class _UserOrderState extends State<UserOrder> {
                                     onTap: () {
                                       setState(() {
                                         isPaperSelected = !isPaperSelected;
-                                        initialPaper = 0;
+                                        initialPaper = 5.0;
+                                        initialMixPaper = 5.0;
                                       });
                                     },
                                     child: SizedBox(
@@ -468,18 +523,6 @@ class _UserOrderState extends State<UserOrder> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: defaultPadding3,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text('Admin Fee',
-                                            style: onboardingNormalText),
-                                        Text('data')
-                                      ],
-                                    ),
-                                  ),
                                   const Divider(
                                     height: 10,
                                   ),
@@ -579,324 +622,42 @@ class _UserOrderState extends State<UserOrder> {
                           ],
                         ),
                       ),
+                      (totalWeight >= 5)
+                          ? SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              height: MediaQuery.of(context).size.height / 12,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: mainColor2, shape: roundedRectBor),
+                                child: const Text('Find a Beever',
+                                    style: onboardingGetStarted),
+                                onPressed: () {
+                                  if (token_local == null) {
+                                    showAnimatedDialogue();
+                                  } else {
+                                    if (mounted) {
+                                      setState(() {
+                                        totalWasteWeight =
+                                            totalWeight.toString();
+                                      });
+                                    }
+                                    getCurrentLocation();
+                                    showAnimatedDialogueFinish();
+                                  }
+                                },
+                              ))
+                          : SizedBox(
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              height: MediaQuery.of(context).size.height / 12,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: mainColor1, shape: roundedRectBor),
+                                child: const Text('Minimal berat 5 Kg',
+                                    style: onboardingGetStarted),
+                                onPressed: () {},
+                              )),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.1,
-                          height: MediaQuery.of(context).size.height / 12,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: mainColor2, shape: roundedRectBor),
-                            child: const Text('Find a Beever',
-                                style: onboardingGetStarted),
-                            onPressed: () {
-                              if (token_local == null) {
-                                showAnimatedDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                          elevation: 1,
-                                          backgroundColor: Colors.white,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.5,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  3,
-                                              alignment: Alignment.center,
-                                              child: SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      1.7,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 15),
-                                                        child: const Text(
-                                                            'You must login first!',
-                                                            style: TextStyle(
-                                                                color: Color(
-                                                                    0xFF707070),
-                                                                fontFamily:
-                                                                    'DiodrumCyrillicBold',
-                                                                fontSize: 18)),
-                                                      ),
-                                                      Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 20),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () async {
-                                                              var result = await Navigator.push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder:
-                                                                          (context) =>
-                                                                              const SignInUser()));
-                                                              if (result ==
-                                                                  'back') {
-                                                                await check_token();
-                                                                if (mounted) {
-                                                                  setState(
-                                                                      () {});
-                                                                }
-                                                              }
-                                                              Navigator.of(
-                                                                      context)
-                                                                  .pop();
-                                                            },
-                                                            child: Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height /
-                                                                  15,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              16),
-                                                                  gradient:
-                                                                      const LinearGradient(
-                                                                          colors: [
-                                                                        Color(
-                                                                            0xFFF8C503),
-                                                                        Color(
-                                                                            0xFFFFE067)
-                                                                      ])),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: const Text(
-                                                                  'Login / Register',
-                                                                  style:
-                                                                      bodyBodyUserMini),
-                                                            ),
-                                                          )),
-                                                      Container(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .only(
-                                                                  top: 20),
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () =>
-                                                                Navigator.of(
-                                                                        context)
-                                                                    .pop(),
-                                                            child: Container(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width /
-                                                                  2,
-                                                              height: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .height /
-                                                                  15,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color:
-                                                                    Colors.grey,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            16),
-                                                              ),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .center,
-                                                              child: const Text(
-                                                                  'Cancel',
-                                                                  style:
-                                                                      bodyBodyUserMini),
-                                                            ),
-                                                          ))
-                                                    ],
-                                                  ))));
-                                    },
-                                    animationType: DialogTransitionType
-                                        .slideFromBottomFade,
-                                    curve: Curves.fastOutSlowIn,
-                                    duration: const Duration(seconds: 1));
-                              } else {
-                                if (mounted) {
-                                  setState(() {
-                                    totalWasteWeight = totalWeight.toString();
-                                  });
-                                }
-                                getCurrentLocation();
-                                showAnimatedDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    builder: (BuildContext context) {
-                                      return Dialog(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(16)),
-                                          elevation: 1,
-                                          backgroundColor: Colors.white,
-                                          insetPadding: const EdgeInsets.all(0),
-                                          child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  1.2,
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  3.1,
-                                              alignment: Alignment.center,
-                                              child: SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      1.3,
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: [
-                                                      Container(
-                                                          child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Container(),
-                                                          GestureDetector(
-                                                              onTap: () =>
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(),
-                                                              child: Image.asset(
-                                                                  'assets/group_2210.png',
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      25))
-                                                        ],
-                                                      )),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                top: 18,
-                                                                bottom: 15),
-                                                        child: const Text(
-                                                            'Pesanan Sudah Siap!',
-                                                            style:
-                                                                titleBodyLogout),
-                                                      ),
-                                                      Container(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                bottom: 45),
-                                                        child: const Text(
-                                                            'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
-                                                            style: bodyBody),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          GestureDetector(
-                                                              onTap: () =>
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop(),
-                                                              child: Container(
-                                                                  width: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .width /
-                                                                      2.8,
-                                                                  height: MediaQuery.of(
-                                                                              context)
-                                                                          .size
-                                                                          .height /
-                                                                      13,
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  child: const Text(
-                                                                      'Kembali',
-                                                                      style:
-                                                                          bodyBodySemi))),
-                                                          SizedBox(
-                                                            width: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .width /
-                                                                2.8,
-                                                            height: MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height /
-                                                                13,
-                                                            child:
-                                                                ElevatedButton(
-                                                                    style: ElevatedButton.styleFrom(
-                                                                        shape: RoundedRectangleBorder(
-                                                                            borderRadius: BorderRadius.circular(
-                                                                                10)),
-                                                                        primary:
-                                                                            const Color(
-                                                                                0xFFF8C503)),
-                                                                    onPressed:
-                                                                        () {
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .pop();
-                                                                      _orderUser();
-                                                                    },
-                                                                    child: const Text(
-                                                                        'Sudah Tepat',
-                                                                        style:
-                                                                            bodyBodyMini)),
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ))));
-                                    },
-                                    animationType: DialogTransitionType
-                                        .slideFromBottomFade,
-                                    curve: Curves.fastOutSlowIn,
-                                    duration: const Duration(seconds: 1));
-                              }
-                            },
-                          )),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 8,
+                        height: MediaQuery.of(context).size.height / 10,
                       ),
                     ],
                   ),
@@ -917,23 +678,174 @@ class _UserOrderState extends State<UserOrder> {
     );
   }
 
-  Widget buildGridView() {
-    return GridView.count(
-        crossAxisCount: 3,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        children: List.generate(images.length, (index) {
-          Asset asset = images[index];
-          return Container(
-              padding: const EdgeInsets.only(bottom: 10, left: 10),
+  void showAnimatedDialogueFinish() {
+    showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              elevation: 1,
+              backgroundColor: Colors.white,
+              insetPadding: const EdgeInsets.all(0),
               child: Container(
-                  width: MediaQuery.of(context).size.width / 5,
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child:
-                          AssetThumb(asset: asset, width: 300, height: 300))));
-        }));
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  height: MediaQuery.of(context).size.height / 3.1,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                              child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(),
+                              GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Image.asset('assets/group_2210.png',
+                                      width: MediaQuery.of(context).size.width /
+                                          25))
+                            ],
+                          )),
+                          Container(
+                            padding: const EdgeInsets.only(top: 18, bottom: 15),
+                            child: const Text('Pesanan Sudah Siap!',
+                                style: titleBodyLogout),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 45),
+                            child: const Text(
+                                'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
+                                style: bodyBody),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              GestureDetector(
+                                  onTap: () => Navigator.of(context).pop(),
+                                  child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          2.8,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              13,
+                                      alignment: Alignment.center,
+                                      child: const Text('Kembali',
+                                          style: bodyBodySemi))),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 2.8,
+                                height: MediaQuery.of(context).size.height / 13,
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        primary: const Color(0xFFF8C503)),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      _orderUser();
+                                    },
+                                    child: const Text('Sudah Tepat',
+                                        style: bodyBodyMini)),
+                              )
+                            ],
+                          )
+                        ],
+                      ))));
+        },
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(seconds: 1));
+  }
+
+  void showAnimatedDialogue() {
+    showAnimatedDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)),
+              elevation: 1,
+              backgroundColor: Colors.white,
+              insetPadding: const EdgeInsets.all(0),
+              child: Container(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                  height: MediaQuery.of(context).size.height / 3,
+                  alignment: Alignment.center,
+                  child: SizedBox(
+                      width: MediaQuery.of(context).size.width / 1.7,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.only(bottom: 15),
+                            child: const Text('You must login first!',
+                                style: TextStyle(
+                                    color: Color(0xFF707070),
+                                    fontFamily: 'DiodrumCyrillicBold',
+                                    fontSize: 18)),
+                          ),
+                          Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: GestureDetector(
+                                onTap: () async {
+                                  var result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignInUser()));
+                                  if (result == 'back') {
+                                    await check_token();
+                                    if (mounted) {
+                                      setState(() {});
+                                    }
+                                  }
+                                  Navigator.of(context).pop();
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 15,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      gradient: const LinearGradient(colors: [
+                                        Color(0xFFF8C503),
+                                        Color(0xFFFFE067)
+                                      ])),
+                                  alignment: Alignment.center,
+                                  child: const Text('Login / Register',
+                                      style: bodyBodyUserMini),
+                                ),
+                              )),
+                          Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: GestureDetector(
+                                onTap: () => Navigator.of(context).pop(),
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width / 2,
+                                  height:
+                                      MediaQuery.of(context).size.height / 15,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey,
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: const Text('Cancel',
+                                      style: bodyBodyUserMini),
+                                ),
+                              ))
+                        ],
+                      ))));
+        },
+        animationType: DialogTransitionType.slideFromBottomFade,
+        curve: Curves.fastOutSlowIn,
+        duration: const Duration(seconds: 1));
   }
 
   Padding paperCard() {
@@ -942,52 +854,108 @@ class _UserOrderState extends State<UserOrder> {
       child: Card(
         child: Padding(
           padding: defaultPaddingS,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: Column(
             children: [
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset(
-                    'icons/waste_icons/paper_button.png',
-                    width: 60,
+                  Row(
+                    children: [
+                      Image.asset(
+                        'icons/waste_icons/paper_button.png',
+                        width: 60,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Text(
+                        'Paper',
+                        style: bodySlimBody,
+                      ),
+                    ],
                   ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Text(
-                    'Paper',
-                    style: bodySlimBody,
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (mounted) {
+                              setState(() {
+                                (initialPaper > 0) ? initialPaper-- : null;
+                              });
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.remove_circle_outline,
+                            color: Colors.amber,
+                          )),
+                      Text(
+                        '$initialPaper Kg',
+                        style: bodySlimBody,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              initialPaper++;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.add_circle_outline_outlined,
+                            color: Colors.amber,
+                          )),
+                    ],
                   ),
                 ],
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        if (mounted) {
-                          setState(() {
-                            (initialPaper > 0) ? initialPaper-- : null;
-                          });
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.remove_circle_outline,
-                        color: Colors.amber,
-                      )),
-                  Text(
-                    '$initialPaper Kg',
-                    style: bodySlimBody,
+                  Row(
+                    children: [
+                      Image.asset(
+                        'icons/waste_icons/mix_paper.png',
+                        width: 60,
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      const Text(
+                        'Mix Paper',
+                        style: bodySlimBody,
+                      ),
+                    ],
                   ),
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          initialPaper++;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.add_circle_outline_outlined,
-                        color: Colors.amber,
-                      )),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            if (mounted) {
+                              setState(() {
+                                (initialMixPaper > 0)
+                                    ? initialMixPaper--
+                                    : null;
+                              });
+                            }
+                          },
+                          icon: const Icon(
+                            Icons.remove_circle_outline,
+                            color: Colors.amber,
+                          )),
+                      Text(
+                        '$initialMixPaper Kg',
+                        style: bodySlimBody,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            setState(() {
+                              initialMixPaper++;
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.add_circle_outline_outlined,
+                            color: Colors.amber,
+                          )),
+                    ],
+                  ),
                 ],
               ),
             ],
@@ -1282,5 +1250,24 @@ class _UserOrderState extends State<UserOrder> {
         ),
       ),
     );
+  }
+
+  Widget buildGridView() {
+    return GridView.count(
+        crossAxisCount: 3,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        children: List.generate(images.length, (index) {
+          Asset asset = images[index];
+          return Container(
+              padding: const EdgeInsets.only(bottom: 10, left: 10),
+              child: Container(
+                  width: MediaQuery.of(context).size.width / 5,
+                  height: MediaQuery.of(context).size.height / 10,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child:
+                          AssetThumb(asset: asset, width: 300, height: 300))));
+        }));
   }
 }

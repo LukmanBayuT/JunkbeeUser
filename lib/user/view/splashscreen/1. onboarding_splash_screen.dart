@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
+import 'package:junkbee_user/user/view/onboarding_screen/onboarding_screen.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:lottie/lottie.dart';
@@ -33,7 +34,7 @@ class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
     if (token == null) {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
-        Get.offAll(() => const NavigatorUser());
+        Get.offAll(() => const OnboardingUser());
       });
     } else if (token != null && role == 'user') {
       var duration = const Duration(seconds: 2);
