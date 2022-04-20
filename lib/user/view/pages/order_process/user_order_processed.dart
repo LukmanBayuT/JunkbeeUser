@@ -12,6 +12,7 @@ import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
+import 'package:junkbee_user/beever/widgets/profile/profile_widget.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
@@ -268,6 +269,49 @@ class _UserOrderState extends State<UserOrder> {
                 children: [
                   Column(
                     children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width / 1.1,
+                        height: MediaQuery.of(context).size.height / 8,
+                        decoration: BoxDecoration(
+                          color: Colors.amber,
+                          // image: const DecorationImage(
+                          //     image: AssetImage('assets/bg_warning.png'),
+                          //     fit: BoxFit.fitWidth),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Image.asset(
+                              'assets/bg_warning_person.png',
+                              width: MediaQuery.of(context).size.width / 4,
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2,
+                              height: MediaQuery.of(context).size.height / 10,
+                              // color: Colors.black,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    'Minimum Request 5 Kg',
+                                    style: onboardingGetStarted,
+                                  ),
+                                  Text(
+                                    'untuk saat ini berat minimal sampah yang bisa kami jemput adalah 5 Kg',
+                                    style: onboardingGetStartedSmallWhite,
+                                  )
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                       Padding(
                         padding: defaultPadding4,
                         child: Column(
