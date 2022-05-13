@@ -33,6 +33,7 @@ class UserOrder extends StatefulWidget {
 
 class _UserOrderState extends State<UserOrder> {
   String? alamat = 'Lokasimu';
+  String? namaTempat = 'Nama Tempat';
   SecureStorage secureStorage = SecureStorage();
 
   dynamic token_local = null;
@@ -262,10 +263,12 @@ class _UserOrderState extends State<UserOrder> {
     if (result != null) {
       setState(() {
         alamat = result.formattedAddress;
+        namaTempat = result.name;
       });
     } else {
       setState(() {
         alamat = alamat;
+        namaTempat = namaTempat;
       });
     }
   }
@@ -589,14 +592,33 @@ class _UserOrderState extends State<UserOrder> {
                                                 'icons/icons_others/ico_location.png',
                                                 width: 30),
                                             const SizedBox(width: 10),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2,
-                                              child: Text((alamat == null)
-                                                  ? 'Lokasimu'
-                                                  : alamat.toString()),
+                                            Column(
+                                              children: [
+                                                const SizedBox(width: 10),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2,
+                                                  child: Text(
+                                                    (alamat == null)
+                                                        ? 'Nama Tempat'
+                                                        : namaTempat.toString(),
+                                                    style: titleBodyMini
+                                                        .copyWith(fontSize: 16),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2,
+                                                  child: Text((alamat == null)
+                                                      ? 'Lokasimu'
+                                                      : alamat.toString()),
+                                                ),
+                                              ],
                                             )
                                           ],
                                         ),
