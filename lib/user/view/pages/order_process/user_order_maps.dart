@@ -90,7 +90,7 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
     //         icon: BitmapDescriptor.defaultMarkerWithHue(
     //             BitmapDescriptor.hueAzure),
     //         position: argument);
-    //     _destination = null; 
+    //     _destination = null;
     //   });
     // } else {
     //   setState(() {
