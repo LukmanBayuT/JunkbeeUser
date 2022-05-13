@@ -21,7 +21,6 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
   GoogleMapController? _googleMapController;
 
   Marker? _origin;
-  Marker? _destination;
 
   @override
   void dispose() {
@@ -80,7 +79,6 @@ class _UserOrderMapsState extends State<UserOrderMaps> {
           icon:
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
           position: argument);
-      _destination = null;
     });
     // if (_origin == null || (_origin != null && _destination != null)) {
     //   setState(() {
