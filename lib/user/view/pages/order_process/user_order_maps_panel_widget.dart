@@ -13,6 +13,7 @@ import 'package:junkbee_user/user/models/geocoding_model.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_geocoding.dart';
 import 'package:junkbee_user/user/view/pages/order_process/maps_flutter.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
+import 'package:place_picker/place_picker.dart';
 import 'package:search_map_location/utils/google_search/place.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_place/google_place.dart';
@@ -62,13 +63,24 @@ class _PanelWidgetState extends State<PanelWidget> {
     getCurrentLocation();
   }
 
+  void showPlacePicker() async {
+    LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => PlacePicker(
+              "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
+            )));
+
+    // Handle the result in your way
+    print(result);
+  }
+
   void autoCompleteSearch(String value) async {
     var result = await googlePlace.autocomplete.get(value);
     if (result != null && result.predictions != null && mounted) {
-      print(result.predictions!.first.description);
       setState(() {
         predictions = result.predictions!;
       });
+    } else {
+      print('no data found');
     }
   }
 
@@ -133,10 +145,8 @@ class _PanelWidgetState extends State<PanelWidget> {
                           _debounce =
                               Timer(const Duration(milliseconds: 1000), () {
                             if (value.isNotEmpty) {
-                              //places api
                               autoCompleteSearch(value);
                             } else {
-                              //clear out the results
                               setState(() {
                                 predictions = [];
                                 startPosition = null;
@@ -198,7 +208,7 @@ class _PanelWidgetState extends State<PanelWidget> {
               );
             },
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 50),
           (_startSearchFieldController.text.isNotEmpty)
               ? SizedBox(
                   width: 100,
@@ -283,12 +293,7 @@ class _PanelWidgetState extends State<PanelWidget> {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isChooseByLocation = false;
-                      isSearchByMap = true;
-                    });
-                  },
+                  onTap: showPlacePicker,
                   child: const Text(
                     'Search by Map',
                     style: titleBodyMiniGreen,

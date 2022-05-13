@@ -58,7 +58,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
       //       );
       //     });
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
       Get.to(() => OngoingOrderProceed());
     });
   }
@@ -76,11 +76,6 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     await secureStorage.writeSecureData('role', role);
     await secureStorage.writeSecureData('id', id.toString());
     print(role);
-  }
-
-  userPage() async {
-    await secureStorage.deleteAllSecureData();
-    Get.offAll(() => const NavigatorUser());
   }
 
   Future<void> patchBeeverLocation() async {

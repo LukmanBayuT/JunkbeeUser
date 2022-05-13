@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
+import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 
 class OnboardingUser1 extends StatelessWidget {
   const OnboardingUser1({
@@ -210,7 +210,7 @@ class OnboardingUser3 extends StatelessWidget {
                       primary: Colors.amber, shape: roundedRectBor),
                   child: const Text('Get Started', style: onboardingGetStarted),
                   onPressed: () {
-                    Get.offAll(() => const SignInUser());
+                    Get.offAll(() => const NavigatorUser());
                   },
                 )),
           ],
