@@ -23,7 +23,7 @@ class SavedLocationState extends State<SavedLocation> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 850),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
             appBar: AppBar(
               backgroundColor: const Color(0xFFF8C503),
               title: const Text(

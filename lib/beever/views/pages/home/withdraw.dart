@@ -23,7 +23,7 @@ class _WithdrawState extends State<WithdrawScreen> {
   Widget build(BuildContext) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               appBar: AppBar(
                   title: const Text('Withdraw', style: textBodyProfile),
                   centerTitle: true,

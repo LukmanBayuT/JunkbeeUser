@@ -231,7 +231,7 @@ class _EditProfileState extends State<EditProfile> {
         onWillPop: () => _onWillPop(),
         child: ScreenUtilInit(
             designSize: const Size(480, 904),
-            builder: () => Scaffold(
+            builder: (_) => Scaffold(
                   appBar: AppBar(
                     title: const Text('Edit Profile', style: textBodyProfile),
                     centerTitle: true,

@@ -27,7 +27,7 @@ class _BeeverProfileState extends State<BeeverProfile> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               body: SingleChildScrollView(
                   child: Stack(
                 alignment: Alignment.topCenter,

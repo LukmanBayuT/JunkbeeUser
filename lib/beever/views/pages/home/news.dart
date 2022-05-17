@@ -12,7 +12,7 @@ class NewsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               appBar: AppBar(
                 title: const Text('News', style: textBodyProfile),
                 centerTitle: true,

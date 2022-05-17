@@ -21,7 +21,7 @@ class _CurrentState extends State<CurrentScreen> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
                 body: SafeArea(
               child: SingleChildScrollView(
                 physics: const NeverScrollableScrollPhysics(),

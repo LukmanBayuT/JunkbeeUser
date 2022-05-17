@@ -23,7 +23,7 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               appBar: AppBar(
                   title: const Text(
                     'Withdraw',

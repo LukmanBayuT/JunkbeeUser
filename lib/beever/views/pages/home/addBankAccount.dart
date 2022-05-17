@@ -22,7 +22,7 @@ class _AddBankAccountState extends State<AddBankAccount> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               appBar: AppBar(
                 title: const Text(
                   'Add Bank Account',

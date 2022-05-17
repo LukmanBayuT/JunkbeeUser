@@ -20,7 +20,7 @@ class _OngoingMessagesState extends State<OngoingMessages> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 854),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               body: Align(
                   alignment: Alignment.topCenter,
                   child: Column(

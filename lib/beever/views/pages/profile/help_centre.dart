@@ -18,27 +18,25 @@ class HelpCentreState extends State<HelpCentre> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(480, 904),
-      builder: () => Scaffold(
-        appBar: const PreferredSize(
-          preferredSize: Size.fromHeight(260),
-          child: HelpCentreWidget(),
-        ),
-        body: SingleChildScrollView(
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              children: [
-                searchBar(context),
-                Topics(context),
-                RecentActivity(context),
-                MoreHelp(context),
-                MailUS(context)
-              ],
+        designSize: const Size(480, 904),
+        builder: (_) => Scaffold(
+            appBar: const PreferredSize(
+              preferredSize: Size.fromHeight(260),
+              child: HelpCentreWidget(),
             ),
-          ),
-        )
-      )
-    );
+            body: SingleChildScrollView(
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  children: [
+                    searchBar(context),
+                    Topics(context),
+                    RecentActivity(context),
+                    MoreHelp(context),
+                    MailUS(context)
+                  ],
+                ),
+              ),
+            )));
   }
 }

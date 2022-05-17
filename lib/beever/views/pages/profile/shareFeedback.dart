@@ -23,7 +23,7 @@ class _ShareFeedbackState extends State<ShareFeedback> {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
-        builder: () => Scaffold(
+        builder: (_) => Scaffold(
               body: SingleChildScrollView(
                 child: Container(
                     width: ScreenUtil().setWidth(480),
