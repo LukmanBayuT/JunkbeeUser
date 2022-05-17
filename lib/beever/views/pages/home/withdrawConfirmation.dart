@@ -10,10 +10,10 @@ class WithdrawConfirmation extends StatefulWidget {
   const WithdrawConfirmation({Key? key}) : super(key: key);
 
   @override
-  _WithdrawConfirmationState createState() => _WithdrawConfirmationState();
+  WithdrawConfirmationState createState() => WithdrawConfirmationState();
 }
 
-class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
+class WithdrawConfirmationState extends State<WithdrawConfirmation> {
   @override
   void initState() {
     super.initState();

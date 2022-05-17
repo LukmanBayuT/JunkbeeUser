@@ -10,17 +10,17 @@ class WithdrawScreen extends StatefulWidget {
   const WithdrawScreen({Key? key}) : super(key: key);
 
   @override
-  _WithdrawState createState() => _WithdrawState();
+  WithdrawState createState() => WithdrawState();
 }
 
-class _WithdrawState extends State<WithdrawScreen> {
+class WithdrawState extends State<WithdrawScreen> {
   @override
   void initState() {
     super.initState();
   }
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return ScreenUtilInit(
         designSize: const Size(480, 904),
         builder: (_) => Scaffold(

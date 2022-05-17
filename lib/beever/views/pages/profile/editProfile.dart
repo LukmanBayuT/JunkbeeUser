@@ -37,10 +37,10 @@ class EditProfile extends StatefulWidget {
       : super(key: key);
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  EditProfileState createState() => EditProfileState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -226,7 +226,7 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () => _onWillPop(),
         child: ScreenUtilInit(

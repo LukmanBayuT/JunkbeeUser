@@ -14,10 +14,10 @@ class LocationTracking extends StatefulWidget {
   const LocationTracking({Key? key}) : super(key: key);
 
   @override
-  _LocationTrackingState createState() => _LocationTrackingState();
+  LocationTrackingState createState() => LocationTrackingState();
 }
 
-class _LocationTrackingState extends State<LocationTracking> {
+class LocationTrackingState extends State<LocationTracking> {
   LatLng sourceLocation = LatLng(28.432864, 77.002563);
   LatLng mrDonnyCP = LatLng(-6.9749235, 110.4218642);
   LatLng mrMarcellCP = LatLng(-6.9749235, 110.4218642);

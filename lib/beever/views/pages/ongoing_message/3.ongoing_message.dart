@@ -10,10 +10,10 @@ class OngoingMessages extends StatefulWidget {
   const OngoingMessages({Key? key}) : super(key: key);
 
   @override
-  _OngoingMessagesState createState() => _OngoingMessagesState();
+  OngoingMessagesState createState() => OngoingMessagesState();
 }
 
-class _OngoingMessagesState extends State<OngoingMessages> {
+class OngoingMessagesState extends State<OngoingMessages> {
   int index = 0;
 
   @override

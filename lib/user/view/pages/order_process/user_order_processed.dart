@@ -28,10 +28,10 @@ class UserOrder extends StatefulWidget {
   const UserOrder({Key? key}) : super(key: key);
 
   @override
-  _UserOrderState createState() => _UserOrderState();
+  UserOrderState createState() => UserOrderState();
 }
 
-class _UserOrderState extends State<UserOrder> {
+class UserOrderState extends State<UserOrder> {
   String? alamat = 'Lokasimu';
   String? namaTempat = 'Nama Tempat';
   SecureStorage secureStorage = SecureStorage();
@@ -46,8 +46,8 @@ class _UserOrderState extends State<UserOrder> {
   bool isMetalSelected = false;
   bool isOilSelected = false;
 
-  double initialPaper = 5.0;
-  double initialMixPaper = 5.0;
+  double initialPaper = 0.0;
+  double initialMixPaper = 0.0;
   double initialPlastic = 0.0;
   double initialGlass = 0.0;
   double initialSachet = 0.0;
@@ -370,8 +370,8 @@ class _UserOrderState extends State<UserOrder> {
                                     onTap: () {
                                       setState(() {
                                         isPaperSelected = !isPaperSelected;
-                                        initialPaper = 5.0;
-                                        initialMixPaper = 5.0;
+                                        initialPaper = 0.0;
+                                        initialMixPaper = 0.0;
                                       });
                                     },
                                     child: SizedBox(
@@ -851,7 +851,8 @@ class _UserOrderState extends State<UserOrder> {
                                       setState(() {});
                                     }
                                   }
-                                  Navigator.of(context).pop();
+                                  // Navigator.of(context).pop();
+                                  Get.back();
                                 },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width / 2,

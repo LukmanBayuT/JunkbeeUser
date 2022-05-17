@@ -14,10 +14,10 @@ class OnboardingSplashScreen extends StatefulWidget {
   const OnboardingSplashScreen({Key? key}) : super(key: key);
 
   @override
-  _OnboardingSplashScreenState createState() => _OnboardingSplashScreenState();
+  OnboardingSplashScreenState createState() => OnboardingSplashScreenState();
 }
 
-class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
+class OnboardingSplashScreenState extends State<OnboardingSplashScreen>
     with TickerProviderStateMixin {
   @override
   void initState() {

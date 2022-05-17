@@ -10,10 +10,10 @@ class ShareFeedback extends StatefulWidget {
   const ShareFeedback({Key? key}) : super(key: key);
 
   @override
-  _ShareFeedbackState createState() => _ShareFeedbackState();
+  ShareFeedbackState createState() => ShareFeedbackState();
 }
 
-class _ShareFeedbackState extends State<ShareFeedback> {
+class ShareFeedbackState extends State<ShareFeedback> {
   @override
   void initState() {
     super.initState();

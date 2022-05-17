@@ -9,10 +9,10 @@ class RecentActivity extends StatefulWidget {
   const RecentActivity({Key? key}) : super(key: key);
 
   @override
-  _RecentActivityState createState() => _RecentActivityState();
+  RecentActivityState createState() => RecentActivityState();
 }
 
-class _RecentActivityState extends State<RecentActivity> {
+class RecentActivityState extends State<RecentActivity> {
   List<String> what_happen = [
     'Something wrong with this order',
     'About fee transaction',

@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => NotificationService())
+        ],
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
@@ -37,9 +40,6 @@ class MyApp extends StatelessWidget {
                 const TextSelectionThemeData(cursorColor: Color(0xff707070)),
           ),
           home: const OnboardingSplashScreen(),
-        ),
-        providers: [
-          ChangeNotifierProvider(create: (_) => NotificationService())
-        ]);
+        ));
   }
 }

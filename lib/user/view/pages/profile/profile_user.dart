@@ -24,10 +24,10 @@ class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
 
   @override
-  _UserProfileState createState() => _UserProfileState();
+  UserProfileState createState() => UserProfileState();
 }
 
-class _UserProfileState extends State<UserProfile> {
+class UserProfileState extends State<UserProfile> {
   dynamic token_local = null;
 
   @override
@@ -73,7 +73,8 @@ class _UserProfileState extends State<UserProfile> {
     Map<String, dynamic> bodyJson = jsonDecode(logOut.body);
     if (bodyJson['message'] == 'success') {
       await secureStorage.deleteAllSecureData();
-      Navigator.pop(context);
+      // Navigator.pop(context);
+      Get.back();
       await checkToken();
       if (mounted) {
         setState(() {});

@@ -17,10 +17,10 @@ class SignUpUser extends StatefulWidget {
   const SignUpUser({Key? key}) : super(key: key);
 
   @override
-  _SignUpUserState createState() => _SignUpUserState();
+  SignUpUserState createState() => SignUpUserState();
 }
 
-class _SignUpUserState extends State<SignUpUser> {
+class SignUpUserState extends State<SignUpUser> {
   final TextEditingController _emailcont = TextEditingController();
   final TextEditingController _passwordcont = TextEditingController();
   final TextEditingController _fullnamecont = TextEditingController();
@@ -55,7 +55,8 @@ class _SignUpUserState extends State<SignUpUser> {
         Fluttertoast.showToast(
             msg: 'Berhasil membuat akun, silahkan login kembali',
             toastLength: Toast.LENGTH_LONG);
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        Get.back();
       } else if (response.statusCode == 400) {
         setState(() => loading = false);
         Get.snackbar('Bad Request', '${response.body}',

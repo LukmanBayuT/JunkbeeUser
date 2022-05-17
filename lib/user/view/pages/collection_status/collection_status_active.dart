@@ -13,10 +13,10 @@ class CollectionStatusUser extends StatefulWidget {
   const CollectionStatusUser({Key? key}) : super(key: key);
 
   @override
-  _CollectionStatusUserState createState() => _CollectionStatusUserState();
+  CollectionStatusUserState createState() => CollectionStatusUserState();
 }
 
-class _CollectionStatusUserState extends State<CollectionStatusUser> {
+class CollectionStatusUserState extends State<CollectionStatusUser> {
   int index = 0;
   dynamic token_local = null;
   dynamic data = null;

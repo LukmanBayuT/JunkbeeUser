@@ -12,10 +12,10 @@ class OngoingOrder extends StatefulWidget {
   const OngoingOrder({Key? key}) : super(key: key);
 
   @override
-  _OngoingOrderState createState() => _OngoingOrderState();
+  OngoingOrderState createState() => OngoingOrderState();
 }
 
-class _OngoingOrderState extends State<OngoingOrder> {
+class OngoingOrderState extends State<OngoingOrder> {
   @override
   Widget build(BuildContext context) {
     return Container(

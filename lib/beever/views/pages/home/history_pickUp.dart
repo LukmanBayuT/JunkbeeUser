@@ -8,10 +8,10 @@ class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
 
   @override
-  _HistoryState createState() => _HistoryState();
+  HistoryState createState() => HistoryState();
 }
 
-class _HistoryState extends State<HistoryScreen> {
+class HistoryState extends State<HistoryScreen> {
   @override
   void initState() {
     super.initState();

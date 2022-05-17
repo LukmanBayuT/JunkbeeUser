@@ -10,10 +10,10 @@ class AvailableScreen extends StatefulWidget {
   const AvailableScreen({Key? key}) : super(key: key);
 
   @override
-  _AvailableState createState() => _AvailableState();
+  AvailableState createState() => AvailableState();
 }
 
-class _AvailableState extends State<AvailableScreen> {
+class AvailableState extends State<AvailableScreen> {
   @override
   void initState() {
     super.initState();

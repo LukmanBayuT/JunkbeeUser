@@ -192,12 +192,12 @@ class _SignInDriverState extends State<SignInDriver> {
                                   _loginUser();
                                 }
                               },
-                              child: const Text('Sign In',
-                                  style: onboardingTextButton),
                               style: ElevatedButton.styleFrom(
                                   primary: Colors.amber,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15))),
+                              child: const Text('Sign In',
+                                  style: onboardingTextButton),
                             ),
                           )),
                     ],

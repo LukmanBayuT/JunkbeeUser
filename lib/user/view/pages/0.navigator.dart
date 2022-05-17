@@ -12,10 +12,10 @@ class NavigatorUser extends StatefulWidget {
   const NavigatorUser({Key? key}) : super(key: key);
 
   @override
-  _NavigatorUserState createState() => _NavigatorUserState();
+  NavigatorUserState createState() => NavigatorUserState();
 }
 
-class _NavigatorUserState extends State<NavigatorUser> {
+class NavigatorUserState extends State<NavigatorUser> {
   DateTime timeBackPressed = DateTime.now();
   @override
   void initState() {

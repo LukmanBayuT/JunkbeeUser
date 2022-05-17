@@ -20,10 +20,10 @@ class SignInUser extends StatefulWidget {
   const SignInUser({Key? key}) : super(key: key);
 
   @override
-  _SignInUserState createState() => _SignInUserState();
+  SignInUserState createState() => SignInUserState();
 }
 
-class _SignInUserState extends State<SignInUser> {
+class SignInUserState extends State<SignInUser> {
   final TextEditingController _logincont = TextEditingController();
   final TextEditingController _passwordcont = TextEditingController();
 

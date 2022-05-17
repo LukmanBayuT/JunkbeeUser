@@ -8,10 +8,10 @@ class CurrentScreen extends StatefulWidget {
   const CurrentScreen({Key? key}) : super(key: key);
 
   @override
-  _CurrentState createState() => _CurrentState();
+  CurrentState createState() => CurrentState();
 }
 
-class _CurrentState extends State<CurrentScreen> {
+class CurrentState extends State<CurrentScreen> {
   @override
   void initState() {
     super.initState();

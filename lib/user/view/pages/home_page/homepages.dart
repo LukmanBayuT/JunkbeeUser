@@ -22,10 +22,10 @@ class HomepagesUser extends StatefulWidget {
   const HomepagesUser({Key? key}) : super(key: key);
 
   @override
-  _HomepagesUserState createState() => _HomepagesUserState();
+  HomepagesUserState createState() => HomepagesUserState();
 }
 
-class _HomepagesUserState extends State<HomepagesUser> {
+class HomepagesUserState extends State<HomepagesUser> {
   final navKey = GlobalKey<CurvedNavigationBarState>();
   dynamic token_local = null;
   String device_info = '';

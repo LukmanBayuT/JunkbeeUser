@@ -9,10 +9,10 @@ class AddBankAccount extends StatefulWidget {
   const AddBankAccount({Key? key}) : super(key: key);
 
   @override
-  _AddBankAccountState createState() => _AddBankAccountState();
+  AddBankAccountState createState() => AddBankAccountState();
 }
 
-class _AddBankAccountState extends State<AddBankAccount> {
+class AddBankAccountState extends State<AddBankAccount> {
   @override
   void initState() {
     super.initState();

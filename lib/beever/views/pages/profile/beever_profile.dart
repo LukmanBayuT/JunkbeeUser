@@ -13,10 +13,10 @@ class BeeverProfile extends StatefulWidget {
   const BeeverProfile({Key? key}) : super(key: key);
 
   @override
-  _BeeverProfileState createState() => _BeeverProfileState();
+  BeeverProfileState createState() => BeeverProfileState();
 }
 
-class _BeeverProfileState extends State<BeeverProfile> {
+class BeeverProfileState extends State<BeeverProfile> {
   @override
   void initState() {
     super.initState();
@@ -180,11 +180,10 @@ class _BeeverProfileState extends State<BeeverProfile> {
                                                               setState(() {});
                                                             }
                                                           } else {
-                                                            final imageURL = EndPoint
-                                                                    .baseURL +
-                                                                'storage/profile-images/' +
-                                                                account
-                                                                    .data.image;
+                                                            final imageURL =
+                                                                '${EndPoint.baseURL}storage/profile-images/' +
+                                                                    account.data
+                                                                        .image;
                                                             final result = await Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(

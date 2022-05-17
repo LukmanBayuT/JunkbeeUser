@@ -285,7 +285,7 @@ packages:
       name: flutter_lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "2.0.1"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -589,7 +589,7 @@ packages:
       name: lints
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.0.0"
   list_ext:
     dependency: transitive
     description:
@@ -666,7 +666,7 @@ packages:
       name: overlay_support
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.1"
+    version: "2.0.0"
   page_transition:
     dependency: "direct main"
     description:
