@@ -35,8 +35,8 @@ class _RecentActivityState extends State<RecentActivity> {
               centerTitle: true,
               leading: TouchableOpacity(
                   onTap: () => Navigator.pop(context),
-                  child:
-                      const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
+                  child: const Icon(Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white)),
             ),
             body: SingleChildScrollView(
                 child: Container(

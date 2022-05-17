@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_const, prefer_const_declarations
+// ignore_for_file: unnecessary_const, prefer_const_declarations, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,26 +81,25 @@ class _BeeverProfileState extends State<BeeverProfile> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            80),
-                                                    child: account.data.image ==
-                                                            null
-                                                        ? Image.asset(
-                                                            'assets/beever_image.png',
-                                                            width: ScreenUtil()
-                                                                .setWidth(80),
-                                                            height: ScreenUtil()
-                                                                .setHeight(80),
-                                                          )
-                                                        : Image.network(
-                                                            '${EndPoint.baseURL}storage/profile-images/${account.data.image}',
-                                                            width: ScreenUtil()
-                                                                .setWidth(80),
-                                                            height: ScreenUtil()
-                                                                .setHeight(80),
-                                                            fit: BoxFit.cover),
+                                                  Container(
+                                                    width: ScreenUtil()
+                                                        .setWidth(80),
+                                                    height: ScreenUtil()
+                                                        .setHeight(70),
+                                                    child: ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              80),
+                                                      child: account
+                                                                  .data.image ==
+                                                              null
+                                                          ? Image.asset(
+                                                              'assets/beever_image.png')
+                                                          : Image.network(
+                                                              '${EndPoint.baseURL}storage/profile-images/${account.data.image}',
+                                                              fit:
+                                                                  BoxFit.cover),
+                                                    ),
                                                   ),
                                                   Container(
                                                     padding:

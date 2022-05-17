@@ -33,8 +33,8 @@ class SavedLocationState extends State<SavedLocation> {
               centerTitle: true,
               leading: TouchableOpacity(
                   onTap: () => Navigator.pop(context),
-                  child:
-                      const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
+                  child: const Icon(Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white)),
             ),
             body: Container(
               width: ScreenUtil().setWidth(480),

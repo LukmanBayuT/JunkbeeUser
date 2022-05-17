@@ -32,9 +32,9 @@ class _WithdrawConfirmationState extends State<WithdrawConfirmation> {
                   centerTitle: true,
                   backgroundColor: const Color(0xFFF8C503),
                   leading: TouchableOpacity(
-                    onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded),
-                  )),
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white))),
               body: SingleChildScrollView(
                   child: Container(
                 width: ScreenUtil().setWidth(480),

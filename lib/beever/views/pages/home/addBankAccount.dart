@@ -32,7 +32,8 @@ class _AddBankAccountState extends State<AddBankAccount> {
                 backgroundColor: const Color(0xFFF8C503),
                 leading: TouchableOpacity(
                     onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded)),
+                    child: const Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white)),
               ),
               body: SingleChildScrollView(
                 child: Container(

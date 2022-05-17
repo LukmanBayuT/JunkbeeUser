@@ -116,7 +116,8 @@ class EditProfileState extends State<EditProfile> {
               centerTitle: true,
               leading: GestureDetector(
                 onTap: () => Navigator.pop(context, 'back'),
-                child: const Icon(Icons.arrow_back_ios_new_rounded),
+                child: const Icon(Icons.arrow_back_ios_new_rounded,
+                    color: Colors.white),
               ),
               actions: [
                 Container(
@@ -147,11 +148,8 @@ class EditProfileState extends State<EditProfile> {
                                           4.5)
                                   : Image.network(
                                       '${widget.image}',
-                                      width: MediaQuery.of(context).size.width /
-                                          4.5,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              8.2,
+                                      width: 100,
+                                      height: 100,
                                       fit: BoxFit.cover,
                                     )),
                           Positioned(
@@ -160,9 +158,8 @@ class EditProfileState extends State<EditProfile> {
                               child: GestureDetector(
                                 onTap: () => takePhoto(),
                                 child: Container(
-                                  width: MediaQuery.of(context).size.width / 13,
-                                  height:
-                                      MediaQuery.of(context).size.height / 24,
+                                  width: 30,
+                                  height: 30,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                       color: const Color(0xFFF8C503),

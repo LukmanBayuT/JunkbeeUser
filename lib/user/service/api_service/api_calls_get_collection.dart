@@ -16,7 +16,6 @@ class GetCollectionData {
     final collectionData = await http.get(
         Uri.parse(EndPoint.baseApiURL + EndPoint.getCollectionData),
         headers: {'Authorization': 'Bearer $token'});
-    print(collectionData.body);
 
     return collectionDataFromJson(collectionData.body);
   }

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, avoid_print, await_only_futures, unused_local_variable, non_constant_identifier_names, avoid_types_as_parameter_names
+// ignore_for_file: file_names, avoid_print, await_only_futures, unused_local_variable, non_constant_identifier_names, avoid_types_as_parameter_names, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -239,7 +239,7 @@ class _EditProfileState extends State<EditProfile> {
                     leading: TouchableOpacity(
                         onTap: () => Navigator.pop(context, 'back'),
                         child: const Icon(Icons.arrow_back_ios_new_rounded,
-                            size: 25)),
+                            color: Colors.white)),
                     actions: [
                       Container(
                           padding: const EdgeInsets.only(right: 20),
@@ -261,27 +261,25 @@ class _EditProfileState extends State<EditProfile> {
                             height: ScreenUtil().setHeight(110),
                             child: Stack(
                               children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(110),
-                                  child: widget.image == null
-                                      ? Image.asset(
-                                          'assets/beever_image.png',
-                                          width: ScreenUtil().setWidth(110),
-                                          height: ScreenUtil().setHeight(110),
-                                        )
-                                      : Image.network('${widget.image}',
-                                          width: ScreenUtil().setWidth(110),
-                                          height: ScreenUtil().setHeight(110),
-                                          fit: BoxFit.cover),
+                                Container(
+                                  width: ScreenUtil().setWidth(110),
+                                  height: ScreenUtil().setHeight(95),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(110),
+                                    child: widget.image == null
+                                        ? Image.asset('assets/beever_image.png')
+                                        : Image.network('${widget.image}',
+                                            fit: BoxFit.cover),
+                                  ),
                                 ),
                                 Positioned(
-                                    bottom: 0,
-                                    right: 8,
+                                    bottom: 8,
+                                    right: 0,
                                     child: TouchableOpacity(
                                         onTap: () => takePhoto(),
                                         child: Container(
-                                            width: ScreenUtil().setWidth(35),
-                                            height: ScreenUtil().setHeight(35),
+                                            width: 30,
+                                            height: 30,
                                             alignment: Alignment.center,
                                             decoration: BoxDecoration(
                                                 color: const Color(0xFFF8C503),

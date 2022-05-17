@@ -29,15 +29,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.amber,
-            fontFamily: 'DiodrumCyrillic',
-            textSelectionTheme:
-                const TextSelectionThemeData(cursorColor: Color(0xff707070)),
-          ),
-          home: const OnboardingSplashScreen(),
-        ),
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.amber,
+              fontFamily: 'DiodrumCyrillic',
+              textSelectionTheme:
+                  const TextSelectionThemeData(cursorColor: Color(0xff707070)),
+            ),
+            home: const OnboardingSplashScreen()),
         providers: [
           ChangeNotifierProvider(create: (_) => NotificationService())
         ]);

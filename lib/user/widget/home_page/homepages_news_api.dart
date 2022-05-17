@@ -21,7 +21,7 @@ class NewsApiUsers extends StatelessWidget {
               padding: const EdgeInsets.only(top: 15, bottom: 100),
               child: SizedBox(
                   width: MediaQuery.of(context).size.width / 1,
-                  height: MediaQuery.of(context).size.height / 3.5,
+                  height: MediaQuery.of(context).size.height / 3,
                   child: FutureBuilder(
                     future: ApiCallsGetNews().getNews(),
                     builder: (BuildContext context, AsyncSnapshot snapshot) {

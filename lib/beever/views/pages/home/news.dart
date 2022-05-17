@@ -19,8 +19,8 @@ class NewsScreen extends StatelessWidget {
                 backgroundColor: const Color(0xFFF8C503),
                 leading: TouchableOpacity(
                     onTap: () => Navigator.pop(context),
-                    child:
-                        const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
+                    child: const Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white)),
               ),
               body: WebView(initialUrl: url),
             ));
