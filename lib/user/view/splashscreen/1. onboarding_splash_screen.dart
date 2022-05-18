@@ -22,7 +22,9 @@ class OnboardingSplashScreenState extends State<OnboardingSplashScreen>
   @override
   void initState() {
     super.initState();
+    print('sampesini');
     startLaunching();
+    print('selesai');
   }
 
   void startLaunching() async {
@@ -35,17 +37,22 @@ class OnboardingSplashScreenState extends State<OnboardingSplashScreen>
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const OnboardingUser());
+        print('token kosong');
       });
     } else if (token != null && role == 'user') {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const NavigatorUser());
+        print('token user');
       });
     } else if (token != null && role == 'beever') {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const NavigatorPages());
+        print('token beever');
       });
+    } else {
+      return startLaunching();
     }
   }
 

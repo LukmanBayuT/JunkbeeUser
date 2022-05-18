@@ -277,10 +277,9 @@ class UserProfileState extends State<UserProfile> {
                                                       setState(() {});
                                                     }
                                                   } else {
-                                                    final imageURL = EndPoint
-                                                            .baseURL +
-                                                        'storage/profile-images/' +
-                                                        userdata.data.image;
+                                                    final imageURL = '${EndPoint
+                                                            .baseURL}storage/profile-images/${ userdata.data.image}'
+                                                       ;
                                                     final result = await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(

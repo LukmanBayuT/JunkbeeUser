@@ -385,7 +385,7 @@ class UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -400,7 +400,7 @@ class UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -415,7 +415,7 @@ class UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -430,7 +430,7 @@ class UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -445,7 +445,7 @@ class UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),

@@ -52,6 +52,7 @@ SizedBox infoAccount(BuildContext context) {
     Map<String, dynamic> bodyJson = jsonDecode(logOut.body);
     if (bodyJson['message'] == 'success') {
       await secureStorage.deleteAllSecureData();
+
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const OnboardingSplashScreen()));
     } else {

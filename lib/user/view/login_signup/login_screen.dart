@@ -84,6 +84,8 @@ class SignInUserState extends State<SignInUser> {
         Map<String, dynamic> updateToken = jsonDecode(resp.body);
         if (updateToken['message'] == 'data has been updated') {
           setState(() => loading = false);
+          //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+          if (!mounted) return;
           Navigator.pop(context, 'back');
         }
         if (kDebugMode) {
@@ -129,6 +131,8 @@ class SignInUserState extends State<SignInUser> {
             setState(() => loading = false);
             await secureStorage.writeSecureData(
                 'token', bodyJSON['data']['token']);
+            //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+            if (!mounted) return;
             Navigator.pop(context, 'back');
           }
         }
@@ -158,6 +162,8 @@ class SignInUserState extends State<SignInUser> {
     if (response.statusCode == 200) {
       setState(() => loading = false);
       await secureStorage.writeSecureData('token', bodyJSON['data']['token']);
+      //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+      if (!mounted) return;
       Navigator.pop(context, 'back');
     }
   }

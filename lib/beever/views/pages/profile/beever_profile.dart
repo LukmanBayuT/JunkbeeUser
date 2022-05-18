@@ -181,9 +181,7 @@ class BeeverProfileState extends State<BeeverProfile> {
                                                             }
                                                           } else {
                                                             final imageURL =
-                                                                '${EndPoint.baseURL}storage/profile-images/' +
-                                                                    account.data
-                                                                        .image;
+                                                                '${EndPoint.baseURL}storage/profile-images/${account.data.image}';
                                                             final result = await Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
