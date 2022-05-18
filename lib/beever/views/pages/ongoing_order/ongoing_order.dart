@@ -67,7 +67,7 @@ class _OngoingOrderState extends State<OngoingOrder> {
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => OngoingOrderProceed());
+              Get.to(() => const WasteCollectionsPoint());
             },
             child: Container(
               width: 100,

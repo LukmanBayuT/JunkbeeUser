@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors_in_immutables, non_constant_identifier_names, avoid_init_to_null, unused_local_variable, await_only_futures, avoid_print, sized_box_for_whitespace, avoid_unnecessary_containers, unnecessary_string_interpolations
+// ignore_for_file: prefer_const_constructors_in_immutables, non_constant_identifier_names, avoid_init_to_null, unused_local_variable, await_only_futures, avoid_print, sized_box_for_whitespace, avoid_unnecessary_containers, unused_import
 
 import 'dart:convert';
 import 'dart:io';
@@ -20,6 +20,8 @@ import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
 import 'package:http/http.dart' as http;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:place_picker/place_picker.dart';
 
 class UserOrder extends StatefulWidget {
   const UserOrder({Key? key}) : super(key: key);
@@ -30,6 +32,7 @@ class UserOrder extends StatefulWidget {
 
 class _UserOrderState extends State<UserOrder> {
   String? alamat = 'Lokasimu';
+  String? namaTempat = 'Nama Tempat';
   SecureStorage secureStorage = SecureStorage();
 
   dynamic token_local = null;
@@ -242,6 +245,29 @@ class _UserOrderState extends State<UserOrder> {
           Icons.error_outlined,
           color: Colors.red,
         ));
+  }
+
+  void showPlacePicker() async {
+    LocationResult? result = await Get.to(() => PlacePicker(
+          "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
+        ));
+    // setState(() {});
+    // LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
+    //     builder: (context) => PlacePicker(
+    //           "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
+    //         )));
+
+    if (result != null) {
+      setState(() {
+        alamat = result.formattedAddress;
+        namaTempat = result.name;
+      });
+    } else {
+      setState(() {
+        alamat = alamat;
+        namaTempat = namaTempat;
+      });
+    }
   }
 
   @override
@@ -646,23 +672,43 @@ class _UserOrderState extends State<UserOrder> {
                                                 'icons/icons_others/ico_location.png',
                                                 width: 30),
                                             const SizedBox(width: 10),
-                                            SizedBox(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2,
-                                              child: Text((alamat != null)
-                                                  ? alamat.toString()
-                                                  : 'Lokasimu'),
+                                            Column(
+                                              children: [
+                                                const SizedBox(width: 10),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2,
+                                                  child: Text(
+                                                    (alamat == null)
+                                                        ? 'Nama Tempat'
+                                                        : namaTempat.toString(),
+                                                    style: titleBodyMini
+                                                        .copyWith(fontSize: 16),
+                                                  ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width /
+                                                      2,
+                                                  child: Text((alamat == null)
+                                                      ? 'Lokasimu'
+                                                      : alamat.toString()),
+                                                ),
+                                              ],
                                             )
                                           ],
                                         ),
                                         GestureDetector(
-                                          onTap: () async {
-                                            alamat = await Get.to(
-                                                () => const UserOrderMaps());
-                                            setState(() {});
-                                          },
+                                          onTap: showPlacePicker,
+                                          // onTap: () async {
+                                          //   alamat = await Get.to(
+                                          //       () => const UserOrderMaps());
+                                          //   setState(() {});
+                                          // },
                                           child: const Text('Change',
                                               style: onboardingSkip),
                                         )
