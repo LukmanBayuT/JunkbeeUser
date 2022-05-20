@@ -11,10 +11,10 @@ class GetUserLocation extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GetUserLocationState createState() => _GetUserLocationState();
+  GetUserLocationState createState() => GetUserLocationState();
 }
 
-class _GetUserLocationState extends State<GetUserLocation> {
+class GetUserLocationState extends State<GetUserLocation> {
   LocationData? currentLocation;
   String address = "";
 
@@ -77,9 +77,9 @@ class _GetUserLocationState extends State<GetUserLocation> {
 
   Future<LocationData?> _getLocation() async {
     Location location = Location();
-    LocationData _locationData;
-    _locationData = await location.getLocation();
-    return _locationData;
+    LocationData locationData;
+    locationData = await location.getLocation();
+    return locationData;
   }
 
   Future<String> _getAddress(double? lat, double? lang) async {

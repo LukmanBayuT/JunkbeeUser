@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class EndPoint {
   static const String baseApiURL = "https://staging2.junkbee.id/api/";
   static const String baseURL = "https://staging2.junkbee.id/";
@@ -16,4 +18,6 @@ class EndPoint {
       "https://staging2.junkbee.id/api/public/news/";
   static const String bannerForNews =
       "https://staging2.junkbee.id/storage/news-images/";
+  static const String topUp = 'payment/va';
+  static const String cancel_topup = 'payment/cancel';
 }

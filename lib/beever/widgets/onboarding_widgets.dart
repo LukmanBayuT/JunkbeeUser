@@ -25,16 +25,18 @@ class Onboarding_1 extends StatelessWidget {
           children: [
             Row(
               children: [
-                Image.asset('assets/onboarding/close_onboarding.png', height: MediaQuery.of(context).size.height / 40),
+                Image.asset('assets/onboarding/close_onboarding.png',
+                    height: MediaQuery.of(context).size.height / 40),
               ],
             ),
             Column(
               children: [
-                Image.asset('assets/onboarding/onboarding_1.png', width: MediaQuery.of(context).size.width / 1.2),
+                Image.asset('assets/onboarding/onboarding_1.png',
+                    width: MediaQuery.of(context).size.width / 1.2),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 20,
                 ),
-                const Text( 'With Junkbee', style: onboardingTextStyleTitle ),
+                const Text('With Junkbee', style: onboardingTextStyleTitle),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 60,
                 ),
@@ -49,19 +51,21 @@ class Onboarding_1 extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width / 1,
-              height: MediaQuery.of(context).size.height / 13,
-              child: ElevatedButton(
-                onPressed: () => onboardingController.animateToPage(1, duration: onboardingSlideDuration, curve: Curves.easeInCubic),
-                child: const Text('Be a Beever', style: onboardingTextButton,),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.amber,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)
-                  )
-                ),
-              )
-            )
+                width: MediaQuery.of(context).size.width / 1,
+                height: MediaQuery.of(context).size.height / 13,
+                child: ElevatedButton(
+                  onPressed: () => onboardingController.animateToPage(1,
+                      duration: onboardingSlideDuration,
+                      curve: Curves.easeInCubic),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.amber,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                  child: const Text(
+                    'Be a Beever',
+                    style: onboardingTextButton,
+                  ),
+                ))
           ],
         ),
       ),
@@ -90,21 +94,26 @@ class Onboarding_2 extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () => onboardingController.animateToPage(0, duration: onboardingSlideDuration, curve: Curves.easeInCubic),
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.amber,
-                  )
-                )
+                    onPressed: () => onboardingController.animateToPage(0,
+                        duration: onboardingSlideDuration,
+                        curve: Curves.easeInCubic),
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.amber,
+                    ))
               ],
             ),
             Column(
               children: [
-                Image.asset('assets/onboarding/onboarding_2.png', width: MediaQuery.of(context).size.width / 1.4,),
+                Image.asset(
+                  'assets/onboarding/onboarding_2.png',
+                  width: MediaQuery.of(context).size.width / 1.4,
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 20,
                 ),
-                const Text('Verify Your Identity', style: onboardingTextStyleTitle),
+                const Text('Verify Your Identity',
+                    style: onboardingTextStyleTitle),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 60,
                 ),
@@ -119,21 +128,18 @@ class Onboarding_2 extends StatelessWidget {
               ],
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width / 1,
-              height: MediaQuery.of(context).size.height / 13,
-              child: ElevatedButton(
-                onPressed: () {
-                  Get.to(() => const SignInDriver());
-                },
-                child: const Text('Continue', style: onboardingTextButton),
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.amber,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)
-                  )
-                ),
-              )
-            ),
+                width: MediaQuery.of(context).size.width / 1,
+                height: MediaQuery.of(context).size.height / 13,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.to(() => const SignInDriver());
+                  },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.amber,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                  child: const Text('Continue', style: onboardingTextButton),
+                )),
           ],
         ),
       ),

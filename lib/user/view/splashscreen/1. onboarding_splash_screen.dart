@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -14,15 +16,17 @@ class OnboardingSplashScreen extends StatefulWidget {
   const OnboardingSplashScreen({Key? key}) : super(key: key);
 
   @override
-  _OnboardingSplashScreenState createState() => _OnboardingSplashScreenState();
+  OnboardingSplashScreenState createState() => OnboardingSplashScreenState();
 }
 
-class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
+class OnboardingSplashScreenState extends State<OnboardingSplashScreen>
     with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+    print('sampesini');
     startLaunching();
+    print('selesai');
   }
 
   void startLaunching() async {
@@ -35,17 +39,22 @@ class _OnboardingSplashScreenState extends State<OnboardingSplashScreen>
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const OnboardingUser());
+        print('token kosong');
       });
     } else if (token != null && role == 'user') {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const NavigatorUser());
+        print('token user');
       });
     } else if (token != null && role == 'beever') {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const NavigatorPages());
+        print('token beever');
       });
+    } else {
+      return startLaunching();
     }
   }
 

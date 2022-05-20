@@ -8,10 +8,10 @@ class News extends StatefulWidget {
   const News({Key? key, @required this.url}) : super(key: key);
 
   @override
-  _NewsState createState() => _NewsState();
+  NewsState createState() => NewsState();
 }
 
-class _NewsState extends State<News> {
+class NewsState extends State<News> {
   bool loading = true;
 
   @override
@@ -25,9 +25,12 @@ class _NewsState extends State<News> {
           ),
           centerTitle: true,
           leading: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: const Icon(Icons.arrow_back_ios_new_rounded,
-                  color: Colors.white)),
+            onTap: () => Navigator.pop(context),
+            child: const Icon(
+              Icons.arrow_back_ios_new_rounded,
+              size: 25,
+            ),
+          ),
         ),
         body: Stack(
           children: [

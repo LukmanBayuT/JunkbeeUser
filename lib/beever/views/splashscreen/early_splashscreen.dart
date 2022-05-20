@@ -11,10 +11,10 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  SplashScreenState createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
+class SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _controller;
 
@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     final SecureStorage secureStorage = SecureStorage();
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
-    
+
     if (token != null) {
       print('token is not null');
       Get.offAll(() => const NavigatorPages());
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen>
           onLoaded: (composition) {
             _controller
               ..duration = composition.duration
-              ..forward().whenComplete(() => startLaunching() );
+              ..forward().whenComplete(() => startLaunching());
           },
         ),
       ),

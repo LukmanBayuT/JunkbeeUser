@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:image_picker/image_picker.dart';
@@ -37,10 +36,10 @@ class EditProfile extends StatefulWidget {
       : super(key: key);
 
   @override
-  _EditProfileState createState() => _EditProfileState();
+  EditProfileState createState() => EditProfileState();
 }
 
-class _EditProfileState extends State<EditProfile> {
+class EditProfileState extends State<EditProfile> {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -76,6 +75,8 @@ class _EditProfileState extends State<EditProfile> {
         }));
     Map<String, dynamic> bodyJSON = jsonDecode(updateData.body);
     if (bodyJSON['message'] == 'data has been updated') {
+      //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+      if (!mounted) return;
       Navigator.pop(context, 'back');
     }
   }
@@ -109,6 +110,8 @@ class _EditProfileState extends State<EditProfile> {
             final response = await http.Response.fromStream(streamedResponse);
             Map<String, dynamic> responseJSON = jsonDecode(response.body);
             if (responseJSON['message'] == 'data has been updated') {
+              //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+              if (!mounted) return;
               Navigator.pop(context, 'back');
             }
           } catch (e) {
@@ -226,237 +229,216 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   @override
-  Widget build(BuildContext) {
+  Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: () => _onWillPop(),
-        child: ScreenUtilInit(
-            designSize: const Size(480, 904),
-            builder: () => Scaffold(
-                  appBar: AppBar(
-                    title: const Text('Edit Profile', style: textBodyProfile),
-                    centerTitle: true,
-                    backgroundColor: const Color(0xFFF8C503),
-                    leading: TouchableOpacity(
-                        onTap: () => Navigator.pop(context, 'back'),
-                        child: const Icon(Icons.arrow_back_ios_new_rounded,
-                            color: Colors.white)),
-                    actions: [
+        child: Scaffold(
+            appBar: AppBar(
+              title: const Text('Edit Profile', style: textBodyProfile),
+              centerTitle: true,
+              backgroundColor: const Color(0xFFF8C503),
+              leading: TouchableOpacity(
+                  onTap: () => Navigator.pop(context, 'back'),
+                  child: const Icon(Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white)),
+              actions: [
+                Container(
+                    padding: const EdgeInsets.only(right: 20),
+                    alignment: Alignment.centerRight,
+                    child: TouchableOpacity(
+                        onTap: () => updateData(),
+                        child:
+                            const Text('Save', style: textProfileMediumWhite)))
+              ],
+            ),
+            body: SingleChildScrollView(
+                child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(children: [
+                      const EditProfileWidget(),
+                      SizedBox(
+                        width: 110,
+                        height: 110,
+                        child: Stack(
+                          children: [
+                            Container(
+                              width: 110,
+                              height: 95,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(110),
+                                child: widget.image == null
+                                    ? Image.asset('assets/beever_image.png')
+                                    : Image.network('${widget.image}',
+                                        fit: BoxFit.cover),
+                              ),
+                            ),
+                            Positioned(
+                                bottom: 8,
+                                right: 0,
+                                child: TouchableOpacity(
+                                    onTap: () => takePhoto(),
+                                    child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            color: const Color(0xFFF8C503),
+                                            borderRadius:
+                                                BorderRadius.circular(35)),
+                                        child: Image.asset(
+                                          'assets/group_1666.png',
+                                          width: 20,
+                                          height: 20,
+                                        ))))
+                          ],
+                        ),
+                      ),
                       Container(
-                          padding: const EdgeInsets.only(right: 20),
-                          alignment: Alignment.centerRight,
-                          child: TouchableOpacity(
-                              onTap: () => updateData(),
-                              child: const Text('Save',
-                                  style: textProfileMediumWhite)))
-                    ],
-                  ),
-                  body: SingleChildScrollView(
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: Column(
-                        children: [
-                          const EditProfileWidget(),
-                          SizedBox(
-                            width: ScreenUtil().setWidth(110),
-                            height: ScreenUtil().setHeight(110),
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: ScreenUtil().setWidth(110),
-                                  height: ScreenUtil().setHeight(95),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(110),
-                                    child: widget.image == null
-                                        ? Image.asset('assets/beever_image.png')
-                                        : Image.network('${widget.image}',
-                                            fit: BoxFit.cover),
-                                  ),
-                                ),
-                                Positioned(
-                                    bottom: 8,
-                                    right: 0,
-                                    child: TouchableOpacity(
-                                        onTap: () => takePhoto(),
-                                        child: Container(
-                                            width: 30,
-                                            height: 30,
-                                            alignment: Alignment.center,
-                                            decoration: BoxDecoration(
-                                                color: const Color(0xFFF8C503),
-                                                borderRadius:
-                                                    BorderRadius.circular(35)),
-                                            child: Image.asset(
-                                              'assets/group_1666.png',
-                                              width: ScreenUtil().setWidth(20),
-                                              height:
-                                                  ScreenUtil().setHeight(20),
-                                            ))))
-                              ],
+                        padding: const EdgeInsets.only(top: 49),
+                        width: 342,
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              width: 342,
+                              child: Text(
+                                'Your Name',
+                                style: textProfile,
+                              ),
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(top: 49),
-                            width: ScreenUtil().setWidth(342),
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: ScreenUtil().setWidth(342),
-                                  child: const Text(
-                                    'Your Name',
-                                    style: textProfile,
-                                  ),
-                                ),
-                                TextFormField(
-                                  controller: nameController,
-                                  style: textProfile,
-                                  textCapitalization: TextCapitalization.words,
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(top: 24),
-                                  width: ScreenUtil().setWidth(342),
-                                  child: const Text(
-                                    'Mobile Number',
-                                    style: textProfile,
-                                  ),
-                                ),
-                                TextFormField(
-                                    controller: phoneController,
-                                    keyboardType: TextInputType.phone,
-                                    style: textProfile),
-                                Container(
-                                  padding: const EdgeInsets.only(top: 24),
-                                  width: ScreenUtil().setWidth(342),
-                                  child: const Text(
-                                    'Email Address',
-                                    style: textProfile,
-                                  ),
-                                ),
-                                TextFormField(
-                                    controller: emailController,
-                                    keyboardType: TextInputType.emailAddress,
-                                    style: textProfile)
-                              ],
+                            TextFormField(
+                              controller: nameController,
+                              style: textProfile,
+                              textCapitalization: TextCapitalization.words,
                             ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(top: 40),
-                            width: ScreenUtil().setWidth(400),
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  width: ScreenUtil().setWidth(400),
-                                  child: const Text(
-                                    'Linked Account',
-                                    style: textProfileBold,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(top: 24),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                            Container(
+                              padding: const EdgeInsets.only(top: 24),
+                              width: 342,
+                              child: const Text(
+                                'Mobile Number',
+                                style: textProfile,
+                              ),
+                            ),
+                            TextFormField(
+                                controller: phoneController,
+                                keyboardType: TextInputType.phone,
+                                style: textProfile),
+                            Container(
+                              padding: const EdgeInsets.only(top: 24),
+                              width: 342,
+                              child: const Text(
+                                'Email Address',
+                                style: textProfile,
+                              ),
+                            ),
+                            TextFormField(
+                                controller: emailController,
+                                keyboardType: TextInputType.emailAddress,
+                                style: textProfile)
+                          ],
+                        ),
+                      ),
+                      Container(
+                          padding: const EdgeInsets.only(top: 40),
+                          width: 400,
+                          alignment: Alignment.topLeft,
+                          child: Column(children: [
+                            const SizedBox(
+                              width: 400,
+                              child: Text(
+                                'Linked Account',
+                                style: textProfileBold,
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(top: 24),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
                                     children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                              width: ScreenUtil().setWidth(40),
-                                              child: Image.asset(
-                                                  'assets/group_1669.png')),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(left: 10),
-                                            child: const Text(
-                                              'Facebook',
-                                              style: textProfile,
-                                            ),
-                                          ),
-                                        ],
+                                      SizedBox(
+                                          width: 40,
+                                          child: Image.asset(
+                                              'assets/group_1669.png')),
+                                      Container(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: const Text(
+                                          'Facebook',
+                                          style: textProfile,
+                                        ),
                                       ),
-                                      FutureBuilder(
-                                          future: ApiCallsGetData().getData(),
-                                          builder: (context,
-                                              AsyncSnapshot snapshot) {
-                                            var editProfile = snapshot.data;
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              return Container(
-                                                  child: (editProfile.data
-                                                                  .facebookId) ==
-                                                              'null' ||
-                                                          (editProfile.data
-                                                                  .facebookId) ==
-                                                              null
-                                                      ? Transform.rotate(
-                                                          angle: 3.15,
-                                                          child: FlutterSwitch(
-                                                              width:
-                                                                  ScreenUtil()
-                                                                      .setWidth(
-                                                                          70),
-                                                              height:
-                                                                  ScreenUtil()
-                                                                      .setHeight(
-                                                                          40),
-                                                              inactiveColor:
-                                                                  const Color(
-                                                                      0xFFDEDEDE),
-                                                              inactiveToggleColor:
-                                                                  const Color(
-                                                                      0xFFF0F0F0),
-                                                              value: isSwitchFB,
-                                                              onToggle: (value) =>
-                                                                  _onFacebookSignIn()),
-                                                        )
-                                                      : Transform.rotate(
-                                                          angle: 3.15,
-                                                          child: FlutterSwitch(
-                                                              width:
-                                                                  ScreenUtil()
-                                                                      .setWidth(
-                                                                          70),
-                                                              height:
-                                                                  ScreenUtil()
-                                                                      .setHeight(
-                                                                          40),
-                                                              activeColor:
-                                                                  const Color(
-                                                                      0xFFC2ECBD),
-                                                              activeToggleColor:
-                                                                  const Color(
-                                                                      0xFF2AAE1B),
-                                                              value:
-                                                                  !isSwitchFB,
-                                                              onToggle: (value) =>
-                                                                  _onFacebookSignOut()),
-                                                        ));
-                                            } else {
-                                              return SizedBox(
-                                                  width:
-                                                      ScreenUtil().setWidth(40),
-                                                  height: ScreenUtil()
-                                                      .setHeight(40),
-                                                  child:
-                                                      const CircularProgressIndicator(
-                                                    strokeWidth: 4,
-                                                    color: Color(0xFFF8C503),
-                                                  ));
-                                            }
-                                          })
                                     ],
                                   ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(top: 23),
-                                  child: Row(
+                                  FutureBuilder(
+                                      future: ApiCallsGetData().getData(),
+                                      builder:
+                                          (context, AsyncSnapshot snapshot) {
+                                        var editProfile = snapshot.data;
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          return Container(
+                                              child: (editProfile.data
+                                                              .facebookId) ==
+                                                          'null' ||
+                                                      (editProfile.data
+                                                              .facebookId) ==
+                                                          null
+                                                  ? Transform.rotate(
+                                                      angle: 3.15,
+                                                      child: FlutterSwitch(
+                                                          width: 70,
+                                                          height: 40,
+                                                          inactiveColor:
+                                                              const Color(
+                                                                  0xFFDEDEDE),
+                                                          inactiveToggleColor:
+                                                              const Color(
+                                                                  0xFFF0F0F0),
+                                                          value: isSwitchFB,
+                                                          onToggle: (value) =>
+                                                              _onFacebookSignIn()),
+                                                    )
+                                                  : Transform.rotate(
+                                                      angle: 3.15,
+                                                      child: FlutterSwitch(
+                                                          width: 70,
+                                                          height: 40,
+                                                          activeColor:
+                                                              const Color(
+                                                                  0xFFC2ECBD),
+                                                          activeToggleColor:
+                                                              const Color(
+                                                                  0xFF2AAE1B),
+                                                          value: !isSwitchFB,
+                                                          onToggle: (value) =>
+                                                              _onFacebookSignOut()),
+                                                    ));
+                                        } else {
+                                          return const SizedBox(
+                                              width: 40,
+                                              height: 40,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 4,
+                                                color: Color(0xFFF8C503),
+                                              ));
+                                        }
+                                      })
+                                ],
+                              ),
+                            ),
+                            Container(
+                                padding: const EdgeInsets.only(top: 23),
+                                child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
                                           SizedBox(
-                                              width: ScreenUtil().setWidth(40),
+                                              width: 40,
                                               child: Image.asset(
                                                   'assets/group_1670.png')),
                                           Container(
@@ -486,14 +468,8 @@ class _EditProfileState extends State<EditProfile> {
                                                       ? Transform.rotate(
                                                           angle: 3.15,
                                                           child: FlutterSwitch(
-                                                              width:
-                                                                  ScreenUtil()
-                                                                      .setWidth(
-                                                                          70),
-                                                              height:
-                                                                  ScreenUtil()
-                                                                      .setHeight(
-                                                                          40),
+                                                              width: 70,
+                                                              height: 40,
                                                               inactiveColor:
                                                                   const Color(
                                                                       0xFFDEDEDE),
@@ -508,14 +484,8 @@ class _EditProfileState extends State<EditProfile> {
                                                       : Transform.rotate(
                                                           angle: 3.15,
                                                           child: FlutterSwitch(
-                                                              width:
-                                                                  ScreenUtil()
-                                                                      .setWidth(
-                                                                          70),
-                                                              height:
-                                                                  ScreenUtil()
-                                                                      .setHeight(
-                                                                          40),
+                                                              width: 70,
+                                                              height: 40,
                                                               activeColor:
                                                                   const Color(
                                                                       0xFFC2ECBD),
@@ -528,28 +498,18 @@ class _EditProfileState extends State<EditProfile> {
                                                                   _onGoogleSignOut()),
                                                         ));
                                             } else {
-                                              return SizedBox(
-                                                  width:
-                                                      ScreenUtil().setWidth(40),
-                                                  height: ScreenUtil()
-                                                      .setHeight(40),
+                                              return const SizedBox(
+                                                  width: 40,
+                                                  height: 40,
                                                   child:
-                                                      const CircularProgressIndicator(
+                                                      CircularProgressIndicator(
                                                     strokeWidth: 4,
                                                     color: Color(0xFFF8C503),
                                                   ));
                                             }
                                           })
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )));
+                                    ]))
+                          ]))
+                    ])))));
   }
 }

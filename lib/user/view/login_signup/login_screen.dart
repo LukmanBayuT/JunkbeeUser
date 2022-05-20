@@ -20,10 +20,10 @@ class SignInUser extends StatefulWidget {
   const SignInUser({Key? key}) : super(key: key);
 
   @override
-  _SignInUserState createState() => _SignInUserState();
+  SignInUserState createState() => SignInUserState();
 }
 
-class _SignInUserState extends State<SignInUser> {
+class SignInUserState extends State<SignInUser> {
   final TextEditingController _logincont = TextEditingController();
   final TextEditingController _passwordcont = TextEditingController();
 
@@ -84,6 +84,8 @@ class _SignInUserState extends State<SignInUser> {
         Map<String, dynamic> updateToken = jsonDecode(resp.body);
         if (updateToken['message'] == 'data has been updated') {
           setState(() => loading = false);
+          //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+          if (!mounted) return;
           Navigator.pop(context, 'back');
         }
         if (kDebugMode) {
@@ -129,6 +131,8 @@ class _SignInUserState extends State<SignInUser> {
             setState(() => loading = false);
             await secureStorage.writeSecureData(
                 'token', bodyJSON['data']['token']);
+            //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+            if (!mounted) return;
             Navigator.pop(context, 'back');
           }
         }
@@ -158,6 +162,8 @@ class _SignInUserState extends State<SignInUser> {
     if (response.statusCode == 200) {
       setState(() => loading = false);
       await secureStorage.writeSecureData('token', bodyJSON['data']['token']);
+      //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+      if (!mounted) return;
       Navigator.pop(context, 'back');
     }
   }
@@ -205,6 +211,7 @@ class _SignInUserState extends State<SignInUser> {
                           Padding(
                             padding: defaultPadding10,
                             child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
                               controller: _logincont,
                               style: const TextStyle(fontSize: 22),
                               decoration: InputDecoration(

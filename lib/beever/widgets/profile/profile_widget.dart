@@ -1,11 +1,10 @@
-// ignore_for_file: unused_import, unnecessary_const, sized_box_for_whitespace, unused_element
+// ignore_for_file: unused_import, unnecessary_const, sized_box_for_whitespace, unused_element, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:junkbee_user/beever/const/const.dart';
@@ -30,10 +29,10 @@ class ProfileWidget extends StatelessWidget {
 }
 
 SizedBox text(BuildContext context) {
-  return SizedBox(
-      width: ScreenUtil().setWidth(480),
-      child: const Center(
-          child: const Text(
+  return const SizedBox(
+      width: 480,
+      child: Center(
+          child: Text(
         'My Account',
         style: textBodyProfile,
       )));
@@ -52,6 +51,7 @@ SizedBox infoAccount(BuildContext context) {
     Map<String, dynamic> bodyJson = jsonDecode(logOut.body);
     if (bodyJson['message'] == 'success') {
       await secureStorage.deleteAllSecureData();
+
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const OnboardingSplashScreen()));
     } else {
@@ -63,7 +63,7 @@ SizedBox infoAccount(BuildContext context) {
 
   return SizedBox(
     child: Container(
-        width: ScreenUtil().setWidth(380),
+        width: 380,
         child: Column(
           children: [
             Container(
@@ -74,14 +74,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Saved Location',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -93,7 +93,7 @@ SizedBox infoAccount(BuildContext context) {
                 )),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: const Border(
                       bottom: const BorderSide(
@@ -109,14 +109,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Help Centre',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -128,7 +128,7 @@ SizedBox infoAccount(BuildContext context) {
                 )),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: Border(
                       bottom:
@@ -141,11 +141,11 @@ SizedBox infoAccount(BuildContext context) {
             //     child: Row(
             //       children: [
             //         Container(
-            //           width: ScreenUtil().setWidth(300),
+            //           width: 300,
             //           child: Text('Setting', style: textProfile,),
             //         ),
             //         Container(
-            //           width: ScreenUtil().setWidth(80),
+            //           width: 80,
             //           alignment: Alignment.centerRight,
             //           child: const Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Color(0xFF707070),)
             //         )
@@ -155,7 +155,7 @@ SizedBox infoAccount(BuildContext context) {
             // ),
             // Container(
             //   padding: const EdgeInsets.only(top: 15),
-            //   width: ScreenUtil().setWidth(380),
+            //   width: 380,
             //   decoration: BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
             // ),
 
@@ -167,14 +167,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Share Feedback',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -186,7 +186,7 @@ SizedBox infoAccount(BuildContext context) {
                 )),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: const Border(
                       bottom: const BorderSide(
@@ -199,14 +199,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Privacy Policy',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -218,7 +218,7 @@ SizedBox infoAccount(BuildContext context) {
                 )),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: const Border(
                       bottom: const BorderSide(
@@ -231,14 +231,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Terms of Service',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -250,7 +250,7 @@ SizedBox infoAccount(BuildContext context) {
                 )),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: const Border(
                       bottom: const BorderSide(
@@ -272,7 +272,7 @@ SizedBox infoAccount(BuildContext context) {
                               backgroundColor: Colors.white,
                               insetPadding: const EdgeInsets.all(0),
                               child: Container(
-                                  width: ScreenUtil().setWidth(400),
+                                  width: 400,
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     mainAxisSize: MainAxisSize.min,
@@ -282,21 +282,20 @@ SizedBox infoAccount(BuildContext context) {
                                               const EdgeInsets.only(top: 38),
                                           child: Image.asset(
                                               'assets/group_1718.png',
-                                              width:
-                                                  ScreenUtil().setWidth(300))),
+                                              width: 300)),
                                       Container(
                                         padding: const EdgeInsets.only(
                                             top: 14, bottom: 19),
-                                        child: Text(
+                                        child: const Text(
                                             'Do you enjoy using JunkBee?',
                                             style: TextStyle(
-                                                color: const Color(0xFF707070),
+                                                color: Color(0xFF707070),
                                                 fontWeight: FontWeight.w800,
-                                                fontSize: 20.sp)),
+                                                fontSize: 20)),
                                       ),
                                       Container(
-                                        width: ScreenUtil().setWidth(300),
-                                        height: ScreenUtil().setHeight(60),
+                                        width: 300,
+                                        height: 60,
                                         child: ElevatedButton(
                                             style: ElevatedButton.styleFrom(
                                                 shape: RoundedRectangleBorder(
@@ -326,8 +325,7 @@ SizedBox infoAccount(BuildContext context) {
                                                             const EdgeInsets
                                                                 .all(0),
                                                         child: Container(
-                                                            width: ScreenUtil()
-                                                                .setWidth(400),
+                                                            width: 400,
                                                             child: Column(
                                                               mainAxisAlignment:
                                                                   MainAxisAlignment
@@ -343,62 +341,56 @@ SizedBox infoAccount(BuildContext context) {
                                                                             38),
                                                                     child: Image.asset(
                                                                         'assets/group_1734.png',
-                                                                        width: ScreenUtil()
-                                                                            .setWidth(300))),
+                                                                        width:
+                                                                            300)),
                                                                 Container(
                                                                   padding: const EdgeInsets
                                                                           .only(
                                                                       top: 20,
                                                                       bottom:
                                                                           10),
-                                                                  child: Text(
+                                                                  child: const Text(
                                                                       'Amazing!',
                                                                       style: TextStyle(
-                                                                          color: const Color(
+                                                                          color: Color(
                                                                               0xFFF8C503),
                                                                           fontWeight: FontWeight
                                                                               .w800,
                                                                           fontSize:
-                                                                              22.sp)),
+                                                                              22)),
                                                                 ),
                                                                 Container(
                                                                   padding: const EdgeInsets
                                                                           .only(
                                                                       bottom:
                                                                           19),
-                                                                  width: ScreenUtil()
-                                                                      .setWidth(
-                                                                          350),
-                                                                  child: Text(
+                                                                  width: 350,
+                                                                  child: const Text(
                                                                       'We are happy to hear that you love using JunkBee App! Would you like to share your experience by rating us on the App Store?',
                                                                       style: TextStyle(
-                                                                          color: const Color(
+                                                                          color: Color(
                                                                               0xFF707070),
                                                                           fontWeight: FontWeight
                                                                               .w500,
-                                                                          fontSize: 18
-                                                                              .sp),
+                                                                          fontSize:
+                                                                              18),
                                                                       textAlign:
                                                                           TextAlign
                                                                               .center),
                                                                 ),
                                                                 Container(
-                                                                  width: ScreenUtil()
-                                                                      .setWidth(
-                                                                          300),
-                                                                  height: ScreenUtil()
-                                                                      .setHeight(
-                                                                          60),
+                                                                  width: 300,
+                                                                  height: 60,
                                                                   child: ElevatedButton(
                                                                       style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)), primary: const Color(0xFFF8C503)),
                                                                       onPressed: () => Navigator.of(context).pop(),
-                                                                      child: Text(
+                                                                      child: const Text(
                                                                         'Give Rating',
-                                                                        style: TextStyle(
+                                                                        style: const TextStyle(
                                                                             color:
                                                                                 Colors.white,
                                                                             fontWeight: FontWeight.w800,
-                                                                            fontSize: 20.sp),
+                                                                            fontSize: 20),
                                                                       )),
                                                                 ),
                                                                 const Padding(
@@ -410,16 +402,16 @@ SizedBox infoAccount(BuildContext context) {
                                                                         Navigator.of(context)
                                                                             .pop(),
                                                                     child: Container(
-                                                                        width: ScreenUtil().setWidth(300),
-                                                                        height: ScreenUtil().setHeight(60),
+                                                                        width: 300,
+                                                                        height: 60,
                                                                         alignment: Alignment.center,
                                                                         decoration: BoxDecoration(color: const Color(0xFFF1F1F1), borderRadius: BorderRadius.circular(10)),
-                                                                        child: Text(
+                                                                        child: const Text(
                                                                           'No, Thanks',
                                                                           style: TextStyle(
-                                                                              color: const Color(0xFF707070),
+                                                                              color: Color(0xFF707070),
                                                                               fontWeight: FontWeight.w600,
-                                                                              fontSize: 20.sp),
+                                                                              fontSize: 20),
                                                                         ))),
                                                                 const Padding(
                                                                     padding: EdgeInsets.only(
@@ -435,12 +427,12 @@ SizedBox infoAccount(BuildContext context) {
                                                   duration: const Duration(
                                                       seconds: 1));
                                             },
-                                            child: Text(
+                                            child: const Text(
                                               'Yup, Love It!',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.w800,
-                                                  fontSize: 20.sp),
+                                                  fontSize: 20),
                                             )),
                                       ),
                                       const Padding(
@@ -449,9 +441,8 @@ SizedBox infoAccount(BuildContext context) {
                                           onTap: () =>
                                               Navigator.of(context).pop(),
                                           child: Container(
-                                              width: ScreenUtil().setWidth(300),
-                                              height:
-                                                  ScreenUtil().setHeight(60),
+                                              width: 300,
+                                              height: 60,
                                               alignment: Alignment.center,
                                               decoration: BoxDecoration(
                                                   color:
@@ -459,13 +450,12 @@ SizedBox infoAccount(BuildContext context) {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
-                                              child: Text(
+                                              child: const Text(
                                                 'Not Really',
                                                 style: TextStyle(
-                                                    color:
-                                                        const Color(0xFF707070),
+                                                    color: Color(0xFF707070),
                                                     fontWeight: FontWeight.w600,
-                                                    fontSize: 20.sp),
+                                                    fontSize: 20),
                                               ))),
                                       const Padding(
                                           padding: EdgeInsets.only(bottom: 30))
@@ -479,14 +469,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Rate Us',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.arrow_forward_ios_rounded,
@@ -498,7 +488,7 @@ SizedBox infoAccount(BuildContext context) {
                 )),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: const Border(
                       bottom: const BorderSide(
@@ -510,14 +500,14 @@ SizedBox infoAccount(BuildContext context) {
               child: Row(
                 children: [
                   Container(
-                    width: ScreenUtil().setWidth(300),
+                    width: 300,
                     child: const Text(
                       'About App',
                       style: textProfile,
                     ),
                   ),
                   Container(
-                    width: ScreenUtil().setWidth(80),
+                    width: 80,
                     alignment: Alignment.centerRight,
                     child: const Text(
                       'v 1.0',
@@ -529,7 +519,7 @@ SizedBox infoAccount(BuildContext context) {
             ),
             Container(
               padding: const EdgeInsets.only(top: 15),
-              width: ScreenUtil().setWidth(380),
+              width: 380,
               decoration: const BoxDecoration(
                   border: const Border(
                       bottom:
@@ -551,11 +541,11 @@ SizedBox infoAccount(BuildContext context) {
                               backgroundColor: Colors.white,
                               insetPadding: const EdgeInsets.all(0),
                               child: Container(
-                                  width: ScreenUtil().setWidth(420),
-                                  height: ScreenUtil().setHeight(300),
+                                  width: 420,
+                                  height: 300,
                                   alignment: Alignment.center,
                                   child: Container(
-                                      width: ScreenUtil().setWidth(380),
+                                      width: 380,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -576,30 +566,27 @@ SizedBox infoAccount(BuildContext context) {
                                                               .pop(),
                                                       child: Image.asset(
                                                           'assets/group_2210.png',
-                                                          width: ScreenUtil()
-                                                              .setWidth(20)))
+                                                          width: 20))
                                                 ],
                                               )),
                                           Container(
                                             padding: const EdgeInsets.only(
                                                 top: 18, bottom: 15),
-                                            child: Text('Comeback Soon!',
+                                            child: const Text('Comeback Soon!',
                                                 style: TextStyle(
-                                                    color:
-                                                        const Color(0xFF707070),
+                                                    color: Color(0xFF707070),
                                                     fontWeight: FontWeight.w800,
-                                                    fontSize: 22.sp)),
+                                                    fontSize: 22)),
                                           ),
                                           Container(
                                             padding: const EdgeInsets.only(
                                                 bottom: 45),
-                                            child: Text(
+                                            child: const Text(
                                                 'Are you sure you want to log out?',
                                                 style: TextStyle(
-                                                    color:
-                                                        const Color(0xFF707070),
+                                                    color: Color(0xFF707070),
                                                     fontWeight: FontWeight.w500,
-                                                    fontSize: 20.sp)),
+                                                    fontSize: 20)),
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -610,26 +597,22 @@ SizedBox infoAccount(BuildContext context) {
                                                       Navigator.of(context)
                                                           .pop(),
                                                   child: Container(
-                                                      width: ScreenUtil()
-                                                          .setWidth(190),
-                                                      height: ScreenUtil()
-                                                          .setHeight(60),
+                                                      width: 190,
+                                                      height: 60,
                                                       alignment:
                                                           Alignment.center,
-                                                      child: Text(
+                                                      child: const Text(
                                                         'Back',
                                                         style: TextStyle(
-                                                            color: const Color(
+                                                            color: Color(
                                                                 0xFF707070),
                                                             fontWeight:
                                                                 FontWeight.w600,
-                                                            fontSize: 20.sp),
+                                                            fontSize: 20),
                                                       ))),
                                               Container(
-                                                width:
-                                                    ScreenUtil().setWidth(190),
-                                                height:
-                                                    ScreenUtil().setHeight(60),
+                                                width: 190,
+                                                height: 60,
                                                 child: ElevatedButton(
                                                     style: ElevatedButton.styleFrom(
                                                         shape: RoundedRectangleBorder(
@@ -640,13 +623,13 @@ SizedBox infoAccount(BuildContext context) {
                                                         primary: const Color(
                                                             0xFFF8C503)),
                                                     onPressed: () => logOut(),
-                                                    child: Text(
+                                                    child: const Text(
                                                       'Confirm',
                                                       style: TextStyle(
                                                           color: Colors.white,
                                                           fontWeight:
                                                               FontWeight.w800,
-                                                          fontSize: 20.sp),
+                                                          fontSize: 20),
                                                     )),
                                               )
                                             ],
@@ -664,14 +647,14 @@ SizedBox infoAccount(BuildContext context) {
                   child: Row(
                     children: [
                       Container(
-                        width: ScreenUtil().setWidth(300),
+                        width: 300,
                         child: const Text(
                           'Log Out',
                           style: textProfile,
                         ),
                       ),
                       Container(
-                          width: ScreenUtil().setWidth(80),
+                          width: 80,
                           alignment: Alignment.centerRight,
                           child: const Icon(
                             Icons.logout_outlined,

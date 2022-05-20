@@ -64,8 +64,7 @@ class NewsApiUsers extends StatelessWidget {
                                                 child: AspectRatio(
                                                   aspectRatio: 11 / 10,
                                                   child: Image.network(
-                                                    EndPoint.bannerForNews +
-                                                        '${news?.data[index].banner}',
+                                                    '${EndPoint.bannerForNews}${news?.data[index].banner}',
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),

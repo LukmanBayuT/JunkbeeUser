@@ -8,10 +8,10 @@ class SignInSplashScreen extends StatefulWidget {
   SignInSplashScreen({Key? key}) : super(key: key);
   final SecureStorage secureStorage = SecureStorage();
   @override
-  _SignInSplashScreenState createState() => _SignInSplashScreenState();
+  SignInSplashScreenState createState() => SignInSplashScreenState();
 }
 
-class _SignInSplashScreenState extends State<SignInSplashScreen>
+class SignInSplashScreenState extends State<SignInSplashScreen>
     with TickerProviderStateMixin {
   late AnimationController _controller;
 

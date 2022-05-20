@@ -9,10 +9,10 @@ import 'package:junkbee_user/beever/views/pages/profile/beever_profile.dart';
 class NavigatorPages extends StatefulWidget {
   const NavigatorPages({Key? key}) : super(key: key);
   @override
-  _NavigatorPagesState createState() => _NavigatorPagesState();
+  NavigatorPagesState createState() => NavigatorPagesState();
 }
 
-class _NavigatorPagesState extends State<NavigatorPages> {
+class NavigatorPagesState extends State<NavigatorPages> {
   DateTime timeBackPressed = DateTime.now();
   int index = 0;
   List<Widget> pagesBeever = [

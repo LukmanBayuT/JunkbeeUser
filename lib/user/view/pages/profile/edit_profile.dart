@@ -56,6 +56,8 @@ class EditProfileState extends State<EditProfile> {
         }));
     Map<String, dynamic> bodyJSON = jsonDecode(updateData.body);
     if (bodyJSON['message'] == 'data has been updated') {
+      //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+      if (!mounted) return;
       Navigator.pop(context, 'back');
     }
   }
@@ -89,6 +91,8 @@ class EditProfileState extends State<EditProfile> {
             final response = await http.Response.fromStream(streamedResponse);
             Map<String, dynamic> responseJSON = jsonDecode(response.body);
             if (responseJSON['message'] == 'data has been updated') {
+              //! Rizky ini perubahan di FLUTTER 3.0, dimana Navigator.pop() digunakan dengan synchronous karena menggunakan metode buildcontext. kalau ada error if(!mounted) return; dihapus aja ya
+              if (!mounted) return;
               Navigator.pop(context, 'back');
             }
           } catch (e) {

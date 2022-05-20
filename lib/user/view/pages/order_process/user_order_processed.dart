@@ -8,7 +8,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -27,10 +26,10 @@ class UserOrder extends StatefulWidget {
   const UserOrder({Key? key}) : super(key: key);
 
   @override
-  _UserOrderState createState() => _UserOrderState();
+  UserOrderState createState() => UserOrderState();
 }
 
-class _UserOrderState extends State<UserOrder> {
+class UserOrderState extends State<UserOrder> {
   String? alamat = 'Lokasimu';
   String? namaTempat = 'Nama Tempat';
   SecureStorage secureStorage = SecureStorage();
@@ -45,15 +44,14 @@ class _UserOrderState extends State<UserOrder> {
   bool isMetalSelected = false;
   bool isOilSelected = false;
 
-  double initialPaper = 5.0;
-  double initialMixPaper = 5.0;
+  double initialPaper = 0.0;
+  double initialMixPaper = 0.0;
   double initialPlastic = 0.0;
   double initialGlass = 0.0;
   double initialSachet = 0.0;
   double initialMetal = 0.0;
   double initialOil = 0.0;
 
-  List<Asset> images = <Asset>[];
   File? image1;
   File? image2;
   File? image3;
@@ -368,8 +366,8 @@ class _UserOrderState extends State<UserOrder> {
                                     onTap: () {
                                       setState(() {
                                         isPaperSelected = !isPaperSelected;
-                                        initialPaper = 5.0;
-                                        initialMixPaper = 5.0;
+                                        initialPaper = 0.0;
+                                        initialMixPaper = 0.0;
                                       });
                                     },
                                     child: SizedBox(
@@ -383,7 +381,7 @@ class _UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -398,7 +396,7 @@ class _UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -413,7 +411,7 @@ class _UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -428,7 +426,7 @@ class _UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -443,7 +441,7 @@ class _UserOrderState extends State<UserOrder> {
                                   ),
                                   GestureDetector(
                                     onTap: () => Fluttertoast.showToast(
-                                        msg: 'Coming soon',
+                                        msg: 'Segera Tayang',
                                         toastLength: Toast.LENGTH_SHORT,
                                         backgroundColor:
                                             const Color(0xFFF8C503)),
@@ -931,7 +929,8 @@ class _UserOrderState extends State<UserOrder> {
                                       setState(() {});
                                     }
                                   }
-                                  Navigator.of(context).pop();
+                                  // Navigator.of(context).pop();
+                                  Get.back();
                                 },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width / 2,

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_init_to_null
+// ignore_for_file: prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_init_to_null, no_leading_underscores_for_local_identifiers, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
@@ -22,10 +22,10 @@ class HomepagesUser extends StatefulWidget {
   const HomepagesUser({Key? key}) : super(key: key);
 
   @override
-  _HomepagesUserState createState() => _HomepagesUserState();
+  HomepagesUserState createState() => HomepagesUserState();
 }
 
-class _HomepagesUserState extends State<HomepagesUser> {
+class HomepagesUserState extends State<HomepagesUser> {
   final navKey = GlobalKey<CurvedNavigationBarState>();
   dynamic token_local = null;
   String device_info = '';
@@ -59,15 +59,15 @@ class _HomepagesUserState extends State<HomepagesUser> {
 
       var platform = NotificationDetails(android: android, iOS: ios);
 
-      await _flutterLocalNotificationsPlugin.show(message.notification.hashCode,
+      await flutterLocalNotificationsPlugin.show(message.notification.hashCode,
           message.notification?.title, message.notification?.body, platform,
           payload: "Welcome to demo app");
     });
     FirebaseMessaging.onMessageOpenedApp.listen((event) async {
-      final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
           FlutterLocalNotificationsPlugin();
 
-      FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
           FlutterLocalNotificationsPlugin();
 
       AndroidInitializationSettings androidInitializationSettings =
@@ -88,7 +88,7 @@ class _HomepagesUserState extends State<HomepagesUser> {
 
       var platform = NotificationDetails(android: android, iOS: ios);
 
-      await _flutterLocalNotificationsPlugin.show(event.notification.hashCode,
+      await flutterLocalNotificationsPlugin.show(event.notification.hashCode,
           event.notification?.title, event.notification?.body, platform,
           payload: "Welcome to demo app");
     });
