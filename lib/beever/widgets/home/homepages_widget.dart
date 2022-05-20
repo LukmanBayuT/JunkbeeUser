@@ -9,7 +9,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
-import 'package:junkbee_user/beever/views/pages/home/withdraw.dart';
 import 'package:junkbee_user/beever/views/pages/home/available_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/current_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/history_pickUp.dart';
@@ -51,8 +50,6 @@ Container profileAndBalance(BuildContext context) {
           return Center(
             child: Column(
               children: [
-                // Image.asset('assets/beever_image.png',
-                //     width: MediaQuery.of(context).size.width / 5),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(90),
                   child: beever?.data.image == null
@@ -115,10 +112,7 @@ Container profileAndBalance(BuildContext context) {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             TouchableOpacity(
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WithdrawScreen())),
+                              onTap: () {},
                               child: Column(
                                 children: [
                                   Image.asset('assets/withdraw_icon.png',

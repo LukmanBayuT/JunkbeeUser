@@ -98,8 +98,3 @@ class NavigatorPagesState extends State<NavigatorPages> {
         ));
   }
 }
-
-// Image.asset((index == 0) ? 'icons/h_1.png' : 'icons/h_0.png', width: 25, height: 25),
-//             Image.asset((index == 1) ? 'icons/cb_1.png' : 'icons/cb_0.png', width: 25, height: 25),
-//             Image.asset((index == 2) ? 'icons/i_0.png' : 'icons/i_0.png', width: 25, height: 25),
-//             Image.asset((index == 3) ? 'icons/p_1.png' : 'icons/p_0.png', width: 25, height: 25),

@@ -33,7 +33,7 @@ class ActiveList extends StatelessWidget {
           return Column(
             children: [
               Container(
-                width: ScreenUtil().setWidth(420),
+                width: MediaQuery.of(context).size.width / 3,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
@@ -48,16 +48,16 @@ class ActiveList extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(top: 17),
-                      width: ScreenUtil().setWidth(390),
+                      width: MediaQuery.of(context).size.width / 5,
                       child: Row(
                         children: [
                           Container(
-                            width: ScreenUtil().setWidth(40),
+                            width: MediaQuery.of(context).size.width / 10,
                             child: Image.asset('assets/group_2262.png'),
                           ),
                           Container(
                             padding: const EdgeInsets.only(left: 10),
-                            width: ScreenUtil().setWidth(250),
+                            width: MediaQuery.of(context).size.width / 10,
                             child: const Text(
                               'Order From Cynthia',
                               style: textProfileBoldMini,
@@ -76,7 +76,7 @@ class ActiveList extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 10.5),
-                      width: ScreenUtil().setWidth(390),
+                      width: MediaQuery.of(context).size.width / 10,
                       decoration: const BoxDecoration(
                           border: const Border(
                               bottom: const BorderSide(
@@ -84,24 +84,25 @@ class ActiveList extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 17),
-                      width: ScreenUtil().setWidth(390),
+                      width: MediaQuery.of(context).size.width / 10,
                       child: Row(
                         children: [
                           Container(
                             width: ScreenUtil().setWidth(40),
                             child: Image.asset(
                               'assets/group_971.png',
-                              width: ScreenUtil().setWidth(30),
-                              height: ScreenUtil().setHeight(30),
+                              width: MediaQuery.of(context).size.width / 10,
+                              height: MediaQuery.of(context).size.height / 10,
                             ),
                           ),
                           Container(
                               padding: const EdgeInsets.only(left: 10),
-                              width: ScreenUtil().setWidth(350),
+                              width: MediaQuery.of(context).size.width / 10,
                               child: Column(
                                 children: [
                                   Container(
-                                    width: ScreenUtil().setWidth(350),
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                     child: const Text(
                                       'Pick Up Location',
                                       style: textProfile,
@@ -109,7 +110,8 @@ class ActiveList extends StatelessWidget {
                                   ),
                                   Container(
                                     padding: const EdgeInsets.only(top: 1),
-                                    width: ScreenUtil().setWidth(350),
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                     child: const Text(
                                       'Tugumuda, 50171 Semarang',
                                       style: textProfileBoldMini,
@@ -122,24 +124,25 @@ class ActiveList extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 17, bottom: 29),
-                      width: ScreenUtil().setWidth(390),
+                      width: MediaQuery.of(context).size.width / 10,
                       child: Row(
                         children: [
                           Container(
-                            width: ScreenUtil().setWidth(40),
+                            width: MediaQuery.of(context).size.width / 10,
                             child: Image.asset(
                               'assets/group_2267.png',
-                              width: ScreenUtil().setWidth(30),
-                              height: ScreenUtil().setHeight(30),
+                              width: MediaQuery.of(context).size.width / 10,
+                              height: MediaQuery.of(context).size.height / 10,
                             ),
                           ),
                           Container(
                               padding: const EdgeInsets.only(left: 10),
-                              width: ScreenUtil().setWidth(350),
+                              width: MediaQuery.of(context).size.width / 10,
                               child: Column(
                                 children: [
                                   Container(
-                                    width: ScreenUtil().setWidth(350),
+                                    width:
+                                        MediaQuery.of(context).size.width / 10,
                                     child: const Text(
                                       'Paper     0.5 kg',
                                       style: textProfile,
@@ -154,7 +157,7 @@ class ActiveList extends StatelessWidget {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(15),
+                height: MediaQuery.of(context).size.height / 10,
               )
             ],
           );
@@ -175,7 +178,7 @@ class InboxList extends StatelessWidget {
           return Column(
             children: [
               Container(
-                width: ScreenUtil().setWidth(420),
+                width: MediaQuery.of(context).size.width / 10,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),

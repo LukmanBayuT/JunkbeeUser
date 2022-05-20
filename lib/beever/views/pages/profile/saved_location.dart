@@ -21,143 +21,141 @@ class SavedLocationState extends State<SavedLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-        designSize: const Size(480, 850),
-        builder: (_) => Scaffold(
-            appBar: AppBar(
-              backgroundColor: const Color(0xFFF8C503),
-              title: const Text(
-                'Saved Location',
-                style: textBodyProfile,
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFF8C503),
+          title: const Text(
+            'Saved Location',
+            style: textBodyProfile,
+          ),
+          centerTitle: true,
+          leading: TouchableOpacity(
+              onTap: () => Navigator.pop(context),
+              child: const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
+        ),
+        body: Container(
+          width: ScreenUtil().setWidth(480),
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 35, bottom: 15),
+                width: ScreenUtil().setWidth(430),
+                decoration: const BoxDecoration(
+                    border: Border(
+                        bottom:
+                            BorderSide(width: 1, color: Color(0xFFDEDEDE)))),
+                child: TouchableOpacity(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Locations(),
+                        )),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Row(
+                            children: [
+                              Image.asset(
+                                'assets/group_1663.png',
+                                width: ScreenUtil().setWidth(30),
+                                height: ScreenUtil().setHeight(30),
+                              ),
+                              Container(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: const Text(
+                                  'Add Location',
+                                  style: textSemiBold,
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Image.asset(
+                          'assets/union_68.png',
+                          width: ScreenUtil().setWidth(15),
+                          height: ScreenUtil().setHeight(15),
+                        )
+                      ],
+                    )),
               ),
-              centerTitle: true,
-              leading: TouchableOpacity(
-                  onTap: () => Navigator.pop(context),
-                  child:
-                      const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
-            ),
-            body: Container(
-              width: ScreenUtil().setWidth(480),
-              alignment: Alignment.topCenter,
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(top: 35, bottom: 15),
-                    width: ScreenUtil().setWidth(430),
-                    decoration: const BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(
-                                width: 1, color: Color(0xFFDEDEDE)))),
-                    child: TouchableOpacity(
-                        onTap: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const Locations(),
-                            )),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Container(
+                padding: const EdgeInsets.only(top: 30, bottom: 15),
+                width: ScreenUtil().setWidth(430),
+                child: const Text(
+                  'Recent',
+                  style: textProfileBold,
+                ),
+              ),
+              Container(
+                  width: ScreenUtil().setWidth(430),
+                  height: ScreenUtil().setHeight(585),
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 2,
+                      itemBuilder: (context, index) {
+                        return Column(
                           children: [
                             Container(
+                              padding: const EdgeInsets.only(top: 15),
+                              width: ScreenUtil().setWidth(430),
                               child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Image.asset(
-                                    'assets/group_1663.png',
-                                    width: ScreenUtil().setWidth(30),
-                                    height: ScreenUtil().setHeight(30),
-                                  ),
                                   Container(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    child: const Text(
-                                      'Add Location',
-                                      style: textSemiBold,
+                                    child: Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/group_1664.png',
+                                          width: ScreenUtil().setWidth(30),
+                                          height: ScreenUtil().setHeight(30),
+                                        ),
+                                        Container(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: const [
+                                              Text(
+                                                'Gudang Y, PT Amogus',
+                                                style: textProfileBoldMini,
+                                              ),
+                                              Text(
+                                                'Jl. Mangun harjo 66, gedhangan',
+                                                style: textProfile,
+                                              )
+                                            ],
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  )
+                                  ),
+                                  TouchableOpacity(
+                                      onTap: () => print('delete'),
+                                      child: Image.asset(
+                                          'assets/trash_svgrepo_com.png',
+                                          width: ScreenUtil().setWidth(18)))
                                 ],
                               ),
                             ),
-                            Image.asset(
-                              'assets/union_68.png',
-                              width: ScreenUtil().setWidth(15),
-                              height: ScreenUtil().setHeight(15),
+                            Container(
+                              padding: const EdgeInsets.only(top: 15),
+                              width: ScreenUtil().setWidth(430),
+                              decoration: const BoxDecoration(
+                                  border: Border(
+                                      bottom: BorderSide(
+                                          width: 1, color: Color(0xFFDEDEDE)))),
                             )
                           ],
-                        )),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 30, bottom: 15),
-                    width: ScreenUtil().setWidth(430),
-                    child: const Text(
-                      'Recent',
-                      style: textProfileBold,
-                    ),
-                  ),
-                  Container(
-                      width: ScreenUtil().setWidth(430),
-                      height: ScreenUtil().setHeight(585),
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: 2,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.only(top: 15),
-                                  width: ScreenUtil().setWidth(430),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/group_1664.png',
-                                              width: ScreenUtil().setWidth(30),
-                                              height:
-                                                  ScreenUtil().setHeight(30),
-                                            ),
-                                            Container(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: const [
-                                                  Text(
-                                                    'Gudang Y, PT Amogus',
-                                                    style: textProfileBoldMini,
-                                                  ),
-                                                  Text(
-                                                    'Jl. Mangun harjo 66, gedhangan',
-                                                    style: textProfile,
-                                                  )
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      TouchableOpacity(
-                                          onTap: () => print('delete'),
-                                          child: Image.asset(
-                                              'assets/trash_svgrepo_com.png',
-                                              width: ScreenUtil().setWidth(18)))
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.only(top: 15),
-                                  width: ScreenUtil().setWidth(430),
-                                  decoration: const BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              width: 1,
-                                              color: Color(0xFFDEDEDE)))),
-                                )
-                              ],
-                            );
-                          }))
-                ],
-              ),
-            )));
+                        );
+                      }))
+            ],
+          ),
+        ));
+
+    // return ScreenUtilInit(
+    //     designSize: const Size(480, 850),
+    //     builder: (_) => );
   }
 }

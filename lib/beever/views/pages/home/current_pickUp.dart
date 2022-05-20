@@ -19,35 +19,36 @@ class CurrentState extends State<CurrentScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-        designSize: const Size(480, 904),
-        builder: (_) => Scaffold(
-                body: SafeArea(
-              child: SingleChildScrollView(
-                physics: const NeverScrollableScrollPhysics(),
-                child: Align(
+    return Scaffold(
+        body: SafeArea(
+      child: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: Column(
+            children: [
+              Container(
+                  width: ScreenUtil().setWidth(480),
+                  height: ScreenUtil().setHeight(230),
                   alignment: Alignment.topCenter,
-                  child: Column(
-                    children: [
-                      Container(
-                          width: ScreenUtil().setWidth(480),
-                          height: ScreenUtil().setHeight(230),
-                          alignment: Alignment.topCenter,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('assets/heading.png'),
-                                  fit: BoxFit.fill)),
-                          child: const CurrentWidget()),
-                      Container(
-                          transform: Matrix4.translationValues(0.0, -80.0, 0.0),
-                          width: ScreenUtil().setWidth(480),
-                          height: ScreenUtil().setHeight(740),
-                          alignment: Alignment.topCenter,
-                          child: const CurrentList())
-                    ],
-                  ),
-                ),
-              ),
-            )));
+                  decoration: const BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/heading.png'),
+                          fit: BoxFit.fill)),
+                  child: const CurrentWidget()),
+              Container(
+                  transform: Matrix4.translationValues(0.0, -80.0, 0.0),
+                  width: ScreenUtil().setWidth(480),
+                  height: ScreenUtil().setHeight(740),
+                  alignment: Alignment.topCenter,
+                  child: const CurrentList())
+            ],
+          ),
+        ),
+      ),
+    ));
+    // return ScreenUtilInit(
+    //     designSize: const Size(480, 904),
+    //     builder: (_) => );
   }
 }
