@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
@@ -24,9 +25,13 @@ class OnboardingSplashScreenState extends State<OnboardingSplashScreen>
   @override
   void initState() {
     super.initState();
-    print('sampesini');
+    if (kDebugMode) {
+      print('sampesini');
+    }
     startLaunching();
-    print('selesai');
+    if (kDebugMode) {
+      print('selesai');
+    }
   }
 
   void startLaunching() async {
@@ -39,22 +44,28 @@ class OnboardingSplashScreenState extends State<OnboardingSplashScreen>
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const OnboardingUser());
-        print('token kosong');
+        if (kDebugMode) {
+          print('token kosong');
+        }
       });
     } else if (token != null && role == 'user') {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const NavigatorUser());
-        print('token user');
+        if (kDebugMode) {
+          print('token user');
+        }
       });
     } else if (token != null && role == 'beever') {
       var duration = const Duration(seconds: 2);
       Timer(duration, () {
         Get.offAll(() => const NavigatorPages());
-        print('token beever');
+        if (kDebugMode) {
+          print('token beever');
+        }
       });
     } else {
-      return startLaunching();
+      return Get.offAll(() => const OnboardingUser());
     }
   }
 

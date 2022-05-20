@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/go_to_waste_collection_points.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/location_tracking.dart';
+import 'package:junkbee_user/beever/views/pages/ongoing_order/multiple_markers.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 

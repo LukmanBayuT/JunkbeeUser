@@ -32,30 +32,27 @@ class NewsState extends State<News> {
             ),
           ),
         ),
-        body: Stack(
-          children: [
-            WebView(
+        body: Stack(children: [
+          WebView(
               initialUrl: widget.url,
               javascriptMode: JavascriptMode.unrestricted,
               onPageFinished: (finish) {
                 setState(() {
                   loading = false;
                 });
-              },
-            ),
-            loading
-                ? Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    color: const Color.fromRGBO(0, 0, 0, 0.5),
-                    alignment: Alignment.center,
-                    child: const SpinKitPouringHourGlass(
-                      color: Color(0xFFF8C503),
-                      size: 50,
-                    ),
-                  )
-                : Stack()
-          ],
-        ));
+              }),
+          loading
+              ? Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: const Color.fromRGBO(0, 0, 0, 0.5),
+                  alignment: Alignment.center,
+                  child: const SpinKitPouringHourGlass(
+                    color: Color(0xFFF8C503),
+                    size: 50,
+                  ),
+                )
+              : Stack()
+        ]));
   }
 }

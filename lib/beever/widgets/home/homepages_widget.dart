@@ -52,8 +52,6 @@ Container profileAndBalance(BuildContext context) {
           return Center(
             child: Column(
               children: [
-                // Image.asset('assets/beever_image.png',
-                //     width: MediaQuery.of(context).size.width / 5),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(90),
                   child: beever?.data.image == null
@@ -116,10 +114,7 @@ Container profileAndBalance(BuildContext context) {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             TouchableOpacity(
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WithdrawScreen())),
+                              onTap: () {},
                               child: Column(
                                 children: [
                                   Image.asset('assets/withdraw_icon.png',

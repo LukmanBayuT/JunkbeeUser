@@ -11,7 +11,7 @@ class ShareFeedbackWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.only(top: 40),
-        width: 480,
+        width: MediaQuery.of(context).size.width,
         height: 280,
         alignment: Alignment.topCenter,
         decoration: const BoxDecoration(
@@ -27,48 +27,30 @@ class ShareFeedbackWidget extends StatelessWidget {
                   spreadRadius: 0.0,
                   offset: Offset(0, 1))
             ]),
-        child: Column(
-          children: [
-            Container(
-              width: 430,
-              child: Row(
-                children: [
-                  Container(
-                    width: 40,
-                    child: TouchableOpacity(
-                        onTap: () => Navigator.pop(context),
-                        child: Image.asset(
-                          'assets/group_2211.png',
-                          width: 20.2,
-                          height: 29.2,
-                        )),
-                  ),
-                  Container(
-                    width: 350,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Container(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(children: [
+                TouchableOpacity(
+                    onTap: () => Navigator.pop(context),
+                    child: Image.asset('assets/group_2211.png',
+                        width: 20.2, height: 29.2)),
+                Container(
+                    width: 330,
                     alignment: Alignment.center,
-                    child: const Text(
-                      'Share Feedback',
-                      style: textBodyProfile,
-                    ),
-                  ),
-                  Container(
-                    width: 40,
-                  )
-                ],
-              ),
-            ),
-            Container(
+                    child:
+                        const Text('Share Feedback', style: textBodyProfile)),
+                Container(width: 20.2, height: 29.2)
+              ])),
+          Container(
               padding: const EdgeInsets.only(top: 20),
-              width: 220,
+              width: MediaQuery.of(context).size.width,
               alignment: Alignment.center,
               child: const Text(
-                'Every Feedback helps. What can we improve on?',
-                style: textProfileMediumWhite,
-                textAlign: TextAlign.center,
-              ),
-            )
-          ],
-        ));
+                  'Every Feedback helps. \nWhat can we improve on?',
+                  style: textProfileMediumWhite,
+                  textAlign: TextAlign.center))
+        ]));
   }
 }
 

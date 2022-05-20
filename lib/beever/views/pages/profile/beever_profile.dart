@@ -29,7 +29,7 @@ class BeeverProfileState extends State<BeeverProfile> {
             child: Stack(alignment: Alignment.topCenter, children: [
       Column(children: [
         Container(
-          width: 480,
+          width: MediaQuery.of(context).size.width,
           height: 230,
           decoration: const BoxDecoration(
               image: DecorationImage(
@@ -41,13 +41,9 @@ class BeeverProfileState extends State<BeeverProfile> {
         ),
         Container(
             transform: Matrix4.translationValues(0.0, -80.0, 0.0),
-            padding: const EdgeInsets.only(bottom: 40),
-            width: 480,
-            alignment: Alignment.topCenter,
+            padding: const EdgeInsets.only(bottom: 40, left: 20, right: 20),
             child: Container(
                 padding: const EdgeInsets.only(top: 15),
-                width: 400,
-                alignment: Alignment.topCenter,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
@@ -59,8 +55,8 @@ class BeeverProfileState extends State<BeeverProfile> {
                           offset: const Offset(0, 1))
                     ]),
                 child: Column(children: [
-                  SizedBox(
-                      width: 380,
+                  Container(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       child: FutureBuilder(
                           future: ApiCallsGetData().getData(),
                           builder:
@@ -70,107 +66,106 @@ class BeeverProfileState extends State<BeeverProfile> {
                             if (snapshot.connectionState ==
                                 ConnectionState.done) {
                               return Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    width: 80,
-                                    height: 70,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(80),
-                                      child: account.data.image == null
-                                          ? Image.asset(
-                                              'assets/beever_image.png')
-                                          : Image.network(
-                                              '${EndPoint.baseURL}storage/profile-images/${account.data.image}',
-                                              fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(left: 10),
-                                    width: 270,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                            width: 270,
-                                            child: Text(
-                                                '${account.data.fullName}',
-                                                style: textProfileBoldMini,
-                                                maxLines: 1)),
-                                        Container(
-                                            padding:
-                                                const EdgeInsets.only(top: 3),
-                                            width: 270,
-                                            child: Text('${account.data.phone}',
-                                                style: textProfile)),
-                                        Container(
-                                            padding:
-                                                const EdgeInsets.only(top: 1),
-                                            width: 270,
-                                            child: Text('${account.data.email}',
-                                                style: textProfile))
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 5),
-                                    width: 30,
-                                    alignment: Alignment.topRight,
-                                    child: TouchableOpacity(
-                                        onTap: () async {
-                                          if (account.data.image == null) {
-                                            final imageURL = null;
-                                            final result = await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditProfile(
-                                                            image: imageURL,
-                                                            name: account
-                                                                .data.fullName,
-                                                            phone: account
-                                                                .data.phone,
-                                                            email: account
-                                                                .data.email)));
-                                            if (result == 'back') {
-                                              await ApiCallsGetData().getData();
-                                              setState(() {});
-                                            }
-                                          } else {
-                                            final imageURL =
-                                                '${EndPoint.baseURL}storage/profile-images/${account.data.image}';
-                                            final result = await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        EditProfile(
-                                                            image: imageURL,
-                                                            name: account
-                                                                .data.fullName,
-                                                            phone: account
-                                                                .data.phone,
-                                                            email: account
-                                                                .data.email)));
-                                            if (result == 'back') {
-                                              await ApiCallsGetData().getData();
-                                              setState(() {});
-                                            }
-                                          }
-                                        },
-                                        child: Image.asset(
-                                          'assets/edit_svgrepo_com.png',
-                                          width: 25,
-                                          height: 25,
-                                        )),
-                                  )
-                                ],
-                              );
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(children: [
+                                      Container(
+                                          width: 80,
+                                          height: 80,
+                                          child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(80),
+                                              child: account.data.image == null
+                                                  ? Image.asset(
+                                                      'assets/beever_image.png')
+                                                  : Image.network(
+                                                      '${EndPoint.baseURL}storage/profile-images/${account.data.image}',
+                                                      fit: BoxFit.cover))),
+                                      Container(
+                                          padding:
+                                              const EdgeInsets.only(left: 10),
+                                          child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('${account.data.fullName}',
+                                                    style: textProfileBoldMini,
+                                                    maxLines: 1),
+                                                Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 3),
+                                                    child: Text(
+                                                        '${account.data.phone}',
+                                                        style: textProfile)),
+                                                Container(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 1),
+                                                    child: Text(
+                                                        '${account.data.email}',
+                                                        style: textProfile))
+                                              ]))
+                                    ]),
+                                    Container(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: TouchableOpacity(
+                                            onTap: () async {
+                                              if (account.data.image == null) {
+                                                final imageURL = null;
+                                                final result = await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditProfile(
+                                                                image: imageURL,
+                                                                name: account
+                                                                    .data
+                                                                    .fullName,
+                                                                phone: account
+                                                                    .data.phone,
+                                                                email: account
+                                                                    .data
+                                                                    .email)));
+                                                if (result == 'back') {
+                                                  await ApiCallsGetData()
+                                                      .getData();
+                                                  setState(() {});
+                                                }
+                                              } else {
+                                                final imageURL =
+                                                    '${EndPoint.baseURL}storage/profile-images/${account.data.image}';
+                                                final result = await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            EditProfile(
+                                                                image: imageURL,
+                                                                name: account
+                                                                    .data
+                                                                    .fullName,
+                                                                phone: account
+                                                                    .data.phone,
+                                                                email: account
+                                                                    .data
+                                                                    .email)));
+                                                if (result == 'back') {
+                                                  await ApiCallsGetData()
+                                                      .getData();
+                                                  setState(() {});
+                                                }
+                                              }
+                                            },
+                                            child: Image.asset(
+                                                'assets/edit_svgrepo_com.png',
+                                                width: 25)))
+                                  ]);
                             } else {
                               return const Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 4,
-                                  backgroundColor: Colors.amber,
-                                ),
-                              );
+                                  child: CircularProgressIndicator(
+                                      strokeWidth: 4,
+                                      backgroundColor: Colors.amber));
                             }
                           })),
                   infoAccount(context)

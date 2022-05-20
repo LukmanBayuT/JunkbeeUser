@@ -45,38 +45,49 @@ class LocationState extends State<Location> {
               onTap: () => Navigator.pop(context),
               child: const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
         ),
-        body: Stack(children: [
-          GoogleMap(
-            mapType: MapType.normal,
-            myLocationEnabled: true,
-            initialCameraPosition: _kGooglePlex,
-            onMapCreated: (GoogleMapController controller) {
-              _controller.complete(controller);
-            },
-          ),
-          Container(
-              padding: const EdgeInsets.only(left: 20, right: 20, top: 8),
-              child: Container(
+        body: Stack(
+          children: [
+            GoogleMap(
+              mapType: MapType.normal,
+              myLocationEnabled: true,
+              initialCameraPosition: _kGooglePlex,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+              },
+            ),
+            Container(
+                padding: const EdgeInsets.only(left: 20, right: 20, top: 8),
+                child: Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16.7)),
                   child: TextFormField(
-                      keyboardType: TextInputType.streetAddress,
-                      textCapitalization: TextCapitalization.words,
-                      decoration: InputDecoration(
-                          hintText: 'Search by City',
-                          suffixIcon: const Icon(Icons.search),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(16.7),
-                            borderSide: const BorderSide(
-                              color: Color(0xFFDEDEDE),
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(16.7),
-                              borderSide:
-                                  const BorderSide(color: Colors.blue))))))
-        ]));
+                    keyboardType: TextInputType.streetAddress,
+                    textCapitalization: TextCapitalization.words,
+                    decoration: InputDecoration(
+                      hintText: 'Search by City',
+                      suffixIcon: const Icon(Icons.search),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.7),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFDEDEDE),
+                          width: 2.0,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(16.7),
+                        borderSide: const BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ),
+                  ),
+                ))
+          ],
+        ));
+
+    // return ScreenUtilInit(
+    //     designSize: const Size(480, 853),
+    //     builder: (_) => );
   }
 }

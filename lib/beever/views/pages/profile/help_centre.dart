@@ -22,14 +22,12 @@ class HelpCentreState extends State<HelpCentre> {
           child: HelpCentreWidget(),
         ),
         body: SingleChildScrollView(
-            child: Align(
-                alignment: Alignment.topCenter,
-                child: Column(children: [
-                  searchBar(context),
-                  Topics(context),
-                  RecentActivity(context),
-                  MoreHelp(context),
-                  MailUS(context)
-                ]))));
+            child: Column(children: [
+          searchBar(context),
+          Topics(context),
+          RecentActivity(context),
+          MoreHelp(context),
+          MailUS(context)
+        ])));
   }
 }

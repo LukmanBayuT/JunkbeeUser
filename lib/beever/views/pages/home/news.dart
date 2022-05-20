@@ -1,25 +1,54 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class NewsScreen extends StatelessWidget {
+class NewsScreen extends StatefulWidget {
   final String? url;
   const NewsScreen({Key? key, @required this.url}) : super(key: key);
 
   @override
+  _NewsScreenState createState() => _NewsScreenState();
+}
+
+class _NewsScreenState extends State<NewsScreen> {
+  bool loading = true;
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('News', style: textBodyProfile),
-        centerTitle: true,
-        backgroundColor: const Color(0xFFF8C503),
-        leading: TouchableOpacity(
-            onTap: () => Navigator.pop(context),
-            child: const Icon(Icons.arrow_back_ios_new_rounded,
-                color: Colors.white)),
-      ),
-      body: WebView(initialUrl: url),
-    );
+        appBar: AppBar(
+          title: const Text('News', style: textBodyProfile),
+          centerTitle: true,
+          backgroundColor: const Color(0xFFF8C503),
+          leading: TouchableOpacity(
+              onTap: () => Navigator.pop(context),
+              child: const Icon(Icons.arrow_back_ios_new_rounded, size: 25)),
+        ),
+        body: Stack(children: [
+          WebView(
+              initialUrl: widget.url,
+              javascriptMode: JavascriptMode.unrestricted,
+              onPageFinished: (finish) {
+                setState(() {
+                  loading = false;
+                });
+              }),
+          loading
+              ? Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  color: const Color.fromRGBO(0, 0, 0, 0.5),
+                  alignment: Alignment.center,
+                  child: const SpinKitPouringHourGlass(
+                    color: Color(0xFFF8C503),
+                    size: 50,
+                  ),
+                )
+              : Stack()
+        ]));
   }
 }

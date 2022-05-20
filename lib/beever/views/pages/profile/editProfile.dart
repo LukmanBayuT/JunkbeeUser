@@ -252,107 +252,177 @@ class EditProfileState extends State<EditProfile> {
               ],
             ),
             body: SingleChildScrollView(
-                child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Column(children: [
-                      const EditProfileWidget(),
-                      SizedBox(
-                        width: 110,
-                        height: 110,
-                        child: Stack(
-                          children: [
-                            Container(
-                              width: 110,
-                              height: 95,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(110),
-                                child: widget.image == null
-                                    ? Image.asset('assets/beever_image.png')
-                                    : Image.network('${widget.image}',
-                                        fit: BoxFit.cover),
-                              ),
-                            ),
-                            Positioned(
-                                bottom: 8,
-                                right: 0,
-                                child: TouchableOpacity(
-                                    onTap: () => takePhoto(),
-                                    child: Container(
-                                        width: 30,
-                                        height: 30,
-                                        alignment: Alignment.center,
-                                        decoration: BoxDecoration(
-                                            color: const Color(0xFFF8C503),
-                                            borderRadius:
-                                                BorderRadius.circular(35)),
-                                        child: Image.asset(
-                                          'assets/group_1666.png',
-                                          width: 20,
-                                          height: 20,
-                                        ))))
-                          ],
-                        ),
+                child: Column(children: [
+              const EditProfileWidget(),
+              SizedBox(
+                width: 110,
+                height: 110,
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 110,
+                      height: 110,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(110),
+                        child: widget.image == null
+                            ? Image.asset('assets/beever_image.png')
+                            : Image.network('${widget.image}',
+                                fit: BoxFit.cover),
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 49),
-                        width: 342,
-                        alignment: Alignment.topLeft,
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              width: 342,
-                              child: Text(
-                                'Your Name',
-                                style: textProfile,
-                              ),
-                            ),
-                            TextFormField(
-                              controller: nameController,
-                              style: textProfile,
-                              textCapitalization: TextCapitalization.words,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(top: 24),
-                              width: 342,
-                              child: const Text(
-                                'Mobile Number',
-                                style: textProfile,
-                              ),
-                            ),
-                            TextFormField(
-                                controller: phoneController,
-                                keyboardType: TextInputType.phone,
-                                style: textProfile),
-                            Container(
-                              padding: const EdgeInsets.only(top: 24),
-                              width: 342,
-                              child: const Text(
-                                'Email Address',
-                                style: textProfile,
-                              ),
-                            ),
-                            TextFormField(
-                                controller: emailController,
-                                keyboardType: TextInputType.emailAddress,
-                                style: textProfile)
-                          ],
-                        ),
+                    ),
+                    Positioned(
+                        bottom: 4,
+                        right: 0,
+                        child: TouchableOpacity(
+                            onTap: () => takePhoto(),
+                            child: Container(
+                                width: 30,
+                                height: 30,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    color: const Color(0xFFF8C503),
+                                    borderRadius: BorderRadius.circular(35)),
+                                child: Image.asset(
+                                  'assets/group_1666.png',
+                                  width: 15,
+                                ))))
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 49),
+                width: 342,
+                alignment: Alignment.topLeft,
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      width: 342,
+                      child: Text(
+                        'Your Name',
+                        style: textProfile,
                       ),
-                      Container(
-                          padding: const EdgeInsets.only(top: 40),
-                          width: 400,
-                          alignment: Alignment.topLeft,
-                          child: Column(children: [
-                            const SizedBox(
-                              width: 400,
-                              child: Text(
-                                'Linked Account',
-                                style: textProfileBold,
+                    ),
+                    TextFormField(
+                      controller: nameController,
+                      style: textProfile,
+                      textCapitalization: TextCapitalization.words,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 24),
+                      width: 342,
+                      child: const Text(
+                        'Mobile Number',
+                        style: textProfile,
+                      ),
+                    ),
+                    TextFormField(
+                        controller: phoneController,
+                        keyboardType: TextInputType.phone,
+                        style: textProfile),
+                    Container(
+                      padding: const EdgeInsets.only(top: 24),
+                      width: 342,
+                      child: const Text(
+                        'Email Address',
+                        style: textProfile,
+                      ),
+                    ),
+                    TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
+                        style: textProfile)
+                  ],
+                ),
+              ),
+              Container(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            child: const Text('Linked Account',
+                                style: textProfileBold)),
+                        Container(
+                          padding: const EdgeInsets.only(
+                              top: 24, left: 20, right: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                      width: 40,
+                                      child:
+                                          Image.asset('assets/group_1669.png')),
+                                  Container(
+                                    padding: const EdgeInsets.only(left: 10),
+                                    child: const Text(
+                                      'Facebook',
+                                      style: textProfile,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(top: 24),
-                              child: Row(
+                              FutureBuilder(
+                                  future: ApiCallsGetData().getData(),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    var editProfile = snapshot.data;
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      return Container(
+                                          child: (editProfile
+                                                          .data.facebookId) ==
+                                                      'null' ||
+                                                  (editProfile
+                                                          .data.facebookId) ==
+                                                      null
+                                              ? Transform.rotate(
+                                                  angle: 3.15,
+                                                  child: FlutterSwitch(
+                                                      width: 70,
+                                                      height: 40,
+                                                      inactiveColor:
+                                                          const Color(
+                                                              0xFFDEDEDE),
+                                                      inactiveToggleColor:
+                                                          const Color(
+                                                              0xFFF0F0F0),
+                                                      value: isSwitchFB,
+                                                      onToggle: (value) =>
+                                                          _onFacebookSignIn()),
+                                                )
+                                              : Transform.rotate(
+                                                  angle: 3.15,
+                                                  child: FlutterSwitch(
+                                                      width: 70,
+                                                      height: 40,
+                                                      activeColor: const Color(
+                                                          0xFFC2ECBD),
+                                                      activeToggleColor:
+                                                          const Color(
+                                                              0xFF2AAE1B),
+                                                      value: !isSwitchFB,
+                                                      onToggle: (value) =>
+                                                          _onFacebookSignOut()),
+                                                ));
+                                    } else {
+                                      return const SizedBox(
+                                          width: 40,
+                                          height: 40,
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 4,
+                                            color: Color(0xFFF8C503),
+                                          ));
+                                    }
+                                  })
+                            ],
+                          ),
+                        ),
+                        Container(
+                            padding: const EdgeInsets.only(
+                                top: 23, left: 20, right: 20),
+                            child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
@@ -361,12 +431,12 @@ class EditProfileState extends State<EditProfile> {
                                       SizedBox(
                                           width: 40,
                                           child: Image.asset(
-                                              'assets/group_1669.png')),
+                                              'assets/group_1670.png')),
                                       Container(
                                         padding:
                                             const EdgeInsets.only(left: 10),
                                         child: const Text(
-                                          'Facebook',
+                                          'Google',
                                           style: textProfile,
                                         ),
                                       ),
@@ -380,11 +450,11 @@ class EditProfileState extends State<EditProfile> {
                                         if (snapshot.connectionState ==
                                             ConnectionState.done) {
                                           return Container(
-                                              child: (editProfile.data
-                                                              .facebookId) ==
+                                              child: (editProfile
+                                                              .data.googleId) ==
                                                           'null' ||
-                                                      (editProfile.data
-                                                              .facebookId) ==
+                                                      (editProfile
+                                                              .data.googleId) ==
                                                           null
                                                   ? Transform.rotate(
                                                       angle: 3.15,
@@ -397,9 +467,9 @@ class EditProfileState extends State<EditProfile> {
                                                           inactiveToggleColor:
                                                               const Color(
                                                                   0xFFF0F0F0),
-                                                          value: isSwitchFB,
+                                                          value: isSwitchGoogle,
                                                           onToggle: (value) =>
-                                                              _onFacebookSignIn()),
+                                                              _onGoogleSignIn()),
                                                     )
                                                   : Transform.rotate(
                                                       angle: 3.15,
@@ -412,9 +482,10 @@ class EditProfileState extends State<EditProfile> {
                                                           activeToggleColor:
                                                               const Color(
                                                                   0xFF2AAE1B),
-                                                          value: !isSwitchFB,
+                                                          value:
+                                                              !isSwitchGoogle,
                                                           onToggle: (value) =>
-                                                              _onFacebookSignOut()),
+                                                              _onGoogleSignOut()),
                                                     ));
                                         } else {
                                           return const SizedBox(
@@ -426,90 +497,8 @@ class EditProfileState extends State<EditProfile> {
                                               ));
                                         }
                                       })
-                                ],
-                              ),
-                            ),
-                            Container(
-                                padding: const EdgeInsets.only(top: 23),
-                                child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SizedBox(
-                                              width: 40,
-                                              child: Image.asset(
-                                                  'assets/group_1670.png')),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(left: 10),
-                                            child: const Text(
-                                              'Google',
-                                              style: textProfile,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      FutureBuilder(
-                                          future: ApiCallsGetData().getData(),
-                                          builder: (context,
-                                              AsyncSnapshot snapshot) {
-                                            var editProfile = snapshot.data;
-                                            if (snapshot.connectionState ==
-                                                ConnectionState.done) {
-                                              return Container(
-                                                  child: (editProfile.data
-                                                                  .googleId) ==
-                                                              'null' ||
-                                                          (editProfile.data
-                                                                  .googleId) ==
-                                                              null
-                                                      ? Transform.rotate(
-                                                          angle: 3.15,
-                                                          child: FlutterSwitch(
-                                                              width: 70,
-                                                              height: 40,
-                                                              inactiveColor:
-                                                                  const Color(
-                                                                      0xFFDEDEDE),
-                                                              inactiveToggleColor:
-                                                                  const Color(
-                                                                      0xFFF0F0F0),
-                                                              value:
-                                                                  isSwitchGoogle,
-                                                              onToggle: (value) =>
-                                                                  _onGoogleSignIn()),
-                                                        )
-                                                      : Transform.rotate(
-                                                          angle: 3.15,
-                                                          child: FlutterSwitch(
-                                                              width: 70,
-                                                              height: 40,
-                                                              activeColor:
-                                                                  const Color(
-                                                                      0xFFC2ECBD),
-                                                              activeToggleColor:
-                                                                  const Color(
-                                                                      0xFF2AAE1B),
-                                                              value:
-                                                                  !isSwitchGoogle,
-                                                              onToggle: (value) =>
-                                                                  _onGoogleSignOut()),
-                                                        ));
-                                            } else {
-                                              return const SizedBox(
-                                                  width: 40,
-                                                  height: 40,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    strokeWidth: 4,
-                                                    color: Color(0xFFF8C503),
-                                                  ));
-                                            }
-                                          })
-                                    ]))
-                          ]))
-                    ])))));
+                                ]))
+                      ]))
+            ]))));
   }
 }

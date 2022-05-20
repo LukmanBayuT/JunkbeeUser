@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_const
-
 import 'package:flutter/material.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:junkbee_user/beever/const/const.dart';
@@ -14,6 +12,8 @@ class OngoingMessages extends StatefulWidget {
 
 class OngoingMessagesState extends State<OngoingMessages> {
   int index = 0;
+  bool isChat = true;
+  bool isInbox = false;
 
   @override
   Widget build(BuildContext context) {
