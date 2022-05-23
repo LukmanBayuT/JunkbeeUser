@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, non_constant_identifier_names, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
@@ -6,7 +6,15 @@ import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/widgets/home/withdraw_confirmation_widget.dart';
 
 class WithdrawConfirmation extends StatefulWidget {
-  const WithdrawConfirmation({Key? key}) : super(key: key);
+  String name;
+  String bank_name;
+  String no_rek;
+  WithdrawConfirmation(
+      {Key? key,
+      required this.name,
+      required this.bank_name,
+      required this.no_rek})
+      : super(key: key);
 
   @override
   WithdrawConfirmationState createState() => WithdrawConfirmationState();
@@ -37,7 +45,10 @@ class WithdrawConfirmationState extends State<WithdrawConfirmation> {
                 child: Column(children: [
           const WithdrawConfirmationWidget(),
           const inputAmount(),
-          const sendTo(),
+          sendTo(
+              name: widget.name,
+              bank_name: widget.bank_name,
+              no_rek: widget.no_rek),
           buttonWithdraw(context)
         ]))));
   }

@@ -10,7 +10,7 @@ class ShareFeedbackWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 40),
+        padding: const EdgeInsets.only(top: 50),
         width: MediaQuery.of(context).size.width,
         height: 280,
         alignment: Alignment.topCenter,
@@ -33,14 +33,14 @@ class ShareFeedbackWidget extends StatelessWidget {
               child: Row(children: [
                 TouchableOpacity(
                     onTap: () => Navigator.pop(context),
-                    child: Image.asset('assets/group_2211.png',
-                        width: 20.2, height: 29.2)),
+                    child: const Icon(Icons.arrow_back_ios_new_rounded,
+                        color: Colors.white)),
                 Container(
                     width: 330,
                     alignment: Alignment.center,
                     child:
                         const Text('Share Feedback', style: textBodyProfile)),
-                Container(width: 20.2, height: 29.2)
+                Container(width: 15)
               ])),
           Container(
               padding: const EdgeInsets.only(top: 20),
@@ -60,18 +60,16 @@ class multipleTextInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        padding: const EdgeInsets.only(left: 20, right: 20),
         transform: Matrix4.translationValues(0.0, -40.0, 0.0),
         child: Column(
           children: [
             Container(
-                width: 400,
-                alignment: Alignment.topCenter,
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 decoration: BoxDecoration(
                     color: const Color(0xFFDEDEDE),
                     borderRadius: BorderRadius.circular(16.7)),
-                child: Container(
-                  width: 380,
-                  child: TextFormField(
+                child: TextFormField(
                     style: const TextStyle(
                         color: Color(0xFF707070),
                         fontFamily: 'DiodrumCyrillic',
@@ -84,16 +82,13 @@ class multipleTextInput extends StatelessWidget {
                             fontFamily: 'DiodrumCyrillic',
                             fontSize: 18),
                         hintText: 'Tell us your thought',
-                        border: InputBorder.none),
-                  ),
-                )),
+                        border: InputBorder.none))),
             Container(
-              padding: const EdgeInsets.only(top: 90),
+              padding: const EdgeInsets.only(top: 90, left: 20, right: 20),
               child: TouchableOpacity(
                   onTap: () => print('send feedback'),
                   child: Container(
-                    width: 380,
-                    height: 75,
+                    height: 65,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                         color: const Color(0xFFF8C503),

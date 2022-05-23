@@ -123,7 +123,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
                         image: AssetImage('assets/heading.png'),
                         fit: BoxFit.fill)),
                 child: WhiteSpace()),
-            profileAndBalance(context),
+            profileAndBalance(),
             orderPickup(context),
             NewsAPI()
           ],

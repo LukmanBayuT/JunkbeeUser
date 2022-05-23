@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace
+// ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace, camel_case_types, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -39,125 +39,153 @@ class WhiteSpace extends StatelessWidget {
   }
 }
 
-Container profileAndBalance(BuildContext context) {
+class profileAndBalance extends StatefulWidget {
+  const profileAndBalance({Key? key}) : super(key: key);
+
+  @override
+  _profileAndBalanceState createState() => _profileAndBalanceState();
+}
+
+class _profileAndBalanceState extends State<profileAndBalance> {
   final format = NumberFormat.simpleCurrency(locale: 'id_ID');
-  return Container(
-    transform: Matrix4.translationValues(0, -70, 0),
-    width: MediaQuery.of(context).size.width / 1.1,
-    child: FutureBuilder(
-      future: ApiCallsGetData().getData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        var beever = snapshot.data;
-        if (snapshot.connectionState == ConnectionState.done) {
-          return Center(
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(90),
-                  child: beever?.data.image == null
-                      ? Image.asset('assets/beever_image.png',
-                          height: MediaQuery.of(context).size.height / 8)
-                      : Image.network(
-                          '${EndPoint.baseURL}storage/profile-images/${beever?.data.image}',
-                          width: 90,
-                          height: 90,
-                          fit: BoxFit.cover,
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      transform: Matrix4.translationValues(0, -70, 0),
+      width: MediaQuery.of(context).size.width / 1.1,
+      child: FutureBuilder(
+        future: ApiCallsGetData().getData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          var beever = snapshot.data;
+          if (snapshot.connectionState == ConnectionState.done) {
+            return Center(
+              child: Column(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(90),
+                    child: beever?.data.image == null
+                        ? Image.asset('assets/beever_image.png',
+                            height: MediaQuery.of(context).size.height / 8)
+                        : Image.network(
+                            '${EndPoint.baseURL}storage/profile-images/${beever?.data.image}',
+                            width: 90,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                  Text('${beever?.data.fullName}', style: titleBodyMini),
+                  SizedBox(
+                    width: 100,
+                    height: 50,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Padding(
+                        padding: defaultPadding2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset('assets/star_icon.png', height: 30),
+                            const Text('(4.5)', style: signScreenTextStyle)
+                          ],
                         ),
-                ),
-                Text('${beever?.data.fullName}', style: titleBodyMini),
-                SizedBox(
-                  width: 100,
-                  height: 50,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: defaultPadding2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 1,
+                    child: Card(
+                      shape: roundedRectBor,
+                      child: Column(
                         children: [
-                          Image.asset('assets/star_icon.png', height: 30),
-                          const Text('(4.5)', style: signScreenTextStyle)
+                          Padding(
+                            padding: defaultPadding2,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text('Balance', style: textProfileBold),
+                                Text(
+                                    '${format.format(int.parse(beever?.data.balance))}',
+                                    style: textProfileBold),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width / 1.2,
+                            decoration: const BoxDecoration(
+                                border: Border(
+                                    bottom: BorderSide(
+                                        width: 1, color: Color(0xFFDEDEDE)))),
+                          ),
+                          const SizedBox(height: 25),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              TouchableOpacity(
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const WithdrawScreen()));
+                                  if (result == 'back') {
+                                    await ApiCallsGetData().getData();
+                                    setState(() {});
+                                  }
+                                },
+                                child: Column(
+                                  children: [
+                                    Image.asset('assets/withdraw_icon.png',
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                25),
+                                    const SizedBox(height: 5),
+                                    const Text('Withdraw', style: bodySlimBody),
+                                  ],
+                                ),
+                              ),
+                              TouchableOpacity(
+                                onTap: () async {
+                                  final result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => const TopUp()));
+                                  if (result == 'back') {
+                                    await ApiCallsGetData().getData();
+                                    setState(() {});
+                                  }
+                                },
+                                child: Column(
+                                  children: [
+                                    Image.asset('assets/topup_icon.png',
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                25),
+                                    const SizedBox(height: 5),
+                                    const Text('Topup', style: bodySlimBody),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 25),
                         ],
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width / 1,
-                  child: Card(
-                    shape: roundedRectBor,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: defaultPadding2,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text('Balance', style: textProfileBold),
-                              Text(
-                                  '${format.format(int.parse(beever?.data.balance))}',
-                                  style: textProfileBold),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1.2,
-                          decoration: const BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(
-                                      width: 1, color: Color(0xFFDEDEDE)))),
-                        ),
-                        const SizedBox(height: 25),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            TouchableOpacity(
-                              onTap: () {},
-                              child: Column(
-                                children: [
-                                  Image.asset('assets/withdraw_icon.png',
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              25),
-                                  const SizedBox(height: 5),
-                                  const Text('Withdraw', style: bodySlimBody),
-                                ],
-                              ),
-                            ),
-                            TouchableOpacity(
-                              onTap: () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => const TopUp())),
-                              child: Column(
-                                children: [
-                                  Image.asset('assets/topup_icon.png',
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              25),
-                                  const SizedBox(height: 5),
-                                  const Text('Topup', style: bodySlimBody),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        const SizedBox(height: 25),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          );
-        } else {
-          return const Center(
-              child: SpinKitWave(color: Colors.white, size: 50));
-        }
-      },
-    ),
-  );
+                ],
+              ),
+            );
+          } else {
+            return const Center(
+                child: SpinKitWave(color: Colors.white, size: 50));
+          }
+        },
+      ),
+    );
+  }
 }
 
 Container orderPickup(BuildContext context) {
