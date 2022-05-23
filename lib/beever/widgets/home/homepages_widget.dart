@@ -1,5 +1,6 @@
 // ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace
 
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
@@ -41,6 +42,37 @@ class WhiteSpace extends StatelessWidget {
   }
 }
 
+void showNotification(BuildContext context) {
+  Flushbar(
+    onStatusChanged: (status) {
+      print('Dipencet');
+    },
+    dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+    flushbarPosition: FlushbarPosition.TOP,
+    mainButton: ButtonBar(
+      children: [
+        IconButton(
+          onPressed: () {
+            print("You clicked me!");
+          },
+          icon: const Icon(
+            Icons.check_circle_rounded,
+            color: Colors.amber,
+            size: 30,
+          ),
+        ),
+      ],
+    ),
+    backgroundColor: Colors.white,
+    title: "Beever ada Pesanan!",
+    titleColor: Colors.grey,
+    message: "Silahkan check pada Collection List",
+    messageColor: Colors.grey,
+    messageSize: 17,
+    duration: const Duration(seconds: 4),
+  ).show(context);
+}
+
 Container profileAndBalance(BuildContext context) {
   final format = NumberFormat.simpleCurrency(locale: 'id_ID');
   return Container(
@@ -67,20 +99,25 @@ Container profileAndBalance(BuildContext context) {
                         ),
                 ),
                 Text('${beever?.data.fullName}', style: titleBodyMini),
-                SizedBox(
-                  width: 100,
-                  height: 50,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30)),
-                    child: Padding(
-                      padding: defaultPadding2,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Image.asset('assets/star_icon.png', height: 30),
-                          const Text('4.5', style: signScreenTextStyle)
-                        ],
+                GestureDetector(
+                  onTap: () {
+                    showNotification(context);
+                  },
+                  child: SizedBox(
+                    width: 100,
+                    height: 50,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Padding(
+                        padding: defaultPadding2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset('assets/star_icon.png', height: 30),
+                            const Text('4.5', style: signScreenTextStyle)
+                          ],
+                        ),
                       ),
                     ),
                   ),
