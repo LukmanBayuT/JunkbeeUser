@@ -41,8 +41,7 @@ class WithdrawConfirmationState extends State<WithdrawConfirmation> {
                 child: const Icon(Icons.arrow_back_ios_new_rounded,
                     color: Colors.white))),
         body: SingleChildScrollView(
-            child: Container(
-                child: Column(children: [
+            child: Column(children: [
           const WithdrawConfirmationWidget(),
           const inputAmount(),
           sendTo(
@@ -50,6 +49,6 @@ class WithdrawConfirmationState extends State<WithdrawConfirmation> {
               bank_name: widget.bank_name,
               no_rek: widget.no_rek),
           buttonWithdraw(context)
-        ]))));
+        ])));
   }
 }

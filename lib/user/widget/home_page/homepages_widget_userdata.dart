@@ -87,9 +87,16 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                                 ? Get.offAll(() => const NavigatorPages())
                                 : showDialogue();
                           },
-                          child: Text('Be a Beever',
-                              style:
-                                  bodyBoldBody.copyWith(color: Colors.white))),
+                          child: Column(
+                            children: [
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text('Be a Beever',
+                                  style: bodyBoldBody.copyWith(
+                                      color: Colors.white)),
+                            ],
+                          )),
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width,

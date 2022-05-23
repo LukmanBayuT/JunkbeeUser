@@ -48,7 +48,7 @@ class OngoingMessagesState extends State<OngoingMessages> {
                             borderRadius: BorderRadius.circular(16.7),
                             gradient: index == 0
                                 ? const LinearGradient(colors: [
-                                    const Color(0xFFF8C503),
+                                    Color(0xFFF8C503),
                                     Color(0xFFFFE067)
                                   ])
                                 : null,

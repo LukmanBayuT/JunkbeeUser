@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:junkbee_user/beever/views/pages/home/withdraw.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
-import 'package:junkbee_user/beever/views/pages/home/withdraw.dart';
 import 'package:junkbee_user/beever/views/pages/home/topUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/available_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/current_pickUp.dart';
@@ -23,10 +23,13 @@ class WhiteSpace extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 1.1,
+      height: MediaQuery.of(context).size.height / 8,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(),
+          const SizedBox(
+            height: 20,
+          ),
           GestureDetector(
               onTap: () {
                 Get.offAll(() => const NavigatorUser());
