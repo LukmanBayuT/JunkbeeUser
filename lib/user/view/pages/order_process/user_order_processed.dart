@@ -8,11 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -54,69 +52,55 @@ class UserOrderState extends State<UserOrder> {
   double initialMetal = 0.0;
   double initialOil = 0.0;
 
-  List<Asset> images = <Asset>[];
-  List<XFile>? image1;
+  File? image1;
   File? image2;
   File? image3;
 
-  Future<void> takePhoto() async {
-    List<Asset> resultList = <Asset>[];
-    if (await Permission.camera.request().isGranted &&
-        await Permission.storage.request().isGranted) {
-      var status = await Permission.camera.status;
-      var state = await Permission.storage.status;
-      if (status.isGranted && state.isGranted) {
-        print('access granted');
-        try {
-          resultList = await MultiImagePicker.pickImages(
-            maxImages: 300,
-            enableCamera: true,
-            selectedAssets: images,
-            cupertinoOptions: const CupertinoOptions(
-              takePhotoIcon: "chat",
-              doneButtonTitle: "Fatto",
-            ),
-            materialOptions: const MaterialOptions(
-              actionBarColor: "#abcdef",
-              actionBarTitle: "Example App",
-              allViewTitle: "All Photos",
-              useDetailsView: false,
-              selectCircleStrokeColor: "#000000",
-            ),
-          );
-        } catch (e) {
-          print(e.toString());
-        }
-
-        if (!mounted) return;
-        setState(() {
-          images = resultList.toList();
-        });
-      } else {
-        print('access denied');
-      }
-    }
-  }
-
-  getImageFileFromAsset(String path) async {
-    final file = File(path);
-    return file;
-  }
-
   void _getFromCam1() async {
-    List<XFile>? pickedFile1 = await ImagePicker().pickMultiImage(
+    XFile? pickedFile1 = await ImagePicker().pickImage(
+      source: ImageSource.camera,
       maxHeight: 1080,
       maxWidth: 1080,
     );
     if (mounted) {
       setState(() {
         if (pickedFile1 != null) {
-          image1 = pickedFile1;
+          image1 = File(pickedFile1.path);
         } else {
           null;
         }
       });
     }
+  }
+
+  void _getFromCam2() async {
+    XFile? pickedFile2 = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxHeight: 1080,
+      maxWidth: 1080,
+    );
+    setState(() {
+      if (pickedFile2 != null) {
+        image2 = File(pickedFile2.path);
+      } else {
+        null;
+      }
+    });
+  }
+
+  void _getFromCam3() async {
+    XFile? pickedFile3 = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxHeight: 1080,
+      maxWidth: 1080,
+    );
+    setState(() {
+      if (pickedFile3 != null) {
+        image3 = File(pickedFile3.path);
+      } else {
+        null;
+      }
+    });
   }
 
   String? latitude;
@@ -152,18 +136,29 @@ class UserOrderState extends State<UserOrder> {
 
       final request = await http.MultipartRequest(
           'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
-      for (int i = 0; i < images.length; i++) {
-        Directory tempDir = await getTemporaryDirectory();
-        String tempPath = tempDir.path;
-        final file = await http.MultipartFile.fromPath(
-            'image', '$tempPath/${images[i].name}',
+
+      if (image1 != null && image2 == null && image3 == null) {
+        final file = await http.MultipartFile.fromPath('image', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
+      } else if (image1 != null && image2 != null && image3 == null) {
+        final file = await http.MultipartFile.fromPath('image', image1!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file);
+        final file2 = await http.MultipartFile.fromPath('image', image2!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file2);
+      } else if (image1 != null && image2 != null && image3 != null) {
+        final file = await http.MultipartFile.fromPath('image', image1!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file);
+        final file2 = await http.MultipartFile.fromPath('image', image2!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file2);
+        final file3 = await http.MultipartFile.fromPath('image', image3!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file3);
       }
-      // print('image 1 => ${image1!.path}');
-      // final file = await http.MultipartFile.fromPath('image', image1!.path,
-      //     contentType: MediaType('image', 'jpg'));
-      // request.files.add(file);
       request.fields['total_weight'] = '$totalWasteWeight';
       request.fields['total'] = '$totalPrice';
       request.fields['fee_beever'] = '$totalFeeBeever';
@@ -227,11 +222,11 @@ class UserOrderState extends State<UserOrder> {
         }
       } catch (e) {
         setState(() => loading = false);
-        print(e);
+        print('error 1 => $e');
       }
     } catch (e) {
       setState(() => loading = false);
-      print(e);
+      print('error 2 => $e');
     }
   }
 
@@ -354,6 +349,7 @@ class UserOrderState extends State<UserOrder> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 10),
                       Padding(
                         padding: defaultPadding4,
                         child: Column(
@@ -483,7 +479,6 @@ class UserOrderState extends State<UserOrder> {
                         padding: defaultPadding4,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
                               width: MediaQuery.of(context).size.width,
@@ -493,19 +488,102 @@ class UserOrderState extends State<UserOrder> {
                             ),
                             const SizedBox(height: 10),
                             Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    takePhoto();
-                                  },
-                                  child: Image.asset(
-                                    'icons/icons_others/add_pict.png',
-                                    width:
-                                        MediaQuery.of(context).size.width / 5,
-                                  ),
-                                ),
-                                Expanded(child: buildGridView())
+                                image1 != null
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          _getFromCam1();
+                                        },
+                                        child: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              8,
+                                          child: ClipRRect(
+                                            borderRadius: roundedRect,
+                                            child: Image.file(image1!,
+                                                fit: BoxFit.cover),
+                                          ),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          _getFromCam1();
+                                        },
+                                        child: Image.asset(
+                                          'icons/icons_others/add_pict.png',
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              5,
+                                        ),
+                                      ),
+                                const SizedBox(width: 25),
+                                image2 != null
+                                    ? GestureDetector(
+                                        onTap: _getFromCam2,
+                                        child: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              8,
+                                          child: ClipRRect(
+                                              borderRadius: roundedRect,
+                                              child: Image.file(image2!,
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          _getFromCam2();
+                                        },
+                                        child: Image.asset(
+                                          'icons/icons_others/add_pict.png',
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              5,
+                                        ),
+                                      ),
+                                const SizedBox(width: 25),
+                                image3 != null
+                                    ? GestureDetector(
+                                        onTap: _getFromCam3,
+                                        child: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              4,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              8,
+                                          child: ClipRRect(
+                                              borderRadius: roundedRect,
+                                              child: Image.file(image3!,
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      )
+                                    : GestureDetector(
+                                        onTap: () {
+                                          _getFromCam3();
+                                        },
+                                        child: Image.asset(
+                                          'icons/icons_others/add_pict.png',
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              5,
+                                        ),
+                                      ),
                               ],
                             )
                           ],
@@ -702,7 +780,7 @@ class UserOrderState extends State<UserOrder> {
                                 onPressed: () {},
                               )),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 10,
+                        height: MediaQuery.of(context).size.height / 6,
                       ),
                     ],
                   ),
@@ -1296,24 +1374,5 @@ class UserOrderState extends State<UserOrder> {
         ),
       ),
     );
-  }
-
-  Widget buildGridView() {
-    return GridView.count(
-        crossAxisCount: 3,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        children: List.generate(images.length, (index) {
-          Asset asset = images[index];
-          return Container(
-              padding: const EdgeInsets.only(bottom: 10, left: 10),
-              child: Container(
-                  width: MediaQuery.of(context).size.width / 5,
-                  height: MediaQuery.of(context).size.height / 10,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child:
-                          AssetThumb(asset: asset, width: 300, height: 300))));
-        }));
   }
 }

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_init_to_null
+// ignore_for_file: prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_init_to_null, no_leading_underscores_for_local_identifiers, unused_local_variable
 
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';

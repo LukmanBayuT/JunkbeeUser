@@ -186,16 +186,8 @@ class UserProfileState extends State<UserProfile> {
                                                             left: 10,
                                                             right: 10),
                                                     child: Container(
-                                                        width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width /
-                                                            5.5,
-                                                        height: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .height /
-                                                            10,
+                                                        width: 75,
+                                                        height: 75,
                                                         child: ClipRRect(
                                                           borderRadius:
                                                               BorderRadius

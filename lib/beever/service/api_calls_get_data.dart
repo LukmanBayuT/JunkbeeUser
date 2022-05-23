@@ -15,7 +15,6 @@ class ApiCallsGetData {
     final driverData = await http.get(
         Uri.parse(EndPoint.baseApiURL + EndPoint.getUserData),
         headers: {'Authorization': 'Bearer $token'});
-    print(driverData.body);
 
     return beeverDataFromJson(driverData.body);
   }

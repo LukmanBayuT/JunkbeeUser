@@ -197,13 +197,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.2"
-  file_picker:
-    dependency: "direct main"
-    description:
-      name: file_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.5.1"
   firebase_core:
     dependency: "direct main"
     description:
@@ -335,13 +328,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  flutter_screenutil:
-    dependency: "direct main"
-    description:
-      name: flutter_screenutil
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.5.3+1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -653,13 +639,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  multi_image_picker2:
-    dependency: "direct main"
-    description:
-      name: multi_image_picker2
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.0.02"
   nested:
     dependency: transitive
     description:

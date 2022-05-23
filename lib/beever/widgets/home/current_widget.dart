@@ -1,5 +1,6 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 
@@ -9,34 +10,34 @@ class CurrentWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: ScreenUtil().setWidth(480),
-        height: ScreenUtil().setHeight(80),
+        width: 480,
+        height: 80,
         alignment: Alignment.topCenter,
         child: SizedBox(
-          width: ScreenUtil().setWidth(430),
+          width: 430,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: ScreenUtil().setWidth(40),
+                width: 40,
                 child: Align(
                     alignment: Alignment.centerLeft,
                     child: TouchableOpacity(
                       onTap: () => Navigator.pop(context, true),
                       child: Image.asset(
                         'assets/group_2211.png',
-                        width: ScreenUtil().setWidth(15.2),
-                        height: ScreenUtil().setHeight(24.2),
+                        width: 15.2,
+                        height: 24.2,
                       ),
                     )),
               ),
               Container(
-                width: ScreenUtil().setWidth(350),
+                width: 350,
                 alignment: Alignment.center,
                 child: const Text('Current Pick Up', style: textBodyProfile),
               ),
               Container(
-                width: ScreenUtil().setWidth(40),
+                width: 40,
               )
             ],
           ),
@@ -56,7 +57,7 @@ class CurrentList extends StatelessWidget {
           return Column(
             children: [
               Container(
-                width: ScreenUtil().setWidth(420),
+                width: 420,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(16),
@@ -71,23 +72,23 @@ class CurrentList extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.only(top: 17),
-                      width: ScreenUtil().setWidth(390),
+                      width: 390,
                       child: Row(
                         children: [
                           SizedBox(
-                            width: ScreenUtil().setWidth(40),
+                            width: 40,
                             child: Image.asset('assets/group_2262.png'),
                           ),
                           Container(
                             padding: const EdgeInsets.only(left: 10),
-                            width: ScreenUtil().setWidth(250),
+                            width: 250,
                             child: const Text(
                               'Order From Cynthia',
                               style: textProfileBoldMini,
                             ),
                           ),
                           Container(
-                            width: ScreenUtil().setWidth(100),
+                            width: 100,
                             alignment: Alignment.centerRight,
                             child: const Text(
                               '1 hour ago',
@@ -99,7 +100,7 @@ class CurrentList extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 10.5),
-                      width: ScreenUtil().setWidth(390),
+                      width: 390,
                       decoration: const BoxDecoration(
                           border: Border(
                               bottom: BorderSide(
@@ -107,32 +108,32 @@ class CurrentList extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 17),
-                      width: ScreenUtil().setWidth(390),
+                      width: 390,
                       child: Row(
                         children: [
                           SizedBox(
-                            width: ScreenUtil().setWidth(40),
+                            width: 40,
                             child: Image.asset(
                               'assets/group_971.png',
-                              width: ScreenUtil().setWidth(30),
-                              height: ScreenUtil().setHeight(30),
+                              width: 30,
+                              height: 30,
                             ),
                           ),
                           Container(
                               padding: const EdgeInsets.only(left: 10),
-                              width: ScreenUtil().setWidth(350),
+                              width: 350,
                               child: Column(
                                 children: [
-                                  SizedBox(
-                                    width: ScreenUtil().setWidth(350),
-                                    child: const Text(
+                                  const SizedBox(
+                                    width: 350,
+                                    child: Text(
                                       'Pick Up Location',
                                       style: textProfile,
                                     ),
                                   ),
                                   Container(
                                     padding: const EdgeInsets.only(top: 1),
-                                    width: ScreenUtil().setWidth(350),
+                                    width: 350,
                                     child: const Text(
                                       'Tugumuda, 50171 Semarang',
                                       style: textProfileBoldMini,
@@ -145,25 +146,25 @@ class CurrentList extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.only(top: 17, bottom: 29),
-                      width: ScreenUtil().setWidth(390),
+                      width: 390,
                       child: Row(
                         children: [
                           SizedBox(
-                            width: ScreenUtil().setWidth(40),
+                            width: 40,
                             child: Image.asset(
                               'assets/group_2267.png',
-                              width: ScreenUtil().setWidth(30),
-                              height: ScreenUtil().setHeight(30),
+                              width: 30,
+                              height: 30,
                             ),
                           ),
                           Container(
                               padding: const EdgeInsets.only(left: 10),
-                              width: ScreenUtil().setWidth(350),
+                              width: 350,
                               child: Column(
                                 children: [
-                                  SizedBox(
-                                    width: ScreenUtil().setWidth(350),
-                                    child: const Text(
+                                  const SizedBox(
+                                    width: 350,
+                                    child: Text(
                                       'Paper     0.5 kg',
                                       style: textProfile,
                                     ),
@@ -177,7 +178,7 @@ class CurrentList extends StatelessWidget {
                 ),
               ),
               Container(
-                height: ScreenUtil().setHeight(15),
+                height: 15,
               )
             ],
           );

@@ -161,6 +161,7 @@ class SignUpUserState extends State<SignUpUser> {
                         Padding(
                           padding: defaultPadding10,
                           child: TextFormField(
+                            keyboardType: TextInputType.number,
                             controller: _phonenumcont,
                             style: const TextStyle(fontSize: 22),
                             decoration: InputDecoration(
@@ -174,6 +175,7 @@ class SignUpUserState extends State<SignUpUser> {
                         Padding(
                           padding: defaultPadding10,
                           child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             controller: _emailcont,
                             style: const TextStyle(fontSize: 22),
                             decoration: InputDecoration(

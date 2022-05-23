@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names, avoid_renaming_method_parameters, unnecessary_const, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:junkbee_user/beever/views/pages/home/addBankAccount.dart';
@@ -19,17 +18,25 @@ class WithdrawWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset('assets/wallet_svgrepo_com.png', width: ScreenUtil().setWidth(25), height: ScreenUtil().setHeight(25),),
+              Image.asset(
+                'assets/wallet_svgrepo_com.png',
+                width: 25,
+                height: 25,
+              ),
               Container(
-                padding: const EdgeInsets.only(left: 10),
-                child: const Text('Your Total Balance', style: textProfileMini,)
-              )
+                  padding: const EdgeInsets.only(left: 10),
+                  child: const Text(
+                    'Your Total Balance',
+                    style: textProfileMini,
+                  ))
             ],
           ),
           Container(
-            padding: const EdgeInsets.only(top: 15),
-            child: const Text('Rp 150.000', style: titleBold,)
-          ),
+              padding: const EdgeInsets.only(top: 15),
+              child: const Text(
+                'Rp 150.000',
+                style: titleBold,
+              )),
           Container(
             padding: const EdgeInsets.only(top: 10),
             child: Row(
@@ -49,35 +56,41 @@ class WithdrawWidget extends StatelessWidget {
 Container ChooseBankAccount(BuildContext context) {
   return Container(
     padding: const EdgeInsets.only(top: 20),
-    width: ScreenUtil().setWidth(400),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Choose your bank account', style: textProfile,),
-        Container(
-          padding: const EdgeInsets.only(top: 15),
-          child: TouchableOpacity(
-            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const AddBankAccount())),
+    child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Container(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: const Text(
+          'Choose your bank account',
+          style: textProfile,
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+        child: TouchableOpacity(
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const AddBankAccount())),
             child: Row(
               children: [
-                Image.asset('assets/subtraction_2.png', width: ScreenUtil().setWidth(25), height: ScreenUtil().setHeight(25),),
+                Image.asset(
+                  'assets/subtraction_2.png',
+                  width: 25,
+                  height: 25,
+                ),
                 Container(
                   padding: const EdgeInsets.only(left: 10),
-                  child: const Text('Add Bank Account', style: textProfileMediumGreen,),
+                  child: const Text(
+                    'Add Bank Account',
+                    style: textProfileMediumGreen,
+                  ),
                 )
               ],
-            )
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.only(top: 15),
-          width: ScreenUtil().setWidth(400),
-          decoration: const BoxDecoration(border: const Border(bottom: BorderSide(width: 1.0, color: Color(0xFFDEDEDE)))),
-        ),
-
-        const ListBankAccount()
-      ]
-    ),
+            )),
+      ),
+      Container(
+          padding: const EdgeInsets.only(top: 15, left: 20, right: 20),
+          child: const Divider(thickness: 1.0)),
+      const ListBankAccount()
+    ]),
   );
 }
 
@@ -87,106 +100,122 @@ class ListBankAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: 2,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          padding: const EdgeInsets.only(top: 15, bottom: 15),
-          width: ScreenUtil().setWidth(400),
-          decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: const Color(0xFFDEDEDE)))),
-          child: TouchableOpacity(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: const Text('Joko Widodo Sudirjo', style: textProfileBoldMini,),
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: 2,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+              padding: const EdgeInsets.only(
+                  top: 15, bottom: 15, left: 20, right: 20),
+              decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          width: 1.0, color: const Color(0xFFDEDEDE)))),
+              child: TouchableOpacity(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: const Text(
+                              'Joko Widodo Sudirjo',
+                              style: textProfileBoldMini,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 2),
+                            child: const Text(
+                              'BCA',
+                              style: textProfile,
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(top: 3),
+                            child: const Text(
+                              '00973538296',
+                              style: textProfile,
+                            ),
+                          )
+                        ],
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 2),
-                        child: const Text('BCA', style: textProfile,),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 3),
-                        child: const Text('00973538296', style: textProfile,),
-                      )
-                    ],
-                  ),
+                    ),
+                    const Text('data')
+                  ],
                 ),
-                const Text('data')
-              ],
-            ),
-          )
-        );
-      }
-    );
+              ));
+        });
   }
 }
 
 Container ChooseVirtualAccount(BuildContext context) {
   return Container(
-    padding: const EdgeInsets.only(top: 20),
-    width: ScreenUtil().setWidth(400),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text('Or choose virtual account', style: textProfile,),
+      padding: const EdgeInsets.only(top: 20),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Container(
-          padding: const EdgeInsets.only(top: 25, bottom: 15),
-          width: ScreenUtil().setWidth(400),
-          decoration: const BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: const Color(0xFFDEDEDE)))),
-          child: TouchableOpacity(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Image.asset('assets/logo_ovo_pay.png', width: ScreenUtil().setWidth(80))
-                ),
-                const Text('data')
-              ],
-            ),
-          )
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: const Text(
+            'Or choose virtual account',
+            style: textProfile,
+          ),
         ),
         Container(
-          padding: const EdgeInsets.only(top: 20),
-          width: ScreenUtil().setWidth(400),
-          child: TouchableOpacity(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  child: Image.asset('assets/rectangle_1869.png', width: ScreenUtil().setWidth(80))
-                ),
-                const Text('data')
-              ],
-            ),
-          )
-        )
-      ],
-    ),
-  );
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Container(
+              padding: const EdgeInsets.only(top: 25, bottom: 10),
+              decoration: const BoxDecoration(
+                  border: Border(
+                      bottom: BorderSide(
+                          width: 1.0, color: const Color(0xFFDEDEDE)))),
+              child: TouchableOpacity(
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                    Container(
+                        child:
+                            Image.asset('assets/logo_ovo_pay.png', width: 80)),
+                    const Text('data')
+                  ]))),
+        ),
+        Container(
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
+            child: TouchableOpacity(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                  Container(
+                      child:
+                          Image.asset('assets/rectangle_1869.png', width: 80)),
+                  const Text('data')
+                ])))
+      ]));
 }
 
 Container ButtonContinue(BuildContext context) {
   return Container(
-    padding: const EdgeInsets.only(top: 50, bottom: 30),
+    padding: const EdgeInsets.only(top: 50, bottom: 30, left: 20, right: 20),
     child: TouchableOpacity(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WithdrawConfirmation())),
-      child: Container(
-        width: ScreenUtil().setWidth(400),
-        height: ScreenUtil().setHeight(75),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF8C503),
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: const [BoxShadow(color: Colors.grey, blurRadius: 2, spreadRadius: 0.0, offset: Offset(0, 1))]
-        ),
-        child: const Text('Continue', style: textBodyProfile,),
-      )
-    ),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const WithdrawConfirmation())),
+        child: Container(
+          height: 65,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: const Color(0xFFF8C503),
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.grey,
+                    blurRadius: 2,
+                    spreadRadius: 0.0,
+                    offset: Offset(0, 1))
+              ]),
+          child: const Text(
+            'Continue',
+            style: textBodyProfile,
+          ),
+        )),
   );
 }

@@ -211,6 +211,7 @@ class SignInUserState extends State<SignInUser> {
                           Padding(
                             padding: defaultPadding10,
                             child: TextFormField(
+                              keyboardType: TextInputType.emailAddress,
                               controller: _logincont,
                               style: const TextStyle(fontSize: 22),
                               decoration: InputDecoration(

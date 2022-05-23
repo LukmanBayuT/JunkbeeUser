@@ -9,6 +9,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:junkbee_user/beever/const/base_url.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
+import 'package:junkbee_user/beever/views/pages/home/topUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/available_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/current_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/history_pickUp.dart';
@@ -128,6 +129,9 @@ Container profileAndBalance(BuildContext context) {
                               ),
                             ),
                             TouchableOpacity(
+                              onTap: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => const TopUp())),
                               child: Column(
                                 children: [
                                   Image.asset('assets/topup_icon.png',
