@@ -21,10 +21,13 @@ class WhiteSpace extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width / 1.1,
+      height: MediaQuery.of(context).size.height / 8,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(),
+          const SizedBox(
+            height: 20,
+          ),
           GestureDetector(
               onTap: () {
                 Get.offAll(() => const NavigatorUser());
@@ -75,7 +78,7 @@ Container profileAndBalance(BuildContext context) {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Image.asset('assets/star_icon.png', height: 30),
-                          const Text('(4.5)', style: signScreenTextStyle)
+                          const Text('4.5', style: signScreenTextStyle)
                         ],
                       ),
                     ),
