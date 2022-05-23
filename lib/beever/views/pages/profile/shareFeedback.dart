@@ -27,6 +27,7 @@ class ShareFeedbackState extends State<ShareFeedback> {
       const ShareFeedbackWidget(),
       Container(
           transform: Matrix4.translationValues(0.0, -70.0, 0.0),
+          alignment: Alignment.center,
           child: Column(children: [
             Container(
                 width: 220,

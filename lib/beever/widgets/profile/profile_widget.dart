@@ -172,7 +172,7 @@ SizedBox infoAccount(BuildContext context) {
                         backgroundColor: Colors.white,
                         insetPadding: const EdgeInsets.all(0),
                         child: Container(
-                            width: 400,
+                            padding: const EdgeInsets.only(left: 35, right: 35),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               mainAxisSize: MainAxisSize.min,
@@ -217,7 +217,10 @@ SizedBox infoAccount(BuildContext context) {
                                                   insetPadding:
                                                       const EdgeInsets.all(0),
                                                   child: Container(
-                                                      width: 400,
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 35,
+                                                              right: 35),
                                                       child: Column(
                                                         mainAxisAlignment:
                                                             MainAxisAlignment
@@ -255,7 +258,7 @@ SizedBox infoAccount(BuildContext context) {
                                                                 const EdgeInsets
                                                                         .only(
                                                                     bottom: 19),
-                                                            width: 350,
+                                                            width: 300,
                                                             child: const Text(
                                                                 'We are happy to hear that you love using JunkBee App! Would you like to share your experience by rating us on the App Store?',
                                                                 style: TextStyle(
@@ -265,7 +268,7 @@ SizedBox infoAccount(BuildContext context) {
                                                                         FontWeight
                                                                             .w500,
                                                                     fontSize:
-                                                                        18),
+                                                                        16),
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center),
@@ -420,94 +423,88 @@ SizedBox infoAccount(BuildContext context) {
                         backgroundColor: Colors.white,
                         insetPadding: const EdgeInsets.all(0),
                         child: Container(
-                            width: 420,
-                            height: 300,
-                            alignment: Alignment.center,
-                            child: Container(
-                                width: 380,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Container(
-                                        padding: const EdgeInsets.only(top: 5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Container(),
-                                            GestureDetector(
-                                                onTap: () =>
-                                                    Navigator.of(context).pop(),
-                                                child: Image.asset(
-                                                    'assets/group_2210.png',
-                                                    width: 20))
-                                          ],
-                                        )),
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          top: 18, bottom: 15),
-                                      child: const Text('Comeback Soon!',
-                                          style: TextStyle(
-                                              color: Color(0xFF707070),
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 22)),
-                                    ),
-                                    Container(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 45),
-                                      child: const Text(
-                                          'Are you sure you want to log out?',
-                                          style: TextStyle(
-                                              color: Color(0xFF707070),
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20)),
-                                    ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        GestureDetector(
-                                            onTap: () =>
-                                                Navigator.of(context).pop(),
-                                            child: Container(
-                                                width: 190,
-                                                height: 60,
-                                                alignment: Alignment.center,
-                                                child: const Text(
-                                                  'Back',
-                                                  style: TextStyle(
-                                                      color: Color(0xFF707070),
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontSize: 20),
-                                                ))),
-                                        Container(
-                                          width: 190,
-                                          height: 60,
-                                          child: ElevatedButton(
-                                              style: ElevatedButton.styleFrom(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10)),
-                                                  primary:
-                                                      const Color(0xFFF8C503)),
-                                              onPressed: () => logOut(),
+                            padding: const EdgeInsets.only(left: 20, right: 20),
+                            width: 370,
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                      padding: const EdgeInsets.only(top: 25),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Container(),
+                                          GestureDetector(
+                                              onTap: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: Image.asset(
+                                                  'assets/group_2210.png',
+                                                  width: 20))
+                                        ],
+                                      )),
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        top: 18, bottom: 15),
+                                    child: const Text('Segera Kembali!',
+                                        style: TextStyle(
+                                            color: Color(0xFF707070),
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 22)),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.only(bottom: 45),
+                                    child: const Text(
+                                        'Apakah Anda yakin ingin keluar?',
+                                        style: TextStyle(
+                                            color: Color(0xFF707070),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 20)),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      GestureDetector(
+                                          onTap: () =>
+                                              Navigator.of(context).pop(),
+                                          child: Container(
+                                              width: 150,
+                                              height: 60,
+                                              alignment: Alignment.center,
                                               child: const Text(
-                                                'Confirm',
+                                                'Back',
                                                 style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.w800,
+                                                    color: Color(0xFF707070),
+                                                    fontWeight: FontWeight.w600,
                                                     fontSize: 20),
-                                              )),
-                                        )
-                                      ],
-                                    ),
-                                    const Padding(
-                                        padding: EdgeInsets.only(bottom: 30))
-                                  ],
-                                ))));
+                                              ))),
+                                      Container(
+                                        width: 150,
+                                        height: 60,
+                                        child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10)),
+                                                primary:
+                                                    const Color(0xFFF8C503)),
+                                            onPressed: () => logOut(),
+                                            child: const Text(
+                                              'Confirm',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w800,
+                                                  fontSize: 20),
+                                            )),
+                                      )
+                                    ],
+                                  ),
+                                  const Padding(
+                                      padding: EdgeInsets.only(bottom: 30))
+                                ])));
                   },
                   animationType: DialogTransitionType.slideFromBottomFade,
                   curve: Curves.fastOutSlowIn,

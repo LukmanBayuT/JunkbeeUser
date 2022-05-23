@@ -18,23 +18,28 @@ class WithdrawState extends State<WithdrawScreen> {
     super.initState();
   }
 
+  _onWillPop() async {
+    Navigator.pop(context, 'back');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            title: const Text('Withdraw', style: textBodyProfile),
-            centerTitle: true,
-            backgroundColor: const Color(0xFFF8C503),
-            leading: TouchableOpacity(
-                onTap: () => Navigator.pop(context),
-                child: const Icon(Icons.arrow_back_ios_new_rounded,
-                    color: Colors.white))),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          const WithdrawWidget(),
-          ChooseBankAccount(context),
-          ChooseVirtualAccount(context),
-          ButtonContinue(context)
-        ])));
+    return WillPopScope(
+      onWillPop: () => _onWillPop(),
+      child: Scaffold(
+          appBar: AppBar(
+              title: const Text('Withdraw', style: textBodyProfile),
+              centerTitle: true,
+              backgroundColor: const Color(0xFFF8C503),
+              leading: TouchableOpacity(
+                  onTap: () => Navigator.pop(context, 'back'),
+                  child: const Icon(Icons.arrow_back_ios_new_rounded,
+                      color: Colors.white))),
+          body: SingleChildScrollView(
+              child: Column(children: [
+            const WithdrawWidget(),
+            ChooseBankAccount(context)
+          ]))),
+    );
   }
 }
