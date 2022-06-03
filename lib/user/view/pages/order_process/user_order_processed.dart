@@ -249,12 +249,6 @@ class UserOrderState extends State<UserOrder> {
     LocationResult? result = await Get.to(() => PlacePicker(
           "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
         ));
-    // setState(() {});
-    // LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (context) => PlacePicker(
-    //           "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
-    //         )));
-
     if (result != null) {
       setState(() {
         alamat = result.formattedAddress;

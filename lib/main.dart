@@ -10,12 +10,14 @@ import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
-import 'package:junkbee_user/services/notification.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/view/splashscreen/1.%20onboarding_splash_screen.dart';
 
+import 'services/notification_services.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
@@ -27,19 +29,15 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => NotificationService())
-        ],
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.amber,
-            fontFamily: 'DiodrumCyrillic',
-            textSelectionTheme:
-                const TextSelectionThemeData(cursorColor: Color(0xff707070)),
-          ),
-          home: const OnboardingSplashScreen(),
-        ));
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+        fontFamily: 'DiodrumCyrillic',
+        textSelectionTheme:
+            const TextSelectionThemeData(cursorColor: Color(0xff707070)),
+      ),
+      home: const OnboardingSplashScreen(),
+    );
   }
 }
