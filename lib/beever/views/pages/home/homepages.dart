@@ -29,12 +29,6 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     super.initState();
     getRole();
     patchBeeverLocation();
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      Get.to(() => OngoingOrderProceed());
-    });
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      Get.to(() => OngoingOrderProceed());
-    });
   }
 
   getRole() async {
