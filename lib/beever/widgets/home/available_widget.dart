@@ -13,16 +13,15 @@ class AvailableWidget extends StatelessWidget {
       Container(
           padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Container(
-                child: TouchableOpacity(
-                    onTap: () => Navigator.pop(context, true),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white))),
+            TouchableOpacity(
+                onTap: () => Navigator.pop(context, true),
+                child: const Icon(Icons.arrow_back_ios_new_rounded,
+                    color: Colors.white)),
             Container(
                 width: 300,
                 alignment: Alignment.center,
                 child: const Text('Available Pick Up', style: textBodyProfile)),
-            Container(width: 40)
+            Container(width: 25)
           ]))
     ]);
   }
@@ -65,7 +64,6 @@ class AvailableList extends StatelessWidget {
                                           Image.asset('assets/group_2262.png')),
                                   Container(
                                       padding: const EdgeInsets.only(left: 10),
-                                      width: 250,
                                       child: const Text('Order From Cynthia',
                                           style: TextStyle(
                                               color: Color(0xFF707070),
@@ -79,7 +77,6 @@ class AvailableList extends StatelessWidget {
                               ])),
                       Container(
                         padding: const EdgeInsets.only(top: 10.5),
-                        width: 390,
                         decoration: const BoxDecoration(
                             border: const Border(
                                 bottom: const BorderSide(

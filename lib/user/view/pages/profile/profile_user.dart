@@ -196,7 +196,7 @@ class UserProfileState extends State<UserProfile> {
                                                                       .image ==
                                                                   null
                                                               ? Image.asset(
-                                                                  'assets/beever_image.png',
+                                                                  'assets/ellipse_302.png',
                                                                   fit: BoxFit
                                                                       .cover,
                                                                 )
@@ -269,9 +269,8 @@ class UserProfileState extends State<UserProfile> {
                                                       setState(() {});
                                                     }
                                                   } else {
-                                                    final imageURL = '${EndPoint
-                                                            .baseURL}storage/profile-images/${ userdata.data.image}'
-                                                       ;
+                                                    final imageURL =
+                                                        '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}';
                                                     final result = await Navigator.push(
                                                         context,
                                                         MaterialPageRoute(

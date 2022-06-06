@@ -147,9 +147,8 @@ class EditProfileState extends State<EditProfile> {
                           ClipRRect(
                               borderRadius: BorderRadius.circular(100),
                               child: widget.image == null
-                                  ? Image.asset('assets/beever_image.png',
-                                      width: MediaQuery.of(context).size.width /
-                                          4.5)
+                                  ? Image.asset('assets/ellipse_302.png',
+                                      width: 100)
                                   : Image.network(
                                       '${widget.image}',
                                       width: 100,

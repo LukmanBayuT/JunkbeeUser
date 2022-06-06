@@ -57,7 +57,6 @@ class ActiveList extends StatelessWidget {
                                           Image.asset('assets/group_2262.png')),
                                   Container(
                                       padding: const EdgeInsets.only(left: 10),
-                                      width: 250,
                                       child: const Text('Order From Cynthia',
                                           style: TextStyle(
                                               color: Color(0xFF707070),
@@ -162,7 +161,6 @@ class InboxList extends StatelessWidget {
                                           Image.asset('assets/group_2262.png')),
                                   Container(
                                       padding: const EdgeInsets.only(left: 10),
-                                      width: 250,
                                       child: const Text('Order From Cynthia',
                                           style: TextStyle(
                                               color: Color(0xFF707070),

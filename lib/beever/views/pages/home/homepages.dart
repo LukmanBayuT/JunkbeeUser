@@ -89,7 +89,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                padding: const EdgeInsets.only(top: 40),
+                padding: const EdgeInsets.only(top: 10),
                 height: MediaQuery.of(context).size.height / 4,
                 alignment: Alignment.topCenter,
                 decoration: const BoxDecoration(

@@ -28,32 +28,59 @@ class _TopUpState extends State<TopUp> {
   bool loading = false;
   TextEditingController amount = TextEditingController();
   String payment_method = '';
+  String image = '';
 
   _onWillPop() async {
     Navigator.pop(context, 'back');
   }
 
   void topUp() async {
-    setState(() => loading = true);
-    var authToken = await secureStorage.readSecureData('token');
-    var token = authToken;
+    if (payment_method == 'BCA' ||
+        payment_method == 'BRI' ||
+        payment_method == 'BNI') {
+      setState(() => loading = true);
+      var authToken = await secureStorage.readSecureData('token');
+      var token = authToken;
 
-    final top_up = await http.post(
-        Uri.parse(EndPoint.baseApiURL + EndPoint.topUp),
-        headers: {'Authorization': 'Bearer $token'},
-        body: {'amount': amount.text.trim(), 'bank': payment_method});
-    Map<String, dynamic> bodyJson = jsonDecode(top_up.body);
-    var va_numbers = jsonEncode(bodyJson['data']['va_numbers']);
-    String x1 = va_numbers;
-    var x2 = jsonDecode(x1);
-    List? list = x2 != null ? List.from(x2) : null;
-    if (bodyJson['message'] == 'data has been updated') {
-      setState(() => loading = false);
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => TopupConfirmation(
-              bank_name: list![0]['bank'],
-              va_number: list[0]['va_number'],
-              id_transaksi: bodyJson['data']['transaction_id'])));
+      final top_up = await http.post(
+          Uri.parse(EndPoint.baseApiURL + EndPoint.topUp),
+          headers: {'Authorization': 'Bearer $token'},
+          body: {'amount': amount.text.trim(), 'bank': payment_method});
+      Map<String, dynamic> bodyJson = jsonDecode(top_up.body);
+      var va_numbers = jsonEncode(bodyJson['data']['va_numbers']);
+      String x1 = va_numbers;
+      var x2 = jsonDecode(x1);
+      List? list = x2 != null ? List.from(x2) : null;
+      if (bodyJson['message'] == 'data has been updated') {
+        setState(() => loading = false);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TopupConfirmation(
+                amount: amount.text,
+                image: image,
+                bank_name: list![0]['bank'],
+                va_number: list[0]['va_number'],
+                id_transaksi: bodyJson['data']['transaction_id'])));
+      }
+    } else if (payment_method == 'Mandiri') {
+      setState(() => loading = true);
+      var authToken = await secureStorage.readSecureData('token');
+      var token = authToken;
+
+      final top_up = await http.post(
+          Uri.parse(EndPoint.baseApiURL + EndPoint.topUp),
+          headers: {'Authorization': 'Bearer $token'},
+          body: {'amount': amount.text.trim(), 'bank': payment_method});
+      Map<String, dynamic> bodyJson = jsonDecode(top_up.body);
+      if (bodyJson['message'] == 'data has been updated') {
+        setState(() => loading = false);
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => TopupConfirmation(
+                amount: amount.text,
+                image: image,
+                bank_name: 'mandiri',
+                va_number: bodyJson['data']['permata_va_number'],
+                id_transaksi: bodyJson['data']['transaction_id'])));
+      }
     }
   }
 
@@ -71,42 +98,40 @@ class _TopUpState extends State<TopUp> {
                     child: const Icon(Icons.arrow_back_ios_new_rounded,
                         color: Colors.white))),
             body: Stack(alignment: Alignment.topCenter, children: [
-              Column(
-                children: [
-                  SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                        Container(
-                            padding: const EdgeInsets.only(
-                                top: 25, left: 25, right: 25, bottom: 15),
-                            child: const Text('Top Up Trough',
-                                style: bodySlimBody)),
-                        Container(
-                            padding: const EdgeInsets.only(
-                                left: 25, right: 25, bottom: 20),
-                            child: TextFormField(
+              Column(children: [
+                SingleChildScrollView(
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                      Container(
+                          padding: const EdgeInsets.only(
+                              top: 25, left: 25, right: 25, bottom: 15),
+                          child:
+                              const Text('Top Up Trough', style: bodySlimBody)),
+                      Container(
+                          padding: const EdgeInsets.only(
+                              left: 25, right: 25, bottom: 20),
+                          child: TextFormField(
                               controller: amount,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
-                                hintText: 'Input Nominal',
-                                hintStyle: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16,
-                                    color: Color(0xFF707070)),
-                                enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.7),
-                                    borderSide: const BorderSide(
-                                        color: Colors.black45, width: 2.0)),
-                                focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(16.7),
-                                    borderSide: const BorderSide(
-                                        color: Color(0xFFF8C503), width: 2.0)),
-                              ),
-                            )),
-                        Container(
-                            padding: const EdgeInsets.only(left: 10, right: 10),
-                            child: Theme(
+                                  hintText: 'Input Nominal',
+                                  hintStyle: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16,
+                                      color: Color(0xFF707070)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16.7),
+                                      borderSide: const BorderSide(
+                                          color: Colors.black45, width: 2.0)),
+                                  focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(16.7),
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFF8C503),
+                                          width: 2.0))))),
+                      Container(
+                          padding: const EdgeInsets.only(left: 10, right: 10),
+                          child: Theme(
                               data: Theme.of(context)
                                   .copyWith(dividerColor: Colors.transparent),
                               child: ExpansionTile(
@@ -127,6 +152,8 @@ class _TopUpState extends State<TopUp> {
                                                         payment_method =
                                                             bank[index]
                                                                 ['bank_name'];
+                                                        image = bank[index]
+                                                            ['image'];
                                                       });
                                                     },
                                                     child: Container(
@@ -179,46 +206,41 @@ class _TopUpState extends State<TopUp> {
                                                                       ['image'],
                                                                   height: 20)),
                                                           Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .only(
-                                                                    left: 10),
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .min,
-                                                              children: [
-                                                                Text(
-                                                                    'Bank ${bank[index]['bank_name']} (Dicek Otomatis)',
-                                                                    style: const TextStyle(
-                                                                        fontWeight:
-                                                                            FontWeight
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 10),
+                                                              child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .min,
+                                                                  children: [
+                                                                    Text(
+                                                                        'Bank ${bank[index]['bank_name']} (Dicek Otomatis)',
+                                                                        style: const TextStyle(
+                                                                            fontWeight: FontWeight
                                                                                 .w800,
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: Color(
-                                                                            0xFF707070))),
-                                                                Text(
-                                                                    'Hanya menerima dari ${bank[index]['bank_name']}',
-                                                                    style: const TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: Color(
-                                                                            0xFF707070)))
-                                                              ],
-                                                            ),
-                                                          )
+                                                                            fontSize:
+                                                                                15,
+                                                                            color:
+                                                                                Color(0xFF707070))),
+                                                                    Text(
+                                                                        'Hanya menerima dari ${bank[index]['bank_name']}',
+                                                                        style: const TextStyle(
+                                                                            fontSize:
+                                                                                15,
+                                                                            color:
+                                                                                Color(0xFF707070)))
+                                                                  ]))
                                                         ])))
                                               ]);
                                         })
-                                  ]),
-                            ))
-                      ])),
-                ],
-              ),
+                                  ])))
+                    ]))
+              ]),
               Positioned(
                   bottom: 50,
                   child: Container(

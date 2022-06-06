@@ -128,99 +128,91 @@ class _SignInDriverState extends State<SignInDriver> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-      child: Scaffold(
-          body: SafeArea(
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: SingleChildScrollView(
-              child: Stack(
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  const LogoType(),
-                  Column(
-                    children: [
-                      Padding(
-                        padding: defaultPadding9,
-                        child: TextFormField(
-                          controller: _logincont,
-                          keyboardType: TextInputType.emailAddress,
-                          style: signScreenTextStyle,
-                          decoration: InputDecoration(
-                              labelStyle: signScreenTextStyle,
-                              labelText: 'Phone Number or Email',
-                              errorText: (_validate)
-                                  ? "Username cannot be empty"
-                                  : null),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      Padding(
-                        padding: defaultPadding9,
-                        child: TextFormField(
-                          controller: _passwordcont,
-                          style: signScreenTextStyle,
-                          obscureText: (_obsecureText) ? true : false,
-                          decoration: InputDecoration(
-                              labelStyle: signScreenTextStyle,
-                              labelText: 'Password',
-                              errorText: (_validate)
-                                  ? "Password Cannot be Empty"
-                                  : null,
-                              suffixIcon: IconButton(
-                                  onPressed: () => _toggle(),
-                                  icon: Icon((_obsecureText)
-                                      ? Icons.visibility
-                                      : Icons.visibility_off))),
-                        ),
-                      ),
-                      const ForgotPassword(),
-                      const SizedBox(height: 20),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width / 1,
-                          height: MediaQuery.of(context).size.height / 13,
-                          child: Padding(
-                            padding: defaultPadding9,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                if (_logincont.text.isEmpty) {
-                                  setState(() => _validate = true);
-                                } else {
-                                  setState(() => _validate = false);
-                                  _loginUser();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.amber,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15))),
-                              child: const Text('Sign In',
-                                  style: onboardingTextButton),
-                            ),
-                          )),
-                    ],
-                  ),
-                  const BecomeABeever()
-                ],
-              ),
-              Container(
-                color: Colors.transparent,
-                child: (loading)
-                    ? Container(
-                        color: const Color.fromRGBO(0, 0, 0, 0.5),
-                        alignment: Alignment.center,
-                        child: Lottie.asset("assets/animation/booble.json",
-                            width: 250,
-                            height: MediaQuery.of(context).size.height * 1,
-                            animate: true))
-                    : null,
-              )
-            ],
-          )),
-        ),
-      )),
-    );
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: Scaffold(
+            body: SafeArea(
+                child: Align(
+                    alignment: Alignment.topCenter,
+                    child: SingleChildScrollView(
+                        child: Stack(children: [
+                      Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const LogoType(),
+                            Column(children: [
+                              Padding(
+                                  padding: defaultPadding9,
+                                  child: TextFormField(
+                                      controller: _logincont,
+                                      keyboardType: TextInputType.emailAddress,
+                                      style: signScreenTextStyle,
+                                      decoration: InputDecoration(
+                                          labelStyle: signScreenTextStyle,
+                                          labelText: 'Phone Number or Email',
+                                          errorText: (_validate)
+                                              ? "Username cannot be empty"
+                                              : null))),
+                              const SizedBox(height: 20),
+                              Padding(
+                                  padding: defaultPadding9,
+                                  child: TextFormField(
+                                      controller: _passwordcont,
+                                      style: signScreenTextStyle,
+                                      obscureText:
+                                          (_obsecureText) ? true : false,
+                                      decoration: InputDecoration(
+                                          labelStyle: signScreenTextStyle,
+                                          labelText: 'Password',
+                                          errorText: (_validate)
+                                              ? "Password Cannot be Empty"
+                                              : null,
+                                          suffixIcon: IconButton(
+                                              onPressed: () => _toggle(),
+                                              icon: Icon((_obsecureText)
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off))))),
+                              const ForgotPassword(),
+                              const SizedBox(height: 20),
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width / 1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 13,
+                                  child: Padding(
+                                      padding: defaultPadding9,
+                                      child: ElevatedButton(
+                                          onPressed: () {
+                                            if (_logincont.text.isEmpty) {
+                                              setState(() => _validate = true);
+                                            } else {
+                                              setState(() => _validate = false);
+                                              _loginUser();
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.amber,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15))),
+                                          child: const Text('Sign In',
+                                              style: onboardingTextButton))))
+                            ]),
+                            const BecomeABeever()
+                          ]),
+                      Container(
+                        color: Colors.transparent,
+                        child: (loading)
+                            ? Container(
+                                color: const Color.fromRGBO(0, 0, 0, 0.5),
+                                alignment: Alignment.center,
+                                child: Lottie.asset(
+                                    "assets/animation/booble.json",
+                                    width: 250,
+                                    height:
+                                        MediaQuery.of(context).size.height * 1,
+                                    animate: true))
+                            : null,
+                      )
+                    ]))))));
   }
 }

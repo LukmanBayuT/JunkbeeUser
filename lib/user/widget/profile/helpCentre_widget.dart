@@ -3,64 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 
-class HelpCentreWidget extends StatelessWidget {
-  const HelpCentreWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      alignment: Alignment.topCenter,
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/group_2239.png'), fit: BoxFit.cover)),
-      child: Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.only(top: 40),
-            width: MediaQuery.of(context).size.width / 1.1,
-            child: Row(
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width / 5,
-                  alignment: Alignment.topLeft,
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back_ios_new_rounded,
-                        size: 22, color: Colors.white),
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  alignment: Alignment.topCenter,
-                  child: const Text('Help Centre', style: bodyBodyUserBold),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width / 5,
-                )
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.only(top: 30),
-            width: MediaQuery.of(context).size.width / 1.1,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text('Hi Joko,', style: bodyBodyMini),
-                Container(
-                    padding: const EdgeInsets.only(top: 8, bottom: 4),
-                    child: const Text('We Are Ready', style: bodyBodyUserBold)),
-                const Text('To Help You', style: bodyBodyUserBold)
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
-
 SizedBox AllTopics(BuildContext context) {
   return SizedBox(
     width: MediaQuery.of(context).size.width / 1.1,
