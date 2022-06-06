@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:junkbee_user/beever/service/api_calls_beever.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:location/location.dart';
@@ -13,7 +13,22 @@ import 'package:swipeable_button_view/swipeable_button_view.dart';
 class OngoingOrderProceed extends StatefulWidget {
   var panelController = PanelController();
 
-  OngoingOrderProceed({Key? key}) : super(key: key);
+  var latUser;
+  var longUser;
+  var alamat;
+  var namaTempat;
+  var userOrder;
+  var orderCode;
+
+  OngoingOrderProceed(
+      {Key? key,
+      required this.latUser,
+      required this.longUser,
+      required this.userOrder,
+      required this.namaTempat,
+      required this.alamat,
+      required this.orderCode})
+      : super(key: key);
 
   @override
   State<OngoingOrderProceed> createState() => _OngoingOrderProceedState();
@@ -66,7 +81,10 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
             (isLastScreen == true) ? panelHeightOpenFinal : panelHeightOpen,
         body: Stack(
           children: [
-            GoogleMap(initialCameraPosition: initialCameraPosition),
+            GoogleMap(
+              initialCameraPosition: initialCameraPosition,
+              markers: {},
+            ),
             Column(
               children: [
                 const SizedBox(
@@ -181,13 +199,13 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                       const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Collection By',
+                        children: [
+                          const Text(
+                            'Nama Pemesan',
                             style: onboardingNormalText,
                           ),
                           Text(
-                            'Joko Widodo',
+                            widget.userOrder ?? 'Nama User',
                             style: bodyBodyBold,
                           ),
                         ],
@@ -208,14 +226,25 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                       const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            'Pickup Location',
+                        children: [
+                          const Text(
+                            'Lokasi Pickup',
                             style: onboardingNormalText,
                           ),
-                          Text(
-                            'Data Lokasi',
-                            style: bodyBodyBold,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.namaTempat ?? 'Nama Tempat',
+                                style: bodyBodyBold,
+                              ),
+                              Text(
+                                widget.alamat ?? 'Alamat',
+                                style: bodyBodyBold.copyWith(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -229,46 +258,24 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                 (isOnTheWay == true)
                     ? Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width / 2.6,
-                                height: MediaQuery.of(context).size.height / 13,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.red,
-                                      shape: roundedRectBor),
-                                  child: const Text('Cancel',
-                                      style: onboardingGetStarted),
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                )),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width / 2.6,
-                                height: MediaQuery.of(context).size.height / 13,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Colors.amber,
-                                      shape: roundedRectBor),
-                                  child: const Text('Pick Up',
-                                      style: onboardingGetStarted),
-                                  onPressed: () {
-                                    if (mounted) {
-                                      setState(() {
-                                        isOnTheWay = false;
-                                        isOnTheWayText = true;
-                                        isOnPickUp = true;
-                                      });
-                                    }
-                                  },
-                                )),
-                          ],
-                        ),
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 2.6,
+                            height: MediaQuery.of(context).size.height / 13,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.amber, shape: roundedRectBor),
+                              child: const Text('Pick Up',
+                                  style: onboardingGetStarted),
+                              onPressed: () {
+                                if (mounted) {
+                                  setState(() {
+                                    isOnTheWay = false;
+                                    isOnTheWayText = true;
+                                    isOnPickUp = true;
+                                  });
+                                }
+                              },
+                            )),
                       )
                     : Container(),
                 (isOnPickUp == true)
@@ -397,7 +404,13 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                     child: Text('Confirm',
                                         style: onboardingGetStarted.copyWith(
                                             fontSize: 18)),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      // BeeverApi().beeverConfirm(
+                                      //     widget.orderCode,
+                                      //     totalWeight,
+                                      //     total,
+                                      //     wasteType);
+                                    },
                                   )),
                             ],
                           ),

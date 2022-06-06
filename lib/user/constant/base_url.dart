@@ -15,6 +15,7 @@ class EndPoint {
   static const String updateProfileImage = 'userdata/update/image';
   static const String updateSocialMedia = 'userdata/update/socialmedia';
   static const String updateUserLocation = 'userdata/update/latlong';
+  static const String beeverConfirmation = 'beever/collection/confirm';
   static const String beeverGetCollection = 'beever/get/orderlist';
   static const String beeverCollectionDetails =
       'beever/collection/history/detail/';
