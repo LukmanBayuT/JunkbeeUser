@@ -131,7 +131,6 @@ class UserOrderState extends State<UserOrder> {
   String? subtotal = 20.toString();
 
   void _orderUser() async {
-    return print('jancok');
     try {
       var authToken = await secureStorage.readSecureData('token');
       var token = authToken;
