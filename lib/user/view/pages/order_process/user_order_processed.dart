@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, non_constant_identifier_names, avoid_init_to_null, unused_local_variable, await_only_futures, avoid_print, sized_box_for_whitespace, avoid_unnecessary_containers, unused_import
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -130,6 +131,7 @@ class UserOrderState extends State<UserOrder> {
   String? subtotal = 20.toString();
 
   void _orderUser() async {
+    return print('jancok');
     try {
       var authToken = await secureStorage.readSecureData('token');
       var token = authToken;
@@ -138,24 +140,24 @@ class UserOrderState extends State<UserOrder> {
           'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
 
       if (image1 != null && image2 == null && image3 == null) {
-        final file = await http.MultipartFile.fromPath('image', image1!.path,
+        final file = await http.MultipartFile.fromPath('images', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
       } else if (image1 != null && image2 != null && image3 == null) {
-        final file = await http.MultipartFile.fromPath('image', image1!.path,
+        final file = await http.MultipartFile.fromPath('images', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
-        final file2 = await http.MultipartFile.fromPath('image', image2!.path,
+        final file2 = await http.MultipartFile.fromPath('images', image2!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file2);
       } else if (image1 != null && image2 != null && image3 != null) {
-        final file = await http.MultipartFile.fromPath('image', image1!.path,
+        final file = await http.MultipartFile.fromPath('images', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
-        final file2 = await http.MultipartFile.fromPath('image', image2!.path,
+        final file2 = await http.MultipartFile.fromPath('images', image2!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file2);
-        final file3 = await http.MultipartFile.fromPath('image', image3!.path,
+        final file3 = await http.MultipartFile.fromPath('images', image3!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file3);
       }
@@ -164,6 +166,7 @@ class UserOrderState extends State<UserOrder> {
       request.fields['fee_beever'] = '$totalFeeBeever';
       request.fields['waste_type'] = '$wasteType';
       request.fields['waste_weight'] = '$wasteWeight';
+      request.fields['tempat'] = '$namaTempat';
       request.fields['subtotal'] = '$subtotal';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
@@ -174,39 +177,13 @@ class UserOrderState extends State<UserOrder> {
         setState(() => loading = true);
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
-        print(token);
         Map<String, dynamic> responseJSON = jsonDecode(response.body);
         if (response.statusCode == 200) {
+          setState(() => loading = false);
           print(responseJSON);
-          var orderCode = responseJSON['data'][0]['order_code'];
-          var alamatNih = responseJSON['data'][0]['location1'];
-          print(orderCode);
-          try {
-            final responsePost = await http.post(
-                Uri.parse(EndPoint.baseApiURL + EndPoint.userFindBeever),
-                headers: {
-                  'Authorization': 'Bearer $token'
-                },
-                body: {
-                  'order_code': orderCode,
-                  'lat': latitude,
-                  'lng': longitude
-                });
-            print(responsePost.body);
-            if (responsePost.statusCode == 200 &&
-                responseJSON['success'] == 1) {
-              setState(() => loading = false);
-              Get.offAll(() => const NavigatorUser());
-            } else {
-              setState(() => loading = false);
-              print('ada error');
-            }
-          } catch (e) {
-            setState(() => loading = false);
-            print('error => $e');
-          }
         } else if (response.statusCode == 400) {
           setState(() => loading = false);
+          print(responseJSON);
           Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.amber,
@@ -249,12 +226,6 @@ class UserOrderState extends State<UserOrder> {
     LocationResult? result = await Get.to(() => PlacePicker(
           "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
         ));
-    // setState(() {});
-    // LocationResult result = await Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (context) => PlacePicker(
-    //           "AIzaSyA1MgLuZuyqR_OGY3ob3M52N46TDBRI_9k",
-    //         )));
-
     if (result != null) {
       setState(() {
         alamat = result.formattedAddress;

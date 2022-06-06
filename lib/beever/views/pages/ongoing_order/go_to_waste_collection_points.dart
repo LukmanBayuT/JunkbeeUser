@@ -39,31 +39,6 @@ class _WasteCollectionsPointState extends State<WasteCollectionsPoint> {
   bool isMrMarcell = false;
   bool isMrWelly = false;
 
-  Set<Marker> markerList = {
-    Marker(
-        markerId: const MarkerId('Mr. Donny'),
-        position: const LatLng(-6.9749235, 110.4218642),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-        onTap: () {}),
-    Marker(
-      markerId: const MarkerId('Mr. Marcell'),
-      position: const LatLng(-6.9870617, 110.3908796),
-      infoWindow: const InfoWindow(
-          title: 'Mr. Marcell Super Warehouse',
-          snippet:
-              'Jl. Puspowarno Sel. V No.26 Salamanmloyo, Kec. Semarang Barat'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
-    ),
-    Marker(
-      markerId: const MarkerId('Mr. Welly'),
-      position: const LatLng(-7.014945, 110.4162697),
-      infoWindow: const InfoWindow(
-          title: 'Mr. Welly Super Warehouse',
-          snippet: 'Jl. Kendalisodo No.2a, Wonotingal, Kec. Candisari'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-    ),
-  };
-
   @override
   void initState() {
     location = Location();

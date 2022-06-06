@@ -92,6 +92,9 @@ const textProfileMiniGreen =
 const titleBold =
     TextStyle(fontSize: 26, fontWeight: FontWeight.w700, color: mainColor1);
 
+const titleBoldMini =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: mainColor1);
+
 const onboardingGetStarted = TextStyle(
   fontSize: 21,
   fontWeight: FontWeight.bold,

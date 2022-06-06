@@ -1,4 +1,4 @@
-// ignore_for_file: sized_box_for_whitespace, unnecessary_const, duplicate_ignore
+// ignore_for_file: sized_box_for_whitespace, unnecessary_const, duplicate_ignore, avoid_unnecessary_containers
 
 import 'package:flutter/material.dart';
 import 'package:junkbee_user/beever/const/const.dart';

@@ -164,147 +164,161 @@ class UserProfileState extends State<UserProfile> {
                                     ))
                               ] else ...[
                                 SizedBox(
-                                  width: MediaQuery.of(context).size.width / 1,
-                                  height:
-                                      MediaQuery.of(context).size.height / 7,
-                                  child: FutureBuilder(
-                                    future: ApiCallsGetData().getUserData(),
-                                    builder: (BuildContext context,
-                                        AsyncSnapshot snapshot) {
-                                      if (snapshot.connectionState ==
-                                          ConnectionState.done) {
-                                        var userdata = snapshot.data;
-                                        return Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Container(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10,
-                                                            right: 10),
-                                                    child: Container(
-                                                        width: 75,
-                                                        height: 75,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(50),
-                                                          child: userdata.data
-                                                                      .image ==
-                                                                  null
-                                                              ? Image.asset(
-                                                                  'assets/ellipse_302.png',
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                )
-                                                              : Image.network(
-                                                                  '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}',
-                                                                  fit: BoxFit
-                                                                      .cover),
-                                                        ))),
-                                                Container(
-                                                    width:
-                                                        MediaQuery.of(context)
+                                    width:
+                                        MediaQuery.of(context).size.width / 1,
+                                    height:
+                                        MediaQuery.of(context).size.height / 7,
+                                    child: FutureBuilder(
+                                        future: ApiCallsGetData().getUserData(),
+                                        builder: (BuildContext context,
+                                            AsyncSnapshot snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.done) {
+                                            var userdata = snapshot.data;
+                                            return Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(children: [
+                                                    Container(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .only(
+                                                                left: 10,
+                                                                right: 10),
+                                                        child: Container(
+                                                            width: 75,
+                                                            height: 75,
+                                                            child: ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50),
+                                                              child: userdata
+                                                                          .data
+                                                                          .image ==
+                                                                      null
+                                                                  ? Image.asset(
+                                                                      'assets/ellipse_302.png',
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    )
+                                                                  : Image.network(
+                                                                      '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}',
+                                                                      fit: BoxFit
+                                                                          .cover),
+                                                            ))),
+                                                    Container(
+                                                        width: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .width /
                                                             3,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            '${userdata?.data.fullName}',
-                                                            style:
-                                                                bodyBoldBody),
-                                                        if (userdata
-                                                                ?.data.phone ==
-                                                            '') ...[
-                                                          Text('-',
-                                                              style:
-                                                                  bodySlimBody)
-                                                        ] else ...[
-                                                          Text(
-                                                              '${userdata?.data.phone}',
-                                                              style:
-                                                                  bodySlimBody)
-                                                        ],
-                                                        Text(
-                                                            '${userdata?.data.email}',
-                                                            style:
-                                                                bodySlimBody),
-                                                      ],
-                                                    ))
-                                              ],
-                                            ),
-                                            IconButton(
-                                                onPressed: () async {
-                                                  if (userdata.data.image ==
-                                                      null) {
-                                                    final imageURL =
-                                                        userdata.data.image;
-                                                    final result = await Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => EditProfile(
-                                                                image: imageURL,
-                                                                name: userdata
-                                                                    ?.data
-                                                                    .fullName,
-                                                                phone: userdata
-                                                                    ?.data
-                                                                    .phone,
-                                                                email: userdata
-                                                                    ?.data
-                                                                    .email)));
-                                                    if (result == 'back') {
-                                                      await ApiCallsGetData()
-                                                          .getUserData();
-                                                      setState(() {});
-                                                    }
-                                                  } else {
-                                                    final imageURL =
-                                                        '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}';
-                                                    final result = await Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) => EditProfile(
-                                                                image: imageURL,
-                                                                name: userdata
-                                                                    ?.data
-                                                                    .fullName,
-                                                                phone: userdata
-                                                                    ?.data
-                                                                    .phone,
-                                                                email: userdata
-                                                                    ?.data
-                                                                    .email)));
-                                                    if (result == 'back') {
-                                                      await ApiCallsGetData()
-                                                          .getUserData();
-                                                      setState(() {});
-                                                    }
-                                                  }
-                                                },
-                                                icon: const Icon(
-                                                    Icons.edit_rounded,
-                                                    color: Colors.amber))
-                                          ],
-                                        );
-                                      } else {
-                                        return const Center(
-                                            child: SpinKitWave(
-                                                size: 50, color: mainColor2));
-                                      }
-                                    },
-                                  ),
-                                )
+                                                        child: Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(
+                                                                  '${userdata?.data.fullName}',
+                                                                  style:
+                                                                      bodyBoldBody),
+                                                              if (userdata?.data
+                                                                      .phone ==
+                                                                  '') ...[
+                                                                Text('-',
+                                                                    style:
+                                                                        bodySlimBody)
+                                                              ] else ...[
+                                                                Text(
+                                                                    '${userdata?.data.phone}',
+                                                                    style:
+                                                                        bodySlimBody)
+                                                              ],
+                                                              Text(
+                                                                  '${userdata?.data.email}',
+                                                                  style:
+                                                                      bodySlimBody)
+                                                            ]))
+                                                  ]),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 18),
+                                                    child: IconButton(
+                                                        onPressed: () async {
+                                                          if (userdata
+                                                                  .data.image ==
+                                                              null) {
+                                                            final imageURL =
+                                                                userdata
+                                                                    .data.image;
+                                                            final result = await Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => EditProfile(
+                                                                        image:
+                                                                            imageURL,
+                                                                        name: userdata
+                                                                            ?.data
+                                                                            .fullName,
+                                                                        phone: userdata
+                                                                            ?.data
+                                                                            .phone,
+                                                                        email: userdata
+                                                                            ?.data
+                                                                            .email)));
+                                                            if (result ==
+                                                                'back') {
+                                                              await ApiCallsGetData()
+                                                                  .getUserData();
+                                                              setState(() {});
+                                                            }
+                                                          } else {
+                                                            final imageURL =
+                                                                '${EndPoint.baseURL}storage/profile-images/${userdata.data.image}';
+                                                            final result = await Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => EditProfile(
+                                                                        image:
+                                                                            imageURL,
+                                                                        name: userdata
+                                                                            ?.data
+                                                                            .fullName,
+                                                                        phone: userdata
+                                                                            ?.data
+                                                                            .phone,
+                                                                        email: userdata
+                                                                            ?.data
+                                                                            .email)));
+                                                            if (result ==
+                                                                'back') {
+                                                              await ApiCallsGetData()
+                                                                  .getUserData();
+                                                              setState(() {});
+                                                            }
+                                                          }
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.edit_rounded,
+                                                            color:
+                                                                Colors.amber)),
+                                                  )
+                                                ]);
+                                          } else {
+                                            return const Center(
+                                                child: SpinKitWave(
+                                                    size: 50,
+                                                    color: mainColor2));
+                                          }
+                                        }))
                               ],
                               const SizedBox(height: 10),
                               Column(

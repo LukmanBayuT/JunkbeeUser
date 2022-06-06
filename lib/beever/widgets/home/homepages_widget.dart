@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/beever/views/pages/home/withdraw.dart';
+import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
+import 'package:junkbee_user/services/notification_services.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +17,21 @@ import 'package:junkbee_user/beever/views/pages/home/available_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/current_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/history_pickUp.dart';
 import 'package:junkbee_user/beever/views/pages/home/news.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
-class WhiteSpace extends StatelessWidget {
+class WhiteSpace extends StatefulWidget {
   const WhiteSpace({Key? key}) : super(key: key);
+
+  @override
+  State<WhiteSpace> createState() => _WhiteSpaceState();
+}
+
+class _WhiteSpaceState extends State<WhiteSpace> {
+  @override
+  void initState() {
+    tz.initializeTimeZones();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,20 +87,51 @@ class _profileAndBalanceState extends State<profileAndBalance> {
                           ),
                   ),
                   Text('${beever?.data.fullName}', style: titleBodyMini),
-                  SizedBox(
-                    width: 100,
-                    height: 50,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Padding(
-                        padding: defaultPadding2,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset('assets/star_icon.png', height: 30),
-                            const Text('(4.5)', style: signScreenTextStyle)
-                          ],
+                  GestureDetector(
+                    onTap: () {
+                      ShowNotification().showFlushBar(context);
+                    },
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Padding(
+                          padding: defaultPadding2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset('assets/star_icon.png', height: 30),
+                              const Text('(4.5)', style: signScreenTextStyle)
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  GestureDetector(
+                    onTap: () {
+                      NotificationService()
+                          .showNotification(1, "title", "body", 2);
+                      ApiCallsGetCollection().getCollectionData();
+                    },
+                    child: SizedBox(
+                      width: 100,
+                      height: 50,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30)),
+                        child: Padding(
+                          padding: defaultPadding2,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Image.asset('assets/star_icon.png', height: 30),
+                              const Text('(4.5)', style: signScreenTextStyle)
+                            ],
+                          ),
                         ),
                       ),
                     ),

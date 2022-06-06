@@ -31,22 +31,18 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
         context: context,
         builder: (BuildContext context) {
           AlertDialog dialog = AlertDialog(
-            title: const Text('Anda bukan beever'),
-            content: const Text(
-                'Silahkan mendaftar menjadi beever dengan datang ke kantor pusat Junkbee Semarang'),
-            actions: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(primary: Colors.amber),
-                onPressed: () {
-                  Get.back();
-                },
-                child: Text(
-                  'OK',
-                  style: bodySlimBody.copyWith(color: Colors.white),
-                ),
-              )
-            ],
-          );
+              title: const Text('Anda bukan beever'),
+              content: const Text(
+                  'Silahkan mendaftar menjadi beever dengan datang ke kantor pusat Junkbee Semarang'),
+              actions: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.amber),
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text('OK',
+                        style: bodySlimBody.copyWith(color: Colors.white)))
+              ]);
           return dialog;
         });
   }
@@ -55,9 +51,8 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
   Widget build(BuildContext context) {
     String? roles;
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
+        width: MediaQuery.of(context).size.width,
+        child: Column(children: [
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 30,
@@ -72,79 +67,64 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                       image: AssetImage('assets/background_home_page.png'),
                       fit: BoxFit.cover)),
               child: Container(
-                padding: const EdgeInsets.only(top: 15),
-                width: MediaQuery.of(context).size.width / 1.15,
-                child: Column(
-                  children: [
+                  padding: const EdgeInsets.only(top: 15),
+                  width: MediaQuery.of(context).size.width / 1.15,
+                  child: Column(children: [
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      alignment: Alignment.topRight,
-                      child: GestureDetector(
-                          onTap: () async {
-                            roles = await secureStorage.readSecureData('roles');
-                            print(roles);
-                            (roles == 'beever')
-                                ? Get.offAll(() => const NavigatorPages())
-                                : showDialogue();
-                          },
-                          child: Column(
-                            children: [
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text('Be a Beever',
-                                  style: bodyBoldBody.copyWith(
-                                      color: Colors.white)),
-                            ],
-                          )),
-                    ),
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.topRight,
+                        child: GestureDetector(
+                            onTap: () async {
+                              roles =
+                                  await secureStorage.readSecureData('roles');
+                              print(roles);
+                              (roles == 'beever')
+                                  ? Get.offAll(() => const NavigatorPages())
+                                  : showDialogue();
+                            },
+                            child: Text('Be a Beever',
+                                style: bodyBoldBody.copyWith(
+                                    color: Colors.white)))),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: FutureBuilder(
-                        future: ApiCallsGetData().getUserData(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.done) {
-                            var userdata = snapshot.data;
-                            secureStorage.writeSecureData(
-                                'roles', userdata?.data.role);
+                        padding: const EdgeInsets.only(top: 15),
+                        width: MediaQuery.of(context).size.width,
+                        child: FutureBuilder(
+                            future: ApiCallsGetData().getUserData(),
+                            builder:
+                                (BuildContext context, AsyncSnapshot snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.done) {
+                                var userdata = snapshot.data;
+                                secureStorage.writeSecureData(
+                                    'roles', userdata?.data.role);
 
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text('Hi,', style: bodyBodyUser),
-                                Text(
-                                    '${userdata?.data.fullName} as ${userdata?.data.role}',
-                                    style: bodyBodyUser),
-                                const SizedBox(width: 30),
-                                Row(
-                                  children: [
-                                    Image.asset('assets/dompet.png',
-                                        height: 20),
-                                    const SizedBox(width: 10),
-                                    Text(
-                                        '${format.format(int.parse(userdata?.data.balance))}',
-                                        style: bodyBodyUser)
-                                  ],
-                                )
-                              ],
-                            );
-                          } else {
-                            return const Center(
-                                child:
-                                    SpinKitWave(size: 50, color: mainColor0));
-                          }
-                        },
-                      ),
-                    )
-                  ],
-                ),
-              )),
+                                return Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text('Hi,', style: bodyBodyUser),
+                                      Text(
+                                          '${userdata?.data.fullName} as ${userdata?.data.role}',
+                                          style: bodyBodyUser),
+                                      const SizedBox(width: 30),
+                                      Row(children: [
+                                        Image.asset('assets/dompet.png',
+                                            height: 20),
+                                        const SizedBox(width: 10),
+                                        Text(
+                                            '${format.format(int.parse(userdata?.data.balance))}',
+                                            style: bodyBodyUser)
+                                      ])
+                                    ]);
+                              } else {
+                                return const Center(
+                                    child: SpinKitWave(
+                                        size: 50, color: mainColor0));
+                              }
+                            }))
+                  ]))),
           const ArticleJunkbee()
-        ],
-      ),
-    );
+        ]));
   }
 }
 
@@ -155,9 +135,8 @@ class UIHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      child: Column(
-        children: [
+        width: MediaQuery.of(context).size.width,
+        child: Column(children: [
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height / 30,
@@ -172,10 +151,9 @@ class UIHomePage extends StatelessWidget {
                       image: AssetImage('assets/background_home_page.png'),
                       fit: BoxFit.cover)),
               child: Container(
-                padding: const EdgeInsets.only(top: 15),
-                width: MediaQuery.of(context).size.width / 1.15,
-                child: Column(
-                  children: [
+                  padding: const EdgeInsets.only(top: 15),
+                  width: MediaQuery.of(context).size.width / 1.15,
+                  child: Column(children: [
                     Container(
                       width: MediaQuery.of(context).size.width,
                       alignment: Alignment.topRight,
@@ -189,34 +167,29 @@ class UIHomePage extends StatelessWidget {
                                   bodyBoldBody.copyWith(color: Colors.white))),
                     ),
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text('Hi,', style: bodyBodyUser),
-                          Container(
-                              padding: const EdgeInsets.only(top: 5, bottom: 9),
-                              child: Text('$device_info', style: bodyBodyUser)),
-                          const SizedBox(width: 30),
-                          Row(
+                        padding: const EdgeInsets.only(top: 15),
+                        width: MediaQuery.of(context).size.width,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Image.asset('assets/dompet.png',
-                                  height:
-                                      MediaQuery.of(context).size.height / 25),
-                              const SizedBox(width: 10),
-                              Text('${format.format(int.parse('0'))}',
-                                  style: bodyBodyUser)
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              )),
+                              const Text('Hi,', style: bodyBodyUser),
+                              Container(
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 9),
+                                  child: Text('$device_info',
+                                      style: bodyBodyUser)),
+                              const SizedBox(width: 30),
+                              Row(children: [
+                                Image.asset('assets/dompet.png',
+                                    height: MediaQuery.of(context).size.height /
+                                        25),
+                                const SizedBox(width: 10),
+                                Text('${format.format(int.parse('0'))}',
+                                    style: bodyBodyUser)
+                              ])
+                            ]))
+                  ]))),
           const ArticleJunkbee()
-        ],
-      ),
-    );
+        ]));
   }
 }
