@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -123,12 +124,12 @@ class UserOrderState extends State<UserOrder> {
   }
 
   String? totalWasteWeight;
-  String? totalPrice = 10.000.toString();
+  String? totalPrice;
   String? totalFeeBeever = 3000.toString();
   String? userLocation;
   String? wasteType = 'paper';
-  String? wasteWeight = 10.toString();
-  String? subtotal = 20.toString();
+  String? wasteWeight;
+  String? subtotal;
 
   void _orderUser() async {
     try {
@@ -166,7 +167,7 @@ class UserOrderState extends State<UserOrder> {
       request.fields['waste_type'] = '$wasteType';
       request.fields['waste_weight'] = '$wasteWeight';
       request.fields['tempat'] = '$namaTempat';
-      request.fields['subtotal'] = '$subtotal';
+      request.fields['subtotal'] = '$totalPrice';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
       request.fields['location1'] = '$alamat';
@@ -264,6 +265,8 @@ class UserOrderState extends State<UserOrder> {
         initialOil +
         initialPlastic +
         initialSachet;
+
+    double totalPrice = totalWeight * 3750;
 
     return Scaffold(
       appBar: AppBar(
@@ -589,10 +592,12 @@ class UserOrderState extends State<UserOrder> {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text('Total Earnings',
+                                      children: [
+                                        const Text('Total Earnings',
                                             style: onboardingNormalText),
-                                        Text('data')
+                                        Text(NumberFormat.simpleCurrency(
+                                                locale: 'ID')
+                                            .format(totalPrice))
                                       ],
                                     ),
                                   ),
@@ -604,10 +609,12 @@ class UserOrderState extends State<UserOrder> {
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
-                                      children: const [
-                                        Text('Estimated Earnings',
+                                      children: [
+                                        const Text('Estimated Earnings',
                                             style: onboardingNormalText),
-                                        Text('data')
+                                        Text(NumberFormat.simpleCurrency(
+                                                locale: 'ID')
+                                            .format(totalPrice))
                                       ],
                                     ),
                                   ),
@@ -672,11 +679,6 @@ class UserOrderState extends State<UserOrder> {
                                         ),
                                         GestureDetector(
                                           onTap: showPlacePicker,
-                                          // onTap: () async {
-                                          //   alamat = await Get.to(
-                                          //       () => const UserOrderMaps());
-                                          //   setState(() {});
-                                          // },
                                           child: const Text('Change',
                                               style: onboardingSkip),
                                         )

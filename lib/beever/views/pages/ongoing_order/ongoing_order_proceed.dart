@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:junkbee_user/beever/service/api_calls_beever.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:location/location.dart';
