@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed.dart';
 import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
@@ -40,11 +41,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
       if (message != null) {
         ShowNotification().showFlushBar(context);
         print('object');
-        // Navigator.pushNamed(
-        //   context,
-        //   '/message',
-        //   arguments: MessageArguments(message, true),
-        // );
+        Get.to(() => OngoingOrder());
       }
     });
 
@@ -67,16 +64,12 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
             ),
           ),
         );
+        ShowNotification().showFlushBar(context);
       }
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print('A new onMessageOpenedApp event was published!');
-      // Navigator.pushNamed(
-      //   context,
-      //   '/message',
-      //   arguments: MessageArguments(message, true),
-      // );
     });
   }
 
@@ -104,12 +97,12 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
     var lat = position.latitude;
     var long = position.longitude;
 
-    var uri =
-        Uri.https('www.staging2.junkbee.id', '/api/beever/update/location', {
+    var uri = Uri.https(
+        'www.staging2.junkbee.id', '/api/beever/update/location', {
       'id': id,
       'lat': lat.toString(),
       'lng': long.toString(),
-      // 'status': 'ready'
+      'status': 'ready'
     });
     print(lat);
     print(long);
@@ -117,7 +110,7 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
         await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
       print(response.body);
-      return Future.delayed(Duration(seconds: 15))
+      return Future.delayed(Duration(seconds: 10))
           .then((value) => patchBeeverLocation());
     } else {
       return null;

@@ -2,10 +2,15 @@
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 
 class ShowNotification {
   void showFlushBar(BuildContext context) {
     Flushbar(
+      onTap: ((flushbar) {
+        Get.to(() => const OngoingOrder());
+      }),
       onStatusChanged: (status) {
         print('Dipencet');
       },

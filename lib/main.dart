@@ -9,6 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -18,6 +19,7 @@ import 'services/notification_services.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Handling a background message ${message.messageId}');
   await Firebase.initializeApp();
+  await Get.to(() => const OngoingOrder());
 }
 
 late AndroidNotificationChannel? channel;
@@ -36,7 +38,7 @@ void main() async {
       'High Importance Notifications', // title
       description:
           'This channel is used for important notifications', // description
-      importance: Importance.high,
+      importance: Importance.max,
     );
 
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();

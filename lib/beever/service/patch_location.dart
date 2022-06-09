@@ -13,17 +13,17 @@ class PatchLocation {
     var lat = position.latitude;
     var long = position.longitude;
 
-    var uri = Uri.https(
-        'www.staging2.junkbee.id', '/api/beever/update/location', {
+    var uri =
+        Uri.https('www.staging2.junkbee.id', '/api/beever/update/location', {
       'id': id,
       'lat': lat.toString(),
       'lng': long.toString(),
-      'status': 'ready'
+      // 'status': 'ready'
     });
     var response =
         await http.patch(uri, headers: {'Authorization': 'Bearer $token'});
     if (response.statusCode == 200) {
-      return Future.delayed(const Duration(seconds: 5))
+      return Future.delayed(const Duration(seconds: 15))
           .then((value) => patchBeeverLocation());
     } else {}
   }

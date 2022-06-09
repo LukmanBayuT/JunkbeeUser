@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -127,7 +128,7 @@ class UserOrderState extends State<UserOrder> {
   String? totalPrice;
   String? totalFeeBeever = 3000.toString();
   String? userLocation;
-  String? wasteType = 'paper';
+  String? wasteType = 'Paper';
   String? wasteWeight;
   String? subtotal;
 
@@ -142,6 +143,7 @@ class UserOrderState extends State<UserOrder> {
       if (image1 != null && image2 == null && image3 == null) {
         final file = await http.MultipartFile.fromPath('images', image1!.path,
             contentType: MediaType('image', 'jpg'));
+
         request.files.add(file);
       } else if (image1 != null && image2 != null && image3 == null) {
         final file = await http.MultipartFile.fromPath('images', image1!.path,
@@ -163,21 +165,22 @@ class UserOrderState extends State<UserOrder> {
       }
       request.fields['total_weight'] = '$totalWasteWeight';
       request.fields['total'] = '$totalPrice';
+      request.fields['subtotal'] = '$totalPrice';
       request.fields['fee_beever'] = '$totalFeeBeever';
       request.fields['waste_type'] = '$wasteType';
       request.fields['waste_weight'] = '$wasteWeight';
       request.fields['tempat'] = '$namaTempat';
-      request.fields['subtotal'] = '$totalPrice';
+      request.fields['location1'] = '$alamat';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
-      request.fields['location1'] = '$alamat';
       request.headers['Authorization'] = 'Bearer $token';
 
       try {
         setState(() => loading = true);
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
-        Map<String, dynamic> responseJSON = jsonDecode(response.body);
+        print(response.body);
+        Map<String, dynamic> responseJSON = await jsonDecode(response.body);
         if (response.statusCode == 200) {
           setState(() => loading = false);
           print(responseJSON);
@@ -190,7 +193,7 @@ class UserOrderState extends State<UserOrder> {
               colorText: Colors.white,
               isDismissible: true,
               forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-              duration: const Duration(seconds: 1),
+              duration: const Duration(seconds: 3),
               margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
               icon: const Icon(
                 Icons.error_outlined,
@@ -779,78 +782,76 @@ class UserOrderState extends State<UserOrder> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return Dialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              elevation: 1,
-              backgroundColor: Colors.white,
-              insetPadding: const EdgeInsets.all(0),
-              child: Container(
-                  width: MediaQuery.of(context).size.width / 1.2,
-                  height: MediaQuery.of(context).size.height / 3.1,
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                      width: MediaQuery.of(context).size.width / 1.3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Container(
-                              child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(),
-                              GestureDetector(
-                                  onTap: () => Navigator.of(context).pop(),
-                                  child: Image.asset('assets/group_2210.png',
-                                      width: MediaQuery.of(context).size.width /
-                                          25))
-                            ],
-                          )),
-                          Container(
-                            padding: const EdgeInsets.only(top: 18, bottom: 15),
-                            child: const Text('Pesanan Sudah Siap!',
-                                style: titleBodyLogout),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.only(bottom: 45),
-                            child: const Text(
-                                'Pastikan Pesanan anda disertai dengan alamat agar beever tidak bingung',
-                                style: bodyBody),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                  onTap: () => Navigator.of(context).pop(),
-                                  child: Container(
-                                      width: MediaQuery.of(context).size.width /
-                                          2.8,
-                                      height:
-                                          MediaQuery.of(context).size.height /
-                                              13,
-                                      alignment: Alignment.center,
-                                      child: const Text('Kembali',
-                                          style: bodyBodySemi))),
-                              SizedBox(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+            elevation: 1,
+            backgroundColor: Colors.white,
+            insetPadding: const EdgeInsets.all(0),
+            child: Container(
+              width: MediaQuery.of(context).size.width / 1.2,
+              height: MediaQuery.of(context).size.height / 3.1,
+              alignment: Alignment.center,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width / 1.3,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                        child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(),
+                        GestureDetector(
+                            onTap: () => Navigator.of(context).pop(),
+                            child: Image.asset('assets/group_2210.png',
+                                width: MediaQuery.of(context).size.width / 25))
+                      ],
+                    )),
+                    Container(
+                      padding: const EdgeInsets.only(top: 18, bottom: 15),
+                      child: const Text('Pesanan Sudah Siap!',
+                          style: titleBodyLogout),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(bottom: 45),
+                      child: const Text(
+                          'Pastikan Pesanan anda disertai dengan alamat ya!',
+                          style: bodyBody),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(
+                            onTap: () => Navigator.of(context).pop(),
+                            child: Container(
                                 width: MediaQuery.of(context).size.width / 2.8,
                                 height: MediaQuery.of(context).size.height / 13,
-                                child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        primary: const Color(0xFFF8C503)),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      _orderUser();
-                                    },
-                                    child: const Text('Sudah Tepat',
-                                        style: bodyBodyMini)),
-                              )
-                            ],
-                          )
-                        ],
-                      ))));
+                                alignment: Alignment.center,
+                                child: const Text('Kembali',
+                                    style: bodyBodySemi))),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 2.8,
+                          height: MediaQuery.of(context).size.height / 13,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10)),
+                                  primary: const Color(0xFFF8C503)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                _orderUser();
+                              },
+                              child: const Text('Sudah Tepat',
+                                  style: bodyBodyMini)),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
         },
         animationType: DialogTransitionType.slideFromBottomFade,
         curve: Curves.fastOutSlowIn,

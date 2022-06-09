@@ -42,6 +42,8 @@ dependencies:
     sdk: flutter
   flutter_animated_dialog: ^2.0.1
   flutter_dotenv: ^5.0.2
+  flutter_launcher_icons: ^0.9.3
+
   flutter_local_notifications: ^9.4.0
   flutter_login_facebook: ^1.4.1
   flutter_polyline_points: ^1.0.0
@@ -81,6 +83,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/logo/logo_junkbee.png"
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
@@ -104,6 +111,7 @@ flutter:
     - icons/icons_button/
     - icons/waste_icons/
     - icons/icons_others/
+    - assets/logo/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
