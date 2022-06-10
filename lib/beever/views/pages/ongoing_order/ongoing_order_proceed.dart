@@ -1,10 +1,13 @@
 // ignore_for_file: must_be_immutable, avoid_unnecessary_containers
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-import 'package:location/location.dart';
+
 import 'package:page_transition/page_transition.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
@@ -12,8 +15,8 @@ import 'package:swipeable_button_view/swipeable_button_view.dart';
 class OngoingOrderProceed extends StatefulWidget {
   var panelController = PanelController();
 
-  var latUser;
-  var longUser;
+  double latUser;
+  double longUser;
   var alamat;
   var namaTempat;
   var userOrder;
@@ -34,12 +37,84 @@ class OngoingOrderProceed extends StatefulWidget {
 }
 
 class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
+  bool servicestatus = false;
+  bool haspermission = false;
+  late LocationPermission permission;
+  late Position position;
+  String long = "", lat = "";
+  late StreamSubscription<Position> positionStream;
+
+  checkGps() async {
+    servicestatus = await Geolocator.isLocationServiceEnabled();
+    if (servicestatus) {
+      permission = await Geolocator.checkPermission();
+
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          print('Location permissions are denied');
+        } else if (permission == LocationPermission.deniedForever) {
+          print("'Location permissions are permanently denied");
+        } else {
+          haspermission = true;
+        }
+      } else {
+        haspermission = true;
+      }
+
+      if (haspermission) {
+        setState(() {
+          //refresh the UI
+        });
+
+        getLocation();
+      }
+    } else {
+      print("GPS Service is not enabled, turn on GPS location");
+    }
+
+    setState(() {
+      //refresh the UI
+    });
+  }
+
+  getLocation() async {
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    print(position.longitude); //Output: 80.24599079
+    print(position.latitude); //Output: 29.6593457
+
+    long = position.longitude.toString();
+    lat = position.latitude.toString();
+
+    setState(() {
+      //refresh UI
+    });
+
+    LocationSettings locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.high, //accuracy of the location data
+      distanceFilter: 100, //minimum distance (measured in meters) a
+      //device must move horizontally before an update event is generated;
+    );
+
+    StreamSubscription<Position> positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position position) {
+      print(position.longitude); //Output: 80.24599079
+      print(position.latitude); //Output: 29.6593457
+
+      long = position.longitude.toString();
+      lat = position.latitude.toString();
+
+      setState(() {
+        //refresh UI on update
+      });
+    });
+  }
+
   final TextEditingController _jenisSampah = TextEditingController();
   final TextEditingController _beratSampah = TextEditingController();
   final panelController = PanelController();
-  LocationData? currentLocation;
-  late LocationData destinationLocation;
-  late Location location;
 
   bool isOnTheWay = true;
   bool isOnTheWayText = false;
@@ -52,15 +127,17 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   bool isCompleted = false;
   bool isFinished = false;
 
+  late double latUser = widget.latUser;
+  late double longUser = widget.longUser;
+
+  late LatLng userLocation = LatLng(latUser, longUser);
+
   @override
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = CameraPosition(
       zoom: 16,
       tilt: 30,
-      target: currentLocation != null
-          ? LatLng(currentLocation!.latitude ?? 0.0,
-              currentLocation!.longitude ?? 0.0)
-          : const LatLng(-6.9714229, 110.4265293),
+      target: LatLng(userLocation.latitude, userLocation.longitude),
     );
     final panelHeightOpen = MediaQuery.of(context).size.height * 0.35;
     final panelHeightClosed = MediaQuery.of(context).size.height * 0.1;
@@ -82,7 +159,15 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
           children: [
             GoogleMap(
               initialCameraPosition: initialCameraPosition,
-              markers: {},
+              markers: {
+                Marker(
+                  markerId: MarkerId('${widget.userOrder}'),
+                  position:
+                      LatLng(userLocation.latitude, userLocation.longitude),
+                  icon: BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueOrange),
+                ),
+              },
             ),
             Column(
               children: [
