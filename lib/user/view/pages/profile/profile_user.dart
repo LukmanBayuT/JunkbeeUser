@@ -363,22 +363,23 @@ class UserProfileState extends State<UserProfile> {
                                           size: 20,
                                         ),
                                       )),
-                                  const ListTile(
-                                    title: Text('Privacy Policy',
-                                        style: bodySlimBody),
-                                    trailing: Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  const ListTile(
-                                    title: Text('Terms of Services',
-                                        style: bodySlimBody),
-                                    trailing: Icon(
-                                      Icons.arrow_forward_ios_rounded,
-                                      size: 20,
-                                    ),
-                                  ),
+                                  GestureDetector(
+                                      onTap: () => print('Privacy Policy'),
+                                      child: const ListTile(
+                                          title: Text('Privacy Policy',
+                                              style: bodySlimBody),
+                                          trailing: Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 20))),
+                                  GestureDetector(
+                                      onTap: () =>
+                                          debugPrint('Terms  of Services'),
+                                      child: const ListTile(
+                                          title: Text('Terms of Services',
+                                              style: bodySlimBody),
+                                          trailing: Icon(
+                                              Icons.arrow_forward_ios_rounded,
+                                              size: 20))),
                                   GestureDetector(
                                       onTap: () {
                                         showAnimatedDialog(

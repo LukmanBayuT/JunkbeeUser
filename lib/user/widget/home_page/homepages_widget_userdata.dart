@@ -164,8 +164,7 @@ class UIHomePage extends StatelessWidget {
                               toastLength: Toast.LENGTH_LONG),
                           child: Text('Be a Beever',
                               style:
-                                  bodyBoldBody.copyWith(color: Colors.white))),
-                    ),
+                                  bodyBoldBody.copyWith(color: Colors.white)))),
                     Container(
                         padding: const EdgeInsets.only(top: 15),
                         width: MediaQuery.of(context).size.width,

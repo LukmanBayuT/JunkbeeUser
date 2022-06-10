@@ -67,6 +67,7 @@ class UserOrderState extends State<UserOrder> {
       setState(() {
         if (pickedFile1 != null) {
           image1 = File(pickedFile1.path);
+          print(image1);
         } else {
           null;
         }
@@ -179,10 +180,9 @@ class UserOrderState extends State<UserOrder> {
         Map<String, dynamic> responseJSON = jsonDecode(response.body);
         if (response.statusCode == 200) {
           setState(() => loading = false);
-          print(responseJSON);
+          Get.offAll(() => const NavigatorUser());
         } else if (response.statusCode == 400) {
           setState(() => loading = false);
-          print(responseJSON);
           Get.snackbar('Bad Request', response.body,
               snackPosition: SnackPosition.BOTTOM,
               backgroundColor: Colors.amber,
