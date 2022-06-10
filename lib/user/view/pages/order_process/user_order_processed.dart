@@ -125,12 +125,12 @@ class UserOrderState extends State<UserOrder> {
     print(longitude);
   }
 
-  String? totalWasteWeight;
-  String? totalPrice;
+  int? totalWasteWeight;
+  double? totalHarga;
   String? totalFeeBeever = 3000.toString();
   String? userLocation;
   String? wasteType = 'Paper';
-  String? wasteWeight;
+  int? wasteWeight;
   String? subtotal;
 
   void _orderUser() async {
@@ -144,7 +144,6 @@ class UserOrderState extends State<UserOrder> {
       if (image1 != null && image2 == null && image3 == null) {
         final file = await http.MultipartFile.fromPath('images', image1!.path,
             contentType: MediaType('image', 'jpg'));
-
         request.files.add(file);
       } else if (image1 != null && image2 != null && image3 == null) {
         final file = await http.MultipartFile.fromPath('images', image1!.path,
@@ -165,16 +164,18 @@ class UserOrderState extends State<UserOrder> {
         request.files.add(file3);
       }
       request.fields['total_weight'] = '$totalWasteWeight';
-      request.fields['total'] = '$totalPrice';
-      request.fields['subtotal'] = '$totalPrice';
+      request.fields['total'] = '$totalHarga';
+      request.fields['subtotal'] = '$totalHarga';
       request.fields['fee_beever'] = '$totalFeeBeever';
       request.fields['waste_type'] = '$wasteType';
-      request.fields['waste_weight'] = '$wasteWeight';
+      request.fields['waste_weight'] = '$totalWasteWeight';
       request.fields['tempat'] = '$namaTempat';
       request.fields['location1'] = '$alamat';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
-      request.headers['Authorization'] = 'Bearer $token';
+      request.headers.addAll({
+        'Authorization': 'Bearer $authToken',
+      });
 
       try {
         setState(() => loading = true);
@@ -736,8 +737,8 @@ class UserOrderState extends State<UserOrder> {
                                   } else {
                                     if (mounted) {
                                       setState(() {
-                                        totalWasteWeight =
-                                            totalWeight.toString();
+                                        totalWasteWeight = totalWeight.toInt();
+                                        totalHarga = totalPrice;
                                       });
                                     }
                                     getCurrentLocation();

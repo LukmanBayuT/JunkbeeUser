@@ -44,6 +44,8 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
               if (snapshot.hasData) {
                 var details = snapshot.data.data[0];
                 var detailsWaste = snapshot.data.data[0].detail[0];
+                var latUser = double.tryParse(details.lat);
+                var longUser = double.tryParse(details.lng);
                 return SizedBox(
                   width: MediaQuery.of(context).size.width / 1.1,
                   child: Card(
@@ -66,32 +68,6 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Row(
-                              //   children: [
-                              //     SizedBox(
-                              //       width:
-                              //           MediaQuery.of(context).size.width /
-                              //               3,
-                              //       child: const Text(
-                              //         'ID',
-                              //         style: titleBoldMini,
-                              //       ),
-                              //     ),
-                              //     SizedBox(
-                              //       width:
-                              //           MediaQuery.of(context).size.width /
-                              //               12,
-                              //       child: const Text(
-                              //         ':',
-                              //         style: titleBoldMini,
-                              //       ),
-                              //     ),
-                              //     Text(
-                              //       details.userId,
-                              //       style: titleBoldMini,
-                              //     ),
-                              //   ],
-                              // ),
                               Row(
                                 children: [
                                   SizedBox(
@@ -302,12 +278,13 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                         onPressed: () {
                                           Get.to(
                                             () => OngoingOrderProceed(
-                                                latUser: details.lat,
-                                                longUser: details.lng,
-                                                userOrder: details.fullName,
-                                                orderCode: details.orderCode,
-                                                namaTempat: details.tempat,
-                                                alamat: details.location1),
+                                              latUser: latUser!.toDouble(),
+                                              longUser: longUser!.toDouble(),
+                                              userOrder: details.fullName,
+                                              orderCode: details.orderCode,
+                                              namaTempat: details.tempat,
+                                              alamat: details.location1,
+                                            ),
                                           );
                                         },
                                         child: const Text(

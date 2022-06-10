@@ -87,51 +87,20 @@ class _profileAndBalanceState extends State<profileAndBalance> {
                           ),
                   ),
                   Text('${beever?.data.fullName}', style: titleBodyMini),
-                  GestureDetector(
-                    onTap: () {
-                      ShowNotification().showFlushBar(context);
-                    },
-                    child: SizedBox(
-                      width: 100,
-                      height: 50,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Padding(
-                          padding: defaultPadding2,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.asset('assets/star_icon.png', height: 30),
-                              const Text('(4.5)', style: signScreenTextStyle)
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  GestureDetector(
-                    onTap: () {
-                      NotificationService()
-                          .showNotification(1, "title", "body", 2);
-                      ApiCallsGetCollection().getCollectionData();
-                    },
-                    child: SizedBox(
-                      width: 100,
-                      height: 50,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30)),
-                        child: Padding(
-                          padding: defaultPadding2,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.asset('assets/star_icon.png', height: 30),
-                              const Text('(4.5)', style: signScreenTextStyle)
-                            ],
-                          ),
+                  SizedBox(
+                    width: 100,
+                    height: 50,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Padding(
+                        padding: defaultPadding2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Image.asset('assets/star_icon.png', height: 30),
+                            const Text('(4.5)', style: signScreenTextStyle)
+                          ],
                         ),
                       ),
                     ),
