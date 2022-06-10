@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:junkbee_user/beever/service/api_calls_beever.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:location/location.dart';
@@ -88,7 +87,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
             Column(
               children: [
                 const SizedBox(
-                  height: 100,
+                  height: 150,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20),
@@ -238,11 +237,14 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                 widget.namaTempat ?? 'Nama Tempat',
                                 style: bodyBodyBold,
                               ),
-                              Text(
-                                widget.alamat ?? 'Alamat',
-                                style: bodyBodyBold.copyWith(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.3,
+                                child: Text(
+                                  widget.alamat ?? 'Alamat',
+                                  style: bodyBodyBold.copyWith(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal),
+                                ),
                               ),
                             ],
                           ),
@@ -253,29 +255,32 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                 ),
                 const Divider(
                   height: 20,
-                  thickness: 2,
+                  thickness: 5,
                 ),
                 (isOnTheWay == true)
                     ? Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: SizedBox(
-                            width: MediaQuery.of(context).size.width / 2.6,
-                            height: MediaQuery.of(context).size.height / 13,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.amber, shape: roundedRectBor),
-                              child: const Text('Pick Up',
-                                  style: onboardingGetStarted),
-                              onPressed: () {
-                                if (mounted) {
-                                  setState(() {
-                                    isOnTheWay = false;
-                                    isOnTheWayText = true;
-                                    isOnPickUp = true;
-                                  });
-                                }
-                              },
-                            )),
+                        child: Center(
+                          child: SizedBox(
+                              width: MediaQuery.of(context).size.width / 1,
+                              height: MediaQuery.of(context).size.height / 10,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.amber,
+                                    shape: roundedRectBor),
+                                child: const Text('Pick Up',
+                                    style: onboardingGetStarted),
+                                onPressed: () {
+                                  if (mounted) {
+                                    setState(() {
+                                      isOnTheWay = false;
+                                      isOnTheWayText = true;
+                                      isOnPickUp = true;
+                                    });
+                                  }
+                                },
+                              )),
+                        ),
                       )
                     : Container(),
                 (isOnPickUp == true)
