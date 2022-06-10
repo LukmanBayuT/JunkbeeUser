@@ -181,6 +181,15 @@ class UserOrderState extends State<UserOrder> {
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
         print(response.body);
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Container(
+                  width: 350,
+                  height: 400,
+                  color: Colors.white,
+                  child: SingleChildScrollView(child: Text(response.body)));
+            });
         Map<String, dynamic> responseJSON = await jsonDecode(response.body);
         if (response.statusCode == 200) {
           setState(() => loading = false);
@@ -566,67 +575,59 @@ class UserOrderState extends State<UserOrder> {
                         ),
                       ),
                       Padding(
-                        padding: defaultPadding4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Estimated Earnings',
-                              style: titleBodyMini,
-                            ),
-                            Card(
-                              shape: roundedRectBor,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: defaultPadding3,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text('Estimated Weight (Kg)',
-                                            style: onboardingNormalText),
-                                        Text(totalWeight.toString())
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: defaultPadding3,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text('Total Earnings',
-                                            style: onboardingNormalText),
-                                        Text(NumberFormat.simpleCurrency(
-                                                locale: 'ID')
-                                            .format(totalPrice))
-                                      ],
-                                    ),
-                                  ),
-                                  const Divider(
-                                    height: 10,
-                                  ),
-                                  Padding(
-                                    padding: defaultPadding3,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Text('Estimated Earnings',
-                                            style: onboardingNormalText),
-                                        Text(NumberFormat.simpleCurrency(
-                                                locale: 'ID')
-                                            .format(totalPrice))
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                          padding: defaultPadding4,
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Estimated Earnings',
+                                  style: titleBodyMini,
+                                ),
+                                Card(
+                                    shape: roundedRectBor,
+                                    child: Column(children: [
+                                      Padding(
+                                        padding: defaultPadding3,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            const Text('Estimated Weight (Kg)',
+                                                style: onboardingNormalText),
+                                            Text(totalWeight.toString())
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: defaultPadding3,
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Total Earnings',
+                                                    style:
+                                                        onboardingNormalText),
+                                                Text('$totalPrice')
+                                              ])),
+                                      const Divider(height: 10),
+                                      Padding(
+                                          padding: defaultPadding3,
+                                          child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                const Text('Estimated Earnings',
+                                                    style:
+                                                        onboardingNormalText),
+                                                Text(
+                                                    NumberFormat.simpleCurrency(
+                                                            locale: 'ID')
+                                                        .format(totalPrice))
+                                              ]))
+                                    ]))
+                              ])),
                       Padding(
                         padding: defaultPadding4,
                         child: Column(
