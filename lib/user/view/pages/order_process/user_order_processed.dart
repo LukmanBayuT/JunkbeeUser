@@ -193,6 +193,15 @@ class UserOrderState extends State<UserOrder> {
             });
         Map<String, dynamic> responseJSON = await jsonDecode(response.body);
         if (response.statusCode == 200) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return Container(
+                    width: 350,
+                    height: 400,
+                    color: Colors.white,
+                    child: SingleChildScrollView(child: Text(response.body)));
+              });
           setState(() => loading = false);
           Get.offAll(() => const NavigatorUser());
         } else if (response.statusCode == 400) {
