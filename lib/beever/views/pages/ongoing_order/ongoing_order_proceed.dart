@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -52,9 +53,13 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
         if (permission == LocationPermission.denied) {
-          print('Location permissions are denied');
+          if (kDebugMode) {
+            print('Location permissions are denied');
+          }
         } else if (permission == LocationPermission.deniedForever) {
-          print("'Location permissions are permanently denied");
+          if (kDebugMode) {
+            print("'Location permissions are permanently denied");
+          }
         } else {
           haspermission = true;
         }
@@ -70,7 +75,9 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
         getLocation();
       }
     } else {
-      print("GPS Service is not enabled, turn on GPS location");
+      if (kDebugMode) {
+        print("GPS Service is not enabled, turn on GPS location");
+      }
     }
 
     setState(() {
@@ -81,8 +88,12 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   getLocation() async {
     position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
-    print(position.longitude); //Output: 80.24599079
-    print(position.latitude); //Output: 29.6593457
+    if (kDebugMode) {
+      print(position.longitude);
+    } //Output: 80.24599079
+    if (kDebugMode) {
+      print(position.latitude);
+    } //Output: 29.6593457
 
     long = position.longitude.toString();
     lat = position.latitude.toString();
@@ -132,6 +143,22 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
 
   late LatLng userLocation = LatLng(latUser, longUser);
 
+  BitmapDescriptor? bitmapDescriptor;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BitmapDescriptor.fromAssetImage(
+            const ImageConfiguration(devicePixelRatio: 2.5),
+            'assets/point_user.bmp')
+        .then((onValue) {
+      setState(() {
+        bitmapDescriptor = onValue;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     CameraPosition initialCameraPosition = CameraPosition(
@@ -164,8 +191,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                   markerId: MarkerId('${widget.userOrder}'),
                   position:
                       LatLng(userLocation.latitude, userLocation.longitude),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueOrange),
+                  // icon: BitmapDescriptor.fromBytes(byteData),
                 ),
               },
             ),
@@ -338,9 +364,12 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Divider(
-                  height: 20,
-                  thickness: 5,
+                  height: 5,
+                  thickness: 2,
                 ),
                 (isOnTheWay == true)
                     ? Padding(
@@ -382,7 +411,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                           activeColor: const Color.fromARGB(255, 247, 172, 12),
                           isFinished: isFinished,
                           onWaitingProcess: () {
-                            Future.delayed(const Duration(seconds: 3), () {
+                            Future.delayed(const Duration(seconds: 2), () {
                               setState(() {
                                 isFinished = true;
                               });
