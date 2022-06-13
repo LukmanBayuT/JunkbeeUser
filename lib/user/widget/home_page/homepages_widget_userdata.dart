@@ -10,7 +10,7 @@ import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/widget/home_page/homepages_widget_article.dart';
 
-final format = NumberFormat.simpleCurrency(locale: 'id_ID');
+final format = NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0);
 
 class UserDataHomepages extends StatefulWidget {
   final dynamic token_local = null;
@@ -155,16 +155,16 @@ class UIHomePage extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 1.15,
                   child: Column(children: [
                     Container(
-                      width: MediaQuery.of(context).size.width,
-                      alignment: Alignment.topRight,
-                      child: GestureDetector(
-                          onTap: () => Fluttertoast.showToast(
-                              backgroundColor: const Color(0xFFF8C503),
-                              msg: 'Anda harus login terlebih dahulu',
-                              toastLength: Toast.LENGTH_LONG),
-                          child: Text('Be a Beever',
-                              style:
-                                  bodyBoldBody.copyWith(color: Colors.white)))),
+                        width: MediaQuery.of(context).size.width,
+                        alignment: Alignment.topRight,
+                        child: GestureDetector(
+                            onTap: () => Fluttertoast.showToast(
+                                backgroundColor: const Color(0xFFF8C503),
+                                msg: 'Anda harus login terlebih dahulu',
+                                toastLength: Toast.LENGTH_LONG),
+                            child: Text('Be a Beever',
+                                style: bodyBoldBody.copyWith(
+                                    color: Colors.white)))),
                     Container(
                         padding: const EdgeInsets.only(top: 15),
                         width: MediaQuery.of(context).size.width,
