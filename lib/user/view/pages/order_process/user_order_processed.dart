@@ -62,26 +62,24 @@ class UserOrderState extends State<UserOrder> {
   void _getFromCam1() async {
     XFile? pickedFile1 = await ImagePicker().pickImage(
       source: ImageSource.camera,
-      maxHeight: 1080,
-      maxWidth: 1080,
+      maxHeight: 480,
+      maxWidth: 480,
     );
     if (mounted) {
-      setState(() {
-        if (pickedFile1 != null) {
+      if (pickedFile1 != null) {
+        setState(() {
           image1 = File(pickedFile1.path);
-          print(image1);
-        } else {
-          null;
-        }
-      });
+        });
+        print(image1);
+      }
     }
   }
 
   void _getFromCam2() async {
     XFile? pickedFile2 = await ImagePicker().pickImage(
       source: ImageSource.camera,
-      maxHeight: 1080,
-      maxWidth: 1080,
+      maxHeight: 480,
+      maxWidth: 480,
     );
     setState(() {
       if (pickedFile2 != null) {
@@ -95,8 +93,8 @@ class UserOrderState extends State<UserOrder> {
   void _getFromCam3() async {
     XFile? pickedFile3 = await ImagePicker().pickImage(
       source: ImageSource.camera,
-      maxHeight: 1080,
-      maxWidth: 1080,
+      maxHeight: 480,
+      maxWidth: 480,
     );
     setState(() {
       if (pickedFile3 != null) {
@@ -142,24 +140,27 @@ class UserOrderState extends State<UserOrder> {
           'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
 
       if (image1 != null && image2 == null && image3 == null) {
-        final file = await http.MultipartFile.fromPath('images', image1!.path,
+        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
       } else if (image1 != null && image2 != null && image3 == null) {
-        final file = await http.MultipartFile.fromPath('images', image1!.path,
+        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
-        final file2 = await http.MultipartFile.fromPath('images', image2!.path,
+        final file2 = await http.MultipartFile.fromPath(
+            'images[]', image2!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file2);
       } else if (image1 != null && image2 != null && image3 != null) {
-        final file = await http.MultipartFile.fromPath('images', image1!.path,
+        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file);
-        final file2 = await http.MultipartFile.fromPath('images', image2!.path,
+        final file2 = await http.MultipartFile.fromPath(
+            'images[]', image2!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file2);
-        final file3 = await http.MultipartFile.fromPath('images', image3!.path,
+        final file3 = await http.MultipartFile.fromPath(
+            'images[]', image3!.path,
             contentType: MediaType('image', 'jpg'));
         request.files.add(file3);
       }
@@ -175,6 +176,7 @@ class UserOrderState extends State<UserOrder> {
       request.fields['lng'] = '$longitude';
       request.headers.addAll({
         'Authorization': 'Bearer $authToken',
+        'Content-Type': 'multipart/form-data'
       });
 
       try {
@@ -182,26 +184,8 @@ class UserOrderState extends State<UserOrder> {
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
         print(response.body);
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Container(
-                  width: 350,
-                  height: 400,
-                  color: Colors.white,
-                  child: SingleChildScrollView(child: Text(response.body)));
-            });
         Map<String, dynamic> responseJSON = await jsonDecode(response.body);
         if (response.statusCode == 200) {
-          showDialog(
-              context: context,
-              builder: (context) {
-                return Container(
-                    width: 350,
-                    height: 400,
-                    color: Colors.white,
-                    child: SingleChildScrollView(child: Text(response.body)));
-              });
           setState(() => loading = false);
           Get.offAll(() => const NavigatorUser());
         } else if (response.statusCode == 400) {
@@ -222,6 +206,7 @@ class UserOrderState extends State<UserOrder> {
       } catch (e) {
         setState(() => loading = false);
         print('error 1 => $e');
+        Get.offAll(() => const NavigatorUser());
       }
     } catch (e) {
       setState(() => loading = false);
@@ -618,7 +603,11 @@ class UserOrderState extends State<UserOrder> {
                                                 const Text('Total Earnings',
                                                     style:
                                                         onboardingNormalText),
-                                                Text('$totalPrice')
+                                                Text(
+                                                    NumberFormat.simpleCurrency(
+                                                            locale: 'ID',
+                                                            decimalDigits: 0)
+                                                        .format(totalPrice))
                                               ])),
                                       const Divider(height: 10),
                                       Padding(
@@ -633,7 +622,8 @@ class UserOrderState extends State<UserOrder> {
                                                         onboardingNormalText),
                                                 Text(
                                                     NumberFormat.simpleCurrency(
-                                                            locale: 'ID')
+                                                            locale: 'ID',
+                                                            decimalDigits: 0)
                                                         .format(totalPrice))
                                               ]))
                                     ]))
