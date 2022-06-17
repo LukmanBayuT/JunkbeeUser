@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace, camel_case_types, library_private_types_in_public_api
+// ignore_for_file: unnecessary_string_interpolations, sized_box_for_whitespace, camel_case_types, library_private_types_in_public_api, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -364,6 +364,7 @@ class UserProfileState extends State<UserProfile> {
                                         ),
                                       )),
                                   GestureDetector(
+                                      // ignore: avoid_print
                                       onTap: () => print('Privacy Policy'),
                                       child: const ListTile(
                                           title: Text('Privacy Policy',

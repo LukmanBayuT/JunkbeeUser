@@ -38,7 +38,7 @@ class OngoingOrderState extends State<OngoingOrder> {
             ),
             GestureDetector(
               onTap: () {
-                Get.to(() => const LocationTracking());
+                // Get.to(() => const LocationTracking());
               },
               child: Container(
                 width: 100,
@@ -70,7 +70,7 @@ class OngoingOrderState extends State<OngoingOrder> {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height / 50,
+              height: MediaQuery.of(context).size.height / 100,
             ),
             FutureBuilder<CollectionModelBeever>(
               future: ApiCallsGetCollection().getCollectionData(),
@@ -84,6 +84,7 @@ class OngoingOrderState extends State<OngoingOrder> {
                   return SizedBox(
                     height: MediaQuery.of(context).size.height / 1.35,
                     child: ListView.builder(
+                      // reverse: true,
                       // physics: const NeverScrollableScrollPhysics(),
                       padding: const EdgeInsets.only(bottom: 70),
                       shrinkWrap: true,

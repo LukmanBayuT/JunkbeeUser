@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';

@@ -1,46 +1,56 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
-
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:location/location.dart';
-import 'package:junkbee_user/beever/service/google_maps_api.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
+import '../../../../user/constant/constant.dart';
+import '../../../service/google_maps_api.dart';
+
 class LocationTracking extends StatefulWidget {
-  const LocationTracking({Key? key}) : super(key: key);
+  const LocationTracking(
+      {Key? key, required this.latUser, required this.longUser})
+      : super(key: key);
+
+  final double latUser;
+  final double longUser;
 
   @override
   LocationTrackingState createState() => LocationTrackingState();
 }
 
 class LocationTrackingState extends State<LocationTracking> {
-  LatLng sourceLocation = LatLng(28.432864, 77.002563);
-  LatLng mrDonnyCP = LatLng(-6.9749235, 110.4218642);
-  LatLng mrMarcellCP = LatLng(-6.9749235, 110.4218642);
-  LatLng mrWellyCP = LatLng(-6.9749235, 110.4218642);
-
-  bool isMrDonny = true;
-  bool isMrMarcell = false;
-  bool isMrWelly = false;
-
-  final Completer<GoogleMapController> _controller = Completer();
-  final panelController = PanelController();
-
-  final Set<Marker> _marker = <Marker>{};
-
-  final Set<Polyline> _polylines = <Polyline>{};
-  List<LatLng> polylineCoordinates = [];
-  late PolylinePoints polylinePoints;
-
-  late StreamSubscription<LocationData> subscription;
-
   LocationData? currentLocation;
   late LocationData destinationLocation;
   late Location location;
+  LatLng mrDonnyCP = const LatLng(-6.9749235, 110.4218642);
+  final panelController = PanelController();
+  List<LatLng> polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
+  LatLng sourceLocation = const LatLng(28.432864, 77.002563);
+  late StreamSubscription<LocationData> subscription;
+
+  final Completer<GoogleMapController> _controller = Completer();
+  final Set<Marker> _marker = <Marker>{};
+  final Set<Polyline> _polylines = <Polyline>{};
+
+  List<String> images = [
+    'assets/point_user.png',
+    'assets/beever_motor.png',
+  ];
+
+  Uint8List? markerImage;
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -66,21 +76,25 @@ class LocationTrackingState extends State<LocationTracking> {
     });
   }
 
-  void showLocationPins() {
+  void showLocationPins() async {
+    final Uint8List markerIconBeever =
+        await getBytesFromAsset('assets/beever_motor.png', 50);
+    final Uint8List markerIconUser =
+        await getBytesFromAsset('assets/point_user.png', 50);
     var sourceposition = LatLng(
         currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0);
-    var destinationPosition = LatLng(mrDonnyCP.latitude, mrDonnyCP.longitude);
+    var destinationPosition = LatLng(widget.latUser, widget.longUser);
 
     _marker.add(Marker(
-      markerId: MarkerId('sourcePosition'),
+      markerId: const MarkerId('sourcePosition'),
       position: sourceposition,
+      icon: BitmapDescriptor.fromBytes(markerIconBeever),
     ));
 
     _marker.add(
       Marker(
-        markerId: MarkerId('destinationPosition'),
-        infoWindow: const InfoWindow(title: 'Mr Donny Super Warehouse'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        markerId: const MarkerId('destinationPosition'),
+        icon: BitmapDescriptor.fromBytes(markerIconUser),
         position: destinationPosition,
       ),
     );
@@ -92,7 +106,7 @@ class LocationTrackingState extends State<LocationTracking> {
       GoogleMapApi().url,
       PointLatLng(
           currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0),
-      PointLatLng(mrDonnyCP.latitude, mrDonnyCP.longitude),
+      PointLatLng(widget.latUser, widget.longUser),
     );
 
     if (result.points.isNotEmpty) {
@@ -105,7 +119,7 @@ class LocationTrackingState extends State<LocationTracking> {
     setState(() {
       _polylines.add(Polyline(
         width: 5,
-        polylineId: PolylineId('polyline'),
+        polylineId: const PolylineId('polyline'),
         color: Colors.blueAccent,
         points: polylineCoordinates,
       ));
@@ -113,6 +127,9 @@ class LocationTrackingState extends State<LocationTracking> {
   }
 
   void updatePinsOnMap() async {
+    double mainBearing = 15.0;
+    final Uint8List markerIconBeever =
+        await getBytesFromAsset('assets/beever_motor.png', 50);
     CameraPosition cameraPosition = CameraPosition(
       zoom: 18,
       tilt: 50,
@@ -121,17 +138,28 @@ class LocationTrackingState extends State<LocationTracking> {
     );
 
     final GoogleMapController controller = await _controller.future;
-    // controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     var sourcePosition = LatLng(
         currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0);
 
     setState(() {
       _marker.removeWhere((marker) => marker.mapsId.value == 'sourcePosition');
       _marker.add(Marker(
-        markerId: MarkerId('sourcePosition'),
+        icon: BitmapDescriptor.fromBytes(markerIconBeever),
+        markerId: const MarkerId('sourcePosition'),
         position: sourcePosition,
       ));
     });
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   @override
@@ -142,7 +170,7 @@ class LocationTrackingState extends State<LocationTracking> {
       target: currentLocation != null
           ? LatLng(currentLocation!.latitude ?? 0.0,
               currentLocation!.longitude ?? 0.0)
-          : LatLng(0.0, 0.0),
+          : const LatLng(0.0, 0.0),
     );
 
     return currentLocation == null
@@ -150,7 +178,7 @@ class LocationTrackingState extends State<LocationTracking> {
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             alignment: Alignment.center,
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           )
         : SafeArea(
             child: Scaffold(
@@ -234,147 +262,6 @@ class LocationTrackingState extends State<LocationTracking> {
                           height: 20,
                           thickness: 2,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMrMarcell = false;
-                              isMrWelly = false;
-                              isMrDonny = true;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2,
-                                      color: (isMrDonny == true)
-                                          ? Colors.amber
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Mr. Donny CP',
-                                      style: bodyBodyBold,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Alamat',
-                                      style: onboardingNormalText,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Jl. Kanjengan Pungkuran No.383, Kauman, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50139',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMrDonny = false;
-                              isMrWelly = false;
-                              isMrMarcell = true;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2,
-                                      color: (isMrMarcell == true)
-                                          ? Colors.amber
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Mr. Marcell CP',
-                                      style: bodyBodyBold,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Alamat',
-                                      style: onboardingNormalText,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Jl. Puspowarno Sel. V No.26 Salamanmloyo, Kec. Semarang Barat Kota Semarang, Jawa Tengah 50149',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMrDonny = false;
-                              isMrMarcell = false;
-                              isMrWelly = true;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2,
-                                      color: (isMrWelly == true)
-                                          ? Colors.amber
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Mr. Welly CP',
-                                      style: bodyBodyBold,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Alamat',
-                                      style: onboardingNormalText,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Jl. Kendalisodo No.2a, Wonotingal, Kec. Candisari, Kota Semarang, Jawa Tengah 50252',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       ],
                     ),
                   );
@@ -382,11 +269,5 @@ class LocationTrackingState extends State<LocationTracking> {
               ),
             ),
           );
-  }
-
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
   }
 }

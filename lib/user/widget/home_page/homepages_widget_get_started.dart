@@ -19,7 +19,9 @@ class UserDataGetStarted extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             GestureDetector(
                 onTap: () {
-                  print('new collection');
+                  if (kDebugMode) {
+                    print('new collection');
+                  }
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width / 2.5,
