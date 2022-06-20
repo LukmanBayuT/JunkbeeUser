@@ -62,9 +62,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
   bool isLastScreenText = false;
   bool isOnPickUp = false;
   bool isOnPickUpText = false;
-  //variable bool
   bool isOnTheWay = true;
-
   bool isOnTheWayText = false;
   bool isWeightConfirmation = false;
   bool isWeightConfirmationText = false;
@@ -442,14 +440,13 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                                 child: const Text('Pick Up',
                                     style: onboardingGetStarted),
                                 onPressed: () {
-                                  // Get.to(() => LocationTracking());
-                                  // if (mounted) {
-                                  //   setState(() {
-                                  //     isOnTheWay = false;
-                                  //     isOnTheWayText = true;
-                                  //     isOnPickUp = true;
-                                  //   });
-                                  // }
+                                  if (mounted) {
+                                    setState(() {
+                                      isOnTheWay = false;
+                                      isOnTheWayText = true;
+                                      isOnPickUp = true;
+                                    });
+                                  }
                                 },
                               )),
                         ),

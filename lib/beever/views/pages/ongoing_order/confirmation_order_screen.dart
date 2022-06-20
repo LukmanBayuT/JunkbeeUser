@@ -314,6 +314,10 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                           Get.to(() => LocationTracking(
                                                 latUser: latUser!.toDouble(),
                                                 longUser: longUser!.toDouble(),
+                                                userOrder: details.fullName,
+                                                orderCode: details.orderCode,
+                                                namaTempat: details.tempat,
+                                                alamat: details.location1,
                                               ));
                                         },
                                         child: const Text(
