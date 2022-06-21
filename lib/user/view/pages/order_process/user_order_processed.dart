@@ -141,27 +141,27 @@ class UserOrderState extends State<UserOrder> {
 
       if (image1 != null && image2 == null && image3 == null) {
         final file = await http.MultipartFile.fromPath('images[]', image1!.path,
-            contentType: MediaType('image', 'jpg'));
+            contentType: MediaType('images[]', 'jpg'));
         request.files.add(file);
       } else if (image1 != null && image2 != null && image3 == null) {
         final file = await http.MultipartFile.fromPath('images[]', image1!.path,
-            contentType: MediaType('image', 'jpg'));
+            contentType: MediaType('images[]', 'jpg'));
         request.files.add(file);
         final file2 = await http.MultipartFile.fromPath(
             'images[]', image2!.path,
-            contentType: MediaType('image', 'jpg'));
+            contentType: MediaType('images[]', 'jpg'));
         request.files.add(file2);
       } else if (image1 != null && image2 != null && image3 != null) {
         final file = await http.MultipartFile.fromPath('images[]', image1!.path,
-            contentType: MediaType('image', 'jpg'));
+            contentType: MediaType('images[]', 'jpg'));
         request.files.add(file);
         final file2 = await http.MultipartFile.fromPath(
             'images[]', image2!.path,
-            contentType: MediaType('image', 'jpg'));
+            contentType: MediaType('images[]', 'jpg'));
         request.files.add(file2);
         final file3 = await http.MultipartFile.fromPath(
             'images[]', image3!.path,
-            contentType: MediaType('image', 'jpg'));
+            contentType: MediaType('images[]', 'jpg'));
         request.files.add(file3);
       }
       request.fields['total_weight'] = '$totalWasteWeight';
@@ -176,18 +176,21 @@ class UserOrderState extends State<UserOrder> {
       request.fields['lng'] = '$longitude';
       request.headers.addAll({
         'Authorization': 'Bearer $authToken',
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Charset': 'utf-8'
       });
 
       try {
         setState(() => loading = true);
         final streamedResponse = await request.send();
         final response = await http.Response.fromStream(streamedResponse);
-        print(response.body);
-        Map<String, dynamic> responseJSON = await jsonDecode(response.body);
         if (response.statusCode == 200) {
           setState(() => loading = false);
           Get.offAll(() => const NavigatorUser());
+          Fluttertoast.showToast(
+              msg: 'Pesanan anda berhasil dibuat',
+              toastLength: Toast.LENGTH_SHORT,
+              backgroundColor: const Color(0xFFF8C503));
         } else if (response.statusCode == 400) {
           setState(() => loading = false);
           Get.snackbar('Bad Request', response.body,
@@ -198,15 +201,16 @@ class UserOrderState extends State<UserOrder> {
               forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
               duration: const Duration(seconds: 3),
               margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
-              icon: const Icon(
-                Icons.error_outlined,
-                color: Colors.red,
-              ));
+              icon: const Icon(Icons.error_outlined, color: Colors.red));
         }
       } catch (e) {
         setState(() => loading = false);
         print('error 1 => $e');
-        Get.offAll(() => const NavigatorUser());
+        showDialog(
+            context: context,
+            builder: (context) {
+              return Container(color: Colors.white, child: Text('$e'));
+            });
       }
     } catch (e) {
       setState(() => loading = false);
