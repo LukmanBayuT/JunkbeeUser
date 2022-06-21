@@ -1,46 +1,89 @@
-// ignore_for_file: prefer_const_constructors, unused_local_variable
-
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:junkbee_user/user/constant/constant.dart';
+import '../../../service/api_calls_beever.dart';
 import 'package:location/location.dart';
-import 'package:junkbee_user/beever/service/google_maps_api.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:swipeable_button_view/swipeable_button_view.dart';
+
+import '../../../../user/constant/constant.dart';
+import '../../../service/google_maps_api.dart';
+import '../0.navigator.dart';
 
 class LocationTracking extends StatefulWidget {
-  const LocationTracking({Key? key}) : super(key: key);
+  const LocationTracking({
+    Key? key,
+    required this.latUser,
+    required this.longUser,
+    required this.userOrder,
+    required this.orderCode,
+    required this.namaTempat,
+    required this.alamat,
+  }) : super(key: key);
+
+  final String? alamat;
+  final double latUser;
+  final double longUser;
+  final String? namaTempat;
+  final String? orderCode;
+  final String? userOrder;
 
   @override
   LocationTrackingState createState() => LocationTrackingState();
 }
 
 class LocationTrackingState extends State<LocationTracking> {
-  LatLng sourceLocation = LatLng(28.432864, 77.002563);
-  LatLng mrDonnyCP = LatLng(-6.9749235, 110.4218642);
-  LatLng mrMarcellCP = LatLng(-6.9749235, 110.4218642);
-  LatLng mrWellyCP = LatLng(-6.9749235, 110.4218642);
-
-  bool isMrDonny = true;
-  bool isMrMarcell = false;
-  bool isMrWelly = false;
-
-  final Completer<GoogleMapController> _controller = Completer();
-  final panelController = PanelController();
-
-  final Set<Marker> _marker = <Marker>{};
-
-  final Set<Polyline> _polylines = <Polyline>{};
-  List<LatLng> polylineCoordinates = [];
-  late PolylinePoints polylinePoints;
-
-  late StreamSubscription<LocationData> subscription;
-
   LocationData? currentLocation;
   late LocationData destinationLocation;
+  List<String> images = [
+    'assets/point_user.png',
+    'assets/beever_motor.png',
+  ];
+  final List<String> categoryItems = [
+    'Mix_Paper',
+    'Paper',
+  ];
+
+  String? selectedCategory;
+
+  bool isCompleted = false;
+  bool isFinished = false;
+  bool isLastScreen = false;
+  bool isLastScreenText = false;
+  bool isOnPickUp = false;
+  bool isOnPickUpText = false;
+  bool isOnTheWay = true;
+  bool isOnTheWayText = false;
+  bool isWeightConfirmation = false;
+  bool isWeightConfirmationText = false;
+  bool isLengkap = false;
   late Location location;
+  Uint8List? markerImage;
+  final panelController = PanelController();
+  List<LatLng> polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
+  late StreamSubscription<LocationData> subscription;
+
+  final TextEditingController _beratSampah = TextEditingController();
+  final TextEditingController _hargaSampah = TextEditingController();
+  final Completer<GoogleMapController> _controller = Completer();
+
+  final Set<Marker> _marker = <Marker>{};
+  final Set<Polyline> _polylines = <Polyline>{};
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -60,27 +103,31 @@ class LocationTrackingState extends State<LocationTracking> {
       setState(() {});
     });
 
-    destinationLocation = LocationData.fromMap({
-      "latitude": mrDonnyCP.latitude,
-      "longitude": mrDonnyCP.longitude,
-    });
+    // destinationLocation = LocationData.fromMap({
+    //   "latitude": mrDonnyCP.latitude,
+    //   "longitude": mrDonnyCP.longitude,
+    // });
   }
 
-  void showLocationPins() {
+  void showLocationPins() async {
+    final Uint8List markerIconBeever =
+        await getBytesFromAsset('assets/beever_motor.png', 50);
+    final Uint8List markerIconUser =
+        await getBytesFromAsset('assets/point_user.png', 50);
     var sourceposition = LatLng(
         currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0);
-    var destinationPosition = LatLng(mrDonnyCP.latitude, mrDonnyCP.longitude);
+    var destinationPosition = LatLng(widget.latUser, widget.longUser);
 
     _marker.add(Marker(
-      markerId: MarkerId('sourcePosition'),
+      markerId: const MarkerId('sourcePosition'),
       position: sourceposition,
+      icon: BitmapDescriptor.fromBytes(markerIconBeever),
     ));
 
     _marker.add(
       Marker(
-        markerId: MarkerId('destinationPosition'),
-        infoWindow: const InfoWindow(title: 'Mr Donny Super Warehouse'),
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+        markerId: const MarkerId('destinationPosition'),
+        icon: BitmapDescriptor.fromBytes(markerIconUser),
         position: destinationPosition,
       ),
     );
@@ -92,7 +139,7 @@ class LocationTrackingState extends State<LocationTracking> {
       GoogleMapApi().url,
       PointLatLng(
           currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0),
-      PointLatLng(mrDonnyCP.latitude, mrDonnyCP.longitude),
+      PointLatLng(widget.latUser, widget.longUser),
     );
 
     if (result.points.isNotEmpty) {
@@ -105,7 +152,7 @@ class LocationTrackingState extends State<LocationTracking> {
     setState(() {
       _polylines.add(Polyline(
         width: 5,
-        polylineId: PolylineId('polyline'),
+        polylineId: const PolylineId('polyline'),
         color: Colors.blueAccent,
         points: polylineCoordinates,
       ));
@@ -113,6 +160,9 @@ class LocationTrackingState extends State<LocationTracking> {
   }
 
   void updatePinsOnMap() async {
+    // double mainBearing = 15.0;
+    // final Uint8List markerIconBeever =
+    //     await getBytesFromAsset('assets/beever_motor.png', 50);
     CameraPosition cameraPosition = CameraPosition(
       zoom: 18,
       tilt: 50,
@@ -121,17 +171,28 @@ class LocationTrackingState extends State<LocationTracking> {
     );
 
     final GoogleMapController controller = await _controller.future;
-    // controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    var sourcePosition = LatLng(
-        currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0);
+    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    // var sourcePosition = LatLng(
+    //     currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0);
 
     setState(() {
       _marker.removeWhere((marker) => marker.mapsId.value == 'sourcePosition');
-      _marker.add(Marker(
-        markerId: MarkerId('sourcePosition'),
-        position: sourcePosition,
-      ));
+      // _marker.add(Marker(
+      //   icon: BitmapDescriptor.fromBytes(markerIconBeever),
+      //   markerId: const MarkerId('sourcePosition'),
+      //   position: sourcePosition,
+      // ));
     });
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   @override
@@ -142,15 +203,21 @@ class LocationTrackingState extends State<LocationTracking> {
       target: currentLocation != null
           ? LatLng(currentLocation!.latitude ?? 0.0,
               currentLocation!.longitude ?? 0.0)
-          : LatLng(0.0, 0.0),
+          : const LatLng(0.0, 0.0),
     );
+
+    final panelHeightOpen = Get.height * 0.35;
+    final panelHeightClosed = Get.height * 0.175;
+
+    final panelHeightOpenFinal = Get.height * 0.8;
+    final panelHeightClosedFinal = Get.height * 0.175;
 
     return currentLocation == null
         ? Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: Get.height,
+            width: Get.width,
             alignment: Alignment.center,
-            child: CircularProgressIndicator(),
+            child: const CircularProgressIndicator(),
           )
         : SafeArea(
             child: Scaffold(
@@ -159,7 +226,14 @@ class LocationTrackingState extends State<LocationTracking> {
                 parallaxEnabled: true,
                 parallaxOffset: .5,
                 borderRadius: roundedRect,
+                minHeight: (isLastScreen == true)
+                    ? panelHeightClosedFinal
+                    : panelHeightClosed,
+                maxHeight: (isLastScreen == true)
+                    ? panelHeightOpenFinal
+                    : panelHeightOpen,
                 body: GoogleMap(
+                  myLocationEnabled: true,
                   myLocationButtonEnabled: true,
                   compassEnabled: true,
                   markers: _marker,
@@ -189,13 +263,13 @@ class LocationTrackingState extends State<LocationTracking> {
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'Collection Points',
+                                children: [
+                                  const Text(
+                                    'Nama User',
                                     style: onboardingNormalText,
                                   ),
                                   Text(
-                                    'Joko Widodo',
+                                    widget.userOrder!,
                                     style: bodyBodyBold,
                                   ),
                                 ],
@@ -216,14 +290,24 @@ class LocationTrackingState extends State<LocationTracking> {
                               const SizedBox(width: 20),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Text(
-                                    'Location',
+                                children: [
+                                  const Text(
+                                    'Lokasi Pickup',
                                     style: onboardingNormalText,
                                   ),
-                                  Text(
-                                    'Data Lokasi',
-                                    style: bodyBodyBold,
+                                  SizedBox(
+                                    width: Get.width / 1.3,
+                                    child: Text(
+                                      widget.namaTempat!,
+                                      style: bodyBodyBold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width / 1.3,
+                                    child: Text(
+                                      widget.alamat!,
+                                      style: bodyBody,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -234,147 +318,256 @@ class LocationTrackingState extends State<LocationTracking> {
                           height: 20,
                           thickness: 2,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMrMarcell = false;
-                              isMrWelly = false;
-                              isMrDonny = true;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2,
-                                      color: (isMrDonny == true)
-                                          ? Colors.amber
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Mr. Donny CP',
-                                      style: bodyBodyBold,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Alamat',
-                                      style: onboardingNormalText,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Jl. Kanjengan Pungkuran No.383, Kauman, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50139',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
+                        (isOnTheWay == true)
+                            ? Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Center(
+                                  child: SizedBox(
+                                      width:
+                                          MediaQuery.of(context).size.width / 1,
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              10,
+                                      child: ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.amber,
+                                            shape: roundedRectBor),
+                                        child: const Text('Pick Up',
+                                            style: onboardingGetStarted),
+                                        onPressed: () {
+                                          if (mounted) {
+                                            setState(() {
+                                              isOnTheWay = false;
+                                              isOnTheWayText = true;
+                                              isOnPickUp = true;
+                                            });
+                                          }
+                                        },
+                                      )),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMrDonny = false;
-                              isMrWelly = false;
-                              isMrMarcell = true;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2,
-                                      color: (isMrMarcell == true)
-                                          ? Colors.amber
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Mr. Marcell CP',
-                                      style: bodyBodyBold,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Alamat',
-                                      style: onboardingNormalText,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Jl. Puspowarno Sel. V No.26 Salamanmloyo, Kec. Semarang Barat Kota Semarang, Jawa Tengah 50149',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
+                              )
+                            : Container(),
+                        (isOnPickUp == true)
+                            ? Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: SwipeableButtonView(
+                                  buttonText: 'Arrived at The Pickup',
+                                  buttonWidget: const Icon(
+                                    Icons.arrow_forward_ios_rounded,
+                                    color: Colors.grey,
+                                  ),
+                                  activeColor:
+                                      const Color.fromARGB(255, 247, 172, 12),
+                                  isFinished: isFinished,
+                                  onWaitingProcess: () {
+                                    Future.delayed(const Duration(seconds: 2),
+                                        () {
+                                      setState(() {
+                                        isFinished = true;
+                                      });
+                                    });
+                                  },
+                                  onFinish: () async {
+                                    setState(() {
+                                      isOnTheWay = false;
+                                      isOnPickUp = false;
+                                      isOnPickUpText = true;
+                                      isLastScreen = true;
+                                      isFinished = false;
+                                    });
+                                  },
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isMrDonny = false;
-                              isMrMarcell = false;
-                              isMrWelly = true;
-                            });
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 2,
-                                      color: (isMrWelly == true)
-                                          ? Colors.amber
-                                          : Colors.grey),
-                                  borderRadius: BorderRadius.circular(20)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
-                                    Text(
-                                      'Mr. Welly CP',
-                                      style: bodyBodyBold,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Alamat',
-                                      style: onboardingNormalText,
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Text(
-                                      'Jl. Kendalisodo No.2a, Wonotingal, Kec. Candisari, Kota Semarang, Jawa Tengah 50252',
-                                      textAlign: TextAlign.center,
-                                    )
-                                  ],
+                              )
+                            : Container(),
+                        (isLastScreen == true)
+                            ? Column(children: [
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  height: Get.height * 0.5,
+                                  width: Get.width / 1,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const Text(
+                                        'Category',
+                                        style: bodyBodyBold,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                        width: Get.width,
+                                        child: DropdownButtonHideUnderline(
+                                          child: DropdownButton2(
+                                              hint:
+                                                  const Text('Kategori Sampah'),
+                                              value: selectedCategory,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  selectedCategory =
+                                                      value as String;
+                                                });
+                                              },
+                                              items: categoryItems
+                                                  .map((categoryItems) =>
+                                                      DropdownMenuItem<String>(
+                                                        value: categoryItems,
+                                                        child: Text(
+                                                          categoryItems,
+                                                          style: bodyBody,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ))
+                                                  .toList()),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const Text(
+                                        'Total Weight',
+                                        style: bodyBodyBold,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          hintText: 'Total Kilo',
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.7),
+                                            borderSide: const BorderSide(
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.7),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFDEDEDE),
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          counterText: '',
+                                        ),
+                                        controller: _beratSampah,
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      const Text(
+                                        'Harga Yang Disepakati',
+                                        style: bodyBodyBold,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextFormField(
+                                        keyboardType: TextInputType.number,
+                                        decoration: InputDecoration(
+                                          hintText: 'Total Harga',
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.7),
+                                            borderSide: const BorderSide(
+                                              color: Colors.blue,
+                                            ),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(16.7),
+                                            borderSide: const BorderSide(
+                                              color: Color(0xFFDEDEDE),
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          counterText: '',
+                                        ),
+                                        controller: _hargaSampah,
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      SizedBox(
+                                          width: Get.width / 5,
+                                          height: Get.height / 20,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                primary: Colors.amber,
+                                                shape: roundedRectBor),
+                                            child: Text('Confirm',
+                                                style: onboardingGetStarted
+                                                    .copyWith(fontSize: 12)),
+                                            onPressed: () {
+                                              if (_beratSampah.text.isNotEmpty &&
+                                                  _hargaSampah
+                                                      .text.isNotEmpty &&
+                                                  selectedCategory != null) {
+                                                BeeverApi().beeverConfirm(
+                                                    widget.orderCode!,
+                                                    _beratSampah.text,
+                                                    _hargaSampah.text,
+                                                    selectedCategory);
+                                                setState(() {
+                                                  isLengkap = true;
+                                                });
+                                              } else {
+                                                showDialogue();
+                                              }
+                                            },
+                                          )),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ),
+                                (isLengkap == true)
+                                    ? Padding(
+                                        padding: const EdgeInsets.all(20),
+                                        child: SwipeableButtonView(
+                                          buttonText: 'Weight Confirmation',
+                                          buttonWidget: const Icon(
+                                            Icons.arrow_forward_ios_rounded,
+                                            color: Colors.grey,
+                                          ),
+                                          activeColor: const Color.fromARGB(
+                                              255, 247, 172, 12),
+                                          isFinished: isFinished,
+                                          onWaitingProcess: () {
+                                            Future.delayed(
+                                                const Duration(seconds: 2), () {
+                                              setState(() {
+                                                isFinished = true;
+                                              });
+                                            });
+                                          },
+                                          onFinish: () async {
+                                            await Navigator.pushReplacement(
+                                                context,
+                                                PageTransition(
+                                                    type:
+                                                        PageTransitionType.fade,
+                                                    child:
+                                                        const NavigatorPages()));
+                                            setState(() {
+                                              isOnTheWay = true;
+                                              isOnTheWayText = false;
+                                              isOnPickUp = false;
+                                              isOnPickUpText = false;
+                                              isLastScreen = false;
+                                              isLastScreenText = false;
+                                              isFinished = false;
+                                              isFinished = false;
+                                            });
+                                          },
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                              ])
+                            : Container()
                       ],
                     ),
                   );
@@ -384,9 +577,23 @@ class LocationTrackingState extends State<LocationTracking> {
           );
   }
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
+  showDialogue() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          AlertDialog dialog = AlertDialog(
+              title: const Text('Mohon Diisi!'),
+              content: const Text('Pastikan semua sudah lengkap dan diisi'),
+              actions: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(primary: Colors.amber),
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: Text('OK',
+                        style: bodySlimBody.copyWith(color: Colors.white)))
+              ]);
+          return dialog;
+        });
   }
 }

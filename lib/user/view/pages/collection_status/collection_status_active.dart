@@ -1,11 +1,13 @@
-// ignore_for_file: sized_box_for_whitespace, avoid_init_to_null, non_constant_identifier_names, unnecessary_const, duplicate_ignore
+// ignore_for_file: sized_box_for_whitespace, avoid_init_to_null, non_constant_identifier_names, unnecessary_const, duplicate_ignore, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_collection.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
@@ -285,7 +287,11 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                                             Color(0xFFF8C503)),
                                                   ),
                                                   Text(
-                                                      '${collectiondata.data[index].createdAt}',
+                                                      DateFormat(
+                                                              'yyyy - MM - dd')
+                                                          .format(collectiondata
+                                                              .data[index]
+                                                              .createdAt),
                                                       style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w800,

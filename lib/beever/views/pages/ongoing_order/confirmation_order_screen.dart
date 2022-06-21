@@ -1,10 +1,11 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
-import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed.dart';
+import 'package:junkbee_user/beever/views/pages/ongoing_order/location_tracking.dart';
 
 class ConfirmationOrderScreen extends StatefulWidget {
   ConfirmationOrderScreen({Key? key, required String this.orderCode})
@@ -18,11 +19,24 @@ class ConfirmationOrderScreen extends StatefulWidget {
 }
 
 class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
+  late double longBeever, latBeever;
+
   @override
   void initState() {
     ApiCallsGetCollectionDetails()
         .getCollectionData(widget.orderCode.toString());
+    getLocation();
     super.initState();
+  }
+
+  getLocation() async {
+    Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    setState(() {
+      latBeever = position.latitude;
+      longBeever = position.longitude;
+    });
   }
 
   @override
@@ -86,13 +100,18 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                       style: titleBoldMini,
                                     ),
                                   ),
-                                  Text(
-                                    details.fullName,
-                                    style: titleBoldMini,
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Text(
+                                      details.fullName,
+                                      style: titleBoldMini,
+                                    ),
                                   ),
                                 ],
                               ),
                               Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
                                     width:
@@ -110,9 +129,13 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                       style: titleBoldMini,
                                     ),
                                   ),
-                                  Text(
-                                    details.tempat,
-                                    style: titleBoldMini,
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.5,
+                                    child: Text(
+                                      details.tempat,
+                                      style: titleBoldMini,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -276,16 +299,26 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                         style: ElevatedButton.styleFrom(
                                             shape: roundedRectBor),
                                         onPressed: () {
-                                          Get.to(
-                                            () => OngoingOrderProceed(
-                                              latUser: latUser!.toDouble(),
-                                              longUser: longUser!.toDouble(),
-                                              userOrder: details.fullName,
-                                              orderCode: details.orderCode,
-                                              namaTempat: details.tempat,
-                                              alamat: details.location1,
-                                            ),
-                                          );
+                                          // Get.to(
+                                          //   () => OngoingOrderProceed(
+                                          //     latUser: latUser!.toDouble(),
+                                          //     longUser: longUser!.toDouble(),
+                                          //     userOrder: details.fullName,
+                                          //     orderCode: details.orderCode,
+                                          //     namaTempat: details.tempat,
+                                          //     alamat: details.location1,
+                                          //     latBeever: latBeever,
+                                          //     longBeever: longBeever,
+                                          //   ),
+                                          // );
+                                          Get.to(() => LocationTracking(
+                                                latUser: latUser!.toDouble(),
+                                                longUser: longUser!.toDouble(),
+                                                userOrder: details.fullName,
+                                                orderCode: details.orderCode,
+                                                namaTempat: details.tempat,
+                                                alamat: details.location1,
+                                              ));
                                         },
                                         child: const Text(
                                           'Process',

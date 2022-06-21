@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:junkbee_user/beever/model/beever_confirmation.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -25,7 +26,9 @@ class BeeverApi {
           'fee_beever': '3000',
           'waste_type': wasteType
         });
-    print(beeverConfirmCollection.body);
+    if (kDebugMode) {
+      print(beeverConfirmCollection.body);
+    }
     return beeverConfirmationFromJson(beeverConfirmCollection.body);
   }
 }

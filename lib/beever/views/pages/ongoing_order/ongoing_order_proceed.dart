@@ -1,27 +1,23 @@
 // ignore_for_file: must_be_immutable, avoid_unnecessary_containers
 
 import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:junkbee_user/beever/service/google_maps_api.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-
+import 'package:location/location.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:swipeable_button_view/swipeable_button_view.dart';
 
 class OngoingOrderProceed extends StatefulWidget {
-  var panelController = PanelController();
-
-  double latUser;
-  double longUser;
-  var alamat;
-  var namaTempat;
-  var userOrder;
-  var orderCode;
-
   OngoingOrderProceed(
       {Key? key,
       required this.latUser,
@@ -29,108 +25,193 @@ class OngoingOrderProceed extends StatefulWidget {
       required this.userOrder,
       required this.namaTempat,
       required this.alamat,
-      required this.orderCode})
+      required this.orderCode,
+      required this.latBeever,
+      required this.longBeever})
       : super(key: key);
+
+  String alamat;
+  double latBeever;
+  //macam - variabel
+  double latUser;
+
+  double longBeever;
+  double longUser;
+  String namaTempat;
+  String orderCode;
+  //controller over here
+  var panelController = PanelController();
+
+  String userOrder;
 
   @override
   State<OngoingOrderProceed> createState() => _OngoingOrderProceedState();
 }
 
 class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
-  bool servicestatus = false;
+  LocationData? currentLocation;
   bool haspermission = false;
+  List<String> images = [
+    'assets/point_user.png',
+    'assets/beever_motor.png',
+  ];
+
+  bool isCompleted = false;
+  bool isFinished = false;
+  bool isLastScreen = false;
+  bool isLastScreenText = false;
+  bool isOnPickUp = false;
+  bool isOnPickUpText = false;
+  bool isOnTheWay = true;
+  bool isOnTheWayText = false;
+  bool isWeightConfirmation = false;
+  bool isWeightConfirmationText = false;
+  late double latBeever = widget.latBeever;
+  late double latUser = widget.latUser;
+  //set polylines
+  late Location location;
+
+  late double longBeever = widget.longBeever;
+  late double longUser = widget.longUser;
+  //variabel markers
+  Uint8List? markerImage;
+
+  final panelController = PanelController();
   late LocationPermission permission;
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints = PolylinePoints();
+  Map<PolylineId, Polyline> polylines = {};
   late Position position;
-  String long = "", lat = "";
   late StreamSubscription<Position> positionStream;
+  //variabel macam-macam
+  bool servicestatus = false;
 
-  checkGps() async {
-    servicestatus = await Geolocator.isLocationServiceEnabled();
-    if (servicestatus) {
-      permission = await Geolocator.checkPermission();
+  late StreamSubscription<LocationData> subscription;
+  late LatLng userLocation = LatLng(latUser, longUser);
 
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          print('Location permissions are denied');
-        } else if (permission == LocationPermission.deniedForever) {
-          print("'Location permissions are permanently denied");
-        } else {
-          haspermission = true;
-        }
-      } else {
-        haspermission = true;
+  final TextEditingController _beratSampah = TextEditingController();
+  //Completer
+  final Completer<GoogleMapController> _controller = Completer();
+
+  //controller disini
+  final TextEditingController _jenisSampah = TextEditingController();
+
+  late final List<LatLng> _latLang = <LatLng>[
+    LatLng(latUser, longUser),
+    LatLng(latBeever, longBeever)
+  ];
+
+  final List<Marker> _markers = <Marker>[];
+  final Set<Polyline> _polylines = <Polyline>{};
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+    location = Location();
+    polylinePoints = PolylinePoints();
+    subscription = location.onLocationChanged.listen((clocation) {
+      currentLocation = clocation;
+      updatePinsOnMap();
+    });
+  }
+
+  //Making Marker//
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  loadData() async {
+    for (int i = 0; i < images.length; i++) {
+      final Uint8List markerIcon = await getBytesFromAsset(images[i], 80);
+      _markers.add(
+        Marker(
+          markerId: MarkerId(i.toString()),
+          position: _latLang[i],
+          icon: BitmapDescriptor.fromBytes(markerIcon),
+        ),
+      );
+      if (mounted) {
+        setState(() {});
       }
+    }
+  }
 
-      if (haspermission) {
-        setState(() {
-          //refresh the UI
-        });
+  void setPolylinesInMap() async {
+    var result = await polylinePoints.getRouteBetweenCoordinates(
+      GoogleMapApi().url,
+      PointLatLng(latBeever, longBeever),
+      PointLatLng(latUser, longUser),
+    );
 
-        getLocation();
+    if (result.points.isNotEmpty) {
+      for (var pointLatLng in result.points) {
+        polylineCoordinates
+            .add(LatLng(pointLatLng.latitude, pointLatLng.longitude));
       }
-    } else {
-      print("GPS Service is not enabled, turn on GPS location");
     }
 
     setState(() {
-      //refresh the UI
+      _polylines.add(Polyline(
+        width: 5,
+        polylineId: const PolylineId('polyline'),
+        color: Colors.blueAccent,
+        points: polylineCoordinates,
+      ));
     });
   }
 
-  getLocation() async {
-    position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    print(position.longitude); //Output: 80.24599079
-    print(position.latitude); //Output: 29.6593457
+  void showLocationPins() {
+    var sourceposition = LatLng(latBeever, longBeever);
 
-    long = position.longitude.toString();
-    lat = position.latitude.toString();
+    _markers.add(Marker(
+      markerId: const MarkerId('sourcePosition'),
+      position: sourceposition,
+    ));
+    setPolylinesInMap();
+  }
 
-    setState(() {
-      //refresh UI
-    });
-
-    LocationSettings locationSettings = LocationSettings(
-      accuracy: LocationAccuracy.high, //accuracy of the location data
-      distanceFilter: 100, //minimum distance (measured in meters) a
-      //device must move horizontally before an update event is generated;
+  void updatePinsOnMap() async {
+    CameraPosition cameraPosition = CameraPosition(
+      zoom: 18,
+      tilt: 50,
+      target: LatLng(latBeever, longBeever),
     );
 
-    StreamSubscription<Position> positionStream =
-        Geolocator.getPositionStream(locationSettings: locationSettings)
-            .listen((Position position) {
-      print(position.longitude); //Output: 80.24599079
-      print(position.latitude); //Output: 29.6593457
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    var sourcePosition = LatLng(latBeever, longBeever);
 
-      long = position.longitude.toString();
-      lat = position.latitude.toString();
-
-      setState(() {
-        //refresh UI on update
-      });
+    setState(() {
+      _markers.removeWhere((marker) => marker.mapsId.value == 'sourcePosition');
+      _markers.add(Marker(
+        markerId: const MarkerId('Beever Position'),
+        position: sourcePosition,
+      ));
     });
   }
 
-  final TextEditingController _jenisSampah = TextEditingController();
-  final TextEditingController _beratSampah = TextEditingController();
-  final panelController = PanelController();
+  Widget buildDragHandler() => GestureDetector(
+        onTap: togglePanel,
+        child: Center(
+          child: Container(
+            width: 200,
+            height: 5,
+            decoration: BoxDecoration(
+                color: Colors.grey[300], borderRadius: roundedRect),
+          ),
+        ),
+      );
 
-  bool isOnTheWay = true;
-  bool isOnTheWayText = false;
-  bool isOnPickUp = false;
-  bool isOnPickUpText = false;
-  bool isWeightConfirmation = false;
-  bool isWeightConfirmationText = false;
-  bool isLastScreen = false;
-  bool isLastScreenText = false;
-  bool isCompleted = false;
-  bool isFinished = false;
-
-  late double latUser = widget.latUser;
-  late double longUser = widget.longUser;
-
-  late LatLng userLocation = LatLng(latUser, longUser);
+  void togglePanel() => widget.panelController.isPanelOpen
+      ? widget.panelController.close()
+      : widget.panelController.open();
 
   @override
   Widget build(BuildContext context) {
@@ -159,15 +240,15 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
           children: [
             GoogleMap(
               initialCameraPosition: initialCameraPosition,
-              markers: {
-                Marker(
-                  markerId: MarkerId('${widget.userOrder}'),
-                  position:
-                      LatLng(userLocation.latitude, userLocation.longitude),
-                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                      BitmapDescriptor.hueOrange),
-                ),
+              mapType: MapType.normal,
+              myLocationButtonEnabled: true,
+              // myLocationEnabled: true,
+              onMapCreated: (GoogleMapController controller) {
+                _controller.complete(controller);
+                showLocationPins();
               },
+              markers: Set<Marker>.of(_markers),
+              polylines: Set<Polyline>.of(polylines.values),
             ),
             Column(
               children: [
@@ -289,7 +370,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             style: onboardingNormalText,
                           ),
                           Text(
-                            widget.userOrder ?? 'Nama User',
+                            widget.userOrder,
                             style: bodyBodyBold,
                           ),
                         ],
@@ -319,13 +400,13 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                widget.namaTempat ?? 'Nama Tempat',
+                                widget.namaTempat,
                                 style: bodyBodyBold,
                               ),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 1.3,
                                 child: Text(
-                                  widget.alamat ?? 'Alamat',
+                                  widget.alamat,
                                   style: bodyBodyBold.copyWith(
                                       fontSize: 14,
                                       fontWeight: FontWeight.normal),
@@ -338,9 +419,12 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Divider(
-                  height: 20,
-                  thickness: 5,
+                  height: 5,
+                  thickness: 2,
                 ),
                 (isOnTheWay == true)
                     ? Padding(
@@ -382,7 +466,7 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
                           activeColor: const Color.fromARGB(255, 247, 172, 12),
                           isFinished: isFinished,
                           onWaitingProcess: () {
-                            Future.delayed(const Duration(seconds: 3), () {
+                            Future.delayed(const Duration(seconds: 2), () {
                               setState(() {
                                 isFinished = true;
                               });
@@ -553,20 +637,4 @@ class _OngoingOrderProceedState extends State<OngoingOrderProceed> {
       ),
     );
   }
-
-  Widget buildDragHandler() => GestureDetector(
-        onTap: togglePanel,
-        child: Center(
-          child: Container(
-            width: 200,
-            height: 5,
-            decoration: BoxDecoration(
-                color: Colors.grey[300], borderRadius: roundedRect),
-          ),
-        ),
-      );
-
-  void togglePanel() => widget.panelController.isPanelOpen
-      ? widget.panelController.close()
-      : widget.panelController.open();
 }
