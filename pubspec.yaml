@@ -33,9 +33,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.3
   custom_info_window: ^1.0.1
+  dart_code_metrics: ^4.16.0
   device_info_plus: ^3.2.2
   dio: ^4.0.4
   dropdown_button2: ^1.6.2
+  email_validator: ^2.0.1
   firebase_core: ^1.13.1
   firebase_messaging: ^11.2.8
   firebase_storage: ^10.2.9

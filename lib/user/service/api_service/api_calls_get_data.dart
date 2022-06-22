@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
-import 'package:junkbee_user/user/constant/base_url.dart';
-import 'package:junkbee_user/user/models/user_data_models.dart';
-import 'package:junkbee_user/user/service/storage/secure_storage.dart';
+
+import '../../constant/base_url.dart';
+import '../../models/user_data_models.dart';
+import '../storage/secure_storage.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 

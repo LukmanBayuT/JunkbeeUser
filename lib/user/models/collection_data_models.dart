@@ -1,18 +1,17 @@
 // To parse this JSON data, do
 //
-//     final collectionData = collectionDataFromJson(jsonString);
-
-// ignore_for_file: constant_identifier_names, duplicate_ignore, unnecessary_new, prefer_conditional_assignment
+//     final userHistoryDataCollection = userHistoryDataCollectionFromJson(jsonString);
 
 import 'dart:convert';
 
-CollectionData collectionDataFromJson(String str) =>
-    CollectionData.fromJson(json.decode(str));
+UserHistoryDataCollection userHistoryDataCollectionFromJson(String str) =>
+    UserHistoryDataCollection.fromJson(json.decode(str));
 
-String collectionDataToJson(CollectionData data) => json.encode(data.toJson());
+String userHistoryDataCollectionToJson(UserHistoryDataCollection data) =>
+    json.encode(data.toJson());
 
-class CollectionData {
-  CollectionData({
+class UserHistoryDataCollection {
+  UserHistoryDataCollection({
     this.success,
     this.message,
     this.data,
@@ -22,7 +21,8 @@ class CollectionData {
   final String? message;
   final List<Datum>? data;
 
-  factory CollectionData.fromJson(Map<String, dynamic> json) => CollectionData(
+  factory UserHistoryDataCollection.fromJson(Map<String, dynamic> json) =>
+      UserHistoryDataCollection(
         success: json["success"],
         message: json["message"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -46,10 +46,13 @@ class Datum {
     this.status,
     this.location1,
     this.location2,
+    this.tempat,
+    this.notes,
     this.reason,
     this.createdAt,
     this.updatedAt,
     this.userName,
+    this.driverName,
   });
 
   final int? id;
@@ -58,13 +61,16 @@ class Datum {
   final String? totalWeight;
   final String? total;
   final String? feeBeever;
-  final Status? status;
-  final Location1? location1;
-  final Location2? location2;
+  final String? status;
+  final String? location1;
+  final dynamic location2;
+  final String? tempat;
+  final String? notes;
   final dynamic reason;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final UserName? userName;
+  final String? userName;
+  final String? driverName;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -73,13 +79,16 @@ class Datum {
         totalWeight: json["total_weight"],
         total: json["total"],
         feeBeever: json["fee_beever"],
-        status: statusValues.map![json["status"]],
-        location1: location1Values.map![json["location1"]],
-        location2: location2Values.map![json["location2"]],
+        status: json["status"],
+        location1: json["location1"],
+        location2: json["location2"],
+        tempat: json["tempat"],
+        notes: json["notes"] == null ? null : json["notes"],
         reason: json["reason"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
-        userName: userNameValues.map![json["user_name"]],
+        userName: json["user_name"],
+        driverName: json["driver_name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -90,47 +99,15 @@ class Datum {
         "total_weight": totalWeight,
         "total": total,
         "fee_beever": feeBeever,
-        "status": statusValues.reverse[status],
-        "location1": location1Values.reverse[location1],
-        "location2": location2Values.reverse[location2],
+        "status": status,
+        "location1": location1,
+        "location2": location2,
+        "tempat": tempat,
+        "notes": notes == null ? null : notes,
         "reason": reason,
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
-        "user_name": userNameValues.reverse[userName],
+        "user_name": userName,
+        "driver_name": driverName,
       };
-}
-
-enum Location1 { JL_JL, NULL, SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137 }
-
-final location1Values = EnumValues({
-  "Jl.Jl": Location1.JL_JL,
-  "null": Location1.NULL,
-  "Semarang Plaza, Kota Semarang, Indonesia, 50137":
-      Location1.SEMARANG_PLAZA_KOTA_SEMARANG_INDONESIA_50137
-});
-
-enum Location2 { EMPTY }
-
-final location2Values = EnumValues({" ": Location2.EMPTY});
-
-enum Status { SUCEED }
-
-final statusValues = EnumValues({"suceed": Status.SUCEED});
-
-enum UserName { LUCY_VER }
-
-final userNameValues = EnumValues({"Lucy Ver": UserName.LUCY_VER});
-
-class EnumValues<T> {
-  Map<String, T>? map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    if (reverseMap == null) {
-      reverseMap = map!.map((k, v) => MapEntry(v, k));
-    }
-    return reverseMap!;
-  }
 }

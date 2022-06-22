@@ -1,10 +1,12 @@
 // ignore_for_file: avoid_print, unnecessary_string_interpolations, unused_import, empty_catches
 
 import 'dart:convert';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
 import 'package:lottie/lottie.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
@@ -33,6 +35,8 @@ class SignUpUserState extends State<SignUpUser> {
   final bool _validate = false;
   bool isChecked = false;
 
+  var email = false.obs;
+
   void _toggle() {
     setState(() {
       _obsecureText = !_obsecureText;
@@ -59,18 +63,9 @@ class SignUpUserState extends State<SignUpUser> {
         Get.back();
       } else if (response.statusCode == 400) {
         setState(() => loading = false);
-        Get.snackbar('Bad Request', '${response.body}',
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Colors.amber,
-            colorText: Colors.white,
-            isDismissible: true,
-            forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-            duration: const Duration(seconds: 1),
-            margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
-            icon: const Icon(
-              Icons.error_outlined,
-              color: Colors.red,
-            ));
+
+        // ignore: use_build_context_synchronously
+        ShowNotification().showErrorSignUp(context);
       }
     } catch (e) {
       setState(() => loading = false);
@@ -174,17 +169,22 @@ class SignUpUserState extends State<SignUpUser> {
                         ),
                         Padding(
                           padding: defaultPadding10,
-                          child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            controller: _emailcont,
-                            style: const TextStyle(fontSize: 22),
-                            decoration: InputDecoration(
-                                labelStyle: signScreenTextStyle,
-                                labelText: 'Email',
-                                errorText: (_validate)
-                                    ? "Username cannot be empty"
-                                    : null),
-                          ),
+                          child: Obx(() => TextFormField(
+                                onChanged: (asd) {
+                                  if (EmailValidator.validate(asd)) {
+                                    email(true);
+                                  } else {
+                                    email(false);
+                                  }
+                                },
+                                keyboardType: TextInputType.emailAddress,
+                                controller: _emailcont,
+                                style: const TextStyle(fontSize: 22),
+                                decoration: const InputDecoration(
+                                  labelStyle: signScreenTextStyle,
+                                  labelText: 'Email',
+                                ),
+                              )),
                         ),
                         Padding(
                           padding: defaultPadding10,
@@ -244,7 +244,9 @@ class SignUpUserState extends State<SignUpUser> {
                           child: const Text('Sign Up',
                               style: onboardingGetStarted),
                           onPressed: () {
-                            (isChecked == true) ? _registerUser() : null;
+                            (isChecked == true && email == true)
+                                ? _registerUser()
+                                : null;
                           },
                         ))
                   ],

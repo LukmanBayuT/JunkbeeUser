@@ -39,4 +39,36 @@ class ShowNotification {
       duration: const Duration(seconds: 4),
     ).show(context);
   }
+
+  void showErrorSignUp(BuildContext context) {
+    Flushbar(
+      onTap: ((flushbar) {}),
+      onStatusChanged: (status) {
+        print('Dipencet');
+      },
+      dismissDirection: FlushbarDismissDirection.HORIZONTAL,
+      flushbarPosition: FlushbarPosition.TOP,
+      mainButton: ButtonBar(
+        children: [
+          IconButton(
+            onPressed: () {
+              print("You clicked me!");
+            },
+            icon: const Icon(
+              Icons.close,
+              color: Colors.amber,
+              size: 30,
+            ),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      title: "Gagal!",
+      titleColor: Colors.amber,
+      message: "Silahkan lengkapi form dengan benar",
+      messageColor: Colors.amber,
+      messageSize: 17,
+      duration: const Duration(seconds: 4),
+    ).show(context);
+  }
 }

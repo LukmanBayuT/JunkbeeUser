@@ -36,6 +36,7 @@ class UserOrderState extends State<UserOrder> {
   String? alamat = 'Lokasimu';
   String? namaTempat = 'Nama Tempat';
   SecureStorage secureStorage = SecureStorage();
+  final TextEditingController _notesController = TextEditingController();
 
   dynamic token_local = null;
   bool loading = false;
@@ -172,6 +173,7 @@ class UserOrderState extends State<UserOrder> {
       request.fields['waste_weight'] = '$totalWasteWeight';
       request.fields['tempat'] = '$namaTempat';
       request.fields['location1'] = '$alamat';
+      request.fields['notes'] = '$_notesController';
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
       request.headers.addAll({
@@ -706,12 +708,13 @@ class UserOrderState extends State<UserOrder> {
                               child: SizedBox(
                                 width: MediaQuery.of(context).size.width / 1,
                                 height: MediaQuery.of(context).size.height / 4,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
                                   child: TextField(
+                                    controller: _notesController,
                                     maxLines: 10,
                                     keyboardType: TextInputType.multiline,
-                                    decoration: InputDecoration.collapsed(
+                                    decoration: const InputDecoration.collapsed(
                                       hintText: 'Your Notes Here',
                                     ),
                                   ),
@@ -721,7 +724,10 @@ class UserOrderState extends State<UserOrder> {
                           ],
                         ),
                       ),
-                      (totalWeight >= 5)
+                      (totalWeight >= 5 &&
+                              image1 != null &&
+                              image2 != null &&
+                              image3 != null)
                           ? SizedBox(
                               width: MediaQuery.of(context).size.width / 1.1,
                               height: MediaQuery.of(context).size.height / 12,
@@ -751,7 +757,8 @@ class UserOrderState extends State<UserOrder> {
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     primary: mainColor1, shape: roundedRectBor),
-                                child: const Text('Minimal berat 5 Kg',
+                                child: const Text(
+                                    'Minimal berat 5Kg & Foto Lengkap',
                                     style: onboardingGetStarted),
                                 onPressed: () {},
                               )),
