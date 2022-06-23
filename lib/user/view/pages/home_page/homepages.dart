@@ -43,7 +43,7 @@ class HomepagesUserState extends State<HomepagesUser> {
       });
     }
     if (token != null) {
-      await ApiCallsGetData().getUserData();
+      await ApiCallsGetDataUser().getUserData();
       if (mounted) {
         setState(() {});
       }

@@ -17,7 +17,7 @@ class HelpCentreState extends State<HelpCentre> {
   @override
   void initState() {
     super.initState();
-    ApiCallsGetData().getUserData();
+    ApiCallsGetDataUser().getUserData();
   }
 
   @override
@@ -63,7 +63,7 @@ class HelpCentreState extends State<HelpCentre> {
                                 width: MediaQuery.of(context).size.width / 1.6,
                                 alignment: Alignment.topLeft,
                                 child: FutureBuilder(
-                                    future: ApiCallsGetData().getUserData(),
+                                    future: ApiCallsGetDataUser().getUserData(),
                                     builder: (BuildContext context,
                                         AsyncSnapshot snapshot) {
                                       var data = snapshot.data;

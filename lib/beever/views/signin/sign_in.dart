@@ -68,7 +68,7 @@ class _SignInDriverState extends State<SignInDriver> {
           if (updateDeviceToken['message'] == 'data has been updated') {
             setState(() => loading = false);
             Get.offAll(() => const NavigatorPages());
-            ApiCallsGetData().getData();
+            ApiCallsGetDataBeever().getData();
           }
         } else {
           var errorMessage = output['message'];

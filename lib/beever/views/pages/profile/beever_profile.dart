@@ -19,7 +19,7 @@ class BeeverProfileState extends State<BeeverProfile> {
   @override
   void initState() {
     super.initState();
-    ApiCallsGetData().getData();
+    ApiCallsGetDataBeever().getData();
   }
 
   @override
@@ -58,7 +58,7 @@ class BeeverProfileState extends State<BeeverProfile> {
                   Container(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: FutureBuilder(
-                          future: ApiCallsGetData().getData(),
+                          future: ApiCallsGetDataBeever().getData(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot) {
                             var account = snapshot.data;
@@ -129,7 +129,7 @@ class BeeverProfileState extends State<BeeverProfile> {
                                                                     .data
                                                                     .email)));
                                                 if (result == 'back') {
-                                                  await ApiCallsGetData()
+                                                  await ApiCallsGetDataBeever()
                                                       .getData();
                                                   setState(() {});
                                                 }
@@ -151,7 +151,7 @@ class BeeverProfileState extends State<BeeverProfile> {
                                                                     .data
                                                                     .email)));
                                                 if (result == 'back') {
-                                                  await ApiCallsGetData()
+                                                  await ApiCallsGetDataBeever()
                                                       .getData();
                                                   setState(() {});
                                                 }

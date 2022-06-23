@@ -9,7 +9,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
-import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
 import 'package:junkbee_user/main.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
@@ -20,8 +19,9 @@ import 'package:junkbee_user/user/widget/home_page/homepages_widget_article.dart
 final format = NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0);
 
 class UserDataHomepages extends StatefulWidget {
-  final dynamic token_local = null;
   const UserDataHomepages({Key? key}) : super(key: key);
+
+  final dynamic token_local = null;
 
   @override
   State<UserDataHomepages> createState() => _UserDataHomepagesState();
@@ -133,7 +133,7 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                         padding: const EdgeInsets.only(top: 15),
                         width: MediaQuery.of(context).size.width,
                         child: FutureBuilder(
-                            future: ApiCallsGetData().getUserData(),
+                            future: ApiCallsGetDataUser().getUserData(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
@@ -173,8 +173,9 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
 }
 
 class UIHomePage extends StatelessWidget {
-  final String? device_info;
   const UIHomePage({Key? key, required this.device_info}) : super(key: key);
+
+  final String? device_info;
 
   @override
   Widget build(BuildContext context) {

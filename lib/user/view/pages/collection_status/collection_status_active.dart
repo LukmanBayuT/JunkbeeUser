@@ -6,11 +6,14 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
+import 'package:junkbee_user/user/controller/waste_count.dart';
+import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/service/api_service/api_user_history_data_collection.dart';
 import 'package:junkbee_user/user/service/api_service/api_confirm_order.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
+import 'package:junkbee_user/user/view/pages/collection_status/cobagetx.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
@@ -303,6 +306,35 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                               )),
                                           Container(
                                             padding:
+                                                const EdgeInsets.only(top: 10),
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.25,
+                                            child: Row(
+                                              children: [
+                                                const Text(
+                                                  'Status Pesanan Anda : ',
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      color: Color(0xFFF8C503)),
+                                                ),
+                                                Text(
+                                                    collectiondata
+                                                        .data[index].status
+                                                        .toString()
+                                                        .toUpperCase(),
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w800,
+                                                        color:
+                                                            Color(0xFFF8C503)))
+                                              ],
+                                            ),
+                                          ),
+                                          Container(
+                                            padding:
                                                 const EdgeInsets.only(top: 5),
                                             width: MediaQuery.of(context)
                                                     .size
@@ -480,6 +512,11 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                                         color: Color(
                                                             0xFFDEDEDE)))),
                                           ),
+                                          ElevatedButton(
+                                              onPressed: () {
+                                                Get.to(() => const CobaGetX());
+                                              },
+                                              child: const Text('COba')),
                                           Container(
                                             padding:
                                                 const EdgeInsets.only(top: 5),
@@ -531,7 +568,6 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                                   color: Color(0xFF707070)),
                                             ),
                                           ),
-                                          const SizedBox(height: 10),
                                           Container(
                                             padding:
                                                 const EdgeInsets.only(top: 5),
@@ -543,18 +579,23 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                                   color: Color(0xFF707070)),
                                             ),
                                           ),
-                                          const SizedBox(height: 10),
-                                          Container(
-                                            padding:
-                                                const EdgeInsets.only(top: 5),
-                                            width: Get.width / 1.25,
-                                            child: Text(
-                                              'Catatan : ${collectiondata.data[index].notes}',
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: Color(0xFF707070)),
-                                            ),
-                                          ),
+                                          (collectiondata.data[index].notes !=
+                                                  null)
+                                              ? Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 5),
+                                                  width: Get.width / 1.25,
+                                                  child: Text(
+                                                    'Catatan : ${collectiondata.data[index].notes}',
+                                                    style: const TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            Color(0xFF707070)),
+                                                  ),
+                                                )
+                                              : Container(),
                                           const SizedBox(height: 10),
                                         ],
                                       ),

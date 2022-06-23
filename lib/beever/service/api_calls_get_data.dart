@@ -9,7 +9,7 @@ import 'package:junkbee_user/user/constant/base_url.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
-class ApiCallsGetData {
+class ApiCallsGetDataBeever {
   Future<BeeverData> getData() async {
     var authToken = await secureStorage.readSecureData('token');
     var token = authToken;
