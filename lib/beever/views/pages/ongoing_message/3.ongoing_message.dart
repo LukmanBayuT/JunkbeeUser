@@ -62,7 +62,7 @@ class OngoingMessagesState extends State<OngoingMessages> {
                                   offset: const Offset(0, 1))
                             ]),
                         child: Center(
-                          child: Text('Active',
+                          child: Text('Messages',
                               style: index == 0
                                   ? textProfileBoldWhite
                                   : textProfileWhite),
@@ -96,7 +96,7 @@ class OngoingMessagesState extends State<OngoingMessages> {
                                   offset: const Offset(0, 1))
                             ]),
                         child: Center(
-                          child: Text('History',
+                          child: Text('Inbox',
                               style: index == 1
                                   ? textProfileBoldWhite
                                   : textProfileWhite),

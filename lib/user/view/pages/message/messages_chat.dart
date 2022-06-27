@@ -192,7 +192,7 @@ class UserMessagesState extends State<UserMessages> {
               child: ListView.builder(
                   padding: const EdgeInsets.only(bottom: 20),
                   shrinkWrap: true,
-                  itemCount: 4,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
@@ -242,7 +242,7 @@ class UserMessagesState extends State<UserMessages> {
                                                         const EdgeInsets.only(
                                                             top: 2, bottom: 10),
                                                     child: const Text(
-                                                      'Mr. Sunaryo - Beever',
+                                                      'Coming soon',
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
@@ -251,7 +251,7 @@ class UserMessagesState extends State<UserMessages> {
                                                               0xFF707070)),
                                                     )),
                                                 const Text(
-                                                    'How its going Miss?',
+                                                    'This feature coming soon',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -270,7 +270,7 @@ class UserMessagesState extends State<UserMessages> {
                                                 4.6,
                                             alignment: Alignment.topRight,
                                             child: const Text(
-                                              'Today',
+                                              'ongoing',
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500,
@@ -294,7 +294,7 @@ class UserMessagesState extends State<UserMessages> {
               child: ListView.builder(
                   padding: const EdgeInsets.only(bottom: 20),
                   shrinkWrap: true,
-                  itemCount: 4,
+                  itemCount: 1,
                   itemBuilder: (context, index) {
                     return Column(
                       children: [
@@ -344,7 +344,7 @@ class UserMessagesState extends State<UserMessages> {
                                                         const EdgeInsets.only(
                                                             top: 2, bottom: 10),
                                                     child: const Text(
-                                                      'Mr. Joko - Beever',
+                                                      'This feature will be coming soon!',
                                                       style: TextStyle(
                                                           fontSize: 16,
                                                           fontWeight:
@@ -353,7 +353,7 @@ class UserMessagesState extends State<UserMessages> {
                                                               0xFF707070)),
                                                     )),
                                                 const Text(
-                                                    'How its going Miss?',
+                                                    'Please Kindly Wait!',
                                                     style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
@@ -372,7 +372,7 @@ class UserMessagesState extends State<UserMessages> {
                                                 4.6,
                                             alignment: Alignment.topRight,
                                             child: const Text(
-                                              'Yesterday',
+                                              'coming soon',
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500,

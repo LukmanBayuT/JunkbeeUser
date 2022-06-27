@@ -8,6 +8,8 @@ import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.
 import 'package:junkbee_user/user/view/pages/message/messages_chat.dart';
 import 'package:junkbee_user/user/view/pages/profile/profile_user.dart';
 
+final navKey = GlobalKey<CurvedNavigationBarState>();
+
 class NavigatorUser extends StatefulWidget {
   const NavigatorUser({Key? key}) : super(key: key);
 
@@ -22,8 +24,6 @@ class NavigatorUserState extends State<NavigatorUser> {
     super.initState();
     PermissionHandler().listenForPermission();
   }
-
-  final navKey = GlobalKey<CurvedNavigationBarState>();
 
   int index = 0;
 
@@ -112,3 +112,74 @@ class NavigatorUserState extends State<NavigatorUser> {
         ));
   }
 }
+
+// class HomepagesUser extends StatefulWidget {
+//   const HomepagesUser({Key? key}) : super(key: key);
+
+//   @override
+//   HomepagesUserState createState() => HomepagesUserState();
+// }
+
+// class HomepagesUserState extends State<HomepagesUser> {
+//   final navKey = GlobalKey<CurvedNavigationBarState>();
+//   dynamic token_local = null;
+//   String device_info = '';
+//   final SecureStorage secureStorage = SecureStorage();
+//   final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     if (mounted) {
+//       checkToken();
+//     }
+//   }
+
+//   checkToken() async {
+//     var authToken = await secureStorage.readSecureData('token');
+//     var token = authToken;
+//     if (mounted) {
+//       setState(() {
+//         token_local = token;
+//       });
+//     }
+//     if (token != null) {
+//       await ApiCallsGetDataUser().getUserData();
+//       if (mounted) {
+//         setState(() {});
+//       }
+//     } else {
+//       getDeviceInfo();
+//     }
+//   }
+
+//   getDeviceInfo() async {
+//     AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+//     if (mounted) {
+//       setState(() {
+//         device_info = '${androidInfo.model}';
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//         body: SingleChildScrollView(
+//             child: Column(
+//                 crossAxisAlignment: CrossAxisAlignment.center,
+//                 children: [
+//           Container(
+//             child: token_local == null
+//                 ? UIHomePage(
+//                     device_info: device_info,
+//                   )
+//                 : const UserDataHomepages(),
+//           ),
+//           UserDataGetStarted(navKey: navKey),
+//           const WasteCategories(),
+//           const StatisticUsers(),
+//           const NewsApiUsers()
+//         ])));
+//   }
+// }

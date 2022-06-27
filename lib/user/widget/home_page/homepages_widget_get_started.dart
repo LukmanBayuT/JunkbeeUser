@@ -1,7 +1,10 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
+import 'package:junkbee_user/user/view/collection_status_user.dart';
+import 'package:junkbee_user/user/view/order_screen.dart';
 
 class UserDataGetStarted extends StatelessWidget {
   const UserDataGetStarted({Key? key, required this.navKey}) : super(key: key);
@@ -19,9 +22,7 @@ class UserDataGetStarted extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             GestureDetector(
                 onTap: () {
-                  if (kDebugMode) {
-                    print('new collection');
-                  }
+                  Get.to(() => const UserOrderScreen());
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width / 2.5,
@@ -34,9 +35,7 @@ class UserDataGetStarted extends StatelessWidget {
                             Text('New Collection', style: bodyBodyUserMini)))),
             GestureDetector(
                 onTap: () {
-                  if (kDebugMode) {
-                    print('history');
-                  }
+                  Get.to(() => const CollectionStatusUserOut());
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width / 2.5,

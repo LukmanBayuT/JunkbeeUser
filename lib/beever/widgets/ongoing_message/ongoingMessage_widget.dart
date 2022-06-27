@@ -27,7 +27,7 @@ class ActiveList extends StatelessWidget {
     return ListView.builder(
         padding: const EdgeInsets.only(bottom: 70),
         shrinkWrap: true,
-        itemCount: 4,
+        itemCount: 1,
         itemBuilder: (context, index) {
           return Column(children: [
             Padding(
@@ -57,13 +57,13 @@ class ActiveList extends StatelessWidget {
                                           Image.asset('assets/group_2262.png')),
                                   Container(
                                       padding: const EdgeInsets.only(left: 10),
-                                      child: const Text('Order From Cynthia',
+                                      child: const Text('Coming Soon',
                                           style: TextStyle(
                                               color: Color(0xFF707070),
                                               fontWeight: FontWeight.w800,
                                               fontSize: 16)))
                                 ]),
-                                const Text('1 hour ago',
+                                const Text('ongoing',
                                     style: TextStyle(
                                         color: Color(0xFF707070),
                                         fontWeight: FontWeight.w500))
@@ -95,8 +95,7 @@ class ActiveList extends StatelessWidget {
                                               fontSize: 15)),
                                       Padding(
                                           padding: EdgeInsets.only(top: 1),
-                                          child: Text(
-                                              'Tugumuda, 50171 Semarang',
+                                          child: Text('Coming Soon',
                                               style: TextStyle(
                                                   color: Color(0xFF707070),
                                                   fontWeight: FontWeight.w800,
@@ -110,7 +109,7 @@ class ActiveList extends StatelessWidget {
                             Image.asset('assets/group_2267.png', width: 30),
                             const Padding(
                                 padding: EdgeInsets.only(left: 10),
-                                child: const Text('Paper     0.5 kg',
+                                child: const Text('Waste',
                                     style: TextStyle(
                                         color: Color(0xFF707070),
                                         fontWeight: FontWeight.w500,
@@ -161,13 +160,13 @@ class InboxList extends StatelessWidget {
                                           Image.asset('assets/group_2262.png')),
                                   Container(
                                       padding: const EdgeInsets.only(left: 10),
-                                      child: const Text('Order From Cynthia',
+                                      child: const Text('Coming Soon',
                                           style: TextStyle(
                                               color: Color(0xFF707070),
                                               fontWeight: FontWeight.w800,
                                               fontSize: 16)))
                                 ]),
-                                const Text('1 hour ago',
+                                const Text('Ongoing',
                                     style: TextStyle(
                                         color: Color(0xFF707070),
                                         fontWeight: FontWeight.w500))
@@ -199,8 +198,7 @@ class InboxList extends StatelessWidget {
                                               fontSize: 15)),
                                       Padding(
                                           padding: EdgeInsets.only(top: 1),
-                                          child: Text(
-                                              'Tugumuda, 50171 Semarang',
+                                          child: Text('Coming Soon',
                                               style: TextStyle(
                                                   color: Color(0xFF707070),
                                                   fontWeight: FontWeight.w800,
@@ -214,7 +212,7 @@ class InboxList extends StatelessWidget {
                             Image.asset('assets/group_2267.png', width: 30),
                             const Padding(
                                 padding: EdgeInsets.only(left: 10),
-                                child: const Text('Paper     0.5 kg',
+                                child: const Text('Waste',
                                     style: TextStyle(
                                         color: Color(0xFF707070),
                                         fontWeight: FontWeight.w500,

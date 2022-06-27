@@ -1,13 +1,8 @@
-// ignore_for_file: sized_box_for_whitespace, avoid_init_to_null, non_constant_identifier_names, unnecessary_const, duplicate_ignore, unused_import
-
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-import 'package:junkbee_user/user/controller/waste_count.dart';
-import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/service/api_service/api_user_history_data_collection.dart';
 import 'package:junkbee_user/user/service/api_service/api_confirm_order.dart';
 import 'package:junkbee_user/user/service/storage/secure_storage.dart';
@@ -16,14 +11,14 @@ import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 
 final SecureStorage secureStorage = SecureStorage();
 
-class CollectionStatusUser extends StatefulWidget {
-  const CollectionStatusUser({Key? key}) : super(key: key);
+class CollectionStatusUserOut extends StatefulWidget {
+  const CollectionStatusUserOut({Key? key}) : super(key: key);
 
   @override
-  CollectionStatusUserState createState() => CollectionStatusUserState();
+  CollectionStatusUserOutState createState() => CollectionStatusUserOutState();
 }
 
-class CollectionStatusUserState extends State<CollectionStatusUser> {
+class CollectionStatusUserOutState extends State<CollectionStatusUserOut> {
   dynamic data = null;
   int index = 0;
   dynamic token_local = null;
@@ -60,7 +55,7 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/heading.png'), fit: BoxFit.cover)),
-          child: Container(
+          child: SizedBox(
             width: Get.width / 1.1,
             child: Column(
               children: [
@@ -122,8 +117,8 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                         borderRadius: BorderRadius.circular(16),
                                         // ignore: unnecessary_const
                                         gradient: const LinearGradient(colors: [
-                                          const Color(0xFFF8C503),
-                                          const Color(0xFFFFE067)
+                                          Color(0xFFF8C503),
+                                          Color(0xFFFFE067)
                                         ]),
                                         boxShadow: const [
                                           BoxShadow(
