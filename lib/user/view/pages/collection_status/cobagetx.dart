@@ -13,7 +13,6 @@ class CobaGetX extends StatefulWidget {
 class _CobaGetXState extends State<CobaGetX> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     ApiCallsGetDataUser().getWastePrice();
   }

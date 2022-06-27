@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print, unnecessary_string_interpolations, unused_import, empty_catches
+// ignore_for_file: avoid_print, unnecessary_string_interpolations, unused_import, empty_catches, unrelated_type_equality_checks
 
 import 'dart:convert';
 import 'package:email_validator/email_validator.dart';
