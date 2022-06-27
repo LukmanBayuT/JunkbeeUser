@@ -1,16 +1,17 @@
 // To parse this JSON data, do
 //
-//     final addCollection = addCollectionFromJson(jsonString);
+//     final userActiveDataCollection = userActiveDataCollectionFromJson(jsonString);
 
 import 'dart:convert';
 
-AddCollection addCollectionFromJson(String str) =>
-    AddCollection.fromJson(json.decode(str));
+UserActiveDataCollection userActiveDataCollectionFromJson(String str) =>
+    UserActiveDataCollection.fromJson(json.decode(str));
 
-String addCollectionToJson(AddCollection data) => json.encode(data.toJson());
+String userActiveDataCollectionToJson(UserActiveDataCollection data) =>
+    json.encode(data.toJson());
 
-class AddCollection {
-  AddCollection({
+class UserActiveDataCollection {
+  UserActiveDataCollection({
     this.success,
     this.message,
     this.data,
@@ -20,7 +21,8 @@ class AddCollection {
   final String? message;
   final List<Datum>? data;
 
-  factory AddCollection.fromJson(Map<String, dynamic> json) => AddCollection(
+  factory UserActiveDataCollection.fromJson(Map<String, dynamic> json) =>
+      UserActiveDataCollection(
         success: json["success"],
         message: json["message"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -37,9 +39,6 @@ class Datum {
   Datum({
     this.id,
     this.orderCode,
-    this.userId,
-    this.driverId,
-    this.wasteCollectorId,
     this.date,
     this.totalWeight,
     this.total,
@@ -47,33 +46,35 @@ class Datum {
     this.status,
     this.location1,
     this.location2,
+    this.tempat,
+    this.notes,
     this.reason,
     this.createdAt,
     this.updatedAt,
+    this.userName,
+    this.driverName,
   });
 
   final int? id;
   final String? orderCode;
-  final String? userId;
-  final dynamic driverId;
-  final dynamic wasteCollectorId;
   final DateTime? date;
   final String? totalWeight;
   final String? total;
   final String? feeBeever;
   final String? status;
   final String? location1;
-  final String? location2;
+  final dynamic location2;
+  final String? tempat;
+  final String? notes;
   final dynamic reason;
   final DateTime? createdAt;
   final DateTime? updatedAt;
+  final String? userName;
+  final String? driverName;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
         orderCode: json["order_code"],
-        userId: json["user_id"],
-        driverId: json["driver_id"],
-        wasteCollectorId: json["waste_collector_id"],
         date: DateTime.parse(json["date"]),
         totalWeight: json["total_weight"],
         total: json["total"],
@@ -81,17 +82,18 @@ class Datum {
         status: json["status"],
         location1: json["location1"],
         location2: json["location2"],
+        tempat: json["tempat"],
+        notes: json["notes"],
         reason: json["reason"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        userName: json["user_name"],
+        driverName: json["driver_name"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "order_code": orderCode,
-        "user_id": userId,
-        "driver_id": driverId,
-        "waste_collector_id": wasteCollectorId,
         "date":
             "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
         "total_weight": totalWeight,
@@ -100,8 +102,12 @@ class Datum {
         "status": status,
         "location1": location1,
         "location2": location2,
+        "tempat": tempat,
+        "notes": notes,
         "reason": reason,
         "created_at": createdAt!.toIso8601String(),
         "updated_at": updatedAt!.toIso8601String(),
+        "user_name": userName,
+        "driver_name": driverName,
       };
 }

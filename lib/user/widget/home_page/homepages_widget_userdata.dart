@@ -1,20 +1,27 @@
 // ignore_for_file: sized_box_for_whitespace, unnecessary_string_interpolations, non_constant_identifier_names, avoid_print
 
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:junkbee_user/beever/views/pages/0.navigator.dart';
+import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
+import 'package:junkbee_user/main.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
+import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/user/widget/home_page/homepages_widget_article.dart';
 
 final format = NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0);
 
 class UserDataHomepages extends StatefulWidget {
-  final dynamic token_local = null;
   const UserDataHomepages({Key? key}) : super(key: key);
+
+  final dynamic token_local = null;
 
   @override
   State<UserDataHomepages> createState() => _UserDataHomepagesState();
@@ -24,6 +31,43 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
   @override
   void initState() {
     super.initState();
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        ShowNotification().showFlushBar(context);
+        print('object');
+        Get.to(() => const NavigatorUser());
+      }
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin!.show(
+          notification.hashCode,
+          notification.title,
+          notification.body,
+          NotificationDetails(
+            android: AndroidNotificationDetails(
+              channel!.id,
+              channel!.name,
+              channelDescription: channel!.description,
+              // ignore: todo
+              // TODO add a proper drawable resource to android, for now using
+              //      one that already exists in example app.
+              icon: 'launch_background',
+            ),
+          ),
+        );
+        ShowNotification().showFlushBar(context);
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+    });
   }
 
   showDialogue() {
@@ -89,7 +133,7 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                         padding: const EdgeInsets.only(top: 15),
                         width: MediaQuery.of(context).size.width,
                         child: FutureBuilder(
-                            future: ApiCallsGetData().getUserData(),
+                            future: ApiCallsGetDataUser().getUserData(),
                             builder:
                                 (BuildContext context, AsyncSnapshot snapshot) {
                               if (snapshot.connectionState ==
@@ -129,8 +173,9 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
 }
 
 class UIHomePage extends StatelessWidget {
-  final String? device_info;
   const UIHomePage({Key? key, required this.device_info}) : super(key: key);
+
+  final String? device_info;
 
   @override
   Widget build(BuildContext context) {

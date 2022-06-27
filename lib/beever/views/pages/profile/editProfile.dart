@@ -144,7 +144,7 @@ class EditProfileState extends State<EditProfile> {
               body: json.encode({'facebook_id': profile.userId}));
           Map<String, dynamic> bodyJSON = jsonDecode(response.body);
           if (bodyJSON['message'] == 'data has been updated') {
-            await ApiCallsGetData().getData();
+            await ApiCallsGetDataBeever().getData();
             setState(() {});
           }
         }
@@ -173,7 +173,7 @@ class EditProfileState extends State<EditProfile> {
         body: json.encode({'facebook_id': null}));
     Map<String, dynamic> bodyJSON = jsonDecode(response.body);
     if (bodyJSON['message'] == 'data has been updated') {
-      await ApiCallsGetData().getData();
+      await ApiCallsGetDataBeever().getData();
       setState(() {});
     }
   }
@@ -191,7 +191,7 @@ class EditProfileState extends State<EditProfile> {
         body: json.encode({'google_id': account.id}));
     Map<String, dynamic> bodyJSON = jsonDecode(response.body);
     if (bodyJSON['message'] == 'data has been updated') {
-      await ApiCallsGetData().getData();
+      await ApiCallsGetDataBeever().getData();
       setState(() {});
     }
   }
@@ -219,7 +219,7 @@ class EditProfileState extends State<EditProfile> {
         body: json.encode({'google_id': 'null'}));
     Map<String, dynamic> bodyJSON = jsonDecode(response.body);
     if (bodyJSON['message'] == 'data has been updated') {
-      await ApiCallsGetData().getData();
+      await ApiCallsGetDataBeever().getData();
       setState(() {});
     }
   }
@@ -365,7 +365,7 @@ class EditProfileState extends State<EditProfile> {
                                 ],
                               ),
                               FutureBuilder(
-                                  future: ApiCallsGetData().getData(),
+                                  future: ApiCallsGetDataBeever().getData(),
                                   builder: (context, AsyncSnapshot snapshot) {
                                     var editProfile = snapshot.data;
                                     if (snapshot.connectionState ==
@@ -443,7 +443,7 @@ class EditProfileState extends State<EditProfile> {
                                     ],
                                   ),
                                   FutureBuilder(
-                                      future: ApiCallsGetData().getData(),
+                                      future: ApiCallsGetDataBeever().getData(),
                                       builder:
                                           (context, AsyncSnapshot snapshot) {
                                         var editProfile = snapshot.data;

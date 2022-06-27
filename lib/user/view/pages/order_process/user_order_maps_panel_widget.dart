@@ -9,8 +9,6 @@ import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
 import 'package:junkbee_user/beever/widgets/profile/profile_widget.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
-import 'package:junkbee_user/user/models/geocoding_model.dart';
-import 'package:junkbee_user/user/service/api_service/api_calls_geocoding.dart';
 import 'package:junkbee_user/user/view/pages/order_process/maps_flutter.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
 import 'package:place_picker/place_picker.dart';

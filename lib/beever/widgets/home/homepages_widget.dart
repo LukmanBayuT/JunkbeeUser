@@ -67,7 +67,7 @@ class _profileAndBalanceState extends State<profileAndBalance> {
       transform: Matrix4.translationValues(0, -70, 0),
       width: MediaQuery.of(context).size.width / 1.1,
       child: FutureBuilder(
-        future: ApiCallsGetData().getData(),
+        future: ApiCallsGetDataBeever().getData(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           var beever = snapshot.data;
           if (snapshot.connectionState == ConnectionState.done) {
@@ -143,7 +143,7 @@ class _profileAndBalanceState extends State<profileAndBalance> {
                                           builder: (context) =>
                                               const WithdrawScreen()));
                                   if (result == 'back') {
-                                    await ApiCallsGetData().getData();
+                                    await ApiCallsGetDataBeever().getData();
                                     setState(() {});
                                   }
                                 },
@@ -165,7 +165,7 @@ class _profileAndBalanceState extends State<profileAndBalance> {
                                       MaterialPageRoute(
                                           builder: (context) => const TopUp()));
                                   if (result == 'back') {
-                                    await ApiCallsGetData().getData();
+                                    await ApiCallsGetDataBeever().getData();
                                     setState(() {});
                                   }
                                 },

@@ -6,22 +6,24 @@ import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
+import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
+import 'package:junkbee_user/user/controller/waste_count.dart';
+import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
 import 'package:junkbee_user/user/view/pages/order_process/user_order_maps.dart';
-import 'package:http/http.dart' as http;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:place_picker/place_picker.dart';
 
@@ -34,79 +36,47 @@ class UserOrder extends StatefulWidget {
 
 class UserOrderState extends State<UserOrder> {
   String? alamat = 'Lokasimu';
-  String? namaTempat = 'Nama Tempat';
-  SecureStorage secureStorage = SecureStorage();
-
-  dynamic token_local = null;
-  bool loading = false;
-
-  bool isPaperSelected = false;
-  bool isPlasticSelected = false;
-  bool isGlassSelected = false;
-  bool isSachetSelected = false;
-  bool isMetalSelected = false;
-  bool isOilSelected = false;
-
-  double initialPaper = 0.0;
-  double initialMixPaper = 0.0;
-  double initialPlastic = 0.0;
-  double initialGlass = 0.0;
-  double initialSachet = 0.0;
-  double initialMetal = 0.0;
-  double initialOil = 0.0;
-
   File? image1;
   File? image2;
   File? image3;
 
-  void _getFromCam1() async {
-    XFile? pickedFile1 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxHeight: 480,
-      maxWidth: 480,
-    );
-    if (mounted) {
-      if (pickedFile1 != null) {
-        setState(() {
-          image1 = File(pickedFile1.path);
-        });
-        print(image1);
-      }
-    }
-  }
-
-  void _getFromCam2() async {
-    XFile? pickedFile2 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxHeight: 480,
-      maxWidth: 480,
-    );
-    setState(() {
-      if (pickedFile2 != null) {
-        image2 = File(pickedFile2.path);
-      } else {
-        null;
-      }
-    });
-  }
-
-  void _getFromCam3() async {
-    XFile? pickedFile3 = await ImagePicker().pickImage(
-      source: ImageSource.camera,
-      maxHeight: 480,
-      maxWidth: 480,
-    );
-    setState(() {
-      if (pickedFile3 != null) {
-        image3 = File(pickedFile3.path);
-      } else {
-        null;
-      }
-    });
-  }
-
+  bool isGlassSelected = false;
+  bool isMetalSelected = false;
+  bool isOilSelected = false;
+  bool isPaperSelected = false;
+  bool isPlasticSelected = false;
+  bool isSachetSelected = false;
   String? latitude;
+  bool loading = false;
   String? longitude;
+  String? namaTempat = 'Nama Tempat';
+  int? paperPrice;
+  SecureStorage secureStorage = SecureStorage();
+  String? subtotal;
+  dynamic token_local = null;
+  String? totalFeeBeever = 3000.toString();
+  double? totalHarga;
+  int? totalWasteWeight;
+  String? userLocation;
+  WasteCountController wasteCountController = Get.put(WasteCountController());
+  String? wasteType = 'Paper';
+  int? wasteWeight;
+
+  final TextEditingController _notesController = TextEditingController();
+
+  @override
+  void initState() {
+    ApiCallsGetDataUser().getWastePrice();
+    super.initState();
+    PermissionHandler().listenForPermission();
+    getWasteParice();
+    check_token();
+  }
+
+  void getWasteParice() async {
+    var wastePrice = await secureStorage.readSecureData('paperPrice');
+    paperPrice = int.parse(wastePrice);
+  }
 
   void getCurrentLocation() async {
     var position = await Geolocator.getCurrentPosition(
@@ -121,101 +91,6 @@ class UserOrderState extends State<UserOrder> {
     }
     print(latitude);
     print(longitude);
-  }
-
-  int? totalWasteWeight;
-  double? totalHarga;
-  String? totalFeeBeever = 3000.toString();
-  String? userLocation;
-  String? wasteType = 'Paper';
-  int? wasteWeight;
-  String? subtotal;
-
-  void _orderUser() async {
-    try {
-      var authToken = await secureStorage.readSecureData('token');
-      var token = authToken;
-
-      final request = await http.MultipartRequest(
-          'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
-
-      if (image1 != null && image2 == null && image3 == null) {
-        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
-            contentType: MediaType('images[]', 'jpg'));
-        request.files.add(file);
-      } else if (image1 != null && image2 != null && image3 == null) {
-        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
-            contentType: MediaType('images[]', 'jpg'));
-        request.files.add(file);
-        final file2 = await http.MultipartFile.fromPath(
-            'images[]', image2!.path,
-            contentType: MediaType('images[]', 'jpg'));
-        request.files.add(file2);
-      } else if (image1 != null && image2 != null && image3 != null) {
-        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
-            contentType: MediaType('images[]', 'jpg'));
-        request.files.add(file);
-        final file2 = await http.MultipartFile.fromPath(
-            'images[]', image2!.path,
-            contentType: MediaType('images[]', 'jpg'));
-        request.files.add(file2);
-        final file3 = await http.MultipartFile.fromPath(
-            'images[]', image3!.path,
-            contentType: MediaType('images[]', 'jpg'));
-        request.files.add(file3);
-      }
-      request.fields['total_weight'] = '$totalWasteWeight';
-      request.fields['total'] = '$totalHarga';
-      request.fields['subtotal'] = '$totalHarga';
-      request.fields['fee_beever'] = '$totalFeeBeever';
-      request.fields['waste_type'] = '$wasteType';
-      request.fields['waste_weight'] = '$totalWasteWeight';
-      request.fields['tempat'] = '$namaTempat';
-      request.fields['location1'] = '$alamat';
-      request.fields['lat'] = '$latitude';
-      request.fields['lng'] = '$longitude';
-      request.headers.addAll({
-        'Authorization': 'Bearer $authToken',
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Charset': 'utf-8'
-      });
-
-      try {
-        setState(() => loading = true);
-        final streamedResponse = await request.send();
-        final response = await http.Response.fromStream(streamedResponse);
-        if (response.statusCode == 200) {
-          setState(() => loading = false);
-          Get.offAll(() => const NavigatorUser());
-          Fluttertoast.showToast(
-              msg: 'Pesanan anda berhasil dibuat',
-              toastLength: Toast.LENGTH_SHORT,
-              backgroundColor: const Color(0xFFF8C503));
-        } else if (response.statusCode == 400) {
-          setState(() => loading = false);
-          Get.snackbar('Bad Request', response.body,
-              snackPosition: SnackPosition.BOTTOM,
-              backgroundColor: Colors.amber,
-              colorText: Colors.white,
-              isDismissible: true,
-              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
-              duration: const Duration(seconds: 3),
-              margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
-              icon: const Icon(Icons.error_outlined, color: Colors.red));
-        }
-      } catch (e) {
-        setState(() => loading = false);
-        print('error 1 => $e');
-        showDialog(
-            context: context,
-            builder: (context) {
-              return Container(color: Colors.white, child: Text('$e'));
-            });
-      }
-    } catch (e) {
-      setState(() => loading = false);
-      print('error 2 => $e');
-    }
   }
 
   void errorResponse() {
@@ -250,13 +125,6 @@ class UserOrderState extends State<UserOrder> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    PermissionHandler().listenForPermission();
-    check_token();
-  }
-
   check_token() async {
     var token = await secureStorage.readSecureData('token');
     if (mounted) {
@@ -265,520 +133,6 @@ class UserOrderState extends State<UserOrder> {
       });
     }
     getCurrentLocation();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    double totalWeight = initialPaper +
-        initialMixPaper +
-        initialGlass +
-        initialMetal +
-        initialOil +
-        initialPlastic +
-        initialSachet;
-
-    double totalPrice = totalWeight * 3750;
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Collection', style: onboardingGetStarted),
-        centerTitle: true,
-        backgroundColor: Colors.amber,
-        automaticallyImplyLeading: false,
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/bg_warning.png'),
-                              fit: BoxFit.fitWidth),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset(
-                                'assets/bg_warning_person.png',
-                                width: MediaQuery.of(context).size.width / 4,
-                              ),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: const [
-                                    Text(
-                                      'Minimum Request 5 Kg',
-                                      style: onboardingGetStarted,
-                                    ),
-                                    Text(
-                                      'untuk saat ini berat minimal sampah yang bisa kami jemput adalah 5 Kg',
-                                      style: onboardingGetStartedSmallWhite,
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding: defaultPadding4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Waste Categories',
-                                style: titleBodyMini),
-                            const SizedBox(height: 10),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isPaperSelected = !isPaperSelected;
-                                        initialPaper = 0.0;
-                                        initialMixPaper = 0.0;
-                                      });
-                                    },
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 80,
-                                      child: Image.asset((isPaperSelected ==
-                                              true)
-                                          ? 'icons/waste_icons/paper_button.png'
-                                          : 'icons/waste_icons/paper_off.png'),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Fluttertoast.showToast(
-                                        msg: 'Segera Tayang',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        backgroundColor:
-                                            const Color(0xFFF8C503)),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 80,
-                                      child: Image.asset((isPlasticSelected ==
-                                              true)
-                                          ? 'icons/waste_icons/plastic_button.png'
-                                          : 'icons/waste_icons/plastic_off.png'),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Fluttertoast.showToast(
-                                        msg: 'Segera Tayang',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        backgroundColor:
-                                            const Color(0xFFF8C503)),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 80,
-                                      child: Image.asset((isGlassSelected ==
-                                              true)
-                                          ? 'icons/waste_icons/glass_button.png'
-                                          : 'icons/waste_icons/glass_off.png'),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Fluttertoast.showToast(
-                                        msg: 'Segera Tayang',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        backgroundColor:
-                                            const Color(0xFFF8C503)),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 80,
-                                      child: Image.asset((isSachetSelected ==
-                                              true)
-                                          ? 'icons/waste_icons/sachet_button.png'
-                                          : 'icons/waste_icons/sachet_off.png'),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Fluttertoast.showToast(
-                                        msg: 'Segera Tayang',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        backgroundColor:
-                                            const Color(0xFFF8C503)),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 80,
-                                      child: Image.asset((isMetalSelected ==
-                                              true)
-                                          ? 'icons/waste_icons/metal_button.png'
-                                          : 'icons/waste_icons/metal_off.png'),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () => Fluttertoast.showToast(
-                                        msg: 'Segera Tayang',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        backgroundColor:
-                                            const Color(0xFFF8C503)),
-                                    child: SizedBox(
-                                      width: 100,
-                                      height: 80,
-                                      child: Image.asset((isOilSelected == true)
-                                          ? 'icons/waste_icons/oil_button.png'
-                                          : 'icons/waste_icons/oil_off.png'),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      (isPaperSelected == true)
-                          ? paperCard()
-                          : const SizedBox(),
-                      (isPlasticSelected == true)
-                          ? plasticCard()
-                          : const SizedBox(),
-                      (isGlassSelected == true)
-                          ? glassCard()
-                          : const SizedBox(),
-                      (isSachetSelected == true)
-                          ? sachetCard()
-                          : const SizedBox(),
-                      (isMetalSelected == true)
-                          ? metalCard()
-                          : const SizedBox(),
-                      (isOilSelected == true) ? oilCard() : const SizedBox(),
-                      Padding(
-                        padding: defaultPadding4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: MediaQuery.of(context).size.width,
-                              child: const Text(
-                                  'Take a Photos (up to 3 photos)',
-                                  style: titleBodyMini),
-                            ),
-                            const SizedBox(height: 10),
-                            Row(
-                              children: [
-                                image1 != null
-                                    ? GestureDetector(
-                                        onTap: () {
-                                          _getFromCam1();
-                                        },
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              4,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              8,
-                                          child: ClipRRect(
-                                            borderRadius: roundedRect,
-                                            child: Image.file(image1!,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _getFromCam1();
-                                        },
-                                        child: Image.asset(
-                                          'icons/icons_others/add_pict.png',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                        ),
-                                      ),
-                                const SizedBox(width: 25),
-                                image2 != null
-                                    ? GestureDetector(
-                                        onTap: _getFromCam2,
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              4,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              8,
-                                          child: ClipRRect(
-                                              borderRadius: roundedRect,
-                                              child: Image.file(image2!,
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _getFromCam2();
-                                        },
-                                        child: Image.asset(
-                                          'icons/icons_others/add_pict.png',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                        ),
-                                      ),
-                                const SizedBox(width: 25),
-                                image3 != null
-                                    ? GestureDetector(
-                                        onTap: _getFromCam3,
-                                        child: SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              4,
-                                          height: MediaQuery.of(context)
-                                                  .size
-                                                  .height /
-                                              8,
-                                          child: ClipRRect(
-                                              borderRadius: roundedRect,
-                                              child: Image.file(image3!,
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                      )
-                                    : GestureDetector(
-                                        onTap: () {
-                                          _getFromCam3();
-                                        },
-                                        child: Image.asset(
-                                          'icons/icons_others/add_pict.png',
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              5,
-                                        ),
-                                      ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                          padding: defaultPadding4,
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Estimated Earnings',
-                                  style: titleBodyMini,
-                                ),
-                                Card(
-                                    shape: roundedRectBor,
-                                    child: Column(children: [
-                                      Padding(
-                                        padding: defaultPadding3,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            const Text('Estimated Weight (Kg)',
-                                                style: onboardingNormalText),
-                                            Text(totalWeight.toString())
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                          padding: defaultPadding3,
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const Text('Total Earnings',
-                                                    style:
-                                                        onboardingNormalText),
-                                                Text(
-                                                    NumberFormat.simpleCurrency(
-                                                            locale: 'ID',
-                                                            decimalDigits: 0)
-                                                        .format(totalPrice))
-                                              ])),
-                                      const Divider(height: 10),
-                                      Padding(
-                                          padding: defaultPadding3,
-                                          child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                const Text('Estimated Earnings',
-                                                    style:
-                                                        onboardingNormalText),
-                                                Text(
-                                                    NumberFormat.simpleCurrency(
-                                                            locale: 'ID',
-                                                            decimalDigits: 0)
-                                                        .format(totalPrice))
-                                              ]))
-                                    ]))
-                              ])),
-                      Padding(
-                        padding: defaultPadding4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Pick Up Location',
-                                style: titleBodyMini),
-                            Card(
-                              shape: roundedRectBor,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: defaultPadding2,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Image.asset(
-                                                'icons/icons_others/ico_location.png',
-                                                width: 30),
-                                            const SizedBox(width: 10),
-                                            Column(
-                                              children: [
-                                                const SizedBox(width: 10),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2,
-                                                  child: Text(
-                                                    (alamat == null)
-                                                        ? 'Nama Tempat'
-                                                        : namaTempat.toString(),
-                                                    style: titleBodyMini
-                                                        .copyWith(fontSize: 16),
-                                                  ),
-                                                ),
-                                                const SizedBox(width: 10),
-                                                SizedBox(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width /
-                                                      2,
-                                                  child: Text((alamat == null)
-                                                      ? 'Lokasimu'
-                                                      : alamat.toString()),
-                                                ),
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        GestureDetector(
-                                          onTap: showPlacePicker,
-                                          child: const Text('Change',
-                                              style: onboardingSkip),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: defaultPadding4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('Notes', style: titleBodyMini),
-                            Card(
-                              shape: roundedRectBor,
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width / 1,
-                                height: MediaQuery.of(context).size.height / 4,
-                                child: const Padding(
-                                  padding: EdgeInsets.all(8.0),
-                                  child: TextField(
-                                    maxLines: 10,
-                                    keyboardType: TextInputType.multiline,
-                                    decoration: InputDecoration.collapsed(
-                                      hintText: 'Your Notes Here',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      (totalWeight >= 5)
-                          ? SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.1,
-                              height: MediaQuery.of(context).size.height / 12,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: mainColor2, shape: roundedRectBor),
-                                child: const Text('Find a Beever',
-                                    style: onboardingGetStarted),
-                                onPressed: () {
-                                  if (token_local == null) {
-                                    showAnimatedDialogue();
-                                  } else {
-                                    if (mounted) {
-                                      setState(() {
-                                        totalWasteWeight = totalWeight.toInt();
-                                        totalHarga = totalPrice;
-                                      });
-                                    }
-                                    getCurrentLocation();
-                                    showAnimatedDialogueFinish();
-                                  }
-                                },
-                              ))
-                          : SizedBox(
-                              width: MediaQuery.of(context).size.width / 1.1,
-                              height: MediaQuery.of(context).size.height / 12,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: mainColor1, shape: roundedRectBor),
-                                child: const Text('Minimal berat 5 Kg',
-                                    style: onboardingGetStarted),
-                                onPressed: () {},
-                              )),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 6,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            loading
-                ? Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    color: const Color.fromRGBO(0, 0, 0, 0.5),
-                    alignment: Alignment.center,
-                    child: const SpinKitWave(size: 50, color: mainColor2))
-                : Container()
-          ],
-        ),
-      ),
-    );
   }
 
   void showAnimatedDialogueFinish() {
@@ -953,402 +307,783 @@ class UserOrderState extends State<UserOrder> {
   Padding paperCard() {
     return Padding(
       padding: defaultPaddingS,
-      child: Card(
-        child: Padding(
-          padding: defaultPaddingS,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: GetBuilder<WasteCountController>(
+        init: WasteCountController(),
+        initState: (_) {},
+        builder: (controller) {
+          return Card(
+            child: Padding(
+              padding: defaultPaddingS,
+              child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        'icons/waste_icons/paper_button.png',
-                        width: 60,
+                      Row(
+                        children: [
+                          Image.asset(
+                            'icons/waste_icons/paper_button.png',
+                            width: 60,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          const Text(
+                            'Paper',
+                            style: bodySlimBody,
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Text(
-                        'Paper',
-                        style: bodySlimBody,
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Get.find<WasteCountController>()
+                                    .initialPaperMinus();
+                              },
+                              icon: const Icon(
+                                Icons.remove_circle_outline,
+                                color: Colors.amber,
+                              )),
+                          Text(
+                            '${controller.initialPaper} Kg',
+                            style: bodySlimBody,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Get.find<WasteCountController>()
+                                    .initialPaperPlus();
+                              },
+                              icon: const Icon(
+                                Icons.add_circle_outline_outlined,
+                                color: Colors.amber,
+                              )),
+                        ],
                       ),
                     ],
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                          onPressed: () {
-                            if (mounted) {
-                              setState(() {
-                                (initialPaper > 0) ? initialPaper-- : null;
-                              });
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.remove_circle_outline,
-                            color: Colors.amber,
-                          )),
-                      Text(
-                        '$initialPaper Kg',
-                        style: bodySlimBody,
+                      Row(
+                        children: [
+                          Image.asset(
+                            'icons/waste_icons/mix_paper.png',
+                            width: 60,
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          const Text(
+                            'Mix Paper',
+                            style: bodySlimBody,
+                          ),
+                        ],
                       ),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              initialPaper++;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.add_circle_outline_outlined,
-                            color: Colors.amber,
-                          )),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                if (mounted) {
+                                  Get.find<WasteCountController>()
+                                      .initialMixPaperMinus();
+                                }
+                              },
+                              icon: const Icon(
+                                Icons.remove_circle_outline,
+                                color: Colors.amber,
+                              )),
+                          Text(
+                            '${controller.initialMixPaper} Kg',
+                            style: bodySlimBody,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                Get.find<WasteCountController>()
+                                    .initialMixPaperPlus();
+                              },
+                              icon: const Icon(
+                                Icons.add_circle_outline_outlined,
+                                color: Colors.amber,
+                              )),
+                        ],
+                      ),
                     ],
                   ),
                 ],
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _getFromCam1() async {
+    XFile? pickedFile1 = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxHeight: 480,
+      maxWidth: 480,
+    );
+    if (mounted) {
+      if (pickedFile1 != null) {
+        setState(() {
+          image1 = File(pickedFile1.path);
+        });
+        print(image1);
+      }
+    }
+  }
+
+  void _getFromCam2() async {
+    XFile? pickedFile2 = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxHeight: 480,
+      maxWidth: 480,
+    );
+    setState(() {
+      if (pickedFile2 != null) {
+        image2 = File(pickedFile2.path);
+      } else {
+        null;
+      }
+    });
+  }
+
+  void _getFromCam3() async {
+    XFile? pickedFile3 = await ImagePicker().pickImage(
+      source: ImageSource.camera,
+      maxHeight: 480,
+      maxWidth: 480,
+    );
+    setState(() {
+      if (pickedFile3 != null) {
+        image3 = File(pickedFile3.path);
+      } else {
+        null;
+      }
+    });
+  }
+
+  void _orderUser() async {
+    try {
+      var authToken = await secureStorage.readSecureData('token');
+      var token = authToken;
+
+      final request = await http.MultipartRequest(
+          'POST', Uri.parse(EndPoint.baseApiURL + EndPoint.userOrder));
+
+      if (image1 != null && image2 == null && image3 == null) {
+        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file);
+      } else if (image1 != null && image2 != null && image3 == null) {
+        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file);
+        final file2 = await http.MultipartFile.fromPath(
+            'images[]', image2!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file2);
+      } else if (image1 != null && image2 != null && image3 != null) {
+        final file = await http.MultipartFile.fromPath('images[]', image1!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file);
+        final file2 = await http.MultipartFile.fromPath(
+            'images[]', image2!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file2);
+        final file3 = await http.MultipartFile.fromPath(
+            'images[]', image3!.path,
+            contentType: MediaType('image', 'jpg'));
+        request.files.add(file3);
+      }
+      request.fields['total_weight'] = '$totalWasteWeight';
+      request.fields['total'] = '$totalHarga';
+      request.fields['subtotal'] = '$totalHarga';
+      request.fields['fee_beever'] = '$totalFeeBeever';
+      request.fields['waste_type'] = '$wasteType';
+      request.fields['waste_weight'] = '$totalWasteWeight';
+      request.fields['tempat'] = '$namaTempat';
+      request.fields['location1'] = '$alamat';
+      request.fields['notes'] = '$_notesController';
+      request.fields['lat'] = '$latitude';
+      request.fields['lng'] = '$longitude';
+      request.headers.addAll({
+        'Authorization': 'Bearer $authToken',
+        'Content-Type': 'multipart/form-data'
+      });
+
+      try {
+        setState(() => loading = true);
+        final streamedResponse = await request.send();
+        final response = await http.Response.fromStream(streamedResponse);
+        print(response.body);
+        Map<String, dynamic> responseJSON = await jsonDecode(response.body);
+        if (response.statusCode == 200) {
+          setState(() => loading = false);
+          Get.offAll(() => const NavigatorUser());
+        } else if (response.statusCode == 400) {
+          setState(() => loading = false);
+          Get.snackbar('Bad Request', response.body,
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: Colors.amber,
+              colorText: Colors.white,
+              isDismissible: true,
+              forwardAnimationCurve: Curves.easeInOutCubicEmphasized,
+              duration: const Duration(seconds: 3),
+              margin: const EdgeInsets.only(bottom: 300, left: 20, right: 20),
+              icon: const Icon(
+                Icons.error_outlined,
+                color: Colors.red,
+              ));
+        }
+      } catch (e) {
+        setState(() => loading = false);
+        print('error 1 => $e');
+        Get.offAll(() => const NavigatorUser());
+      }
+    } catch (e) {
+      setState(() => loading = false);
+      print('error 2 => $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('New Collection', style: onboardingGetStarted),
+        centerTitle: true,
+        backgroundColor: Colors.amber,
+        automaticallyImplyLeading: false,
+      ),
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+        child: GetBuilder<WasteCountController>(
+          init: WasteCountController(),
+          initState: (_) {},
+          builder: (controller) {
+            var paper = controller.initialPaper.toDouble();
+            var mixPaper = controller.initialMixPaper.toDouble();
+            var totalWeight = paper + mixPaper;
+            var totalPrice = totalWeight * paperPrice!;
+            return Stack(
+              children: [
+                SingleChildScrollView(
+                  child: Stack(
                     children: [
-                      Image.asset(
-                        'icons/waste_icons/mix_paper.png',
-                        width: 60,
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      const Text(
-                        'Mix Paper',
-                        style: bodySlimBody,
+                      Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            decoration: const BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('assets/bg_warning.png'),
+                                  fit: BoxFit.fitWidth),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 15),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Image.asset(
+                                    'assets/bg_warning_person.png',
+                                    width:
+                                        MediaQuery.of(context).size.width / 4,
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: const [
+                                        Text(
+                                          'Minimum Request 5 Kg',
+                                          style: onboardingGetStarted,
+                                        ),
+                                        Text(
+                                          'untuk saat ini berat minimal sampah yang bisa kami jemput adalah 5 Kg',
+                                          style: onboardingGetStartedSmallWhite,
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding: defaultPadding4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Waste Categories',
+                                    style: titleBodyMini),
+                                const SizedBox(height: 10),
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            isPaperSelected = !isPaperSelected;
+                                          });
+                                        },
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 80,
+                                          child: Image.asset((isPaperSelected ==
+                                                  true)
+                                              ? 'icons/waste_icons/paper_button.png'
+                                              : 'icons/waste_icons/paper_off.png'),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Fluttertoast.showToast(
+                                            msg: 'Segera Tayang',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor:
+                                                const Color(0xFFF8C503)),
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 80,
+                                          child: Image.asset((isPlasticSelected ==
+                                                  true)
+                                              ? 'icons/waste_icons/plastic_button.png'
+                                              : 'icons/waste_icons/plastic_off.png'),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Fluttertoast.showToast(
+                                            msg: 'Segera Tayang',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor:
+                                                const Color(0xFFF8C503)),
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 80,
+                                          child: Image.asset((isGlassSelected ==
+                                                  true)
+                                              ? 'icons/waste_icons/glass_button.png'
+                                              : 'icons/waste_icons/glass_off.png'),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Fluttertoast.showToast(
+                                            msg: 'Segera Tayang',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor:
+                                                const Color(0xFFF8C503)),
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 80,
+                                          child: Image.asset((isSachetSelected ==
+                                                  true)
+                                              ? 'icons/waste_icons/sachet_button.png'
+                                              : 'icons/waste_icons/sachet_off.png'),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Fluttertoast.showToast(
+                                            msg: 'Segera Tayang',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor:
+                                                const Color(0xFFF8C503)),
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 80,
+                                          child: Image.asset((isMetalSelected ==
+                                                  true)
+                                              ? 'icons/waste_icons/metal_button.png'
+                                              : 'icons/waste_icons/metal_off.png'),
+                                        ),
+                                      ),
+                                      GestureDetector(
+                                        onTap: () => Fluttertoast.showToast(
+                                            msg: 'Segera Tayang',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            backgroundColor:
+                                                const Color(0xFFF8C503)),
+                                        child: SizedBox(
+                                          width: 100,
+                                          height: 80,
+                                          child: Image.asset((isOilSelected ==
+                                                  true)
+                                              ? 'icons/waste_icons/oil_button.png'
+                                              : 'icons/waste_icons/oil_off.png'),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          (isPaperSelected == true)
+                              ? paperCard()
+                              : const SizedBox(),
+                          Padding(
+                            padding: defaultPadding4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: const Text(
+                                      'Take a Photos (up to 3 photos)',
+                                      style: titleBodyMini),
+                                ),
+                                const SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    image1 != null
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              _getFromCam1();
+                                            },
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  4,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  8,
+                                              child: ClipRRect(
+                                                borderRadius: roundedRect,
+                                                child: Image.file(image1!,
+                                                    fit: BoxFit.cover),
+                                              ),
+                                            ),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () {
+                                              _getFromCam1();
+                                            },
+                                            child: Image.asset(
+                                              'icons/icons_others/add_pict.png',
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  5,
+                                            ),
+                                          ),
+                                    const SizedBox(width: 25),
+                                    image2 != null
+                                        ? GestureDetector(
+                                            onTap: _getFromCam2,
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  4,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  8,
+                                              child: ClipRRect(
+                                                  borderRadius: roundedRect,
+                                                  child: Image.file(image2!,
+                                                      fit: BoxFit.cover)),
+                                            ),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () {
+                                              _getFromCam2();
+                                            },
+                                            child: Image.asset(
+                                              'icons/icons_others/add_pict.png',
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  5,
+                                            ),
+                                          ),
+                                    const SizedBox(width: 25),
+                                    image3 != null
+                                        ? GestureDetector(
+                                            onTap: _getFromCam3,
+                                            child: SizedBox(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  4,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height /
+                                                  8,
+                                              child: ClipRRect(
+                                                  borderRadius: roundedRect,
+                                                  child: Image.file(image3!,
+                                                      fit: BoxFit.cover)),
+                                            ),
+                                          )
+                                        : GestureDetector(
+                                            onTap: () {
+                                              _getFromCam3();
+                                            },
+                                            child: Image.asset(
+                                              'icons/icons_others/add_pict.png',
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  5,
+                                            ),
+                                          ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                          GetBuilder<WasteCountController>(
+                            init: WasteCountController(),
+                            initState: (_) {},
+                            builder: (controller) {
+                              return Padding(
+                                  padding: defaultPadding4,
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text(
+                                          'Estimated Earnings',
+                                          style: titleBodyMini,
+                                        ),
+                                        Card(
+                                            shape: roundedRectBor,
+                                            child: Column(children: [
+                                              Padding(
+                                                padding: defaultPadding3,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    const Text(
+                                                        'Estimated Weight (Kg)',
+                                                        style:
+                                                            onboardingNormalText),
+                                                    Text('$totalWeight')
+                                                  ],
+                                                ),
+                                              ),
+                                              Padding(
+                                                  padding: defaultPadding3,
+                                                  child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                            'Total Earnings',
+                                                            style:
+                                                                onboardingNormalText),
+                                                        Text(NumberFormat
+                                                                .simpleCurrency(
+                                                                    locale:
+                                                                        'ID',
+                                                                    decimalDigits:
+                                                                        0)
+                                                            .format(totalPrice))
+                                                      ])),
+                                              const Divider(height: 10),
+                                              Padding(
+                                                  padding: defaultPadding3,
+                                                  child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .spaceBetween,
+                                                      children: [
+                                                        const Text(
+                                                            'Estimated Earnings',
+                                                            style:
+                                                                onboardingNormalText),
+                                                        Text(NumberFormat
+                                                                .simpleCurrency(
+                                                                    locale:
+                                                                        'ID',
+                                                                    decimalDigits:
+                                                                        0)
+                                                            .format(totalPrice))
+                                                      ]))
+                                            ]))
+                                      ]));
+                            },
+                          ),
+                          Padding(
+                            padding: defaultPadding4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Pick Up Location',
+                                    style: titleBodyMini),
+                                Card(
+                                  shape: roundedRectBor,
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: defaultPadding2,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                    'icons/icons_others/ico_location.png',
+                                                    width: 30),
+                                                const SizedBox(width: 10),
+                                                Column(
+                                                  children: [
+                                                    const SizedBox(width: 10),
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              2,
+                                                      child: Text(
+                                                        (alamat == null)
+                                                            ? 'Nama Tempat'
+                                                            : namaTempat
+                                                                .toString(),
+                                                        style: titleBodyMini
+                                                            .copyWith(
+                                                                fontSize: 16),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    SizedBox(
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .width /
+                                                              2,
+                                                      child: Text((alamat ==
+                                                              null)
+                                                          ? 'Lokasimu'
+                                                          : alamat.toString()),
+                                                    ),
+                                                  ],
+                                                )
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                              onTap: showPlacePicker,
+                                              child: const Text('Change',
+                                                  style: onboardingSkip),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: defaultPadding4,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Notes', style: titleBodyMini),
+                                Card(
+                                  shape: roundedRectBor,
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width / 1,
+                                    height:
+                                        MediaQuery.of(context).size.height / 4,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: TextField(
+                                        controller: _notesController,
+                                        maxLines: 10,
+                                        keyboardType: TextInputType.multiline,
+                                        decoration:
+                                            const InputDecoration.collapsed(
+                                          hintText: 'Your Notes Here',
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          (image1 != null &&
+                                  image2 != null &&
+                                  image3 != null &&
+                                  totalWeight > 5)
+                              ? SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 12,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: mainColor2,
+                                        shape: roundedRectBor),
+                                    child: const Text('Find a Beever',
+                                        style: onboardingGetStarted),
+                                    onPressed: () {
+                                      if (token_local == null) {
+                                        showAnimatedDialogue();
+                                      } else {
+                                        if (mounted) {
+                                          setState(() {
+                                            totalWasteWeight =
+                                                totalWeight.toInt();
+                                            totalHarga = totalPrice;
+                                          });
+                                        }
+                                        getCurrentLocation();
+                                        showAnimatedDialogueFinish();
+                                      }
+                                    },
+                                  ))
+                              : SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width / 1.1,
+                                  height:
+                                      MediaQuery.of(context).size.height / 12,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        primary: mainColor1,
+                                        shape: roundedRectBor),
+                                    child: const Text(
+                                        'Minimal berat 5Kg & Foto Lengkap',
+                                        style: onboardingGetStarted),
+                                    onPressed: () {},
+                                  )),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height / 6,
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      IconButton(
-                          onPressed: () {
-                            if (mounted) {
-                              setState(() {
-                                (initialMixPaper > 0)
-                                    ? initialMixPaper--
-                                    : null;
-                              });
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.remove_circle_outline,
-                            color: Colors.amber,
-                          )),
-                      Text(
-                        '$initialMixPaper Kg',
-                        style: bodySlimBody,
-                      ),
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              initialMixPaper++;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.add_circle_outline_outlined,
-                            color: Colors.amber,
-                          )),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding plasticCard() {
-    return Padding(
-      padding: defaultPaddingS,
-      child: Card(
-        child: Padding(
-          padding: defaultPaddingS,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    'icons/waste_icons/plastic_button.png',
-                    width: 60,
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  const Text(
-                    'Plastic',
-                    style: bodySlimBody,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          (initialPlastic > 0) ? initialPlastic-- : null;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.remove_circle_outline_outlined,
-                        color: Colors.amber,
-                      )),
-                  Text(
-                    '$initialPlastic Kg',
-                    style: bodySlimBody,
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        setState(() {
-                          initialPlastic++;
-                        });
-                      },
-                      icon: const Icon(
-                        Icons.add_circle_outline_outlined,
-                        color: Colors.amber,
-                      )),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Padding glassCard() {
-    return Padding(
-      padding: defaultPaddingS,
-      child: Card(
-        margin: defaultPaddingS,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  'icons/waste_icons/glass_button.png',
-                  width: 60,
                 ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Text(
-                  'Glass',
-                  style: bodySlimBody,
-                ),
+                loading
+                    ? Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
+                        color: const Color.fromRGBO(0, 0, 0, 0.5),
+                        alignment: Alignment.center,
+                        child: const SpinKitWave(size: 50, color: mainColor2))
+                    : Container()
               ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        (initialGlass > 0) ? initialGlass-- : null;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_circle_outline_outlined,
-                      color: Colors.amber,
-                    )),
-                Text(
-                  '$initialGlass Kg',
-                  style: bodySlimBody,
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        initialGlass++;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_outline_outlined,
-                      color: Colors.amber,
-                    )),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding sachetCard() {
-    return Padding(
-      padding: defaultPaddingS,
-      child: Card(
-        margin: defaultPaddingS,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  'icons/waste_icons/sachet_button.png',
-                  width: 60,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Text(
-                  'Sachet',
-                  style: bodySlimBody,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        (initialSachet > 0) ? initialSachet-- : null;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_circle_outline,
-                      color: Colors.amber,
-                    )),
-                Text(
-                  '$initialSachet Kg',
-                  style: bodySlimBody,
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        initialSachet++;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_outline_outlined,
-                      color: Colors.amber,
-                    )),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding metalCard() {
-    return Padding(
-      padding: defaultPaddingS,
-      child: Card(
-        margin: defaultPaddingS,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  'icons/waste_icons/metal_button.png',
-                  width: 60,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Text(
-                  'Metal',
-                  style: bodySlimBody,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        (initialMetal > 0) ? initialMetal-- : null;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_circle_outline,
-                      color: Colors.amber,
-                    )),
-                Text(
-                  '$initialMetal Kg',
-                  style: bodySlimBody,
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        initialMetal++;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_outline_outlined,
-                      color: Colors.amber,
-                    )),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding oilCard() {
-    return Padding(
-      padding: defaultPaddingS,
-      child: Card(
-        margin: defaultPaddingS,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  'icons/waste_icons/oil_button.png',
-                  width: 60,
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                const Text(
-                  'Oil',
-                  style: bodySlimBody,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        (initialOil > 0) ? initialOil-- : null;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.remove_circle_outline,
-                      color: Colors.amber,
-                    )),
-                Text(
-                  '$initialOil Kg',
-                  style: bodySlimBody,
-                ),
-                IconButton(
-                    onPressed: () {
-                      setState(() {
-                        initialOil++;
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.add_circle_outline_outlined,
-                      color: Colors.amber,
-                    )),
-              ],
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

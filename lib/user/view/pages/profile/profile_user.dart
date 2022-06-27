@@ -47,7 +47,7 @@ class UserProfileState extends State<UserProfile> {
     }
     if (token != null) {
       getRole(token);
-      await ApiCallsGetData().getUserData();
+      await ApiCallsGetDataUser().getUserData();
       if (mounted) {
         setState(() {});
       }
@@ -169,7 +169,8 @@ class UserProfileState extends State<UserProfile> {
                                     height:
                                         MediaQuery.of(context).size.height / 7,
                                     child: FutureBuilder(
-                                        future: ApiCallsGetData().getUserData(),
+                                        future:
+                                            ApiCallsGetDataUser().getUserData(),
                                         builder: (BuildContext context,
                                             AsyncSnapshot snapshot) {
                                           if (snapshot.connectionState ==
@@ -276,7 +277,7 @@ class UserProfileState extends State<UserProfile> {
                                                                             .email)));
                                                             if (result ==
                                                                 'back') {
-                                                              await ApiCallsGetData()
+                                                              await ApiCallsGetDataUser()
                                                                   .getUserData();
                                                               setState(() {});
                                                             }
@@ -300,7 +301,7 @@ class UserProfileState extends State<UserProfile> {
                                                                             .email)));
                                                             if (result ==
                                                                 'back') {
-                                                              await ApiCallsGetData()
+                                                              await ApiCallsGetDataUser()
                                                                   .getUserData();
                                                               setState(() {});
                                                             }

@@ -1,24 +1,26 @@
 // To parse this JSON data, do
 //
-//     final wasteList = wasteListFromJson(jsonString);
+//     final wastePrice = wastePriceFromJson(jsonString);
 
 import 'dart:convert';
 
-WasteList wasteListFromJson(String str) => WasteList.fromJson(json.decode(str));
+WastePrice wastePriceFromJson(String str) =>
+    WastePrice.fromJson(json.decode(str));
 
-String wasteListToJson(WasteList data) => json.encode(data.toJson());
+String wastePriceToJson(WastePrice data) => json.encode(data.toJson());
 
-class WasteList {
-  final int? success;
-  final String? message;
-  final List<Datum>? data;
-  WasteList({
+class WastePrice {
+  WastePrice({
     this.success,
     this.message,
     this.data,
   });
 
-  factory WasteList.fromJson(Map<String, dynamic> json) => WasteList(
+  final int? success;
+  final String? message;
+  final List<Datum>? data;
+
+  factory WastePrice.fromJson(Map<String, dynamic> json) => WastePrice(
         success: json["success"],
         message: json["message"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
@@ -32,11 +34,6 @@ class WasteList {
 }
 
 class Datum {
-  final int? id;
-  final String? type;
-  final String? price;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
   Datum({
     this.id,
     this.type,
@@ -44,6 +41,12 @@ class Datum {
     this.createdAt,
     this.updatedAt,
   });
+
+  final int? id;
+  final String? type;
+  final String? price;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
@@ -57,7 +60,7 @@ class Datum {
         "id": id,
         "type": type,
         "price": price,
-        "created_at": createdAt?.toIso8601String(),
-        "updated_at": updatedAt?.toIso8601String(),
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
       };
 }
