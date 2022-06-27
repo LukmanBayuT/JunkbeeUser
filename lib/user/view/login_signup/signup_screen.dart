@@ -169,22 +169,22 @@ class SignUpUserState extends State<SignUpUser> {
                         ),
                         Padding(
                           padding: defaultPadding10,
-                          child: Obx(() => TextFormField(
-                                onChanged: (asd) {
-                                  if (EmailValidator.validate(asd)) {
-                                    email(true);
-                                  } else {
-                                    email(false);
-                                  }
-                                },
-                                keyboardType: TextInputType.emailAddress,
-                                controller: _emailcont,
-                                style: const TextStyle(fontSize: 22),
-                                decoration: const InputDecoration(
-                                  labelStyle: signScreenTextStyle,
-                                  labelText: 'Email',
-                                ),
-                              )),
+                          child: TextFormField(
+                            onChanged: (asd) {
+                              if (EmailValidator.validate(asd)) {
+                                email(true);
+                              } else {
+                                email(false);
+                              }
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                            controller: _emailcont,
+                            style: const TextStyle(fontSize: 22),
+                            decoration: const InputDecoration(
+                              labelStyle: signScreenTextStyle,
+                              labelText: 'Email',
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: defaultPadding10,
