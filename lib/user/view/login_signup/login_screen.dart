@@ -182,142 +182,157 @@ class SignInUserState extends State<SignInUser> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: SingleChildScrollView(
-          child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(height: MediaQuery.of(context).size.height / 30),
+        body: GestureDetector(
+            onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+            child: SingleChildScrollView(
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Stack(children: [
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            'assets_signscreen/logo.png',
-                            height: MediaQuery.of(context).size.height / 7,
-                          ),
-                          const Text('User App',
-                              style: onboardingTextStyleSkipDone),
-                        ],
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 20),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: defaultPadding10,
-                            child: TextFormField(
-                              keyboardType: TextInputType.emailAddress,
-                              controller: _logincont,
-                              style: const TextStyle(fontSize: 22),
-                              decoration: InputDecoration(
-                                  labelStyle: signScreenTextStyle,
-                                  labelText: 'Email',
-                                  errorText: (_validate)
-                                      ? "Username cannot be empty"
-                                      : null),
-                            ),
-                          ),
-                          Padding(
-                            padding: defaultPadding10,
-                            child: TextFormField(
-                              controller: _passwordcont,
-                              style: const TextStyle(fontSize: 22),
-                              obscureText: (_obsecureText) ? true : false,
-                              decoration: InputDecoration(
-                                  labelStyle: signScreenTextStyle,
-                                  labelText: 'Password',
-                                  errorText: (_validate)
-                                      ? "Password Cannot be Empty"
-                                      : null,
-                                  suffixIcon: IconButton(
-                                      onPressed: () => _toggle(),
-                                      icon: Icon((_obsecureText)
-                                          ? Icons.visibility
-                                          : Icons.visibility_off))),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 30),
-                      Padding(
-                        padding: defaultPadding10,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(),
-                            const Text('Forgot Password?',
-                                style: signScreenTextStyle)
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 30),
-                      SizedBox(
-                          width: MediaQuery.of(context).size.width / 1.4,
-                          height: MediaQuery.of(context).size.height / 13,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.amber, shape: roundedRectBor),
-                            child: const Text('Sign In',
-                                style: onboardingGetStarted),
-                            onPressed: () => _loginUser(),
-                          )),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height / 20,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          GestureDetector(
-                              onTap: () => _onFacebookSignIn(),
-                              child: Image.asset(
-                                'assets_signscreen/facebook_icon.png',
-                                height: MediaQuery.of(context).size.height / 18,
-                              )),
-                          SizedBox(
-                              width: MediaQuery.of(context).size.width / 6),
-                          GestureDetector(
-                              onTap: () => _onGoogleSignIn(),
-                              child: Image.asset(
-                                'assets_signscreen/google_icon.png',
-                                height: MediaQuery.of(context).size.height / 18,
-                              ))
-                        ],
-                      ),
-                      SizedBox(height: MediaQuery.of(context).size.height / 20),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          const Text('Dont have account yet?',
-                              style: signScreenTextStyle),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height / 50),
-                          GestureDetector(
-                            onTap: () => Get.to(() => const SignUpUser()),
-                            child: const Text('Sign Up', style: onboardingSkip),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  (loading)
-                      ? Container(
-                          color: const Color.fromRGBO(0, 0, 0, 0.5),
-                          alignment: Alignment.center,
-                          child: Lottie.asset(
-                              "assets/animation/bee_loading.json",
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 1,
-                              animate: true))
-                      : Container()
-                ],
-              )),
-        ),
-      ),
-    );
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 30),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  'assets_signscreen/logo.png',
+                                  height:
+                                      MediaQuery.of(context).size.height / 7,
+                                ),
+                                const Text('User App',
+                                    style: onboardingTextStyleSkipDone),
+                              ],
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 20),
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: defaultPadding10,
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.emailAddress,
+                                    controller: _logincont,
+                                    style: const TextStyle(fontSize: 22),
+                                    decoration: InputDecoration(
+                                        labelStyle: signScreenTextStyle,
+                                        labelText: 'Email',
+                                        errorText: (_validate)
+                                            ? "Username cannot be empty"
+                                            : null),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: defaultPadding10,
+                                  child: TextFormField(
+                                    controller: _passwordcont,
+                                    style: const TextStyle(fontSize: 22),
+                                    obscureText: (_obsecureText) ? true : false,
+                                    decoration: InputDecoration(
+                                        labelStyle: signScreenTextStyle,
+                                        labelText: 'Password',
+                                        errorText: (_validate)
+                                            ? "Password Cannot be Empty"
+                                            : null,
+                                        suffixIcon: IconButton(
+                                            onPressed: () => _toggle(),
+                                            icon: Icon((_obsecureText)
+                                                ? Icons.visibility
+                                                : Icons.visibility_off))),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 30),
+                            Padding(
+                              padding: defaultPadding10,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(),
+                                  const Text('Forgot Password?',
+                                      style: signScreenTextStyle)
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 30),
+                            SizedBox(
+                                width: MediaQuery.of(context).size.width / 1.4,
+                                height: MediaQuery.of(context).size.height / 13,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.amber,
+                                      shape: roundedRectBor),
+                                  child: const Text('Sign In',
+                                      style: onboardingGetStarted),
+                                  onPressed: () => _loginUser(),
+                                )),
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height / 20,
+                            ),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                      onTap: () => _onFacebookSignIn(),
+                                      child: Image.asset(
+                                        'assets_signscreen/facebook_icon.png',
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                18,
+                                      )),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width /
+                                          6),
+                                  GestureDetector(
+                                      onTap: () => _onGoogleSignIn(),
+                                      child: Image.asset(
+                                          'assets_signscreen/google_icon.png',
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height /
+                                              18))
+                                ]),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 20),
+                            Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Text('Dont have account yet?',
+                                      style: signScreenTextStyle),
+                                  SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height /
+                                              50),
+                                  GestureDetector(
+                                      onTap: () =>
+                                          Get.to(() => const SignUpUser()),
+                                      child: const Text('Sign Up',
+                                          style: onboardingSkip))
+                                ])
+                          ]),
+                      (loading)
+                          ? Container(
+                              color: const Color.fromRGBO(0, 0, 0, 0.5),
+                              alignment: Alignment.center,
+                              child: Lottie.asset(
+                                  "assets/animation/bee_loading.json",
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 1,
+                                  animate: true))
+                          : Container()
+                    ])))));
   }
 }
