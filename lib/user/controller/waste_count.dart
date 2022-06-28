@@ -14,6 +14,7 @@ class WasteCountController extends GetxController {
   RxDouble initialOil = 0.0.obs;
   //total
   RxDouble totalWeight = 0.0.obs;
+  int paperPrice = 3000;
 
   initialPaperPlus() {
     initialPaper + 0.5;

@@ -64,6 +64,7 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
             width: Get.width / 1.1,
             child: Column(
               children: [
+                const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.only(top: 15, bottom: 22),
                   width: Get.width,
@@ -379,6 +380,34 @@ class CollectionStatusUserState extends State<CollectionStatusUser> {
                                                         horizontal: 10),
                                                     child: Text(
                                                       'Kode order pesanan : ${collectiondata.data[index].orderCode}',
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Color(
+                                                              0xFF707070)),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 10),
+                                                    child: Text(
+                                                      'Harga : Rp. ${collectiondata.data[index].total}',
+                                                      style: const TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Color(
+                                                              0xFF707070)),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(height: 10),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 10),
+                                                    child: Text(
+                                                      'Berat Total : ${collectiondata.data[index].totalWeight} Kg',
                                                       style: const TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,

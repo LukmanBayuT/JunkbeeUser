@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,6 +20,7 @@ import 'package:junkbee_user/beever/service/secure_storage.dart';
 import 'package:junkbee_user/user/constant/base_url.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/controller/waste_count.dart';
+import 'package:junkbee_user/user/models/waste_price_models.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_get_data.dart';
 import 'package:junkbee_user/user/service/api_service/api_calls_user_permission.dart';
 import 'package:junkbee_user/user/view/login_signup/login_screen.dart';
@@ -39,7 +41,6 @@ class UserOrderState extends State<UserOrder> {
   File? image1;
   File? image2;
   File? image3;
-
   bool isGlassSelected = false;
   bool isMetalSelected = false;
   bool isOilSelected = false;
@@ -50,7 +51,7 @@ class UserOrderState extends State<UserOrder> {
   bool loading = false;
   String? longitude;
   String? namaTempat = 'Nama Tempat';
-  int? paperPrice;
+  int? paperPrices;
   SecureStorage secureStorage = SecureStorage();
   String? subtotal;
   dynamic token_local = null;
@@ -66,16 +67,18 @@ class UserOrderState extends State<UserOrder> {
 
   @override
   void initState() {
-    ApiCallsGetDataUser().getWastePrice();
     super.initState();
-    PermissionHandler().listenForPermission();
     getWasteParice();
+    ApiCallsGetDataUser().getWastePrice();
+    PermissionHandler().listenForPermission();
     check_token();
   }
 
   void getWasteParice() async {
     var wastePrice = await secureStorage.readSecureData('paperPrice');
-    paperPrice = int.parse(wastePrice);
+    setState(() {
+      paperPrices = int.parse(wastePrice);
+    });
   }
 
   void getCurrentLocation() async {
@@ -506,7 +509,7 @@ class UserOrderState extends State<UserOrder> {
       request.fields['waste_weight'] = '$totalWasteWeight';
       request.fields['tempat'] = '$namaTempat';
       request.fields['location1'] = '$alamat';
-      request.fields['notes'] = '$_notesController';
+      request.fields['notes'] = _notesController.text;
       request.fields['lat'] = '$latitude';
       request.fields['lng'] = '$longitude';
       request.headers.addAll({
@@ -567,7 +570,7 @@ class UserOrderState extends State<UserOrder> {
             var paper = controller.initialPaper.toDouble();
             var mixPaper = controller.initialMixPaper.toDouble();
             var totalWeight = paper + mixPaper;
-            var totalPrice = totalWeight * paperPrice!;
+            var totalPrice = totalWeight * controller.paperPrice;
             return Stack(
               children: [
                 SingleChildScrollView(
@@ -1023,7 +1026,7 @@ class UserOrderState extends State<UserOrder> {
                           (image1 != null &&
                                   image2 != null &&
                                   image3 != null &&
-                                  totalWeight > 5)
+                                  totalWeight >= 5)
                               ? SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width / 1.1,

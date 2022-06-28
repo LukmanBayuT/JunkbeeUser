@@ -116,10 +116,11 @@ class _profileAndBalanceState extends State<profileAndBalance> {
                             padding: defaultPadding2,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Balance', style: textProfileBold),
+                              children: const [
+                                Text('Balance', style: textProfileBold),
                                 Text(
-                                    '${format.format(int.parse(beever?.data.balance))}',
+                                    // '${format.format(int.parse(beever?.data.balance))}',
+                                    'Coming Soon',
                                     style: textProfileBold),
                               ],
                             ),

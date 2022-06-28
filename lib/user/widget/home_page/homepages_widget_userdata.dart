@@ -146,19 +146,25 @@ class _UserDataHomepagesState extends State<UserDataHomepages> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
                                       const Text('Hi,', style: bodyBodyUser),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
                                       Text(
-                                          '${userdata?.data.fullName} as ${userdata?.data.role}',
+                                          '${userdata?.data.fullName} as a ${userdata?.data.role}',
                                           style: bodyBodyUser),
                                       const SizedBox(width: 30),
-                                      Row(children: [
-                                        Image.asset('assets/dompet.png',
-                                            height: 20),
-                                        const SizedBox(width: 10),
-                                        Text(
-                                            '${format.format(int.parse(userdata?.data.balance))}',
-                                            style: bodyBodyUser)
-                                      ])
+                                      // Row(children: [
+                                      //   Image.asset('assets/dompet.png',
+                                      //       height: 20),
+                                      //   const SizedBox(width: 10),
+                                      //   Text(
+                                      //       '${format.format(int.parse(userdata?.data.balance))}',
+                                      //       style: bodyBodyUser)
+                                      // ])
                                     ]);
                               } else {
                                 return const Center(
