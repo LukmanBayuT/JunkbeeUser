@@ -559,11 +559,6 @@ class UserOrderState extends State<UserOrder> {
         centerTitle: true,
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
-        leading: IconButton(
-            onPressed: () {
-              Get.back(canPop: false);
-            },
-            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white)),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

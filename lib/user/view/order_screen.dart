@@ -553,10 +553,15 @@ class UserOrderScreenState extends State<UserOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Collection', style: onboardingGetStarted),
+        title: const Text('New Collections', style: onboardingGetStarted),
         centerTitle: true,
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              Get.back(canPop: false);
+            },
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white)),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

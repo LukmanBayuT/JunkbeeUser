@@ -22,7 +22,7 @@ class UserDataGetStarted extends StatelessWidget {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             GestureDetector(
                 onTap: () {
-                  Get.to(() => const UserOrder());
+                  Get.to(() => const UserOrderScreen());
                 },
                 child: Container(
                     width: MediaQuery.of(context).size.width / 2.5,

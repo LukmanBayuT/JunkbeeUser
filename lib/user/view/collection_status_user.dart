@@ -20,7 +20,7 @@ class CollectionStatusUserOut extends StatefulWidget {
 
 class CollectionStatusUserOutState extends State<CollectionStatusUserOut> {
   dynamic data = null;
-  int index = 0;
+  int index = 1;
   dynamic token_local = null;
 
   @override
@@ -56,14 +56,9 @@ class CollectionStatusUserOutState extends State<CollectionStatusUserOut> {
           width: Get.width,
           height: Get.height,
           child: Column(children: [
-            // Container(
-            //   width: Get.width,
-            //   height: Get.height / 30,
-            //   color: Colors.amberAccent,
-            // ),
             Container(
               width: Get.width,
-              height: Get.height / 4.5,
+              height: Get.height / 6,
               alignment: Alignment.topCenter,
               decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -73,13 +68,6 @@ class CollectionStatusUserOutState extends State<CollectionStatusUserOut> {
                 width: Get.width / 1.1,
                 child: Column(
                   children: [
-                    // Container(
-                    //   padding: const EdgeInsets.only(top: 15, bottom: 22),
-                    //   width: Get.width,
-                    //   alignment: Alignment.topCenter,
-                    //   child:
-                    //       const Text('Collection Status', style: bodyBodyUser),
-                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -490,7 +478,7 @@ class CollectionStatusUserOutState extends State<CollectionStatusUserOut> {
                           : Container(
                               transform: Matrix4.translationValues(0, -25, 0),
                               width: Get.width,
-                              height: Get.height / 1.4,
+                              height: Get.height / 1.35,
                               alignment: Alignment.topCenter,
                               child: ListView.builder(
                                   padding: const EdgeInsets.only(bottom: 20),
