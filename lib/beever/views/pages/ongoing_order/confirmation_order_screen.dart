@@ -6,6 +6,8 @@ import 'package:get/get.dart';
 import 'package:junkbee_user/beever/const/const.dart';
 import 'package:junkbee_user/beever/service/api_calls_get_data.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/location_tracking.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ConfirmationOrderScreen extends StatefulWidget {
   ConfirmationOrderScreen({Key? key, required String this.orderCode})
@@ -39,6 +41,10 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
     });
   }
 
+  void _launchUrl(String url) async {
+    if (!await launchUrl(Uri.parse(url))) throw 'Could not launch $url';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,6 +67,12 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                   var detailsWaste = snapshot.data.data[0].detail[0];
                   var latUser = double.tryParse(details.lat);
                   var longUser = double.tryParse(details.lng);
+                  var urlWa = details.phone.toString().substring(
+                        1,
+                        details.phone.length,
+                      );
+                  String? url =
+                      'https://wa.me/62$urlWa?text=Hallo%20kami%20dari%20junkbee%20akan%20menuju%20tempat%20anda';
                   return SizedBox(
                     width: Get.width / 1.1,
                     child: Card(
@@ -89,7 +101,7 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                     SizedBox(
                                       width: Get.width / 4,
                                       child: const Text(
-                                        'Nama Pemesan',
+                                        'User',
                                         style: titleBoldMini,
                                       ),
                                     ),
@@ -109,13 +121,16 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                     ),
                                   ],
                                 ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
                                       width: Get.width / 4,
                                       child: const Text(
-                                        'Nama Tempat',
+                                        'Tempat',
                                         style: titleBoldMini,
                                       ),
                                     ),
@@ -134,6 +149,9 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                       ),
                                     ),
                                   ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
                                 ),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,12 +180,11 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                   ],
                                 ),
                                 Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
                                       width: Get.width / 4,
                                       child: const Text(
-                                        'Nomer Telepon',
+                                        'WhatsApp',
                                         style: titleBoldMini,
                                       ),
                                     ),
@@ -180,9 +197,26 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                     ),
                                     SizedBox(
                                       width: Get.width / 2,
-                                      child: Text(
-                                        details.phone,
-                                        style: titleBoldMini,
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            '+62 ',
+                                            style: titleBoldMini,
+                                          ),
+                                          Text(
+                                            details.phone.toString().substring(
+                                                  1,
+                                                  details.phone.length,
+                                                ),
+                                            style: titleBoldMini,
+                                          ),
+                                          IconButton(
+                                              onPressed: () {
+                                                _launchUrl(url);
+                                              },
+                                              icon: const Icon(Icons.whatsapp,
+                                                  color: Colors.green)),
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -230,9 +264,9 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: Get.width / 3,
+                                      width: Get.width / 4,
                                       child: const Text(
-                                        'Jenis Sampah',
+                                        'Jenis',
                                         style: titleBoldMini,
                                       ),
                                     ),
@@ -252,9 +286,9 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: Get.width / 3,
+                                      width: Get.width / 4,
                                       child: const Text(
-                                        'Berat Sampah',
+                                        'Berat',
                                         style: titleBoldMini,
                                       ),
                                     ),
@@ -274,7 +308,7 @@ class _ConfirmationOrderScreenState extends State<ConfirmationOrderScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: Get.width / 3,
+                                      width: Get.width / 4,
                                       child: const Text(
                                         'Subtotal',
                                         style: titleBoldMini,

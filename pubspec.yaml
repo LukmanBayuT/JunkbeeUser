@@ -78,6 +78,7 @@ dependencies:
   swipeable_button_view: ^0.0.2
   timezone: ^0.8.0
   touchable_opacity: ^1.2.0
+  url_launcher: ^6.1.4
   webview_flutter: ^3.0.1
 
 dev_dependencies:

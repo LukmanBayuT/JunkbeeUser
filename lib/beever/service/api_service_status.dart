@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:junkbee_user/beever/model/beever_status.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,9 +20,13 @@ class ApiServiceStatusBeever {
     final resBody = await res.stream.bytesToString();
 
     if (res.statusCode >= 200 && res.statusCode < 300) {
-      print(resBody);
+      if (kDebugMode) {
+        print(resBody);
+      }
     } else {
-      print(res.reasonPhrase);
+      if (kDebugMode) {
+        print(res.reasonPhrase);
+      }
     }
     return beeverStatusFromJson(resBody);
   }

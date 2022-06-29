@@ -5,7 +5,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -556,10 +555,15 @@ class UserOrderState extends State<UserOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('New Collection', style: onboardingGetStarted),
+        title: const Text('New Collections', style: onboardingGetStarted),
         centerTitle: true,
         backgroundColor: Colors.amber,
         automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () {
+              Get.back(canPop: false);
+            },
+            icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white)),
       ),
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),

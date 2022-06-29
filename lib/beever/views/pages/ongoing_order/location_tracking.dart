@@ -170,8 +170,8 @@ class LocationTrackingState extends State<LocationTracking> {
           currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0),
     );
 
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    // final GoogleMapController controller = await _controller.future;
+    // controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
     // var sourcePosition = LatLng(
     //     currentLocation!.latitude ?? 0.0, currentLocation!.longitude ?? 0.0);
 
