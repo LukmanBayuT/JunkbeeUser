@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:junkbee_user/user/constant/constant.dart';
 import 'package:junkbee_user/user/view/collection_status_user.dart';
 import 'package:junkbee_user/user/view/order_screen.dart';
-import 'package:junkbee_user/user/view/pages/order_process/user_order_processed.dart';
 
 class UserDataGetStarted extends StatelessWidget {
   const UserDataGetStarted({Key? key, required this.navKey}) : super(key: key);

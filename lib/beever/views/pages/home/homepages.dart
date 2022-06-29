@@ -8,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/beever/service/api_service_status.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order.dart';
 import 'package:junkbee_user/beever/views/pages/ongoing_order/ongoing_order_proceed.dart';
 import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
@@ -31,8 +32,8 @@ class _HomePagesDriverState extends State<HomePagesDriver> {
 
   @override
   void initState() {
-    // ApiCallsGetData().getData();
     super.initState();
+    ApiServiceStatusBeever().getDataBeever();
     getRole();
     patchBeeverLocation();
     FirebaseMessaging.instance

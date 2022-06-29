@@ -324,20 +324,20 @@ class UserProfileState extends State<UserProfile> {
                               const SizedBox(height: 10),
                               Column(
                                 children: [
-                                  GestureDetector(
-                                    onTap: () => Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SavedLocation())),
-                                    child: const ListTile(
-                                      title: Text('Saved Location',
-                                          style: bodySlimBody),
-                                      trailing: Icon(
-                                        Icons.arrow_forward_ios_rounded,
-                                        size: 20,
-                                      ),
-                                    ),
-                                  ),
+                                  // GestureDetector(
+                                  //   onTap: () => Navigator.of(context).push(
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               const SavedLocation())),
+                                  //   child: const ListTile(
+                                  //     title: Text('Saved Location',
+                                  //         style: bodySlimBody),
+                                  //     trailing: Icon(
+                                  //       Icons.arrow_forward_ios_rounded,
+                                  //       size: 20,
+                                  //     ),
+                                  //   ),
+                                  // ),
                                   GestureDetector(
                                       onTap: () => Navigator.of(context).push(
                                           MaterialPageRoute(

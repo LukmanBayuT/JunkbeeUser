@@ -56,18 +56,18 @@ SizedBox infoAccount(BuildContext context) {
 
   return SizedBox(
       child: Column(children: [
-    Container(
-        padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
-        child: TouchableOpacity(
-            onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const SavedLocation())),
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text('Saved Location', style: textProfile),
-                  Icon(Icons.arrow_forward_ios_rounded,
-                      size: 15, color: Color(0xFF707070))
-                ]))),
+    // Container(
+    //     padding: const EdgeInsets.only(top: 30, left: 10, right: 10),
+    //     child: TouchableOpacity(
+    //         onTap: () => Navigator.of(context).push(
+    //             MaterialPageRoute(builder: (context) => const SavedLocation())),
+    //         child: Row(
+    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //             children: const [
+    //               Text('Saved Location', style: textProfile),
+    //               Icon(Icons.arrow_forward_ios_rounded,
+    //                   size: 15, color: Color(0xFF707070))
+    //             ]))),
     Container(
         padding: const EdgeInsets.only(top: 15, left: 10, right: 10),
         child: const Divider(thickness: 1.0)),

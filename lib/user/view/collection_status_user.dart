@@ -414,6 +414,40 @@ class CollectionStatusUserOutState extends State<CollectionStatusUserOut> {
                                                       const SizedBox(
                                                           height: 10),
                                                       Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        child: Text(
+                                                          'Harga : Rp. ${collectiondata.data[index].total}',
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xFF707070)),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 10),
+                                                        child: Text(
+                                                          'Berat Total : ${collectiondata.data[index].totalWeight} Kg',
+                                                          style: const TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: Color(
+                                                                  0xFF707070)),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Padding(
                                                           padding:
                                                               const EdgeInsets
                                                                       .symmetric(

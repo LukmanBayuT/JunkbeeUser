@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:junkbee_user/beever/service/api_service_status.dart';
 import 'package:junkbee_user/beever/views/pages/home/withdraw.dart';
 import 'package:junkbee_user/beever/widgets/home/show_notification.dart';
 import 'package:junkbee_user/services/notification_services.dart';
 import 'package:junkbee_user/user/view/pages/0.navigator.dart';
+import 'package:lottie/lottie.dart';
 import 'package:touchable_opacity/touchable_opacity.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -87,6 +89,30 @@ class _profileAndBalanceState extends State<profileAndBalance> {
                           ),
                   ),
                   Text('${beever?.data.fullName}', style: titleBodyMini),
+                  (beever?.data.active == '1')
+                      ? Card(
+                          shape: roundedRectBor,
+                          child: SizedBox(
+                              width: Get.width / 8,
+                              height: Get.height / 20,
+                              child: Center(
+                                child: Lottie.asset(
+                                    'assets/animation/beever_active.json'),
+                              )))
+                      : GestureDetector(
+                          onTap: () {
+                            ApiServiceStatusBeever().patchStatusReady();
+                          },
+                          child: Card(
+                              shape: roundedRectBor,
+                              child: SizedBox(
+                                  width: Get.width / 7,
+                                  height: Get.height / 20,
+                                  child: Center(
+                                    child: Lottie.asset(
+                                        'assets/animation/beever_non.json'),
+                                  ))),
+                        ),
                   SizedBox(
                     width: 100,
                     height: 50,

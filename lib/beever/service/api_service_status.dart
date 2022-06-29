@@ -1,14 +1,51 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:junkbee_user/beever/model/beever_status.dart';
 import 'package:http/http.dart' as http;
+import 'package:junkbee_user/beever/model/user_profile.dart';
+import 'package:junkbee_user/user/service/storage/secure_storage.dart';
 
 class ApiServiceStatusBeever {
-  Future<BeeverStatus> patchStatusReady() async {
+  final SecureStorage secureStorage = SecureStorage();
+  Future<BeeverData> getDataBeever() async {
     var headersList = {
       'Accept': '*/*',
       'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
       'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMSIsImp0aSI6ImJhNmUxNzE5YTBjZTEzM2NjMjJjOGI0NzUwNWJlYjJkYWU5MDc5NDk4MjAyMzMyNDdiODAzZTJjMTIxZDVmOWQyZThhMmZmZGI3ZTJlNDRhIiwiaWF0IjoxNjU2MzI0MDgxLjE2MDM0OSwibmJmIjoxNjU2MzI0MDgxLjE2MDM1NSwiZXhwIjoxNjg3ODYwMDgxLjE1NTUxMSwic3ViIjoiMTkiLCJzY29wZXMiOltdfQ.D1wwtb10X1anfFIYExrtQliYnyNODYXg3VluQ3Pn8l_PTZkZIEYpakDW8vtAh1LC0sWxrrOIP8JdYeICaXxy8M5ZbGaewX41qqVnbjAQK3MtHUwU3pD_qx13NG-MrMTmigQNRbrh3cFG3_o89V5o9PIDKc_3IGof0HdfC4J9d3TQO1xVdkM2NS639NINfTa2I49m-Dy6_i_TdYmmd96h6BamL10eaD8xSR51z6XQOWoqV4z8DShqgfB6jnpN_pnvhgKvuHIZl9SEEBrCdzHUncbqUgaCvxNyHJCp6jdPO0JrI3FbTsz6g7wWPS-2bfYNG_phqtc6qhUU-hc-RLs8ra8pf3vbKyYdy6aYzl4dF07QOiy3bhJHW7rk00jwUAnNbh_RiwRksgydBykX9_7eoipMY71Jo8yQKbv5wMJxrSJ7A-7QqHvjM9XawYfafs9DDvV2Eseb_FpuvDBUAGsW1ytZjx9bveRXoF3yaxi5AIsVtmACddG8t_G3X5WSOcnqQ3rcjP5tEa1lpXTN2qC6k2X0jp9Ggp66Owyl3T8Omt5H8lL_NkcZ8H7HmFphsxFhJ0em8TNlA0am1-HB9f4yuKbn4TKQZU5WItuKbtdvIhHfgQpJxAJAz2BJKoPM6hHsTI5uC3-DkYIfpXRRV8tqG0JNSHWjY5dwnCpmC143Cv8'
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxMSIsImp0aSI6ImVkNTc0MWU4MjJlOTM2ZDg3NzZlZDk4NGIwNjZlOTYxYTQzZDU4MWFiMWMzNjUxZjNhNzQ1ZTE2ZDBhMWNmYTgxYThhODA1MDIxYWE5YzBiIiwiaWF0IjoxNjU2NDc2ODEzLjM4Njk3LCJuYmYiOjE2NTY0NzY4MTMuMzg2OTgsImV4cCI6MTY4ODAxMjgxMy4zODI0MzUsInN1YiI6IjE5Iiwic2NvcGVzIjpbXX0.P4tlPLuP6xBeXLnuyezPuKzhzCY30CI0fw-D3n0v_w1gXN-67Wrt00TDVFPn8u76uUvQSNZxZmTKvgfOl6KqyCUPunKwEjdfMk07bLEaTnwbdZXcEFtrdVGyk4_Y37O4B1_ZyeLRAwg_dY3pD8do16Uu9_ozdsjEvL4d1BI1jYWw73OC6R4KCKqAjjDPsg4hZ3UxxREvlymwh5pyFXpb-Q_7wWc_o8Yvazb2VQYrFPL_PxO81lGZ0rHNQq4l-93RqwnAy9grqFDVZyRU94IrT888zdYl2TZuT93YHB_VxHy5K1lji-CIEUl85d0430Y5d2LbthAe5fge2wu7Qdn4PD8vEIoYfuJPDz8NRqgkHlFFE7leCXOb_d1vitaVwN6zpyF3WRh1uNpucYIf1UvJYI35sEgwlR2Hp9n8oXxnqaASraJGKgTZLNA2QEQmD0coQSjfgzcFRbJziNO87Zn58EHi6jIuICfCW165LhOgEOxnjwWovED6R7CAOJmS96FZ6oBVx0pxrOmV2hsWjIJvX10GucdgBo7mqs3rCQ_SlJO-c54BLm7giOZfS55mvzb-xUAjnWukX_FMVAXKfipRqEEsVhw-oOAt6_-HllSybzN-Cg4x3yBJZIjpVRAr22MNEQKkIOCyemZBMWqVYiqTBj_U-aeBECO1JuLftesFfVU'
+    };
+    var url = Uri.parse('https://staging2.junkbee.id/api/userdata/get');
+
+    var req = http.Request('GET', url);
+    req.headers.addAll(headersList);
+
+    var res = await req.send();
+    final resBody = await res.stream.bytesToString();
+
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      var jsonData = jsonDecode(resBody);
+      var jsonDataStatus = jsonData['data']['active'];
+      try {
+        if (jsonDataStatus == '1') {
+          print('active boss');
+        }
+      } catch (e) {
+        print('i got nothing');
+      }
+    } else {
+      print(res.reasonPhrase);
+    }
+    return beeverDataFromJson(resBody);
+  }
+
+  Future<BeeverStatus> patchStatusReady() async {
+    var authToken = await secureStorage.readSecureData('token');
+    var token = authToken;
+    var headersList = {
+      'Accept': '*/*',
+      'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
+      'Authorization': 'Bearer $token'
     };
     var url = Uri.parse(
         'https://staging2.junkbee.id/api/beever/update/status?status=ready');
