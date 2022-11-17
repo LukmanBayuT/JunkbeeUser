@@ -1,0 +1,108 @@
+// To parse this JSON data, do
+//
+//     final collectionResponse = collectionResponseFromJson(jsonString);
+
+import 'dart:convert';
+
+CollectionResponse collectionResponseFromJson(String str) =>
+    CollectionResponse.fromJson(json.decode(str));
+
+String collectionResponseToJson(CollectionResponse data) =>
+    json.encode(data.toJson());
+
+class CollectionResponse {
+  final int? success;
+  final String? message;
+  final List<Datum>? data;
+
+  CollectionResponse({
+    this.success,
+    this.message,
+    this.data,
+  });
+
+  factory CollectionResponse.fromJson(Map<String, dynamic> json) =>
+      CollectionResponse(
+        success: json["success"],
+        message: json["message"],
+        data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "success": success,
+        "message": message,
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+      };
+}
+
+class Datum {
+  final int? id;
+  final String? orderCode;
+  final String? userId;
+  final dynamic driverId;
+  final dynamic wasteCollectorId;
+  final DateTime? date;
+  final String? totalWeight;
+  final String? total;
+  final String? feeBeever;
+  final String? status;
+  final String? location1;
+  final String? location2;
+  final dynamic reason;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  Datum({
+    this.id,
+    this.orderCode,
+    this.userId,
+    this.driverId,
+    this.wasteCollectorId,
+    this.date,
+    this.totalWeight,
+    this.total,
+    this.feeBeever,
+    this.status,
+    this.location1,
+    this.location2,
+    this.reason,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        id: json["id"],
+        orderCode: json["order_code"],
+        userId: json["user_id"],
+        driverId: json["driver_id"],
+        wasteCollectorId: json["waste_collector_id"],
+        date: DateTime.parse(json["date"]),
+        totalWeight: json["total_weight"],
+        total: json["total"],
+        feeBeever: json["fee_beever"],
+        status: json["status"],
+        location1: json["location1"],
+        location2: json["location2"],
+        reason: json["reason"],
+        createdAt: DateTime.parse(json["created_at"]),
+        updatedAt: DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "order_code": orderCode,
+        "user_id": userId,
+        "driver_id": driverId,
+        "waste_collector_id": wasteCollectorId,
+        "date":
+            "${date!.year.toString().padLeft(4, '0')}-${date!.month.toString().padLeft(2, '0')}-${date!.day.toString().padLeft(2, '0')}",
+        "total_weight": totalWeight,
+        "total": total,
+        "fee_beever": feeBeever,
+        "status": status,
+        "location1": location1,
+        "location2": location2,
+        "reason": reason,
+        "created_at": createdAt!.toIso8601String(),
+        "updated_at": updatedAt!.toIso8601String(),
+      };
+}

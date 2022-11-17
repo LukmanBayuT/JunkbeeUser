@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources> 
+    <string name="mapbox_access_token"> pk.eyJ1IjoibHVrbWFuYnQiLCJhIjoiY2wxMDJzNGs4MHltdjNicWhiNWFkcXQ1MiJ9.lGDlAeRMkdMayLcUt3WQ3w </string>
+    <string name="facebook_app_id">956327388389362</string>
+    <string name="facebook_client_token">ca9d7de9e5a3f5b3efcef7ba954cc7bc</string>
+</resources>

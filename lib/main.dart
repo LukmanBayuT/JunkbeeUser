@@ -1,11 +1,16 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:junkbee_user/view/splashscreen/1.%20onboarding_splash_screen.dart';
+import 'package:junkbee_user/user/view/splashscreen/1.%20onboarding_splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(const MyApp());
 }
 
